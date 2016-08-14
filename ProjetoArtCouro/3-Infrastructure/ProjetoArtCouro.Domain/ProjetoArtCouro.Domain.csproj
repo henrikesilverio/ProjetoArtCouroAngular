@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,7 +41,111 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IRepository\ICompra\ICompraRepository.cs" />
+    <Compile Include="Contracts\IRepository\ICompra\IContaPagarRepository.cs" />
+    <Compile Include="Contracts\IRepository\ICompra\IItemCompraRepository.cs" />
+    <Compile Include="Contracts\IRepository\IEstoque\IEstoqueRepository.cs" />
+    <Compile Include="Contracts\IRepository\IPagamento\ICondicaoPagamentoRepository.cs" />
+    <Compile Include="Contracts\IRepository\IPagamento\IFormaPagamentoRepository.cs" />
+    <Compile Include="Contracts\IRepository\IPessoa\IEnderecoRepository.cs" />
+    <Compile Include="Contracts\IRepository\IPessoa\IEstadoCivilRepository.cs" />
+    <Compile Include="Contracts\IRepository\IPessoa\IEstadoRepository.cs" />
+    <Compile Include="Contracts\IRepository\IPessoa\IMeioComunicacaoRepository.cs" />
+    <Compile Include="Contracts\IRepository\IPessoa\IPapelRepository.cs" />
+    <Compile Include="Contracts\IRepository\IPessoa\IPessoaFisicaRepository.cs" />
+    <Compile Include="Contracts\IRepository\IPessoa\IPessoaJuridicaRepository.cs" />
+    <Compile Include="Contracts\IRepository\IPessoa\IPessoaRepository.cs" />
+    <Compile Include="Contracts\IRepository\IProduto\IProdutoRepository.cs" />
+    <Compile Include="Contracts\IRepository\IProduto\IUnidadeRepository.cs" />
+    <Compile Include="Contracts\IRepository\IUsuario\IGrupoPermissaoRepository.cs" />
+    <Compile Include="Contracts\IRepository\IUsuario\IPermissaoRepository.cs" />
+    <Compile Include="Contracts\IRepository\IUsuario\IUsuarioRepository.cs" />
+    <Compile Include="Contracts\IRepository\IVenda\IContaReceberRepository.cs" />
+    <Compile Include="Contracts\IRepository\IVenda\IItemVendaRepository.cs" />
+    <Compile Include="Contracts\IRepository\IVenda\IVendaRepository.cs" />
+    <Compile Include="Contracts\IService\IAutenticacao\IAutenticacao.cs" />
+    <Compile Include="Contracts\IService\ICompra\ICompraService.cs" />
+    <Compile Include="Contracts\IService\ICompra\IContaPagarService.cs" />
+    <Compile Include="Contracts\IService\IEstoque\IEstoqueService.cs" />
+    <Compile Include="Contracts\IService\IPagamento\ICondicaoPagamentoService.cs" />
+    <Compile Include="Contracts\IService\IPagamento\IFormaPagamentoService.cs" />
+    <Compile Include="Contracts\IService\IPessoa\IPessoaService.cs" />
+    <Compile Include="Contracts\IService\IProduto\IProdutoService.cs" />
+    <Compile Include="Contracts\IService\IUsuario\IUsuarioService.cs" />
+    <Compile Include="Contracts\IService\IVenda\IContaReceberService.cs" />
+    <Compile Include="Contracts\IService\IVenda\IVendaService.cs" />
+    <Compile Include="Entities\Compras\Compra.cs" />
+    <Compile Include="Entities\Compras\ContaPagar.cs" />
+    <Compile Include="Entities\Compras\ItemCompra.cs" />
+    <Compile Include="Entities\Enums\StatusCompraEnum.cs" />
+    <Compile Include="Entities\Enums\StatusContaPagarEnum.cs" />
+    <Compile Include="Entities\Enums\StatusContaReceberEnum.cs" />
+    <Compile Include="Entities\Enums\StatusVendaEnum.cs" />
+    <Compile Include="Entities\Enums\TipoComunicacaoEnum.cs" />
+    <Compile Include="Entities\Enums\TipoPapelPessoaEnum.cs" />
+    <Compile Include="Entities\Estoques\Estoque.cs" />
+    <Compile Include="Entities\Pagamentos\CondicaoPagamento.cs" />
+    <Compile Include="Entities\Pagamentos\FormaPagamento.cs" />
+    <Compile Include="Entities\Pessoas\Endereco.cs" />
+    <Compile Include="Entities\Pessoas\Estado.cs" />
+    <Compile Include="Entities\Pessoas\EstadoCivil.cs" />
+    <Compile Include="Entities\Pessoas\MeioComunicacao.cs" />
+    <Compile Include="Entities\Pessoas\Papel.cs" />
+    <Compile Include="Entities\Pessoas\Pessoa.cs" />
+    <Compile Include="Entities\Pessoas\PessoaFisica.cs" />
+    <Compile Include="Entities\Pessoas\PessoaJuridica.cs" />
+    <Compile Include="Entities\Produtos\Produto.cs" />
+    <Compile Include="Entities\Produtos\Unidade.cs" />
+    <Compile Include="Entities\Usuarios\GrupoPermissao.cs" />
+    <Compile Include="Entities\Usuarios\Permissao.cs" />
+    <Compile Include="Entities\Usuarios\Usuario.cs" />
+    <Compile Include="Entities\Vendas\ContaReceber.cs" />
+    <Compile Include="Entities\Vendas\ItemVenda.cs" />
+    <Compile Include="Entities\Vendas\Venda.cs" />
+    <Compile Include="Models\Cliente\ClienteModel.cs" />
+    <Compile Include="Models\Cliente\PesquisaClienteModel.cs" />
+    <Compile Include="Models\Common\EnderecoModel.cs" />
+    <Compile Include="Models\Common\LookupModel.cs" />
+    <Compile Include="Models\Common\MeioComunicacaoModel.cs" />
+    <Compile Include="Models\Common\PessoaModel.cs" />
+    <Compile Include="Models\Common\RetornoBase.cs" />
+    <Compile Include="Models\Compra\CompraModel.cs" />
+    <Compile Include="Models\Compra\ItemCompraModel.cs" />
+    <Compile Include="Models\Compra\PesquisaCompraModel.cs" />
+    <Compile Include="Models\CondicaoPagamento\CondicaoPagamentoModel.cs" />
+    <Compile Include="Models\ContaPagar\ContaPagarModel.cs" />
+    <Compile Include="Models\ContaPagar\PesquisaContaPagarModel.cs" />
+    <Compile Include="Models\ContaReceber\ContaReceberModel.cs" />
+    <Compile Include="Models\ContaReceber\PesquisaContaReceberModel.cs" />
+    <Compile Include="Models\Estoque\EstoqueModel.cs" />
+    <Compile Include="Models\Estoque\PesquisaEstoqueModel.cs" />
+    <Compile Include="Models\FormaPagamento\FormaPagamentoModel.cs" />
+    <Compile Include="Models\Fornecedor\FornecedorModel.cs" />
+    <Compile Include="Models\Fornecedor\PesquisaFornecedorModel.cs" />
+    <Compile Include="Models\Funcionario\FuncionarioModel.cs" />
+    <Compile Include="Models\Funcionario\PesquisaFuncionarioModel.cs" />
+    <Compile Include="Models\Login\LoginModel.cs" />
+    <Compile Include="Models\Produto\ProdutoModel.cs" />
+    <Compile Include="Models\Usuario\ConfiguracaoUsuarioModel.cs" />
+    <Compile Include="Models\Usuario\GrupoModel.cs" />
+    <Compile Include="Models\Usuario\PermissaoModel.cs" />
+    <Compile Include="Models\Usuario\PesquisaGrupoModel.cs" />
+    <Compile Include="Models\Usuario\PesquisaUsuarioModel.cs" />
+    <Compile Include="Models\Usuario\UsuarioModel.cs" />
+    <Compile Include="Models\Venda\ItemVendaModel.cs" />
+    <Compile Include="Models\Venda\PesquisaVendaModel.cs" />
+    <Compile Include="Models\Venda\VendaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Contracts\IRepository\ICommon\" />
+    <Folder Include="Entities\Common\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProjetoArtCouro.Resources\ProjetoArtCouro.Resources.csproj">
+      <Project>{5bafb16b-6802-4d6d-8045-bf640fb83a57}</Project>
+      <Name>ProjetoArtCouro.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

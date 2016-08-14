@@ -30,7 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,7 +49,80 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBase\DataBaseContext.cs" />
+    <Compile Include="EntityConfig\CompraConfiguration\CompraConfiguration.cs" />
+    <Compile Include="EntityConfig\CompraConfiguration\ContaPagarConfiguration.cs" />
+    <Compile Include="EntityConfig\CompraConfiguration\ItemCompraConfiguration.cs" />
+    <Compile Include="EntityConfig\EstoqueConfiguration\EstoqueConfiguration.cs" />
+    <Compile Include="EntityConfig\PagamentoConfiguration\CondicaoPagamentoConfiguration.cs" />
+    <Compile Include="EntityConfig\PagamentoConfiguration\FormaPagamentoConfiguration.cs" />
+    <Compile Include="EntityConfig\PessoaConfiguration\EnderecoConfiguration.cs" />
+    <Compile Include="EntityConfig\PessoaConfiguration\EstadoCivilConfiguration.cs" />
+    <Compile Include="EntityConfig\PessoaConfiguration\EstadoConfiguration.cs" />
+    <Compile Include="EntityConfig\PessoaConfiguration\MeioComunicacaoConfiguration.cs" />
+    <Compile Include="EntityConfig\PessoaConfiguration\PapelConfiguration.cs" />
+    <Compile Include="EntityConfig\PessoaConfiguration\PessoaConfiguration.cs" />
+    <Compile Include="EntityConfig\PessoaConfiguration\PessoaFisicaConfiguration.cs" />
+    <Compile Include="EntityConfig\PessoaConfiguration\PessoaJuridicaConfiguration.cs" />
+    <Compile Include="EntityConfig\ProdutoConfiguration\ProdutoConfiguration.cs" />
+    <Compile Include="EntityConfig\ProdutoConfiguration\UnidadeConfiguration.cs" />
+    <Compile Include="EntityConfig\UsuarioConfiguration\GrupoPermissaoConfiguration.cs" />
+    <Compile Include="EntityConfig\UsuarioConfiguration\PermissaoConfiguration.cs" />
+    <Compile Include="EntityConfig\UsuarioConfiguration\UsuarioConfiguration.cs" />
+    <Compile Include="EntityConfig\VendaConfiguration\ContaReceberConfiguration.cs" />
+    <Compile Include="EntityConfig\VendaConfiguration\ItemVendaConfiguration.cs" />
+    <Compile Include="EntityConfig\VendaConfiguration\VendaConfiguration.cs" />
+    <Compile Include="Migrations\201603240222577_Banco Inicial.cs" />
+    <Compile Include="Migrations\201603240222577_Banco Inicial.Designer.cs">
+      <DependentUpon>201603240222577_Banco Inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\CompraRepository\CompraRepository.cs" />
+    <Compile Include="Repositorios\CompraRepository\ContaPagarRepository.cs" />
+    <Compile Include="Repositorios\CompraRepository\ItemCompraRepository.cs" />
+    <Compile Include="Repositorios\EstoqueRepository\EstoqueRepository.cs" />
+    <Compile Include="Repositorios\PagamentoRepository\CondicaoPagamentoRepository.cs" />
+    <Compile Include="Repositorios\PagamentoRepository\FormaPagamentoRepository.cs" />
+    <Compile Include="Repositorios\PessoaRepository\EnderecoRepository.cs" />
+    <Compile Include="Repositorios\PessoaRepository\EstadoCivilRepository.cs" />
+    <Compile Include="Repositorios\PessoaRepository\EstadoRepository.cs" />
+    <Compile Include="Repositorios\PessoaRepository\MeioComunicacaoRepository.cs" />
+    <Compile Include="Repositorios\PessoaRepository\PapelRepository.cs" />
+    <Compile Include="Repositorios\PessoaRepository\PessoaFisicaRepository.cs" />
+    <Compile Include="Repositorios\PessoaRepository\PessoaJuridicaRepository.cs" />
+    <Compile Include="Repositorios\PessoaRepository\PessoaRepository.cs" />
+    <Compile Include="Repositorios\ProdutoRepository\ProdutoRepository.cs" />
+    <Compile Include="Repositorios\ProdutoRepository\UnidadeRepository.cs" />
+    <Compile Include="Repositorios\UsuarioRepository\GrupoPermissaoRepository.cs" />
+    <Compile Include="Repositorios\UsuarioRepository\PermissaoRepository.cs" />
+    <Compile Include="Repositorios\UsuarioRepository\UsuarioRepository.cs" />
+    <Compile Include="Repositorios\VendaRepository\ContaReceberRepository.cs" />
+    <Compile Include="Repositorios\VendaRepository\ItemVendaRepository.cs" />
+    <Compile Include="Repositorios\VendaRepository\VendaRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201603240222577_Banco Inicial.resx">
+      <DependentUpon>201603240222577_Banco Inicial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProjetoArtCouro.Domain\ProjetoArtCouro.Domain.csproj">
+      <Project>{d0278cc6-dc16-48e5-9626-b19142b60808}</Project>
+      <Name>ProjetoArtCouro.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProjetoArtCouro.Resources\ProjetoArtCouro.Resources.csproj">
+      <Project>{5bafb16b-6802-4d6d-8045-bf640fb83a57}</Project>
+      <Name>ProjetoArtCouro.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntityConfig\CommonConfiguration\" />
+    <Folder Include="Repositorios\CommonRepository\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -41,6 +41,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Erros.Designer.cs" />
+    <Compile Include="Resources\Mensagens.Designer.cs" />
+    <Compile Include="Validation\AssertionConcern.cs" />
+    <Compile Include="Validation\EmailAssertionConcern.cs" />
+    <Compile Include="Validation\PasswordAssertionConcern.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Erros.resx" />
+    <EmbeddedResource Include="Resources\Mensagens.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
