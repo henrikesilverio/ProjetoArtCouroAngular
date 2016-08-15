@@ -19,7 +19,7 @@ angular
 
             $ocLazyLoadProvider.config({
                 debug: false,
-                events: true,
+                events: true
             });
 
             $urlRouterProvider.otherwise("/dashboard/home");
