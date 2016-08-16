@@ -1,22 +1,32 @@
-<div class="navbar-default sidebar" role="navigation">
+﻿<div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
-        <ul class="nav in" id="side-menu">
+        <ul sidebar class="nav in" id="side-menu">
             <sidebar-search></sidebar-search>
-            <li class="active">
-                <a ui-sref="app">
-                    <i class="fa fa-fw fa-lg fa-home"></i> Home
-                </a>
+            <li ui-sref-active="active">
+                <a ui-sref="home"><i class="fa fa-fw fa-lg fa-home"></i> Home</a>
             </li>
-            <li>
+            <li ng-class="{active: $state.includes('cadastro')}">
                 <a href="">
                     <i class="fa fa-fw fa-lg fa-pencil-square-o"></i>
-                    Cadastro 
+                    Cadastro
                     <span class="fa arrow"></span>
                 </a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=1">
+                <ul class="nav nav-second-level" ng-class="{in: $state.includes('cadastro')}">
                     <li>
-                        <a ui-sref="app.cliente">Cliente</a>
+                        <a href="">Pessoa <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level" ng-class="{in: $state.includes('cadastro')}">
+                            <li ui-sref-active="active"><a ui-sref="cliente">Cliente</a></li>
+                        </ul>
+                        <ul class="nav nav-third-level" ng-class="{in: $state.includes('cadastro')}">
+                            <li ui-sref-active="active"><a ui-sref="fornecedor">Fornecedor</a></li>
+                        </ul>
+                        <ul class="nav nav-third-level" ng-class="{in: $state.includes('cadastro')}">
+                            <li ui-sref-active="active"><a ui-sref="funcionario">Funcionário</a></li>
+                        </ul>
                     </li>
+                </ul>
+                <ul class="nav nav-second-level" ng-class="{in: $state.includes('cadastro')}">
+                    <li ui-sref-active="active"><a ui-sref="produto">Produto</a></li>
                 </ul>
             </li>
         </ul>

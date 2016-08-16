@@ -1,8 +1,6 @@
-# metisMenu [![Build Status](https://secure.travis-ci.org/onokumus/metisMenu.png?branch=master)](https://travis-ci.org/onokumus/metisMenu)
+# metisMenu [![Build Status](https://secure.travis-ci.org/onokumus/metisMenu.svg?branch=master)](https://travis-ci.org/onokumus/metisMenu)
 
-> Easy menu jQuery plugin for Twitter Bootstrap 3
-
-> Now support cdnjs & jsdelivr
+> A jQuery menu plugin
 
 
 ## Installation
@@ -19,41 +17,42 @@ npm install metismenu
 bower install metisMenu
 ```
 
+* [composer](https://getcomposer.org/)
+
+```bash
+composer require onokumus/metismenu:dev-master
+```
+
 * [Download](https://github.com/onokumus/metisMenu/archive/master.zip)
 
 ## Usage
 
-1. Include Twitter Bootstrap StyleSheet
+1. Include metisMenu StyleSheet
 
     ```html
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.0.1/metisMenu.min.css">
     ```
 
-2. Include metisMenu StyleSheet
+2. Include jQuery
 
     ```html
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.metismenu/1.1.2/css/metismenu.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     ```
 
-3. Include jQuery
+3. Include metisMenu plugin's code
 
     ```html
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.0.1/metisMenu.min.js"></script>
     ```
-
-4. Include Twitter Bootstrap Script
+4. Add class `metismenu` to unordered list
 
     ```html
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <ul class="metismenu" id="menu">
+
+    </ul>
     ```
 
-5. Include metisMenu plugin's code
-
-    ```html
-    <script src="//cdn.jsdelivr.net/bootstrap.metismenu/1.1.2/js/metismenu.min.js"></script>
-    ```
-
-6. Call the plugin:
+5. Call the plugin:
 
     ```javascript
     $("#menu").metisMenu();
@@ -73,18 +72,22 @@ For auto collapse support.
   });
 ```
 
-#### doubleTapToGo
-Type: `Boolean`
-Default: `false`
+#### activeClass
+Type: `String`
+Default: `active`
 
-For double tap support.
 
 ```javascript
   $("#menu").metisMenu({
-    doubleTapToGo: true
+    activeClass: 'active'
   });
 ```
 
+### Testing
+```bash
+npm install
+grunt serve
+```
 
 ### [DEMO](http://demo.onokumus.com/metisMenu/)
 
@@ -92,6 +95,10 @@ Contains a simple HTML file to demonstrate metisMenu plugin.
 
 ### Release History
 **DATE**       **VERSION**   **CHANGES**
+* 2015-05-23   v2.0.2        [fixed](https://github.com/onokumus/metisMenu/issues/34#issuecomment-104656754) 
+* 2015-05-22   v2.0.1        changeable classname support
+* 2015-04-03   v2.0.0        Remove Bootstrap dependency
+* 2015-03-24   v1.1.3        composer support
 * 2014-11-01   v1.1.3        Bootstrap 3.3.0
 * 2014-07-07   v1.1.0	       Add double tap functionality
 * 2014-06-24   v1.0.3	       cdnjs support & rename plugin
