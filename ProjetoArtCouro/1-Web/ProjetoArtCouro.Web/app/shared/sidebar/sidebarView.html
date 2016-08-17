@@ -1,32 +1,22 @@
 ﻿<div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul sidebar class="nav in" id="side-menu">
-            <sidebar-search></sidebar-search>
-            <li ui-sref-active="active">
+            <li ng-class="{active: $state.includes('home')}">
                 <a ui-sref="home"><i class="fa fa-fw fa-lg fa-home"></i> Home</a>
             </li>
             <li ng-class="{active: $state.includes('cadastro')}">
-                <a href="">
+                <a ui-sref="cadastro">
                     <i class="fa fa-fw fa-lg fa-pencil-square-o"></i>
-                    Cadastro
-                    <span class="fa arrow"></span>
+                    Cadastro <span class="fa arrow"></span>
                 </a>
-                <ul class="nav nav-second-level" ng-class="{in: $state.includes('cadastro')}">
-                    <li>
-                        <a href="">Pessoa <span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level" ng-class="{in: $state.includes('cadastro')}">
-                            <li ui-sref-active="active"><a ui-sref="cliente">Cliente</a></li>
-                        </ul>
-                        <ul class="nav nav-third-level" ng-class="{in: $state.includes('cadastro')}">
-                            <li ui-sref-active="active"><a ui-sref="fornecedor">Fornecedor</a></li>
-                        </ul>
-                        <ul class="nav nav-third-level" ng-class="{in: $state.includes('cadastro')}">
-                            <li ui-sref-active="active"><a ui-sref="funcionario">Funcionário</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav nav-second-level" ng-class="{in: $state.includes('cadastro')}">
+                <ul class="nav nav-third-level" ng-class="{in: $state.includes('cadastro')}">
+                    <li ui-sref-active="active"><a ui-sref="cliente">Cliente</a></li>
+                    <li ui-sref-active="active"><a ui-sref="fornecedor">Fornecedor</a></li>
+                    <li ui-sref-active="active"><a ui-sref="funcionario">Funcionário</a></li>
                     <li ui-sref-active="active"><a ui-sref="produto">Produto</a></li>
+                    <li ui-sref-active="active"><a ui-sref="formaPagamento">Forma de Pagamento</a></li>
+                    <li ui-sref-active="active"><a ui-sref="condicaoPagamento">Condição de Pagamento</a></li>
+                    <li ui-sref-active="active"><a ui-sref="usuarios">Usuários</a></li>
                 </ul>
             </li>
         </ul>

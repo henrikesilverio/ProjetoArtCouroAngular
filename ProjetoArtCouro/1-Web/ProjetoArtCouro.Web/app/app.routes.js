@@ -73,6 +73,18 @@
                 parent: "cadastro",
                 url: "/produto",
                 templateUrl: "app/components/produto/views/produtoView.html"
+            }).state("formaPagamento", {
+                parent: "cadastro",
+                url: "/formaPagamento",
+                templateUrl: "app/components/formaPagamento/views/formaPagamentoView.html"
+            }).state("condicaoPagamento", {
+                parent: "cadastro",
+                url: "/condicaoPagamento",
+                templateUrl: "app/components/condicaoPagamento/views/condicaoPagamentoView.html"
+            }).state("usuarios", {
+                parent: "cadastro",
+                url: "/usuarios",
+                templateUrl: "app/components/usuario/views/usuarioView.html"
             });
     }
 
