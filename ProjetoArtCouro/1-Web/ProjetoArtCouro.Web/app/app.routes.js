@@ -10,6 +10,13 @@
         function loadScripts($ocLazyLoad) {
             return $ocLazyLoad.load(
                 {
+                    name: "sbAdminApp",
+                    files: [
+                        "app/shared/sidebar/sidebarDirective.js",
+                        "app/shared/sidebar/sidebarSearch/sidebarSearchDirective.js"
+                    ]
+                },
+                {
                     name: "toggle-switch",
                     files: [
                         "bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
@@ -45,76 +52,85 @@
 
         $stateProvider
             .state("root", {
+                abstract: true,
                 templateUrl: "app/shared/main/mainView.html",
                 resolve: {
                     loadScripts: loadScripts
                 }
                 //Home
-            }).state("home", {
-                parent: "root",
+            }).state("root.home", {
                 url: "/home",
                 templateUrl: "app/components/home/views/homeView.html"
                 //Cadastro
-            }).state("cliente", {
-                parent: "root",
+            }).state("cadastro", {
+                abstract: true,
+                templateUrl: "app/shared/main/mainView.html",
+                resolve: {
+                    loadScripts: loadScripts
+                }
+            }).state("cadastro.cliente", {
                 url: "/pesquisaClienteView",
                 templateUrl: "app/components/cliente/views/pesquisaClienteView.html"
-            }).state("fornecedor", {
-                parent: "root",
+            }).state("cadastro.fornecedor", {
                 url: "/fornecedor",
                 templateUrl: "app/components/fornecedor/views/fornecedorView.html"
-            }).state("funcionario", {
-                parent: "root",
+            }).state("cadastro.funcionario", {
                 url: "/funcionario",
                 templateUrl: "app/components/funcionario/views/funcionarioView.html"
-            }).state("produto", {
-                parent: "root",
+            }).state("cadastro.produto", {
                 url: "/produto",
                 templateUrl: "app/components/produto/views/produtoView.html"
-            }).state("formaPagamento", {
-                parent: "root",
+            }).state("cadastro.formaPagamento", {
                 url: "/formaPagamento",
                 templateUrl: "app/components/formaPagamento/views/formaPagamentoView.html"
-            }).state("condicaoPagamento", {
-                parent: "root",
+            }).state("cadastro.condicaoPagamento", {
                 url: "/condicaoPagamento",
                 templateUrl: "app/components/condicaoPagamento/views/condicaoPagamentoView.html"
-            }).state("usuarios", {
-                parent: "root",
+            }).state("cadastro.usuarios", {
                 url: "/usuarios",
                 templateUrl: "app/components/usuario/views/usuarioView.html"
                 //Operações
-            }).state("compra", {
-                parent: "root",
+            }).state("operacoes", {
+                abstract: true,
+                templateUrl: "app/shared/main/mainView.html",
+                resolve: {
+                    loadScripts: loadScripts
+                }
+            }).state("operacoes.compra", {
                 url: "/compra",
                 templateUrl: "app/components/compra/views/compraView.html"
-            }).state("venda", {
-                parent: "root",
+            }).state("operacoes.venda", {
                 url: "/venda",
                 templateUrl: "app/components/venda/views/vendaView.html"
-            }).state("contaPagar", {
-                parent: "root",
+            }).state("operacoes.contaPagar", {
                 url: "/contaPagar",
                 templateUrl: "app/components/contaPagar/views/contaPagarView.html"
-            }).state("contaReceber", {
-                parent: "root",
+            }).state("operacoes.contaReceber", {
                 url: "/contaReceber",
                 templateUrl: "app/components/contaReceber/views/contaReceberView.html"
                 //Relatorios
-            }).state("estoque", {
-                parent: "root",
+            }).state("relatorios", {
+                abstract: true,
+                templateUrl: "app/shared/main/mainView.html",
+                resolve: {
+                    loadScripts: loadScripts
+                }
+            }).state("relatorios.estoque", {
                 url: "/estoque",
                 templateUrl: "app/components/estoque/views/estoqueView.html"
-            }).state("grupoConfiguracao", {
-                parent: "root",
+            }).state("configuracoes", {
+                abstract: true,
+                templateUrl: "app/shared/main/mainView.html",
+                resolve: {
+                    loadScripts: loadScripts
+                }
+            }).state("configuracoes.grupoConfiguracao", {
                 url: "/grupoConfiguracao",
                 templateUrl: "app/components/configuracao/views/grupoView.html"
-            }).state("configuracaoUsuario", {
-                parent: "root",
+            }).state("configuracoes.configuracaoUsuario", {
                 url: "/configuracaoUsuario",
                 templateUrl: "app/components/configuracao/views/configuracaoUsuarioView.html"
-            }).state("alterarSenha", {
-                parent: "root",
+            }).state("configuracoes.alterarSenha", {
                 url: "/alterarSenha",
                 templateUrl: "app/components/usuario/views/alterarSenhaView.html"
             });

@@ -132,10 +132,18 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 .Include<FuncionarioModel, PessoaFisica>()
                 .Include<FornecedorModel, PessoaFisica>();
 
+            CreateMap<ClienteModel, PessoaFisica>();
+            CreateMap<FuncionarioModel, PessoaFisica>();
+            CreateMap<FornecedorModel, PessoaFisica>();
+
             CreateMap<PessoaModel, PessoaJuridica>()
                 .Include<ClienteModel, PessoaJuridica>()
                 .Include<FuncionarioModel, PessoaJuridica>()
                 .Include<FornecedorModel, PessoaJuridica>();
+
+            CreateMap<ClienteModel, PessoaJuridica>();
+            CreateMap<FuncionarioModel, PessoaJuridica>();
+            CreateMap<FornecedorModel, PessoaJuridica>();
 
             CreateMap<PessoaModel, Pessoa>()
                 .ForMember(d => d.PessoaCodigo, m => m.MapFrom(s => s.Codigo))
@@ -183,6 +191,10 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 .Include<FuncionarioModel, Pessoa>()
                 .Include<FornecedorModel, Pessoa>();
 
+            CreateMap<ClienteModel, Pessoa>();
+            CreateMap<FuncionarioModel, Pessoa>();
+            CreateMap<FornecedorModel, Pessoa>();
+
             CreateMap<PessoaModel, EstadoCivil>()
                 .ForMember(d => d.EstadoCivilId, m => m.Ignore())
                 .ForMember(d => d.EstadoCivilNome, m => m.Ignore())
@@ -190,6 +202,10 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 .Include<ClienteModel, EstadoCivil>()
                 .Include<FuncionarioModel, EstadoCivil>()
                 .Include<FornecedorModel, EstadoCivil>();
+
+            CreateMap<ClienteModel, EstadoCivil>();
+            CreateMap<FuncionarioModel, EstadoCivil>();
+            CreateMap<FornecedorModel, EstadoCivil>();
         }
 
         private void MapperUser()

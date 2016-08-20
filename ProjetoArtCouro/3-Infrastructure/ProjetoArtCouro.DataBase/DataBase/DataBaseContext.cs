@@ -23,7 +23,7 @@ namespace ProjetoArtCouro.DataBase.DataBase
         public DataBaseContext()
             : base("ProjetoArtCouroConnectionString")
         {
-            Database.SetInitializer<DataBaseContext>(null);
+            Database.Initialize(true);
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
         }

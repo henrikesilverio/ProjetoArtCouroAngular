@@ -2,7 +2,7 @@
     <div class="sidebar-nav navbar-collapse">
         <ul sidebar class="nav in" id="side-menu">
             <li ng-class="{active: $state.includes('home')}">
-                <a ui-sref="home" href=""><i class="fa fa-fw fa-lg fa-home"></i> Home</a>
+                <a ui-sref="root.home" href=""><i class="fa fa-fw fa-lg fa-home"></i> Home</a>
             </li>
             <li ng-class="{active: $state.includes('cadastro')}">
                 <a ui-sref="cadastro" href="">
@@ -10,13 +10,13 @@
                     Cadastro <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('cadastro')}">
-                    <li ui-sref-active="active"><a ui-sref="cliente" href="">Cliente</a></li>
-                    <li ui-sref-active="active"><a ui-sref="fornecedor" href="">Fornecedor</a></li>
-                    <li ui-sref-active="active"><a ui-sref="funcionario" href="">Funcionário</a></li>
-                    <li ui-sref-active="active"><a ui-sref="produto" href="">Produto</a></li>
-                    <li ui-sref-active="active"><a ui-sref="formaPagamento" href="">Forma de Pagamento</a></li>
-                    <li ui-sref-active="active"><a ui-sref="condicaoPagamento" href="">Condição de Pagamento</a></li>
-                    <li ui-sref-active="active"><a ui-sref="usuarios" href="">Usuários</a></li>
+                    <li ui-sref-active="active"><a ui-sref="cadastro.cliente" href="">Cliente</a></li>
+                    <li ui-sref-active="active"><a ui-sref="cadastro.fornecedor" href="">Fornecedor</a></li>
+                    <li ui-sref-active="active"><a ui-sref="cadastro.funcionario" href="">Funcionário</a></li>
+                    <li ui-sref-active="active"><a ui-sref="cadastro.produto" href="">Produto</a></li>
+                    <li ui-sref-active="active"><a ui-sref="cadastro.formaPagamento" href="">Forma de Pagamento</a></li>
+                    <li ui-sref-active="active"><a ui-sref="cadastro.condicaoPagamento" href="">Condição de Pagamento</a></li>
+                    <li ui-sref-active="active"><a ui-sref="cadastro.usuarios" href="">Usuários</a></li>
                 </ul>
             </li>
             <li ng-class="{active: $state.includes('operacoes')}">
@@ -25,10 +25,10 @@
                     Operações <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('operacoes')}">
-                    <li ui-sref-active="active"><a ui-sref="compra" href="">Compra</a></li>
-                    <li ui-sref-active="active"><a ui-sref="venda" href="">Venda</a></li>
-                    <li ui-sref-active="active"><a ui-sref="contaPagar" href="">Contas a pagar</a></li>
-                    <li ui-sref-active="active"><a ui-sref="contaReceber" href="">Contas a receber</a></li>
+                    <li ui-sref-active="active"><a ui-sref="operacoes.compra" href="">Compra</a></li>
+                    <li ui-sref-active="active"><a ui-sref="operacoes.venda" href="">Venda</a></li>
+                    <li ui-sref-active="active"><a ui-sref="operacoes.contaPagar" href="">Contas a pagar</a></li>
+                    <li ui-sref-active="active"><a ui-sref="operacoes.contaReceber" href="">Contas a receber</a></li>
                 </ul>
             </li>
             <li ng-class="{active: $state.includes('relatorio')}">
@@ -37,7 +37,7 @@
                     Relatorio <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('relatorio')}">
-                    <li ui-sref-active="active"><a ui-sref="estoque" href="">Estoque</a></li>
+                    <li ui-sref-active="active"><a ui-sref="relatorio.estoque" href="">Estoque</a></li>
                 </ul>
             </li>
             <li ng-class="{active: $state.includes('configuracoes')}">
@@ -46,9 +46,9 @@
                     Configurações <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('configuracoes')}">
-                    <li ui-sref-active="active"><a ui-sref="grupoConfiguracao" href="">Configurações de Grupo</a></li>
-                    <li ui-sref-active="active"><a ui-sref="configuracaoUsuario" href="">Configurações de Usuarios</a></li>
-                    <li ui-sref-active="active"><a ui-sref="alterarSenha" href="">Alterar senha</a></li>
+                    <li ui-sref-active="active"><a ui-sref="configuracoes.grupoConfiguracao" href="">Configurações de Grupo</a></li>
+                    <li ui-sref-active="active"><a ui-sref="configuracoes.configuracaoUsuario" href="">Configurações de Usuarios</a></li>
+                    <li ui-sref-active="active"><a ui-sref="configuracoes.alterarSenha" href="">Alterar senha</a></li>
                 </ul>
             </li>
         </ul>

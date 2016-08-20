@@ -16,7 +16,7 @@
     #page-wrapper {
         position: relative;
         margin: 0 0 0 220px;
-        padding: 0 30px;
+        padding: 25px 30px 0 30px;
         border-left: 1px solid #e7e7e7;
     }
 }
@@ -170,6 +170,10 @@
     .btn-danger.btn-outline:hover {
         color: #fff;
     }
+
+.btn {
+    margin-left: 6px;
+}
 
 .chat {
     margin: 0;
@@ -357,11 +361,11 @@ table.dataTable thead .sorting_desc_disabled {
     background-color: #3a3633;
 }
 
-.nav>li>a:focus, .nav>li>a:hover {
+.nav > li > a:focus, .nav > li > a:hover {
     background-color: #2e2b28 !important;
 }
 
-.nav-second-level li.active>a:before {
+.nav-second-level li.active > a:before {
     content: "\f0d9";
     font-family: FontAwesome;
     display: block;
