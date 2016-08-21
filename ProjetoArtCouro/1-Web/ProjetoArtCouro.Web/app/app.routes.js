@@ -1,9 +1,11 @@
 ﻿(function () {
-    function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
+    function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $httpProvider, cfpLoadingBarProvider) {
         $ocLazyLoadProvider.config({
             debug: false,
             events: true
         });
+
+        cfpLoadingBarProvider.spinnerTemplate = "<div class=\"spiner-example\"><div class=\"sk-spinner sk-spinner-rotating-plane\"></div></div>";
 
         $urlRouterProvider.otherwise("/home");
 
@@ -54,9 +56,30 @@
             .state("root", {
                 abstract: true,
                 templateUrl: "app/shared/main/mainView.html",
+                data: {
+                    requiresLogin: true
+                },
+                resolve: {
+                    loadScripts: loadScripts
+                },
+                controller: function ($scope, $state, authService) {
+                    $scope.message = "";
+                    $scope.logOut = function () {
+                        authService.logOut();
+                        $state.go("auth.login");
+                    };
+                }
+            //Login
+            }).state("auth", {
+                abstract: true,
+                templateUrl: "app/components/login/views/loginView.html",
+                controller: "loginCtrl",
                 resolve: {
                     loadScripts: loadScripts
                 }
+            }).state("auth.Login", {
+                url: "/Login",
+                controller: "loginCtrl"
                 //Home
             }).state("root.home", {
                 url: "/home",
@@ -65,6 +88,9 @@
             }).state("cadastro", {
                 abstract: true,
                 templateUrl: "app/shared/main/mainView.html",
+                data: {
+                    requiresLogin: true
+                },
                 resolve: {
                     loadScripts: loadScripts
                 }
@@ -93,6 +119,9 @@
             }).state("operacoes", {
                 abstract: true,
                 templateUrl: "app/shared/main/mainView.html",
+                data: {
+                    requiresLogin: true
+                },
                 resolve: {
                     loadScripts: loadScripts
                 }
@@ -112,6 +141,9 @@
             }).state("relatorios", {
                 abstract: true,
                 templateUrl: "app/shared/main/mainView.html",
+                data: {
+                    requiresLogin: true
+                },
                 resolve: {
                     loadScripts: loadScripts
                 }
@@ -121,6 +153,9 @@
             }).state("configuracoes", {
                 abstract: true,
                 templateUrl: "app/shared/main/mainView.html",
+                data: {
+                    requiresLogin: true
+                },
                 resolve: {
                     loadScripts: loadScripts
                 }
@@ -134,12 +169,27 @@
                 url: "/alterarSenha",
                 templateUrl: "app/components/usuario/views/alterarSenhaView.html"
             });
+
+        $httpProvider.interceptors.push("authInterceptorService");
     }
 
     angular
         .module("sbAdminApp")
         .config(config)
-        .run(function ($rootScope, $state) {
+        .run(function ($rootScope, $state, authService, jwtHelper, aiStorage) {
             $rootScope.$state = $state;
+            authService.fillAuthData();
+            $rootScope.$on("$stateChangeStart", function (e, to) {
+                if (to.data && to.data.requiresLogin) {
+                    if (!aiStorage.get("jwt") ||
+                        jwtHelper.isTokenExpired(aiStorage.get("jwt").token)) {
+                        e.preventDefault();
+                        $state.go("auth.Login");
+                    }
+                } else if (to.name === "auth.Login" && authService.authentication.isAuth) {
+                    e.preventDefault();
+                    $state.go("root.home");
+                }
+            });
         });
 })();
