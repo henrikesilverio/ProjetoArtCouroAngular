@@ -1,5 +1,22 @@
-﻿body {
-    background-color: #3a3633;
+﻿html, body {
+    margin: 0;
+    height: 100%;
+}
+
+    body > div {
+        height: 100%;
+    }
+
+    body #wrapper {
+        background-color: #3a3633;
+    }
+
+    body > div > div {
+        height: inherit;
+    }
+
+.login-backgroud {
+    background-color: #eff0f0
 }
 
 #wrapper {
