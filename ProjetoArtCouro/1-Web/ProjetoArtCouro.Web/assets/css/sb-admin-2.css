@@ -16,7 +16,8 @@
     }
 
 .login-backgroud {
-    background-color: #eff0f0
+    background-color: #f2f3f3;
+    height: 100%;
 }
 
 #wrapper {
@@ -26,7 +27,7 @@
 #page-wrapper {
     padding: 0 15px;
     min-height: 568px;
-    background-color: #eff0f0;
+    background-color: #f2f3f3;
 }
 
 @media(min-width:768px) {
@@ -227,7 +228,7 @@
 }
 
 .login-panel {
-    margin-top: 15%;
+    margin-top: 20%;
 }
 
 .flot-chart {

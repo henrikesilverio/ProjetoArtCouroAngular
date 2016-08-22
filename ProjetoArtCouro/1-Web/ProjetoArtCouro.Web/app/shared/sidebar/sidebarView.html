@@ -31,13 +31,13 @@
                     <li ui-sref-active="active"><a ui-sref="operacoes.contaReceber" href="">Contas a receber</a></li>
                 </ul>
             </li>
-            <li ng-class="{active: $state.includes('relatorio')}">
+            <li ng-class="{active: $state.includes('relatorios')}">
                 <a ui-sref="operecoes" href="">
                     <i class="fa fa-fw fa-lg fa-bar-chart-o"></i>
                     Relatorio <span class="fa arrow"></span>
                 </a>
-                <ul class="nav nav-second-level" ng-class="{in: $state.includes('relatorio')}">
-                    <li ui-sref-active="active"><a ui-sref="relatorio.estoque" href="">Estoque</a></li>
+                <ul class="nav nav-second-level" ng-class="{in: $state.includes('relatorios')}">
+                    <li ui-sref-active="active"><a ui-sref="relatorios.estoque" href="">Estoque</a></li>
                 </ul>
             </li>
             <li ng-class="{active: $state.includes('configuracoes')}">

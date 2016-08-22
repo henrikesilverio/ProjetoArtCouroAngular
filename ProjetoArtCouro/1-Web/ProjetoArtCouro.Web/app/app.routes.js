@@ -83,8 +83,7 @@
                     loadScripts: loadScripts
                 }
             }).state("auth.Login", {
-                url: "/Login",
-                controller: "loginCtrl"
+                url: "/Login"
                 //Home
             }).state("root.home", {
                 url: "/home",

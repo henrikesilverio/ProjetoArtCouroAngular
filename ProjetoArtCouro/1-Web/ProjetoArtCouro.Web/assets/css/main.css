@@ -88,6 +88,18 @@
     background-color: #2e2b28;
 }
 
+#loading-bar .bar {
+    background: #3a3633 !important;
+    height: 3px !important;
+}
+
+#loading-bar .peg {
+    -moz-box-shadow: #3a3633 1px 0 6px 1px !important;
+    -ms-box-shadow: #3a3633 1px 0 6px 1px !important;
+    -webkit-box-shadow: #3a3633 1px 0 6px 1px !important;
+    box-shadow: #3a3633 1px 0 6px 1px !important;
+}
+
 .spiner-example {
     z-index: 1000;
     height: 100%;
@@ -103,7 +115,7 @@
     position: relative;
     width: 60px;
     height: 60px;
-    background-color: #29d;
+    background-color: #3a3633;
     margin: 0 auto;
     -webkit-animation: sk-rotatePlane 1.2s infinite ease-in-out;
     animation: sk-rotatePlane 1.2s infinite ease-in-out;
