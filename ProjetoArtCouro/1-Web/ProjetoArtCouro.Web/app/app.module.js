@@ -8,7 +8,9 @@
             "ui.bootstrap",
             "angular-loading-bar",
             "angular-jwt",
-            "angular-storage"
+            "angular-storage",
+            "datatables",
+            "datatables.bootstrap"
         ]).constant("urls", {
             BASE_API: "http://localhost:15317"
         });

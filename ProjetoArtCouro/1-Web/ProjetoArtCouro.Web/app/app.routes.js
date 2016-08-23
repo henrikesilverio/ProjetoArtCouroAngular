@@ -67,14 +67,14 @@
                 resolve: {
                     loadScripts: loadScripts
                 },
-                controller: function ($scope, $location, authService) {
+                controller: function($scope, $location, authService) {
                     $scope.message = "";
-                    $scope.logOut = function () {
+                    $scope.logOut = function() {
                         authService.logOut();
                         window.location = "/#/Login";
                     };
                 }
-            //Login
+                //Login
             }).state("auth", {
                 abstract: true,
                 templateUrl: "app/components/login/views/loginView.html",
@@ -100,6 +100,8 @@
                 }
             }).state("cadastro.cliente", {
                 url: "/pesquisaClienteView",
+                controller: "pesquisaClienteCtrl",
+                controllerAs: "ctrl",
                 templateUrl: "app/components/cliente/views/pesquisaClienteView.html"
             }).state("cadastro.fornecedor", {
                 url: "/fornecedor",
@@ -180,17 +182,19 @@
     angular
         .module("sbAdminApp")
         .config(config)
-        .run(function ($rootScope, $state, authService, jwtHelper, aiStorage) {
+        .run(function ($rootScope, $state, authService) {
             $rootScope.$state = $state;
             authService.fillAuthData();
             $rootScope.$on("$stateChangeStart", function (e, to) {
                 if (to.data && to.data.requiresLogin) {
-                    if (!aiStorage.get("jwt") ||
-                        jwtHelper.isTokenExpired(aiStorage.get("jwt").token)) {
+                    if (!authService.authentication.isAuth ||
+                        authService.authentication.isTokenExpired) {
                         e.preventDefault();
                         $state.go("auth.Login");
                     }
-                } else if (to.name === "auth.Login" && authService.authentication.isAuth) {
+                } else if (to.name === "auth.Login" &&
+                    authService.authentication.isAuth &&
+                    !authService.authentication.isTokenExpired) {
                     e.preventDefault();
                     $state.go("root.home");
                 }

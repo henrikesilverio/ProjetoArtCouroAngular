@@ -9,7 +9,7 @@
         $scope.message = "";
         $scope.login = function () {
             authService.login($scope.loginData)
-                .then(function (response) {
+                .then(function () {
                     $location.path("/home");
                 },
                 function (err) {
