@@ -29,7 +29,7 @@ namespace ProjetoArtCouro.Api
             config.DependencyResolver = new UnityResolver(container);
 
             ConfigureWebApi(config);
-            ConfigureOAuth(app, container.Resolve<IAutenticacao>());
+            ConfigureOAuth(app, config);
 
             //Deixa o serviço publico sem restrições
             app.UseCors(CorsOptions.AllowAll);
@@ -50,30 +50,11 @@ namespace ProjetoArtCouro.Api
                 );
         }
 
-        public void ConfigureOAuth(IAppBuilder app, IAutenticacao serviceAutenticacao)
+        public void ConfigureOAuth(IAppBuilder app, HttpConfiguration config)
         {
-            var issuer = ConfigurationManager.AppSettings["issuer"];
-            var secret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["secret"]);
-            var oAuthServerOptions = new OAuthAuthorizationServerOptions()
-            {
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/api/security/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),
-                Provider = new AuthorizationServerProvider(serviceAutenticacao),
-                AccessTokenFormat = new CustomJwtFormat(issuer)
-            };
-
-            app.UseOAuthAuthorizationServer(oAuthServerOptions);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-            app.UseJwtBearerAuthentication(new JwtBearerAuthenticationOptions
-            {
-                AuthenticationMode = AuthenticationMode.Active,
-                AllowedAudiences = new[] { "Any" },
-                IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
-                {
-                    new SymmetricKeyIssuerSecurityTokenProvider(issuer, secret)
-                }
-            });
+            var autenticacaoService = (IAutenticacao)config.DependencyResolver.GetService(typeof(IAutenticacao));
+            app.UseOAuthAuthorizationServer(new OAuthServerOptions(autenticacaoService));
+            app.UseJwtBearerAuthentication(new JwtOptions());
         }
     }
 }

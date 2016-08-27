@@ -42,7 +42,7 @@ namespace ProjetoArtCouro.Api.Security
                     return;
                 }
 
-                var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                var identity = new ClaimsIdentity("otc");
 
                 identity.AddClaim(new Claim(ClaimTypes.Name, user.Senha));
                 identity.AddClaim(new Claim(ClaimTypes.Sid, user.UsuarioCodigo.ToString()));

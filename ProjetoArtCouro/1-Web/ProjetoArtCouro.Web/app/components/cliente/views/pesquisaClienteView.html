@@ -8,34 +8,34 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form role="form" class="ng-pristine ng-valid">
+                        <form role="form">
                             <div class="row">
                                 <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-7">
-                                    <label class="control-label" for="nome">Nome</label>
-                                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+                                    <label class="control-label" for="Nome">Nome</label>
+                                    <input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" ng-model="model.Nome">
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-5">
-                                    <label class="control-label" for="cpfcnpj">CPF/CNPJ</label>
-                                    <input type="text" class="form-control" id="cpfcnpj" name="cpfcnpj" placeholder="CPF/CNPJ">
+                                    <label class="control-label" for="CPFCNPJ">CPF/CNPJ</label>
+                                    <input type="text" class="form-control" id="CPFCNPJ" name="CPFCNPJ" placeholder="CPF/CNPJ" ng-model="model.CPFCNPJ">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                    <label class="control-label" for="email">Email</label>
-                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                                    <label class="control-label" for="Email">Email</label>
+                                    <input type="text" class="form-control" id="Email" name="Email" placeholder="Email" ng-model="model.Email">
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                    <label class="control-label" for="codigo">Código</label>
-                                    <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Código">
+                                    <label class="control-label" for="CodigoCliente">Código</label>
+                                    <input type="text" class="form-control" id="CodigoCliente" name="CodigoCliente" placeholder="Código" ng-model="model.CodigoCliente">
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                    <label class="control-label" for="codigo">Tipo de pessoa</label>
+                                    <label class="control-label">Tipo de pessoa</label>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="tipoPessoa" value="pessoaFisica" checked="">Pessoa Física
+                                            <input type="radio" name="EPessoaFisica" value="True" checked="checked" ng-model="model.EPessoaFisica">Pessoa Física
                                         </label>
                                         <label>
-                                            <input type="radio" name="tipoPessoa" value="pessoaJuridica">Pessoa Juridica
+                                            <input type="radio" name="EPessoaFisica" value="False" ng-model="model.EPessoaFisica">Pessoa Juridica
                                         </label>
                                     </div>
                                 </div>
@@ -47,8 +47,8 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="submit" class="btn btn-primary pull-right">Pesquisar</button>
-                        <button type="reset" class="btn btn-success pull-right">Novo</button>
+                        <button ng-click="pesquisar()" class="btn btn-primary pull-right">Pesquisar</button>
+                        <button ui-sref="cadastro.novoCliente" class="btn btn-success pull-right">Novo</button>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="table table-bordered table-hover">
+                        <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="table table-bordered table-hover">
                         </table>
                     </div>
                 </div>

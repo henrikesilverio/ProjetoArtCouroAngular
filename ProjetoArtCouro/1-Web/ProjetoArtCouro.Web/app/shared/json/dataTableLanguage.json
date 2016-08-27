@@ -1,0 +1,13 @@
+﻿{
+  "sInfo": "_START_ a _END_ em _TOTAL_ Cliente",
+  "sInfoEmpty": "Nenhum cliente",
+  "sEmptyTable": "Informe os filtros para pesquisar",
+  "sInfoFiltered": "",
+  "sZeroRecords": "Não há registros para o filtro informado",
+  "oPaginate": {
+    "sFirst": "<<",
+    "sLast": ">>",
+    "sPrevious": "<",
+    "sNext": ">"
+  }
+}

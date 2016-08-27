@@ -67,9 +67,9 @@
                 resolve: {
                     loadScripts: loadScripts
                 },
-                controller: function($scope, $location, authService) {
+                controller: function ($scope, $location, authService) {
                     $scope.message = "";
-                    $scope.logOut = function() {
+                    $scope.logOut = function () {
                         authService.logOut();
                         window.location = "/#/Login";
                     };
@@ -98,11 +98,21 @@
                 resolve: {
                     loadScripts: loadScripts
                 }
-            }).state("cadastro.cliente", {
-                url: "/pesquisaClienteView",
+            }).state("cadastro.pesquisaCliente", {
+                url: "/PesquisaCliente",
                 controller: "pesquisaClienteCtrl",
                 controllerAs: "ctrl",
                 templateUrl: "app/components/cliente/views/pesquisaClienteView.html"
+            }).state("cadastro.novoCliente", {
+                url: "/NovoCliente",
+                controller: "novoClienteController",
+                controllerAs: "ctrl",
+                templateUrl: "app/components/cliente/views/clienteView.html"
+            }).state("cadastro.editarCliente", {
+                url: "/EditarCliente",
+                controller: "editarClienteController",
+                controllerAs: "ctrl",
+                templateUrl: "app/components/cliente/views/clienteView.html"
             }).state("cadastro.fornecedor", {
                 url: "/fornecedor",
                 templateUrl: "app/components/fornecedor/views/fornecedorView.html"
