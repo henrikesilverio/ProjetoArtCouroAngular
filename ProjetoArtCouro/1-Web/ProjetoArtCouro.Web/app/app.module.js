@@ -10,7 +10,8 @@
             "angular-jwt",
             "angular-storage",
             "datatables",
-            "datatables.bootstrap"
+            "datatables.bootstrap",
+            "ngAnimate"
         ]).constant("urls", {
             BASE_API: "http://localhost:15317"
         });

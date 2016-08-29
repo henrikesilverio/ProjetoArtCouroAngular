@@ -1,11 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Web.Http;
-using Microsoft.Owin;
-using Microsoft.Owin.Cors;
-using Microsoft.Owin.Security.DataHandler.Encoder;
-using Microsoft.Owin.Security.Jwt;
-using Microsoft.Owin.Security.OAuth;
+﻿using Microsoft.Owin.Cors;
 using Microsoft.Practices.Unity;
 using Owin;
 using ProjetoArtCouro.Api.AutoMapper;
@@ -13,7 +6,8 @@ using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Api.Security;
 using ProjetoArtCouro.Domain.Contracts.IService.IAutenticacao;
 using ProjetoArtCouro.Startup.DependencyResolver;
-using Microsoft.Owin.Security;
+using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ProjetoArtCouro.Api
 {
@@ -27,6 +21,8 @@ namespace ProjetoArtCouro.Api
             var container = new UnityContainer();
             DependencyResolver.Resolve(container);
             config.DependencyResolver = new UnityResolver(container);
+            var enableCorsAttribute = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(enableCorsAttribute);
 
             ConfigureWebApi(config);
             ConfigureOAuth(app, config);

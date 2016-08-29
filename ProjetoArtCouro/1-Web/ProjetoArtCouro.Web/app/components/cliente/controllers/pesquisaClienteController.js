@@ -7,7 +7,7 @@
             "Nome": "",
             "CPFCNPJ": "",
             "Email": "",
-            "EPessoaFisica": false
+            "EPessoaFisica": "True"
         };
         $scope.nomeTabela = "Tabela de clientes";
         $scope.dtOptions = DTOptionsBuilder

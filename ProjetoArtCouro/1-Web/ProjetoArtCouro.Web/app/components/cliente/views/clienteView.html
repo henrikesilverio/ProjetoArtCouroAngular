@@ -1,1 +1,199 @@
-﻿
+﻿<div class="row">
+    <div class="col-lg-12">
+        <form role="form" name="cliente" novalidate ng-submit="cliente.$valid">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-edit"></i>
+                    {{nomeCabecalho}}
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-7">
+                                    <label class="control-label">Tipo de pessoa</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="EPessoaFisica" value="True" ng-model="model.EPessoaFisica">
+                                            Pessoa Física
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="EPessoaFisica" value="False" ng-model="model.EPessoaFisica">
+                                            Pessoa Juridica
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica == 'True'">
+                                <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8" ng-class="{'has-error': submitted && cliente.Nome.$error.required}">
+                                    <label class="control-label" for="Nome">Nome</label>
+                                    <input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" ng-model="model.Nome" required>
+                                    <div ng-show="cliente.Nome.$dirty || cliente.Nome.$touched || submitted" class="error">
+                                        <span ng-show="submitted && cliente.Nome.$error.required">Campo Obrigatório.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="CPF">CPF</label>
+                                    <input type="text" class="form-control" id="CPF" name="CPF" placeholder="CPF" ng-model="model.CPF">
+                                </div>
+                            </div>
+                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica == 'True'">
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="RG">RG</label>
+                                    <input type="text" class="form-control" id="RG" name="Email" placeholder="RG" ng-model="model.RG">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label">Sexo</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="Sexo" value="M" ng-model="model.Sexo">
+                                            Masculino
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="Sexo" value="F" ng-model="model.Sexo">
+                                            Feminino
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="EstadoCivil">Estado Civil</label>
+                                    <select class="form-control" id="EstadoCivil" name="EstadoCivil" ng-model="model.EstadoCivil">
+                                        <option ng-selected="{{opcao.id == model.EstadoCivil}}"
+                                                ng-repeat="opcao in model.EstadosCivis"
+                                                value="{{opcao.id}}">
+                                            {{opcao.nome}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica == 'False'">
+                                <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                    <label class="control-label" for="RazaoSocial">Nome</label>
+                                    <input type="text" class="form-control" id="RazaoSocial" name="RazaoSocial" placeholder="Nome" ng-model="model.RazaoSocial">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="CNPJ">CNPJ</label>
+                                    <input type="text" class="form-control" id="CNPJ" name="CNPJ" placeholder="CNPJ" ng-model="model.CNPJ">
+                                </div>
+                            </div>
+                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica == 'False'">
+                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <label class="control-label" for="Contato">Contato</label>
+                                    <input type="text" class="form-control" id="Contato" name="Contato" placeholder="Contato" ng-model="model.Contato">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <label class="control-label" for="Endereco">Endereços</label>
+                                    <select class="form-control" id="Endereco" name="Endereco" ng-model="model.Endereco">
+                                        <option ng-selected="{{opcao.id == model.Endereco}}"
+                                                ng-repeat="opcao in model.Enderecos"
+                                                value="{{opcao.id}}">
+                                            {{opcao.nome}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row animated fadeInUp" ng-if="model.Endereco == 0">
+                                <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                    <label class="control-label" for="Logradouro">Logradouro</label>
+                                    <input type="text" class="form-control" id="Logradouro" name="Logradouro" placeholder="Logradouro" ng-model="model.Logradouro">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="Numero">Numero</label>
+                                    <input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" ng-model="model.Numero">
+                                </div>
+                            </div>
+                            <div class="row animated fadeInUp" ng-if="model.Endereco == 0">
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="Bairro">Bairro</label>
+                                    <input type="text" class="form-control" id="Bairro" name="Bairro" placeholder="Bairro" ng-model="model.Bairro">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="Complemento">Complemento</label>
+                                    <input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento" ng-model="model.Complemento">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="Cidade">Cidade</label>
+                                    <input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade" ng-model="model.Cidade">
+                                </div>
+                            </div>
+                            <div class="row animated fadeInUp" ng-if="model.Endereco == 0">
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="CEP">CEP</label>
+                                    <input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" ng-model="model.CEP">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="Estado">Estado</label>
+                                    <select class="form-control" id="Estado" name="Estado" ng-model="model.Estado">
+                                        <option ng-selected="{{opcao.id == model.Estado}}"
+                                                ng-repeat="opcao in model.Estados"
+                                                value="{{opcao.id}}">
+                                            {{opcao.nome}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="Telefone">Telefones</label>
+                                    <select class="form-control" id="Telefone" name="Telefone" ng-model="model.Telefone">
+                                        <option ng-selected="{{opcao.id == model.Telefone}}"
+                                                ng-repeat="opcao in model.Telefones"
+                                                value="{{opcao.id}}">
+                                            {{opcao.nome}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="Celular">Celulares</label>
+                                    <select class="form-control" id="Celular" name="Celular" ng-model="model.Celular">
+                                        <option ng-selected="{{opcao.id == model.Celular}}"
+                                                ng-repeat="opcao in model.Celulares"
+                                                value="{{opcao.id}}">
+                                            {{opcao.nome}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <label class="control-label" for="Email">Emails</label>
+                                    <select class="form-control" id="Email" name="Email" ng-model="model.Email">
+                                        <option ng-selected="{{opcao.id == model.Email}}"
+                                                ng-repeat="opcao in model.Emails"
+                                                value="{{opcao.id}}">
+                                            {{opcao.nome}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 animated fadeInUp" ng-if="model.Telefone == 0">
+                                    <label class="control-label" for="NovoTelefone">Novo Telefone</label>
+                                    <input type="text" class="form-control" id="NovoTelefone" name="NovoTelefone" placeholder="Novo Telefone" ng-model="model.NovoTelefone">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 animated fadeInUp" ng-if="model.Celular == 0"
+                                     ng-class="{'col-sm-offset-4': model.Telefone == -1}">
+                                    <label class="control-label" for="NovoCelular">Novo Celular</label>
+                                    <input type="text" class="form-control" id="NovoCelular" name="NovoCelular" placeholder="Novo Celular" ng-model="model.NovoCelular">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 animated fadeInUp" ng-if="model.Email == 0"
+                                     ng-class="{'col-sm-offset-8': model.Telefone == -1 && model.Celular == -1, 'col-sm-offset-4': model.Telefone != -1 && model.Celular == -1}">
+                                    <label class="control-label" for="NovoEmail">Novo Email</label>
+                                    <input type="text" class="form-control" id="NovoEmail" name="NovoEmail" placeholder="Novo Email" ng-model="model.NovoEmail">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button type="submit" ng-click="submitted=true" class="btn btn-primary pull-right">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

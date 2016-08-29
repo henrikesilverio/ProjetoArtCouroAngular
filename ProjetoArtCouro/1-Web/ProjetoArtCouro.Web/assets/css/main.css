@@ -137,3 +137,11 @@
         transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
     }
 }
+
+div.error {
+    color: #cc5965;
+    display: inline-block;
+    margin-left: 5px;
+    font-weight: 700;
+    font-size: 12px;
+}

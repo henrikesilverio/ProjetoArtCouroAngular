@@ -11,18 +11,13 @@
 
         function loadScripts($ocLazyLoad) {
             return $ocLazyLoad.load(
-                {
-                    name: "sbAdminApp",
-                    files: [
-                        "app/shared/sidebar/sidebarDirective.js",
-                        "app/shared/sidebar/sidebarSearch/sidebarSearchDirective.js"
-                    ]
-                },
-                $ocLazyLoad.load(
-                {
-                    name: "ngAnimate",
-                    files: ["bower_components/angular-animate/angular-animate.js"]
-                }));
+            {
+                name: "sbAdminApp",
+                files: [
+                    "app/shared/sidebar/sidebarDirective.js",
+                    "app/shared/sidebar/sidebarSearch/sidebarSearchDirective.js"
+                ]
+            });
             //{
             //    name: "toggle-switch",
             //    files: [
@@ -105,12 +100,12 @@
                 templateUrl: "app/components/cliente/views/pesquisaClienteView.html"
             }).state("cadastro.novoCliente", {
                 url: "/NovoCliente",
-                controller: "novoClienteController",
+                controller: "novoClienteCtrl",
                 controllerAs: "ctrl",
                 templateUrl: "app/components/cliente/views/clienteView.html"
             }).state("cadastro.editarCliente", {
                 url: "/EditarCliente",
-                controller: "editarClienteController",
+                controller: "editarClienteCtrl",
                 controllerAs: "ctrl",
                 templateUrl: "app/components/cliente/views/clienteView.html"
             }).state("cadastro.fornecedor", {
