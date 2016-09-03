@@ -8,10 +8,10 @@
             "CPF": "",
             "RG": "",
             "EPessoaFisica": "True",
-            "EstadoCivil": -1,
+            "EstadoCivil": "",
             "EstadosCivis": [
                 {
-                    "id": -1,
+                    "id": "",
                     "nome": "Selecione"
                 },
                 {
@@ -35,47 +35,47 @@
                     "nome": "Separado(a)"
                 }
             ],
-            "Endereco": -1,
+            "Endereco": "",
             "Enderecos": [
                 {
-                    "id": -1,
+                    "id": "",
                     "nome": "Selecione"
                 },
                 {
-                    "id": 0,
+                    "id": -1,
                     "nome": "Novo"
                 }
             ],
-            "Telefone": -1,
+            "Telefone": "",
             "Telefones": [
                 {
-                    "id": -1,
+                    "id": "",
                     "nome": "Selecione"
                 },
                 {
-                    "id": 0,
+                    "id": -1,
                     "nome": "Novo"
                 }
             ],
-            "Celular": -1,
+            "Celular": "",
             "Celulares": [
                 {
-                    "id": -1,
+                    "id": "",
                     "nome": "Selecione"
                 },
                 {
-                    "id": 0,
+                    "id": -1,
                     "nome": "Novo"
                 }
             ],
-            "Email": -1,
+            "Email": "",
             "Emails": [
                 {
-                    "id": -1,
+                    "id": "",
                     "nome": "Selecione"
                 },
                 {
-                    "id": 0,
+                    "id": -1,
                     "nome": "Novo"
                 }
             ],
@@ -85,10 +85,10 @@
             "Complemento": "",
             "Cidade": "",
             "CEP": "",
-            "Estado": -1,
+            "Estado": "",
             "Estados": [
                 {
-                    "id": -1,
+                    "id": "",
                     "nome": "Selecione"
                 }
             ]

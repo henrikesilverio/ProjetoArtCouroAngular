@@ -88,6 +88,10 @@
     background-color: #2e2b28;
 }
 
+#loading-bar {
+    position: absolute;
+} 
+
 #loading-bar .bar {
     background: #3a3633 !important;
     height: 3px !important;

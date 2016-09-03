@@ -61,13 +61,6 @@
                 },
                 resolve: {
                     loadScripts: loadScripts
-                },
-                controller: function ($scope, $location, authService) {
-                    $scope.message = "";
-                    $scope.logOut = function () {
-                        authService.logOut();
-                        window.location = "/#/Login";
-                    };
                 }
                 //Login
             }).state("auth", {
