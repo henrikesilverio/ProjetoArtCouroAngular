@@ -16,10 +16,24 @@
         };
 
         var login = function (loginData) {
-            var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
+            //var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
             var deferred = $q.defer();
-            $http.post(urls.BASE_API + "/api/security/token", data, { headers: { 'Content-Type': "application/x-www-form-urlencoded" } })
-                .success(function (response) {
+            $http({
+                    skipAuthorization: true,
+                    url: urls.BASE_API + "/api/security/token",
+                    method: "POST",
+                    headers: { 'Content-Type': "application/x-www-form-urlencoded" },
+                    transformRequest: function(obj) {
+                        var str = [];
+                        for (var p in obj)
+                            if (obj.hasOwnProperty(p)) {
+                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                            }
+                        str.push("grant_type=password");
+                        return str.join("&");
+                    },
+                    data: loginData
+                }).success(function (response) {
                     aiStorage.set("jwt", { token: response.access_token, userName: loginData.userName });
                     authentication.isAuth = true;
                     authentication.userName = loginData.userName;

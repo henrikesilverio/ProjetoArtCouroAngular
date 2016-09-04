@@ -7,14 +7,18 @@
             password: ""
         };
         $scope.message = "";
+        $scope.submetido = false;
         $scope.login = function () {
-            authService.login($scope.loginData)
+            $scope.submetido = true;
+            if ($scope.loginForm.$valid) {
+                authService.login($scope.loginData)
                 .then(function () {
                     $location.path("/home");
                 },
                 function (err) {
                     $scope.message = err.error_description;
                 });
+            }
         };
     };
 

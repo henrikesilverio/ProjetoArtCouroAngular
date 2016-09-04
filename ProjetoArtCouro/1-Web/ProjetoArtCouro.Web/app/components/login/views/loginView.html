@@ -9,13 +9,19 @@
                     <div class="panel-body">
                         <form name="loginForm">
                             <fieldset>
-                                <div class="form-group">
+                                <div class="form-group" ng-class="{'has-error': (submetido || loginForm.nome.$dirty) && loginForm.nome.$error.required}">
                                     <label>Nome</label>
                                     <input class="form-control" placeholder="Nome" name="nome" type="text" ng-model="loginData.userName" required>
+                                    <div ng-show="(submetido || loginForm.nome.$dirty) && loginForm.nome.$error.required" class="error">
+                                        <span>Campo Obrigatório.</span>
+                                    </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" ng-class="{'has-error': (submetido || loginForm.senha.$dirty) && loginForm.senha.$error.required}">
                                     <label>Senha</label>
                                     <input class="form-control" placeholder="Senha" name="senha" type="password" ng-model="loginData.password" required>
+                                    <div ng-show="(submetido || loginForm.senha.$dirty) && loginForm.senha.$error.required" class="error">
+                                        <span>Campo Obrigatório.</span>
+                                    </div>
                                 </div>
                             </fieldset>
                         </form>
