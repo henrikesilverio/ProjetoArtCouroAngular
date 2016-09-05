@@ -180,7 +180,7 @@
                     $(element).mask("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
                 }
             }
-        }).directive("somenteCinquentaLetras", function() {
+        }).directive("somenteCinquentaLetrasMask", function() {
             return {
                 restrict: "A",
                 link: function(scope, element) {
@@ -235,5 +235,16 @@
                     });
                 }
             }
-    });
+        }).directive("emailValido", function() {
+            return {
+                restrict: "A",
+                require: "ngModel",
+                link: function(scope, element, attrs, ctrl) {
+                    scope.$watch(attrs.ngModel, function () {
+                        var regexPattern = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/g;
+                        ctrl.$setValidity("emailValido", regexPattern.test(element[0].value));
+                    });
+                }
+            }
+        });
 })();

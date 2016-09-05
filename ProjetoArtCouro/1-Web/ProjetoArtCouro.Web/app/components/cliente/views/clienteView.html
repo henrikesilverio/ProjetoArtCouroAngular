@@ -28,7 +28,7 @@
                                 <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8"
                                      ng-class="{'has-error': (submitted || cliente.Nome.$dirty) && cliente.Nome.$error.required}">
                                     <label class="control-label" for="Nome">Nome</label>
-                                    <input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" ng-model="model.Nome" required>
+                                    <input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" ng-model="model.Nome" maxlength="80" required>
                                     <div ng-show="(submitted || cliente.Nome.$dirty) && cliente.Nome.$error.required" class="error">
                                         <span>Campo Obrigatório.</span>
                                     </div>
@@ -36,7 +36,7 @@
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.CPF.$dirty) && (cliente.CPF.$error.required || cliente.CPF.$error.cpfValido)}">
                                     <label class="control-label" for="CPF">CPF</label>
-                                    <input type="text" class="form-control" id="CPF" name="CPF" placeholder="CPF" ng-model="model.CPF" required cpf-mask cpf-valido>
+                                    <input type="text" class="form-control" id="CPF" name="CPF" placeholder="CPF" ng-model="model.CPF" maxlength="14" required cpf-mask cpf-valido>
                                     <div ng-show="(submitted || cliente.CPF.$dirty) && (cliente.CPF.$error.required || cliente.CPF.$error.cpfValido)" class="error">
                                         <span ng-show="cliente.CPF.$error.required">Campo Obrigatório.</span>
                                         <span ng-show="cliente.CPF.$error.cpfValido">CPF inválido.</span>
@@ -88,7 +88,7 @@
                                 <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8"
                                      ng-class="{'has-error': (submitted || cliente.RazaoSocial.$dirty) && cliente.RazaoSocial.$error.required}">
                                     <label class="control-label" for="RazaoSocial">Nome</label>
-                                    <input type="text" class="form-control" id="RazaoSocial" name="RazaoSocial" placeholder="Nome" ng-model="model.RazaoSocial" required>
+                                    <input type="text" class="form-control" id="RazaoSocial" name="RazaoSocial" placeholder="Nome" ng-model="model.RazaoSocial" maxlength="150" required>
                                     <div ng-show="(submitted || cliente.RazaoSocial.$dirty) && cliente.RazaoSocial.$error.required" class="error">
                                         <span>Campo Obrigatório.</span>
                                     </div>
@@ -96,7 +96,8 @@
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.CNPJ.$dirty) && (cliente.CNPJ.$error.required || cliente.CNPJ.$error.cnpjValido)}">
                                     <label class="control-label" for="CNPJ">CNPJ</label>
-                                    <input type="text" class="form-control" id="CNPJ" name="CNPJ" placeholder="CNPJ" ng-model="model.CNPJ" required cnpj-valido>
+                                    <input type="text" class="form-control" id="CNPJ" name="CNPJ" placeholder="CNPJ" ng-model="model.CNPJ" 
+                                           maxlength="18" required cnpj-mask cnpj-valido>
                                     <div ng-show="(submitted || cliente.CNPJ.$dirty) && (cliente.CNPJ.$error.required || cliente.CNPJ.$error.cnpjValido)" class="error">
                                         <span ng-show="cliente.CNPJ.$error.required">Campo Obrigatório.</span>
                                         <span ng-show="cliente.CNPJ.$error.cnpjValido">CNPJ inválido.</span>
@@ -107,7 +108,8 @@
                                 <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6"
                                      ng-class="{'has-error': (submitted || cliente.Contato.$dirty) && cliente.Contato.$error.required}">
                                     <label class="control-label" for="Contato">Contato</label>
-                                    <input type="text" class="form-control" id="Contato" name="Contato" placeholder="Contato" ng-model="model.Contato" required>
+                                    <input type="text" class="form-control" id="Contato" name="Contato" placeholder="Contato" 
+                                           ng-model="model.Contato" maxlength="100" required>
                                     <div ng-show="(submitted || cliente.Contato.$dirty) && cliente.Contato.$error.required" class="error">
                                         <span>Campo Obrigatório.</span>
                                     </div>
@@ -133,7 +135,8 @@
                                 <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8"
                                      ng-class="{'has-error': (submitted || cliente.Logradouro.$dirty) && cliente.Logradouro.$error.required}">
                                     <label class="control-label" for="Logradouro">Logradouro</label>
-                                    <input type="text" class="form-control" id="Logradouro" name="Logradouro" placeholder="Logradouro" ng-model="model.Logradouro" required>
+                                    <input type="text" class="form-control" id="Logradouro" name="Logradouro" placeholder="Logradouro" 
+                                           ng-model="model.Logradouro" maxlength="100" required>
                                     <div ng-show="(submitted || cliente.Logradouro.$dirty) && cliente.Logradouro.$error.required" class="error">
                                         <span>Campo Obrigatório.</span>
                                     </div>
@@ -141,7 +144,8 @@
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.Numero.$dirty) && cliente.Numero.$error.required}">
                                     <label class="control-label" for="Numero">Numero</label>
-                                    <input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero" ng-model="model.Numero" required>
+                                    <input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero"
+                                           ng-model="model.Numero" maxlength="8" required>
                                     <div ng-show="(submitted || cliente.Numero.$dirty) && cliente.Numero.$error.required" class="error">
                                         <span>Campo Obrigatório.</span>
                                     </div>
@@ -151,19 +155,22 @@
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.Bairro.$dirty) && cliente.Bairro.$error.required}">
                                     <label class="control-label" for="Bairro">Bairro</label>
-                                    <input type="text" class="form-control" id="Bairro" name="Bairro" placeholder="Bairro" ng-model="model.Bairro" required>
+                                    <input type="text" class="form-control" id="Bairro" name="Bairro" placeholder="Bairro" 
+                                           ng-model="model.Bairro" maxlength="50" required>
                                     <div ng-show="(submitted || cliente.Bairro.$dirty) && cliente.Bairro.$error.required" class="error">
                                         <span>Campo Obrigatório.</span>
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <label class="control-label" for="Complemento">Complemento</label>
-                                    <input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento" ng-model="model.Complemento">
+                                    <input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento" 
+                                           ng-model="model.Complemento" maxlength="30">
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.Cidade.$dirty) && cliente.Cidade.$error.required}">
                                     <label class="control-label" for="Cidade">Cidade</label>
-                                    <input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade" ng-model="model.Cidade" required>
+                                    <input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade" 
+                                           ng-model="model.Cidade" maxlength="50" required somente-cinquenta-letras-mask>
                                     <div ng-show="(submitted || cliente.Cidade.$dirty) && cliente.Cidade.$error.required" class="error">
                                         <span>Campo Obrigatório.</span>
                                     </div>
@@ -173,7 +180,8 @@
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.CEP.$dirty) && cliente.CEP.$error.required}">
                                     <label class="control-label" for="CEP">CEP</label>
-                                    <input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP" ng-model="model.CEP" required cep-mask>
+                                    <input type="text" class="form-control" id="CEP" name="CEP" placeholder="CEP"
+                                            ng-model="model.CEP"  maxlength="9" required cep-mask>
                                     <div ng-show="(submitted || cliente.CEP.$dirty) && cliente.CEP.$error.required" class="error">
                                         <span>Campo Obrigatório.</span>
                                     </div>
@@ -221,6 +229,7 @@
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <label class="control-label" for="Email">Emails</label>
                                     <select class="form-control" id="Email" name="Email" ng-model="model.Email">
+                                        <option value>Selecione</option>
                                         <option ng-selected="{{opcao.id == model.Email}}"
                                                 ng-repeat="opcao in model.Emails"
                                                 value="{{opcao.id}}">
@@ -234,20 +243,27 @@
                                      ng-class="{'has-error': (submitted || cliente.NovoTelefone.$dirty) && cliente.NovoTelefone.$error.required}">
                                     <label class="control-label" for="NovoTelefone">Novo Telefone</label>
                                     <input type="text" class="form-control" id="NovoTelefone" name="NovoTelefone" placeholder="Novo Telefone"
-                                           ng-model="model.NovoTelefone" required>
+                                           ng-model="model.NovoTelefone" required telefone-mask>
                                     <div ng-show="(submitted || cliente.NovoTelefone.$dirty) && cliente.NovoTelefone.$error.required" class="error">
                                         <span>Campo Obrigatório.</span>
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 animated fadeInUp" ng-if="model.Celular == -1"
-                                     ng-class="{'col-sm-offset-4': model.Telefone == -1}">
+                                     ng-class="{'col-sm-offset-4': model.Telefone == undefined}">
                                     <label class="control-label" for="NovoCelular">Novo Celular</label>
-                                    <input type="text" class="form-control" id="NovoCelular" name="NovoCelular" placeholder="Novo Celular" ng-model="model.NovoCelular">
+                                    <input type="text" class="form-control" id="NovoCelular" name="NovoCelular" placeholder="Novo Celular" 
+                                           ng-model="model.NovoCelular" celular-mask>
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 animated fadeInUp" ng-if="model.Email == -1"
-                                     ng-class="{'col-sm-offset-8': model.Telefone == -1 && model.Celular == -1, 'col-sm-offset-4': model.Telefone != -1 && model.Celular == -1}">
+                                     ng-class="{'col-sm-offset-8': model.Telefone == '' && model.Celular == '', 
+                                     'col-sm-offset-4': model.Telefone != '' && model.Celular == '', 
+                                     'has-error': (submitted || cliente.NovoEmail.$dirty) && cliente.NovoEmail.$error.emailValido}">
                                     <label class="control-label" for="NovoEmail">Novo Email</label>
-                                    <input type="text" class="form-control" id="NovoEmail" name="NovoEmail" placeholder="Novo Email" ng-model="model.NovoEmail">
+                                    <input type="text" class="form-control" id="NovoEmail" name="NovoEmail" placeholder="Novo Email"
+                                           ng-model="model.NovoEmail" maxlength="50" email-valido>
+                                    <div ng-show="(submitted || cliente.NovoEmail.$dirty) && cliente.NovoEmail.$error.emailValido" class="error">
+                                        <span>Email inválido.</span>
+                                    </div>
                                 </div>
                             </div>
 

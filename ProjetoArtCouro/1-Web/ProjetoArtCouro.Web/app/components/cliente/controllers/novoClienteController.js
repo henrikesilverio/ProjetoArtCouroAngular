@@ -49,10 +49,6 @@
             "Telefone": "",
             "Telefones": [
                 {
-                    "id": "",
-                    "nome": "Selecione"
-                },
-                {
                     "id": -1,
                     "nome": "Novo"
                 }
