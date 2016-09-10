@@ -1,1 +1,145 @@
-﻿
+﻿<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-table"></i>
+                <strong>Variaveis de Resultado</strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="btn-droppable"
+                             data-drop="true"
+                             ng-model="list1"
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list1])'}"
+                             jqyoui-droppable="{multiple:true}">
+                            <div class="btn btn-draggable"
+                                 ng-repeat="item in list1"
+                                 data-drag="{{item.drag}}"
+                                 data-jqyoui-options="{revert: 'invalid'}"
+                                 ng-model="list1"
+                                 ng-class="item.classColor"
+                                 jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}"
+                                 ng-hide="!item.title">{{item.title}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-table"></i>
+                <strong>Variaveis de Calculo</strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="btn-droppable"
+                             data-drop="true"
+                             ng-model="list2"
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list2])'}"
+                             jqyoui-droppable="{multiple:true}">
+                            <div class="btn btn-draggable"
+                                 ng-repeat="item in list2"
+                                 data-drag="{{item.drag}}"
+                                 data-jqyoui-options="{revert: 'invalid'}"
+                                 ng-model="list2"
+                                 ng-class="item.classColor"
+                                 jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}"
+                                 ng-hide="!item.title">{{item.title}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-table"></i>
+                <strong>Variaveis de parâmetro</strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="btn-droppable"
+                             data-drop="true"
+                             ng-model="list3"
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list3])'}"
+                             jqyoui-droppable="{multiple:true}">
+                            <div class="btn btn-draggable"
+                                 ng-repeat="item in list3"
+                                 data-drag="{{item.drag}}"
+                                 data-jqyoui-options="{revert: 'invalid'}"
+                                 ng-model="list3"
+                                 ng-class="item.classColor"
+                                 jqyoui-draggable="{index: {{$index}},animate:true}"
+                                 ng-show="item.title">{{item.title}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-table"></i>
+                <strong>Teste 4</strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="btn-droppable"
+                             data-drop="true"
+                             ng-model="list4"
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list4])'}"
+                             jqyoui-droppable="{multiple:true}">
+                            <div class="btn btn-draggable"
+                                 ng-repeat="item in list4"
+                                 data-drag="{{item.drag}}"
+                                 data-jqyoui-options="{revert: 'invalid'}"
+                                 ng-model="list4"
+                                 ng-class="item.classColor"
+                                 jqyoui-draggable="{index: {{$index}},animate:true}"
+                                 ng-show="item.title">{{item.title}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-table"></i>
+                <strong>Fórmula</strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="btn-droppable"
+                             data-drop="true"
+                             ng-model="formula"
+                             jqyoui-droppable="{multiple:true}">
+                            <div class="btn btn-draggable"
+                                 ng-repeat="item in formula"
+                                 data-drag="{{item.drag}}"
+                                 data-jqyoui-options="{revert: 'invalid'}"
+                                 jqyoui-draggable="{index: {{$index}},animate:true}"
+                                 ng-show="item.title"
+                                 ng-class="item.classColor"
+                                 ng-model="formula">{{item.title}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

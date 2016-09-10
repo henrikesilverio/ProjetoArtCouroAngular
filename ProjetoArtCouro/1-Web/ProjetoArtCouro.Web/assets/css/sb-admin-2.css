@@ -3,7 +3,7 @@
     height: 100%;
 }
 
-    body > div {
+    body .app {
         height: 100%;
     }
 

@@ -75,6 +75,8 @@
                 //Home
             }).state("root.home", {
                 url: "/home",
+                controller: "homeCtrl",
+                controllerAs: "ctrl",
                 templateUrl: "app/components/home/views/homeView.html"
                 //Cadastro
             }).state("cadastro", {

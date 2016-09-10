@@ -11,7 +11,8 @@
             "angular-storage",
             "datatables",
             "datatables.bootstrap",
-            "ngAnimate"
+            "ngAnimate",
+            "ngDragDrop"
         ]).constant("urls", {
             BASE_API: "http://localhost:15317"
         });

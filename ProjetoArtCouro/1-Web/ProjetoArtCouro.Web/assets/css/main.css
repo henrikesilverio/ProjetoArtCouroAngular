@@ -90,19 +90,19 @@
 
 #loading-bar {
     position: absolute;
-} 
-
-#loading-bar .bar {
-    background: #3a3633 !important;
-    height: 3px !important;
 }
 
-#loading-bar .peg {
-    -moz-box-shadow: #3a3633 1px 0 6px 1px !important;
-    -ms-box-shadow: #3a3633 1px 0 6px 1px !important;
-    -webkit-box-shadow: #3a3633 1px 0 6px 1px !important;
-    box-shadow: #3a3633 1px 0 6px 1px !important;
-}
+    #loading-bar .bar {
+        background: #3a3633 !important;
+        height: 3px !important;
+    }
+
+    #loading-bar .peg {
+        -moz-box-shadow: #3a3633 1px 0 6px 1px !important;
+        -ms-box-shadow: #3a3633 1px 0 6px 1px !important;
+        -webkit-box-shadow: #3a3633 1px 0 6px 1px !important;
+        box-shadow: #3a3633 1px 0 6px 1px !important;
+    }
 
 .spiner-example {
     z-index: 1000;
@@ -148,4 +148,12 @@ div.error {
     margin-left: 5px;
     font-weight: 700;
     font-size: 12px;
+}
+
+.btn-draggable {
+    margin-bottom: 6px;
+}
+
+.btn-droppable {
+    min-height: 40px;
 }

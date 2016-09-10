@@ -18,11 +18,13 @@
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
     <link href="bower_components/angular-datatables/dist/css/angular-datatables.min.css" rel="stylesheet" />
+    <link href="bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css" rel="stylesheet" />
     <link href="assets/css/animate.css" rel="stylesheet" />
     <!-- endbuild -->
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
     <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -39,12 +41,14 @@
     <script src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
     <script src="app/shared/header/headerNotification/headerNotificationDirective.js"></script>
     <script src="app/shared/mask/maskDirective.js"></script>
+    <script src="app/components/home/controllers/homeController.js"></script>
     <script src="app/components/login/services/loginService.js"></script>
     <script src="app/components/login/services/authInterceptorService.js"></script>
     <script src="app/components/login/controllers/loginController.js"></script>
@@ -55,7 +59,7 @@
     <script src="app/components/cliente/controllers/pesquisaClienteController.js"></script>
 </head>
 <body>
-    <div ng-app="sbAdminApp">
+    <div ng-app="sbAdminApp" class="app">
         <div ui-view> 
         </div>
     </div>
