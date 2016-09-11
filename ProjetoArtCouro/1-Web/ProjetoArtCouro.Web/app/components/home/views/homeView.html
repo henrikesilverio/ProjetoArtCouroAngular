@@ -11,9 +11,9 @@
                         <div class="btn-droppable"
                              data-drop="true"
                              ng-model="variaveisResultado"
-                             data-jqyoui-options="{accept:'.resultado, .formula'}"
-                             jqyoui-droppable="{multiple:true}">
-                            <div class="btn btn-draggable resultado"
+                             data-jqyoui-options="optionsResultado"
+                             jqyoui-droppable="{multiple:true, onDrop: 'onDrop'}">
+                            <div class="btn btn-draggable"
                                  ng-repeat="item in variaveisResultado"
                                  data-drag="{{item.drag}}"
                                  data-jqyoui-options="{revert: 'invalid'}"
@@ -39,9 +39,9 @@
                         <div class="btn-droppable"
                              data-drop="true"
                              ng-model="variaveisCalculo"
-                             data-jqyoui-options="{accept:'.calulo, .formula'}"
-                             jqyoui-droppable="{multiple:true}">
-                            <div class="btn btn-draggable calculo"
+                             data-jqyoui-options="optionsCalculo"
+                             jqyoui-droppable="{multiple:true, onDrop: 'onDrop'}">
+                            <div class="btn btn-draggable"
                                  ng-repeat="item in variaveisCalculo"
                                  data-drag="{{item.drag}}"
                                  data-jqyoui-options="{revert: 'invalid'}"
@@ -69,9 +69,9 @@
                         <div class="btn-droppable"
                              data-drop="true"
                              ng-model="variaveisParametro"
-                             data-jqyoui-options="{accept:'.parametro, .formula'}"
-                             jqyoui-droppable="{multiple:true}">
-                            <div class="btn btn-draggable parametro"
+                             data-jqyoui-options="optionsParametro"
+                             jqyoui-droppable="{multiple:true, onDrop: 'onDrop'}">
+                            <div class="btn btn-draggable"
                                  ng-repeat="item in variaveisParametro"
                                  data-drag="{{item.drag}}"
                                  data-jqyoui-options="{revert: 'invalid'}"
@@ -97,8 +97,8 @@
                         <div class="btn-droppable"
                              data-drop="true"
                              ng-model="operadores"
-                             data-jqyoui-options="{accept:'.operadores, .formula'}"
-                             jqyoui-droppable="{multiple:true}">
+                             data-jqyoui-options="optionsOperacao"
+                             jqyoui-droppable="{multiple:true, onDrop: 'onDrop'}">
                             <div class="btn btn-draggable"
                                  ng-repeat="item in operadores"
                                  data-drag="{{item.drag}}"
@@ -127,8 +127,8 @@
                         <div class="btn-droppable"
                              data-drop="true"
                              ng-model="formula"
-                             jqyoui-droppable="{multiple:true}">
-                            <div class="btn btn-draggable formula"
+                             jqyoui-droppable="{multiple:true, onDrop: 'onDrop'}">
+                            <div class="btn btn-draggable"
                                  ng-repeat="item in formula"
                                  data-drag="{{item.drag}}"
                                  data-jqyoui-options="{revert: 'invalid'}"
@@ -137,6 +137,29 @@
                                  ng-class="item.classColor"
                                  ng-model="formula">{{item.name}}</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <label class="control-label">Expressão</label>
+        <input type="text" class="form-control" ng-model="expression" disabled="disabled">
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-table"></i>
+                <strong>Pre-Visualização</strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="table table-bordered table-hover"></table>
                     </div>
                 </div>
             </div>
