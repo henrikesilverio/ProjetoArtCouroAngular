@@ -10,17 +10,17 @@
                     <div class="col-xs-12">
                         <div class="btn-droppable"
                              data-drop="true"
-                             ng-model="list1"
-                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list1])'}"
+                             ng-model="variaveisResultado"
+                             data-jqyoui-options="{accept:'.resultado, .formula'}"
                              jqyoui-droppable="{multiple:true}">
-                            <div class="btn btn-draggable"
-                                 ng-repeat="item in list1"
+                            <div class="btn btn-draggable resultado"
+                                 ng-repeat="item in variaveisResultado"
                                  data-drag="{{item.drag}}"
                                  data-jqyoui-options="{revert: 'invalid'}"
-                                 ng-model="list1"
+                                 ng-model="variaveisResultado"
                                  ng-class="item.classColor"
                                  jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}"
-                                 ng-hide="!item.title">{{item.title}}</div>
+                                 ng-show="item.name">{{item.description}}-{{item.name}}</div>
                         </div>
                     </div>
                 </div>
@@ -38,17 +38,17 @@
                     <div class="col-xs-12">
                         <div class="btn-droppable"
                              data-drop="true"
-                             ng-model="list2"
-                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list2])'}"
+                             ng-model="variaveisCalculo"
+                             data-jqyoui-options="{accept:'.calulo, .formula'}"
                              jqyoui-droppable="{multiple:true}">
-                            <div class="btn btn-draggable"
-                                 ng-repeat="item in list2"
+                            <div class="btn btn-draggable calculo"
+                                 ng-repeat="item in variaveisCalculo"
                                  data-drag="{{item.drag}}"
                                  data-jqyoui-options="{revert: 'invalid'}"
-                                 ng-model="list2"
+                                 ng-model="variaveisCalculo"
                                  ng-class="item.classColor"
                                  jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}"
-                                 ng-hide="!item.title">{{item.title}}</div>
+                                 ng-show="item.name">{{item.description}}-{{item.name}}</div>
                         </div>
                     </div>
                 </div>
@@ -68,17 +68,17 @@
                     <div class="col-xs-12">
                         <div class="btn-droppable"
                              data-drop="true"
-                             ng-model="list3"
-                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list3])'}"
+                             ng-model="variaveisParametro"
+                             data-jqyoui-options="{accept:'.parametro, .formula'}"
                              jqyoui-droppable="{multiple:true}">
-                            <div class="btn btn-draggable"
-                                 ng-repeat="item in list3"
+                            <div class="btn btn-draggable parametro"
+                                 ng-repeat="item in variaveisParametro"
                                  data-drag="{{item.drag}}"
                                  data-jqyoui-options="{revert: 'invalid'}"
-                                 ng-model="list3"
+                                 ng-model="variaveisParametro"
                                  ng-class="item.classColor"
                                  jqyoui-draggable="{index: {{$index}},animate:true}"
-                                 ng-show="item.title">{{item.title}}</div>
+                                 ng-show="item.name">{{item.description}}-{{item.name}}</div>
                         </div>
                     </div>
                 </div>
@@ -89,24 +89,24 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <i class="fa fa-table"></i>
-                <strong>Teste 4</strong>
+                <strong>Operadores</strong>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="btn-droppable"
                              data-drop="true"
-                             ng-model="list4"
-                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list4])'}"
+                             ng-model="operadores"
+                             data-jqyoui-options="{accept:'.operadores, .formula'}"
                              jqyoui-droppable="{multiple:true}">
                             <div class="btn btn-draggable"
-                                 ng-repeat="item in list4"
+                                 ng-repeat="item in operadores"
                                  data-drag="{{item.drag}}"
                                  data-jqyoui-options="{revert: 'invalid'}"
-                                 ng-model="list4"
+                                 ng-model="operadores"
                                  ng-class="item.classColor"
                                  jqyoui-draggable="{index: {{$index}},animate:true}"
-                                 ng-show="item.title">{{item.title}}</div>
+                                 ng-show="item.name">{{item.description}} ({{item.name}})</div>
                         </div>
                     </div>
                 </div>
@@ -128,14 +128,14 @@
                              data-drop="true"
                              ng-model="formula"
                              jqyoui-droppable="{multiple:true}">
-                            <div class="btn btn-draggable"
+                            <div class="btn btn-draggable formula"
                                  ng-repeat="item in formula"
                                  data-drag="{{item.drag}}"
                                  data-jqyoui-options="{revert: 'invalid'}"
                                  jqyoui-draggable="{index: {{$index}},animate:true}"
-                                 ng-show="item.title"
+                                 ng-show="item.name"
                                  ng-class="item.classColor"
-                                 ng-model="formula">{{item.title}}</div>
+                                 ng-model="formula">{{item.name}}</div>
                         </div>
                     </div>
                 </div>

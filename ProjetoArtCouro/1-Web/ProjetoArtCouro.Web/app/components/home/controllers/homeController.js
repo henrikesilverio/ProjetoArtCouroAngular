@@ -2,24 +2,25 @@
     "use strict";
 
     function homeController($scope, $location, authService) {
-        $scope.list1 = [
-            { 'title': "Item 1", 'drag': true, 'classColor': "btn-primary" },
-            { 'title': "Item 2", 'drag': true, 'classColor': "btn-primary" }
+        $scope.variaveisResultado = [
+            { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-primary", "drag": true },
+            { "description": "JORNADA 2", "name": "V_JX", "classColor": "btn-primary", "drag": true }
         ];
-        $scope.list2 = [
-            { 'title': "Item 1", 'drag': true, 'classColor': "btn-success" },
-            { 'title': "Item 2", 'drag': true, 'classColor': "btn-success" }
+        $scope.variaveisCalculo = [
+            { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-success", "drag": true },
+            { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-success", "drag": true }
         ];
-        $scope.list3 = [
-            { 'title': "Item 1", 'drag': true, 'classColor': "btn-info" },
-            { 'title': "Item 2", 'drag': true, 'classColor': "btn-info" }
+        $scope.variaveisParametro = [
+            { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-default", "drag": true },
+            { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-default", "drag": true }
         ];
-        $scope.list4 = [
-            { 'title': "+", 'drag': true, 'classColor': "btn-default" },
-            { 'title': "-", 'drag': true, 'classColor': "btn-default" },
-            { 'title': "*", 'drag': true, 'classColor': "btn-default" },
-            { 'title': "/", 'drag': true, 'classColor': "btn-default" },
-            { 'title': "%", 'drag': true, 'classColor': "btn-default" }
+        $scope.operadores = [
+            { "description": "Soma", "name": "+", "classColor": "btn-warning", "drag": true },
+            { "description": "Adição", "name": "-", "classColor": "btn-warning", "drag": true },
+            { "description": "Multiplicação", "name": "*", "classColor": "btn-warning", "drag": true },
+            { "description": "Subtração", "name": "/", "classColor": "btn-warning", "drag": true },
+            { "description": "Modulo", "name": "%", "classColor": "btn-warning", "drag": true },
+            { "description": "Atribuição", "name": "=", "classColor": "btn-warning", "drag": true }
         ];
         $scope.formula = [];
         // Limit items to be dropped in list1
