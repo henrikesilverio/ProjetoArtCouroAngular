@@ -12,7 +12,8 @@
             "datatables",
             "datatables.bootstrap",
             "ngAnimate",
-            "ngDragDrop"
+            "ngDragDrop",
+            "ngSanitize"
         ]).constant("urls", {
             BASE_API: "http://localhost:15317"
         });

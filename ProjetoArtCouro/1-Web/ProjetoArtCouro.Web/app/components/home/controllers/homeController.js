@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    function homeController($scope, DTOptionsBuilder, DTColumnBuilder) {
+    function homeController($scope, $compile, $q, DTOptionsBuilder, DTColumnBuilder) {
         $scope.variaveisResultado = [
             { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-primary", "type": "R", "drag": true },
             { "description": "JORNADA 2", "name": "V_JX", "classColor": "btn-primary", "type": "R", "drag": true }
@@ -49,42 +49,56 @@
         };
 
         $scope.onDrop = function ($event) {
-            $scope.expression = "";
-            var obj = angular.element($event.target).scope();
-            $scope.dtInstance.DataTable.ngDestroy();
-            $scope.dtColumns = [];
-            for (var i = 0; i < obj.formula.length; i++) {
-                $scope.expression += obj.formula[i].name;
-                if (obj.formula[i].type === "R") {
-                    $scope.dtColumns.push(DTColumnBuilder.newColumn(obj.formula[i].name).withTitle(obj.formula[i].description));
-                }
-            }
-            $scope.dtInstance = {};
-            $scope.dtOptions = DTOptionsBuilder
-                .newOptions()
-                .withBootstrap()
-                .withDisplayLength(15)
-                .withOption('bFilter', false)
-                .withDOM("<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>" +
-                    "t<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>")
-                .withLanguageSource("app/shared/json/dataTableLanguage.json");
+
         };
 
+        function actionsHtml() {
+            return "<input type=\"text\" " +
+                "class=\"form-control\" " +
+                "uib-datepicker-popup=\"dd/mm/yyyy\" " +
+                "show-button-bar=\"false\" " +
+                "ng-model=\"dt2\" " +
+                "is-open=\"abrir\" " +
+                "datepicker-options=\"dateOptions\" " +
+                "ng-required=\"true\" " +
+                "ng-change=\"teste(this)\" " +
+                "ng-click=\"abrir=true\"/>";
+        }
+
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn("").notVisible()
+            DTColumnBuilder.newColumn(actionsHtml).withTitle("Ações").notSortable()
         ];
         $scope.dtInstance = {};
-        $scope.dtOptions = DTOptionsBuilder
-            .newOptions()
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+                var defer = $q.defer();
+                defer.resolve([{ "nome": "" }]);
+                return defer.promise;
+            })
             .withBootstrap()
             .withDisplayLength(15)
-            .withOption('bFilter', false)
+            .withOption("bFilter", false)
+            .withOption('fnRowCallback',
+                function(nRow) {
+                    $compile(nRow)($scope);
+                })
             .withDOM("<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>" +
                 "t<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>")
             .withLanguageSource("app/shared/json/dataTableLanguage.json");
+
+        $scope.dateOptions = {
+            formatYear: "yyyy",
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(),
+            startingDay: 1,
+            showWeeks: false
+        };
+
+        $scope.teste = function(obj) {
+            console.log($scope.dt2);
+        }
     };
 
-    homeController.$inject = ["$scope", "DTOptionsBuilder", "DTColumnBuilder"];
+    homeController.$inject = ["$scope", "$compile", "$q", "DTOptionsBuilder", "DTColumnBuilder"];
     angular.module("sbAdminApp")
         .controller("homeCtrl", homeController);
 }());
