@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Entities.Compras;
@@ -42,6 +43,8 @@ namespace ProjetoArtCouro.Api.AutoMapper
             MapperAccount();
 
             MapperStock();
+
+            MapperCommun();
         }
 
         private void MapperStock()
@@ -273,6 +276,11 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 .ForMember(d => d.GrupoCodigo, m => m.MapFrom(s => s.GrupoPermissaoCodigo))
                 .ForMember(d => d.GrupoNome, m => m.MapFrom(s => s.GrupoPermissaoNome))
                 .ForMember(d => d.Permissoes, m => m.MapFrom(s => s.Permissoes));
+        }
+
+        private void MapperCommun()
+        {
+            CreateMap<Exception, ExceptionModel>();
         }
     }
 }

@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Http;
-using AutoMapper;
+﻿using AutoMapper;
 using Newtonsoft.Json.Linq;
 using ProjetoArtCouro.Api.Extensions;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
-using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
 using ProjetoArtCouro.Domain.Models.Cliente;
+using ProjetoArtCouro.Domain.Models.Enums;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace ProjetoArtCouro.Api.Controllers.Pessoas
 {
@@ -20,6 +18,7 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
     public class ClienteController : BaseApiController
     {
         private readonly IPessoaService _pessoaService;
+
         public ClienteController(IPessoaService pessoaService)
         {
             _pessoaService = pessoaService;

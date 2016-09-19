@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using ProjetoArtCouro.Api.Extensions;
 using ProjetoArtCouro.Domain.Models.Common;
 
@@ -12,9 +13,9 @@ namespace ProjetoArtCouro.Api.Helpers
     {
         public HttpResponseMessage ReturnError(Exception ex)
         {
-            var retornoBase = new RetornoBase<Exception>
+            var retornoBase = new RetornoBase<ExceptionModel>
             {
-                ObjetoRetorno = ex,
+                ObjetoRetorno = Mapper.Map<ExceptionModel>(ex),
                 Mensagem = ex.Message,
                 TemErros = true
             };

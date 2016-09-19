@@ -105,6 +105,7 @@
     <Compile Include="Models\Cliente\ClienteModel.cs" />
     <Compile Include="Models\Cliente\PesquisaClienteModel.cs" />
     <Compile Include="Models\Common\EnderecoModel.cs" />
+    <Compile Include="Models\Common\ExceptionModel.cs" />
     <Compile Include="Models\Common\LookupModel.cs" />
     <Compile Include="Models\Common\MeioComunicacaoModel.cs" />
     <Compile Include="Models\Common\PessoaModel.cs" />

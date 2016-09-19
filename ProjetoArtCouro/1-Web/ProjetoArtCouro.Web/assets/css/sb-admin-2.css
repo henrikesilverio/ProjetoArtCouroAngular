@@ -289,15 +289,15 @@ table.dataTable thead .sorting_desc_disabled {
     box-shadow: inset 0 1px #fff;
 }
 
-.dt-toolbar-footer > :first-child, 
-.dt-toolbar > :first-child {
-    padding-left: 0 !important;
-}
+    .dt-toolbar-footer > :first-child,
+    .dt-toolbar > :first-child {
+        padding-left: 0 !important;
+    }
 
-.dt-toolbar-footer > :last-child, 
-.dt-toolbar > :last-child {
-    padding-right: 0 !important;
-}
+    .dt-toolbar-footer > :last-child,
+    .dt-toolbar > :last-child {
+        padding-right: 0 !important;
+    }
 
 .dataTables_empty {
     padding: 20px 10px !important;
@@ -320,17 +320,17 @@ div.dataTables_paginate {
 }
 
 
-.dt-toolbar-footer > :last-child .DTTT, 
-.dt-toolbar-footer > :last-child .dataTables_filter > :only-child, 
-.dt-toolbar-footer > :last-child .dataTables_length, 
+.dt-toolbar-footer > :last-child .DTTT,
+.dt-toolbar-footer > :last-child .dataTables_filter > :only-child,
+.dt-toolbar-footer > :last-child .dataTables_length,
 .dt-toolbar-footer > :last-child .pagination {
     float: right;
 }
 
-.dt-toolbar-footer>:last-child .DTTT, 
-.dt-toolbar-footer>:last-child .dataTables_filter>:only-child, 
-.dt-toolbar-footer>:last-child .dataTables_length, 
-.dt-toolbar-footer>:last-child .pagination {
+.dt-toolbar-footer > :last-child .DTTT,
+.dt-toolbar-footer > :last-child .dataTables_filter > :only-child,
+.dt-toolbar-footer > :last-child .dataTables_length,
+.dt-toolbar-footer > :last-child .pagination {
     float: right;
 }
 
@@ -346,37 +346,39 @@ div.dataTables_paginate ul.pagination {
     border-radius: 2px;
 }
 
-.pagination>li {
-    display: inline;
-}
+    .pagination > li {
+        display: inline;
+    }
+
 .disabled {
     color: #999;
 }
 
 
-.pagination-sm>li:first-child>a, 
-.pagination-sm>li:first-child>span {
+.pagination-sm > li:first-child > a,
+.pagination-sm > li:first-child > span {
     border-bottom-left-radius: 2px;
     border-top-left-radius: 2px;
 }
 
-.pagination>.disabled>a, 
-.pagination>.disabled>a:focus, 
-.pagination>.disabled>a:hover, 
-.pagination>.disabled>span, 
-.pagination>.disabled>span:focus, 
-.pagination>.disabled>span:hover {
+.pagination > .disabled > a,
+.pagination > .disabled > a:focus,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > span,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > span:hover {
     color: #999;
     background-color: #fff;
     border-color: #ddd;
     cursor: not-allowed;
 }
 
-.pagination-sm>li>a, .pagination-sm>li>span {
+.pagination-sm > li > a, .pagination-sm > li > span {
     padding: 5px 10px;
     font-size: 12px;
 }
-.pagination>li>a, .pagination>li>span {
+
+.pagination > li > a, .pagination > li > span {
     position: relative;
     float: left;
     padding: 6px 12px;
@@ -509,4 +511,13 @@ div.dataTables_paginate ul.pagination {
     right: -21px;
     font-size: 20px;
     color: #eee;
+}
+
+.table {
+    width: 100% !important;
+}
+
+.form-control-table {
+    display: block !important;
+    width: 100% !important;
 }

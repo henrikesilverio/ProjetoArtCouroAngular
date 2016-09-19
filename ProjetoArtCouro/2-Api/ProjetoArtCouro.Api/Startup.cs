@@ -8,6 +8,8 @@ using ProjetoArtCouro.Domain.Contracts.IService.IAutenticacao;
 using ProjetoArtCouro.Startup.DependencyResolver;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace ProjetoArtCouro.Api
 {
@@ -30,6 +32,10 @@ namespace ProjetoArtCouro.Api
             //Deixa o serviço publico sem restrições
             app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);
+
+            //Configuração da serialização json
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             //Incluir os mapeamento de classe
             AutoMapperConfig.RegisterMappings();

@@ -2,71 +2,42 @@
     "use strict";
 
     function homeController($scope, $compile, $q, DTOptionsBuilder, DTColumnBuilder) {
-        $scope.variaveisResultado = [
-            { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-primary", "type": "R", "drag": true },
-            { "description": "JORNADA 2", "name": "V_JX", "classColor": "btn-primary", "type": "R", "drag": true }
-        ];
-        $scope.variaveisCalculo = [
-            { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-success", "type": "C", "drag": true },
-            { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-success", "type": "C", "drag": true }
-        ];
-        $scope.variaveisParametro = [
-            { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-default", "type": "P", "drag": true },
-            { "description": "JORNADA 1", "name": "V_JT", "classColor": "btn-default", "type": "P", "drag": true }
-        ];
         $scope.operadores = [
-            { "description": "Soma", "name": "+", "classColor": "btn-warning", "type": "O", "drag": true },
-            { "description": "Adição", "name": "-", "classColor": "btn-warning", "type": "O", "drag": true },
-            { "description": "Multiplicação", "name": "*", "classColor": "btn-warning", "type": "O", "drag": true },
-            { "description": "Subtração", "name": "/", "classColor": "btn-warning", "type": "O", "drag": true },
-            { "description": "Modulo", "name": "%", "classColor": "btn-warning", "type": "O", "drag": true },
-            { "description": "Atribuição", "name": "=", "classColor": "btn-warning", "type": "O", "drag": true }
+            { "id": "", "description": "Selecione", "name": "+", "classColor": "btn-warning", "type": "O", "drag": true },
+            { "id": 1, "description": "Soma", "name": "+", "classColor": "btn-warning", "type": "O", "drag": true },
+            { "id": 2, "description": "Adição", "name": "-", "classColor": "btn-warning", "type": "O", "drag": true },
+            { "id": 3, "description": "Multiplicação", "name": "*", "classColor": "btn-warning", "type": "O", "drag": true },
+            { "id": 4, "description": "Subtração", "name": "/", "classColor": "btn-warning", "type": "O", "drag": true },
+            { "id": 5, "description": "Modulo", "name": "%", "classColor": "btn-warning", "type": "O", "drag": true },
+            { "id": 6, "description": "Atribuição", "name": "=", "classColor": "btn-warning", "type": "O", "drag": true }
         ];
-        $scope.formula = [];
-        $scope.optionsResultado = {
-            accept: function ($element) {
-                var obj = angular.element($element).scope();
-                return obj.item.type === "R";
-            }
-        };
-        $scope.optionsCalculo = {
-            accept: function ($element) {
-                var obj = angular.element($element).scope();
-                return obj.item.type === "C";
-            }
-        };
-        $scope.optionsParametro = {
-            accept: function ($element) {
-                var obj = angular.element($element).scope();
-                return obj.item.type === "P";
-            }
-        };
-        $scope.optionsOperacao = {
-            accept: function ($element) {
-                var obj = angular.element($element).scope();
-                return obj.item.type === "O";
-            }
-        };
-
-        $scope.onDrop = function ($event) {
-
-        };
-
-        function actionsHtml() {
+        function dataHtml(data, type, full, meta) {
             return "<input type=\"text\" " +
-                "class=\"form-control\" " +
-                "uib-datepicker-popup=\"dd/mm/yyyy\" " +
+                "class=\"form-control form-control-table\" " +
+                "uib-datepicker-popup=\"dd/MM/yyyy\" " +
                 "show-button-bar=\"false\" " +
-                "ng-model=\"dt2\" " +
+                "ng-model=\"data\" " +
                 "is-open=\"abrir\" " +
                 "datepicker-options=\"dateOptions\" " +
                 "ng-required=\"true\" " +
-                "ng-change=\"teste(this)\" " +
+                "ng-change=\"dataChange(" + meta.row + ")\" " +
                 "ng-click=\"abrir=true\"/>";
         }
 
+        function selecaoHtml(data, type, full, meta) {
+            return "<select class=\"form-control form-control-table\" " +
+                "id=\"selecao\" " +
+                "name=\"selecao\" " +
+                "ng-model=\"selecao\" " +
+                "ng-change=\"selecaoChange(" + meta.row + ")\" " +
+                "ng-init=\"selecao = operadores[0]\"" +
+                "ng-options=\"option.description for option in operadores track by option.id\">" +
+                "</select>";
+        }
+
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn(actionsHtml).withTitle("Ações").notSortable()
+            DTColumnBuilder.newColumn(dataHtml).withTitle("Data").notSortable(),
+            DTColumnBuilder.newColumn(selecaoHtml).withTitle("Lista").notSortable()
         ];
         $scope.dtInstance = {};
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
@@ -88,13 +59,16 @@
         $scope.dateOptions = {
             formatYear: "yyyy",
             maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
             startingDay: 1,
             showWeeks: false
         };
 
-        $scope.teste = function(obj) {
-            console.log($scope.dt2);
+        $scope.dataChange = function (obj) {
+            console.log(Date.parse($scope.data));
+        }
+
+        $scope.selecaoChange = function (obj) {
+            console.log($scope.selecao);
         }
     };
 

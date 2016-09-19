@@ -10,10 +10,15 @@
             "EPessoaFisica": "True"
         };
         $scope.nomeTabela = "Tabela de clientes";
-        $scope.dtOptions = DTOptionsBuilder
-            .newOptions()
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+                return pesquisaClienteService.pesquisaCliente($scope.model);
+            })
             .withBootstrap()
             .withDisplayLength(15)
+            .withOption('fnRowCallback',
+                function (nRow) {
+                    $compile(nRow)($scope);
+                })
             .withDOM("<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>" +
                 "t<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>")
             .withLanguageSource("app/shared/json/dataTableLanguage.json");
@@ -27,30 +32,32 @@
         }
 
         function actionsHtml(data) {
-            return "<button class=\"btn btn-warning\" ng-click=\"editar(" + data.CodigoCliente + ")\">" +
+            return "<button class=\"btn btn-warning\" ng-click=\"editar(" + data + ")\">" +
                 "   <i class=\"fa fa-edit\"></i>" +
                 "</button>&nbsp;" +
-                "<button class=\"btn btn-danger\" ng-click=\"deletar(" + data.CodigoCliente + ")\">" +
+                "<button class=\"btn btn-danger\" ng-click=\"deletar(" + data + ")\">" +
                 "   <i class=\"fa fa-trash-o\"></i>" +
                 "</button>";
         }
 
+        function cpfOrCnpj(data) {
+            return data.cpf || data.cnpj;
+        }
+
+        function email(data) {
+            return data.meioComunicacao.email || "N/I";
+        }
+
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn("CodigoCliente").withTitle("Código"),
-            DTColumnBuilder.newColumn("Nome").withTitle("Nome"),
-            DTColumnBuilder.newColumn("CPFCNPJ").withTitle("CPF/CNPJ"),
-            DTColumnBuilder.newColumn("Email").withTitle("Email"),
-            DTColumnBuilder.newColumn(actionsHtml).withTitle("Ações").notSortable()
+            DTColumnBuilder.newColumn("codigo").withTitle("Código").withOption("width", "10%"),
+            DTColumnBuilder.newColumn("nome").withTitle("Nome").withOption("width", "35%"),
+            DTColumnBuilder.newColumn(cpfOrCnpj).withTitle("CPF/CNPJ").withOption("width", "20%"),
+            DTColumnBuilder.newColumn(email).withTitle("Email").withOption("width", "20%"),
+            DTColumnBuilder.newColumn(actionsHtml).withTitle("Ações").withOption("width", "15%").notSortable()
         ];
         $scope.dtInstance = {}
         $scope.pesquisar = function () {
-            pesquisaClienteService.pesquisaCliente($scope.model)
-                .then(function (data) {
-                    $scope.dtInstance = data.ObjetoRetorno;
-                },
-                function(err) {
-                    $scope.message = err.Message;
-                });
+            $scope.dtInstance.reloadData();
         };
     }
 
