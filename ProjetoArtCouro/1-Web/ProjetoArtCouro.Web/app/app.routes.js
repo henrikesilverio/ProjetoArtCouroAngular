@@ -1,5 +1,7 @@
 ﻿(function () {
-    function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $httpProvider, cfpLoadingBarProvider) {
+    "use strict";
+
+    function configuration($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $httpProvider, jwtOptionsProvider, cfpLoadingBarProvider) {
         $ocLazyLoadProvider.config({
             debug: false,
             events: true
@@ -18,38 +20,6 @@
                     "app/shared/sidebar/sidebarSearch/sidebarSearchDirective.js"
                 ]
             });
-            //{
-            //    name: "toggle-switch",
-            //    files: [
-            //        "bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
-            //        "bower_components/angular-toggle-switch/angular-toggle-switch.css"
-            //    ]
-            //}),
-            //$ocLazyLoad.load(
-            //{
-            //    name: "ngAnimate",
-            //    files: ["bower_components/angular-animate/angular-animate.js"]
-            //}),
-            //$ocLazyLoad.load(
-            //{
-            //    name: "ngCookies",
-            //    files: ["bower_components/angular-cookies/angular-cookies.js"]
-            //}),
-            //$ocLazyLoad.load(
-            //{
-            //    name: "ngResource",
-            //    files: ["bower_components/angular-resource/angular-resource.js"]
-            //}),
-            //$ocLazyLoad.load(
-            //{
-            //    name: "ngSanitize",
-            //    files: ["bower_components/angular-sanitize/angular-sanitize.js"]
-            //}),
-            //$ocLazyLoad.load(
-            //{
-            //    name: "ngTouch",
-            //    files: ["bower_components/angular-touch/angular-touch.js"]
-            //});
         }
 
         $stateProvider
@@ -176,16 +146,54 @@
                 templateUrl: "app/components/usuario/views/alterarSenhaView.html"
             });
 
-        $httpProvider.interceptors.push("authInterceptorService");
+        jwtOptionsProvider.config({
+            tokenGetter: function (jwtHelper, $http, options, urls) {
+                //var extension = options.url.substr(options.url.length - 5);
+                //if (extension === ".html" || extension === ".json") {
+                //    return null;
+                //}
+                var token = localStorage.getItem("access_token");
+                var remember = JSON.parse(localStorage.getItem("remember"));
+                var refreshToken = localStorage.getItem("refresh_token");
+                if (remember && token && jwtHelper.isTokenExpired(token)) {
+                    return $http({
+                        url: urls.BASE_API + "/api/security/token",
+                        method: "POST",
+                        skipAuthorization: true,
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                        },
+                        data: $.param({
+                            grant_type: "refresh_token",
+                            refresh_token: refreshToken
+                        })
+                    }).then(function(response) {
+                        token = response.data.access_token;
+                        refreshToken = response.data.refresh_token;
+                        localStorage.setItem("access_token", token);
+                        localStorage.setItem("refresh_token", refreshToken);
+                        return token;
+                    }, function () {
+                        localStorage.removeItem("access_token");
+                        localStorage.removeItem("refresh_token");
+                    });
+                } else {
+                    return token;
+                }
+            },
+            whiteListedDomains: ["localhost"]
+        });
+
+        $httpProvider.interceptors.push("jwtInterceptor");
     }
 
     angular
         .module("sbAdminApp")
-        .config(config)
+        .config(configuration)
         .run(function ($rootScope, $state, authService) {
             $rootScope.$state = $state;
-            authService.fillAuthData();
             $rootScope.$on("$stateChangeStart", function (e, to) {
+                authService.fillAuthData();
                 if (to.data && to.data.requiresLogin) {
                     if (!authService.authentication.isAuth ||
                         authService.authentication.isTokenExpired) {

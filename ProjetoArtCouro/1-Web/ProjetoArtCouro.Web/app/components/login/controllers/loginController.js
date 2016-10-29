@@ -4,7 +4,8 @@
     function loginController($scope, $location, authService) {
         $scope.loginData = {
             userName: "",
-            password: ""
+            password: "",
+            remember: false
         };
         $scope.message = "";
         $scope.submetido = false;

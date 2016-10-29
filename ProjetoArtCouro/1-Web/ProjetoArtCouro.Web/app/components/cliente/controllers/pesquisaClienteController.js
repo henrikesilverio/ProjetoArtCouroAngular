@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    function pesquisaClienteCtrl($scope, pesquisaClienteService, DTOptionsBuilder, DTColumnBuilder) {
+    function pesquisaClienteCtrl($scope, $compile, pesquisaClienteService, DTOptionsBuilder, DTColumnBuilder) {
         $scope.model = {
             "CodigoCliente": "",
             "Nome": "",
@@ -32,10 +32,10 @@
         }
 
         function actionsHtml(data) {
-            return "<button class=\"btn btn-warning\" ng-click=\"editar(" + data + ")\">" +
+            return "<button class=\"btn btn-warning\" ng-click=\"editar(" + data.codigo + ")\">" +
                 "   <i class=\"fa fa-edit\"></i>" +
                 "</button>&nbsp;" +
-                "<button class=\"btn btn-danger\" ng-click=\"deletar(" + data + ")\">" +
+                "<button class=\"btn btn-danger\" ng-click=\"deletar(" + data.codigo + ")\">" +
                 "   <i class=\"fa fa-trash-o\"></i>" +
                 "</button>";
         }
@@ -61,7 +61,7 @@
         };
     }
 
-    pesquisaClienteCtrl.$inject = ["$scope", "pesquisaClienteService", "DTOptionsBuilder", "DTColumnBuilder"];
+    pesquisaClienteCtrl.$inject = ["$scope", "$compile", "pesquisaClienteService", "DTOptionsBuilder", "DTColumnBuilder"];
 
     angular.module("sbAdminApp")
         .controller("pesquisaClienteCtrl", pesquisaClienteCtrl);

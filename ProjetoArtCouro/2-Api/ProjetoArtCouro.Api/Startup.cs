@@ -23,8 +23,8 @@ namespace ProjetoArtCouro.Api
             var container = new UnityContainer();
             DependencyResolver.Resolve(container);
             config.DependencyResolver = new UnityResolver(container);
-            var enableCorsAttribute = new EnableCorsAttribute("*", "*", "*");
-            config.EnableCors(enableCorsAttribute);
+            //var enableCorsAttribute = new EnableCorsAttribute("*", "*", "*");
+            //config.EnableCors(enableCorsAttribute);
 
             ConfigureWebApi(config);
             ConfigureOAuth(app, config);
@@ -44,6 +44,8 @@ namespace ProjetoArtCouro.Api
         public void ConfigureWebApi(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
+            var enableCorsAttribute = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(enableCorsAttribute);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

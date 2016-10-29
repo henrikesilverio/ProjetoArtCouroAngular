@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Owin.Security;
 
 namespace ProjetoArtCouro.Api.Security
 {
@@ -44,10 +45,9 @@ namespace ProjetoArtCouro.Api.Security
 
                 var identity = new ClaimsIdentity("otc");
 
-                identity.AddClaim(new Claim(ClaimTypes.Name, user.Senha));
+                identity.AddClaim(new Claim(ClaimTypes.Name, user.UsuarioNome));
                 identity.AddClaim(new Claim(ClaimTypes.Sid, user.UsuarioCodigo.ToString()));
                 identity.AddClaim(new Claim(ClaimTypes.PrimarySid, user.UsuarioId.ToString()));
-                identity.AddClaim(new Claim(ClaimTypes.GivenName, user.UsuarioNome));
 
                 //Setando as permissao do usuario
                 var permissoes = _autenticacaoService.ObterPermissoes(user.UsuarioNome);
@@ -65,6 +65,17 @@ namespace ProjetoArtCouro.Api.Security
             {
                 context.SetError("invalid_grant", Erros.InvalidCredentials);
             }
+        }
+
+        public override async Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
+        {
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+            // Change authentication ticket for refresh token requests  
+            var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
+            newIdentity.AddClaim(new Claim("newClaim", "newValue"));
+
+            var newTicket = new AuthenticationTicket(newIdentity, context.Ticket.Properties);
+            context.Validated(newTicket);
         }
     }
 }
