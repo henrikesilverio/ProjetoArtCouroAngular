@@ -17,7 +17,7 @@ namespace ProjetoArtCouro.Api.Security
             var refreshTokenProperties = new AuthenticationProperties(context.Ticket.Properties.Dictionary)
             {
                 IssuedUtc = context.Ticket.Properties.IssuedUtc,
-                ExpiresUtc = DateTime.UtcNow.AddMinutes(5)
+                ExpiresUtc = DateTime.UtcNow.AddHours(1)
             };
             var refreshTokenTicket = new AuthenticationTicket(context.Ticket.Identity, refreshTokenProperties);
             RefreshTokens.TryAdd(guid, refreshTokenTicket);

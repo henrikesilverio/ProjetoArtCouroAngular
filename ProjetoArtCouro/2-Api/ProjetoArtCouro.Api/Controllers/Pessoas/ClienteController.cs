@@ -152,13 +152,12 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
             return tsc.Task;
         }
 
-        [Route("ExcluirCliente")]
+        [Route("ExcluirCliente/{codigoCliente:int:min(1)}")]
         [Authorize(Roles = "ExcluirCliente")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
         [HttpDelete]
-        public Task<HttpResponseMessage> ExcluirCliente([FromBody]JObject jObject)
+        public Task<HttpResponseMessage> ExcluirCliente(int codigoCliente)
         {
-            var codigoCliente = jObject["codigoCliente"].ToObject<int>();
             HttpResponseMessage response;
             try
             {

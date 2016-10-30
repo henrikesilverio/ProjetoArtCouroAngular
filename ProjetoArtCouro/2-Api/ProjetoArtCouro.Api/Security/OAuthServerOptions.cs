@@ -13,7 +13,7 @@ namespace ProjetoArtCouro.Api.Security
             AllowInsecureHttp = true;
             TokenEndpointPath = new PathString("/api/security/token");
             //AuthorizeEndpointPath = new PathString();
-            AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(1);
+            AccessTokenExpireTimeSpan = TimeSpan.FromHours(1);
             Provider = new AuthorizationServerProvider(autenticacaoService);
             AccessTokenFormat = new JwtFormat(this);
             RefreshTokenProvider = new ApplicationRefreshTokenProvider();

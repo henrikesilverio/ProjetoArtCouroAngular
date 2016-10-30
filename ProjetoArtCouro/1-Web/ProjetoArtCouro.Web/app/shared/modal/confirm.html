@@ -1,0 +1,25 @@
+﻿<div class="modal-content">
+    <div class="inmodal ng-scope">
+        <div class="modal-header">
+            <i class="fa fa-trash modal-icon"></i>
+            <h4 class="modal-title">{{ confirmModalModel.title }}</h4>
+        </div>
+        <div class="modal-body">
+            <p>
+                <strong>{{ confirmModalModel.text }}</strong>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    ng-click="confirmModalModel.sim()">
+                <i class="fa fa-check"></i> Sim
+            </button>
+            <button type="button"
+                    class="btn btn-warning"
+                    ng-click="confirmModalModel.nao()">
+                <i class="fa fa fa-arrow-left"></i> Não
+            </button>
+        </div>
+    </div>
+</div>

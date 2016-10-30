@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    function novoClienteCtrl($scope, clienteService, tipoPapelPessoaEnum) {
+    function novoClienteCtrl($scope, $state, clienteService, tipoPapelPessoaEnum) {
         $scope.model = {
             "CodigoCliente": "",
             "Nome": "",
@@ -108,12 +108,15 @@
                     "EmailId": model.Email,
                     "Email": model.NovoEmail
                 }
-                clienteService.criarCliente(model);
+                clienteService.criarCliente(model)
+                    .then(function() {
+                        $state.go("cadastro.pesquisaCliente");
+                    });
             }
         }
     }
 
-    novoClienteCtrl.$inject = ["$scope", "clienteService", "tipoPapelPessoaEnum"];
+    novoClienteCtrl.$inject = ["$scope", "$state", "clienteService", "tipoPapelPessoaEnum"];
 
     angular.module("sbAdminApp")
         .controller("novoClienteCtrl", novoClienteCtrl);

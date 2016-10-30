@@ -69,7 +69,7 @@
                 controllerAs: "ctrl",
                 templateUrl: "app/components/cliente/views/clienteView.html"
             }).state("cadastro.editarCliente", {
-                url: "/EditarCliente",
+                url: "/EditarCliente/:codigoCliente",
                 controller: "editarClienteCtrl",
                 controllerAs: "ctrl",
                 templateUrl: "app/components/cliente/views/clienteView.html"
@@ -147,15 +147,16 @@
             });
 
         jwtOptionsProvider.config({
-            tokenGetter: function (jwtHelper, $http, options, urls) {
-                //var extension = options.url.substr(options.url.length - 5);
-                //if (extension === ".html" || extension === ".json") {
-                //    return null;
-                //}
+            tokenGetter: function (jwtHelper, $uibModal, $http, options, urls) {
+                var extension = options.url.substr(options.url.length - 5);
                 var token = localStorage.getItem("access_token");
+                if (extension === ".html" || extension === ".json" || !token) {
+                    return null;
+                }
+
                 var remember = JSON.parse(localStorage.getItem("remember"));
                 var refreshToken = localStorage.getItem("refresh_token");
-                if (remember && token && jwtHelper.isTokenExpired(token)) {
+                if (remember && jwtHelper.isTokenExpired(token)) {
                     return $http({
                         url: urls.BASE_API + "/api/security/token",
                         method: "POST",
@@ -167,7 +168,7 @@
                             grant_type: "refresh_token",
                             refresh_token: refreshToken
                         })
-                    }).then(function(response) {
+                    }).then(function (response) {
                         token = response.data.access_token;
                         refreshToken = response.data.refresh_token;
                         localStorage.setItem("access_token", token);
@@ -178,6 +179,17 @@
                         localStorage.removeItem("refresh_token");
                     });
                 } else {
+                    //var modalInstance = $uibModal.open({
+                    //    animation: true,
+                    //    ariaLabelledBy: "modal-title-top",
+                    //    ariaDescribedBy: "modal-body-top",
+                    //    templateUrl: "app/components/login/views/loginView.html",
+                    //    size: "sm",
+                    //    controller: function ($uibModalInstance) {
+                    //        $uibModalInstance.close(token);
+                    //    }
+                    //});
+                    //return modalInstance.result;
                     return token;
                 }
             },
