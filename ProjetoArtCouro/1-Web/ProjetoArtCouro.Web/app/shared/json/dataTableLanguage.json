@@ -4,6 +4,8 @@
   "sEmptyTable": "Informe os filtros para pesquisar",
   "sInfoFiltered": "",
   "sZeroRecords": "Não há registros para o filtro informado",
+  "sSearchPlaceholder": "Digite o que quer pesquisar...",
+  "sSearch": "Pesquisar no resultado ",
   "oPaginate": {
     "sFirst": "<<",
     "sLast": ">>",

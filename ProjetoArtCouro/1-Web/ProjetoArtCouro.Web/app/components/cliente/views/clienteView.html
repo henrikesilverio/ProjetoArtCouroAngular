@@ -14,11 +14,11 @@
                                     <label class="control-label">Tipo de pessoa</label>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="EPessoaFisica" value="True" ng-model="model.EPessoaFisica">
+                                            <input type="radio" name="EPessoaFisica" value="True" ng-model="model.EPessoaFisica" ng-disabled="ehEdicao">
                                             Pessoa Física
                                         </label>
                                         <label>
-                                            <input type="radio" name="EPessoaFisica" value="False" ng-model="model.EPessoaFisica">
+                                            <input type="radio" name="EPessoaFisica" value="False" ng-model="model.EPessoaFisica" ng-disabled="ehEdicao">
                                             Pessoa Juridica
                                         </label>
                                     </div>
@@ -36,7 +36,8 @@
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.CPF.$dirty) && (cliente.CPF.$error.required || cliente.CPF.$error.cpfValido)}">
                                     <label class="control-label" for="CPF">CPF</label>
-                                    <input type="text" class="form-control" id="CPF" name="CPF" placeholder="CPF" ng-model="model.CPF" maxlength="14" required cpf-mask cpf-valido>
+                                    <input type="text" class="form-control" id="CPF" name="CPF" placeholder="CPF" 
+                                           ng-model="model.CPF" ng-disabled="ehEdicao" maxlength="14" required cpf-mask cpf-valido>
                                     <div ng-show="(submitted || cliente.CPF.$dirty) && (cliente.CPF.$error.required || cliente.CPF.$error.cpfValido)" class="error">
                                         <span ng-show="cliente.CPF.$error.required">Campo Obrigatório.</span>
                                         <span ng-show="cliente.CPF.$error.cpfValido">CPF inválido.</span>
@@ -96,8 +97,8 @@
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.CNPJ.$dirty) && (cliente.CNPJ.$error.required || cliente.CNPJ.$error.cnpjValido)}">
                                     <label class="control-label" for="CNPJ">CNPJ</label>
-                                    <input type="text" class="form-control" id="CNPJ" name="CNPJ" placeholder="CNPJ" ng-model="model.CNPJ" 
-                                           maxlength="18" required cnpj-mask cnpj-valido>
+                                    <input type="text" class="form-control" id="CNPJ" name="CNPJ" placeholder="CNPJ" 
+                                           ng-model="model.CNPJ"  ng-disabled="ehEdicao" maxlength="18" required cnpj-mask cnpj-valido>
                                     <div ng-show="(submitted || cliente.CNPJ.$dirty) && (cliente.CNPJ.$error.required || cliente.CNPJ.$error.cnpjValido)" class="error">
                                         <span ng-show="cliente.CNPJ.$error.required">Campo Obrigatório.</span>
                                         <span ng-show="cliente.CNPJ.$error.cnpjValido">CNPJ inválido.</span>
@@ -116,7 +117,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6"
+                                <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8"
                                      ng-class="{'has-error': (submitted || cliente.Endereco.$dirty) && cliente.Endereco.$error.required}">
                                     <label class="control-label" for="Endereco">Endereços</label>
                                     <select class="form-control" id="Endereco" name="Endereco" ng-model="model.Endereco" required>

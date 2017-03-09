@@ -86,6 +86,26 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
             return tsc.Task;
         }
 
+        [Route("TesteProjecao")]
+        [HttpGet]
+        public Task<HttpResponseMessage> TesteProjecao()
+        {
+            HttpResponseMessage response;
+            try
+            {
+                var listaPessoa = _pessoaService.TesteProjecao();
+                response = ReturnSuccess(listaPessoa);
+            }
+            catch (Exception ex)
+            {
+                response = ReturnError(ex);
+            }
+
+            var tsc = new TaskCompletionSource<HttpResponseMessage>();
+            tsc.SetResult(response);
+            return tsc.Task;
+        }
+
         protected override void Dispose(bool disposing)
         {
             _pessoaService.Dispose();

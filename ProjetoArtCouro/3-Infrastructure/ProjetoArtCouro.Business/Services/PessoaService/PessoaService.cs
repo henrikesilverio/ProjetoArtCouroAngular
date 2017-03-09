@@ -5,6 +5,7 @@ using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
 
@@ -185,6 +186,11 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         public List<PessoaJuridica> ObterListaPessoaJuridicaPorPapel(TipoPapelPessoaEnum papelCodigo)
         {
             return _pessoaJuridicaRepository.ObterLista(0, null, null, null, papelCodigo);
+        }
+
+        public List<PessoaModel> TesteProjecao()
+        {
+            return _pessoaRepository.TesteProjecao();
         }
 
         private void AtualizarEnderecoPessoa(Pessoa pessoa, Pessoa pessoaAtual)

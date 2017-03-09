@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Domain.Models.Enums;
 
 namespace ProjetoArtCouro.Domain.Contracts.IService.IPessoa
@@ -20,5 +21,6 @@ namespace ProjetoArtCouro.Domain.Contracts.IService.IPessoa
         void CriarPessoaJuridica(Pessoa pessoa);
         void AtualizarPessoa(Pessoa pessoa);
         void ExcluirPessoa(int pessoaCodigo);
+        List<PessoaModel> TesteProjecao();
     }
 }

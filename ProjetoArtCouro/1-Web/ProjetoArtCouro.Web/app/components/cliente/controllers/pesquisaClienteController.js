@@ -2,12 +2,14 @@
     "use strict";
 
     function actionsHtml(data) {
-        return "<button class=\"btn btn-warning\" ng-click=\"editar(" + data.codigo + ")\">" +
-            "   <i class=\"fa fa-edit\"></i>" +
-            "</button>&nbsp;" +
-            "<button class=\"btn btn-danger\" ng-click=\"excluir(" + data.codigo + ")\">" +
-            "   <i class=\"fa fa-trash-o\"></i>" +
-            "</button>";
+        return "<div class=\"btn-group\" role=\"toolbar\">" +
+            "<button type=\"button\" class=\"btn btn-warning\" ng-click=\"editar(" + data.codigo + ")\">" +
+            "<i class=\"fa fa-edit\"></i>" +
+            "</button>" +
+            "<button type=\"button\" class=\"btn btn-danger\" ng-click=\"excluir(" + data.codigo + ")\">" +
+            "<i class=\"fa fa-trash-o\"></i>" +
+            "</button>" +
+            "</div>";
     }
 
     function cpfOrCnpj(data) {
@@ -63,7 +65,7 @@
 
         $scope.excluirCliente = function () {
             pesquisaClienteService.excluirCliente($scope.codigoCliente)
-                .then(function() {
+                .then(function () {
                     $scope.dtInstance.reloadData();
                 });
         }

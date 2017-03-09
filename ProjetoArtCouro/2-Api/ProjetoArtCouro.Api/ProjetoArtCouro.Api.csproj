@@ -277,10 +277,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapperConfig.cs" />
+    <Compile Include="AutoMapper\DomainToDomainMappingProfile.cs" />
     <Compile Include="AutoMapper\DomainToModelMappingProfile.cs" />
     <Compile Include="AutoMapper\EnderecoConverter.cs" />
     <Compile Include="AutoMapper\MeioComunicacaoConverter.cs" />

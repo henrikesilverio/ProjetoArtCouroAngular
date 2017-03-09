@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Domain.Models.Enums;
 
 namespace ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa
@@ -17,5 +18,6 @@ namespace ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa
         void Criar(Pessoa pessoa);
         void Atualizar(Pessoa pessoa);
         void Deletar(Pessoa pessoa);
+        List<PessoaModel> TesteProjecao();
     }
 }

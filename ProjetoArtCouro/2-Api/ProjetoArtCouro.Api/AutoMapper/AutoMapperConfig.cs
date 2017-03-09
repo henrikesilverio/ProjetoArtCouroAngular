@@ -10,6 +10,7 @@ namespace ProjetoArtCouro.Api.AutoMapper
             Mapper.Initialize(x =>
             {
                 x.AddProfile<DomainToModelMappingProfile>();
+                x.AddProfile<DomainToDomainMappingProfile>();
                 x.AddProfile<ModelToDomainMappingProfile>();
                 x.AddProfile<ModelToModelMappingProfile>();
             });

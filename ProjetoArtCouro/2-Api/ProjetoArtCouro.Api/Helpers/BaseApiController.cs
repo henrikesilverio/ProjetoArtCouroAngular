@@ -34,7 +34,8 @@ namespace ProjetoArtCouro.Api.Helpers
             {
                 ObjetoRetorno = objetReturn
             };
-            return Request.CreateResponse(HttpStatusCode.OK, retornoBase);
+            var response = Request.CreateResponse(HttpStatusCode.OK, retornoBase);
+            return response;
         }
     }
 }

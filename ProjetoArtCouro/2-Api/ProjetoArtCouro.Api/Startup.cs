@@ -1,5 +1,4 @@
-﻿using Microsoft.Owin.Cors;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Owin;
 using ProjetoArtCouro.Api.AutoMapper;
 using ProjetoArtCouro.Api.Helpers;
@@ -23,14 +22,10 @@ namespace ProjetoArtCouro.Api
             var container = new UnityContainer();
             DependencyResolver.Resolve(container);
             config.DependencyResolver = new UnityResolver(container);
-            //var enableCorsAttribute = new EnableCorsAttribute("*", "*", "*");
-            //config.EnableCors(enableCorsAttribute);
 
             ConfigureWebApi(config);
             ConfigureOAuth(app, config);
 
-            //Deixa o serviço publico sem restrições
-            app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);
 
             //Configuração da serialização json

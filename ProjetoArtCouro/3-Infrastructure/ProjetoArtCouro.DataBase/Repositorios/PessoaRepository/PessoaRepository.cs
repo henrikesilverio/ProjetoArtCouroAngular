@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper.QueryableExtensions;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using ProjetoArtCouro.Domain.Models.Common;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
 {
@@ -102,6 +104,11 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
         {
             _context.Pessoas.Remove(pessoa);
             _context.SaveChanges();
+        }
+
+        public List<PessoaModel> TesteProjecao()
+        {
+           return _context.Pessoas.ProjectTo<PessoaModel>().ToList();
         }
 
         public void Dispose()
