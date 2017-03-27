@@ -1,13 +1,10 @@
-<div id="wrapper">
+ï»¿<div id="wrapper">
     <div ng-include="'app/shared/header/headerView.html'"></div>
     <div id="page-wrapper">
         <div ui-view class="page-wrapper-body"></div>
         <div class="footer">
             <div class="pull-right">
-                10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-                <strong>Copyright</strong> Example Company © 2015-2016
+                <strong>Data: {{data | date:'dd/MM/yyyy'}}</strong>
             </div>
         </div>
     </div>

@@ -48,7 +48,7 @@
         })
             .withBootstrap()
             .withDisplayLength(15)
-            .withOption("fnRowCallback",
+            .withOption("createdRow",
                 function (nRow) {
                     $compile(nRow)($scope);
                 })

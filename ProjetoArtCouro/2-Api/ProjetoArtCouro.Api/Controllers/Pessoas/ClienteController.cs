@@ -8,8 +8,6 @@ using ProjetoArtCouro.Domain.Models.Cliente;
 using ProjetoArtCouro.Domain.Models.Enums;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace ProjetoArtCouro.Api.Controllers.Pessoas
@@ -28,9 +26,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Authorize(Roles = "NovoCliente")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
         [HttpPost]
-        public Task<HttpResponseMessage> CriarCliente(ClienteModel model)
+        public IHttpActionResult CriarCliente(ClienteModel model)
         {
-            HttpResponseMessage response;
             try
             {
                 var pessoa = Mapper.Map<Pessoa>(model);
@@ -49,82 +46,62 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
                     pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
                     _pessoaService.CriarPessoaJuridica(pessoa);
                 }
-                response = ReturnSuccess();
+                return OkRetornoBase();
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("PesquisarCliente")]
         [Authorize(Roles = "PesquisaCliente")]
         [HttpPost]
-        public Task<HttpResponseMessage> PesquisarCliente(PesquisaClienteModel model)
+        public IHttpActionResult PesquisarCliente(PesquisaClienteModel model)
         {
-            HttpResponseMessage response;
             try
             {
                 if (model.EPessoaFisica)
                 {
                     var listaPessoaFisica = _pessoaService.PesquisarPessoaFisica(model.CodigoCliente ?? 0, model.Nome,
                     model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Cliente);
-                    response = ReturnSuccess(Mapper.Map<List<ClienteModel>>(listaPessoaFisica));
+                    return OkRetornoBase(Mapper.Map<List<ClienteModel>>(listaPessoaFisica));
                 }
-                else
-                {
-                    var listaPessoaJuridica = _pessoaService.PesquisarPessoaJuridica(model.CodigoCliente ?? 0, model.Nome,
-                    model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Cliente);
-                    response = ReturnSuccess(Mapper.Map<List<ClienteModel>>(listaPessoaJuridica));
-                }
+                var listaPessoaJuridica = _pessoaService.PesquisarPessoaJuridica(model.CodigoCliente ?? 0, model.Nome,
+                model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Cliente);
+                return OkRetornoBase(Mapper.Map<List<ClienteModel>>(listaPessoaJuridica));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("PesquisarClientePorCodigo")]
         [Authorize(Roles = "EditarCliente")]
         [HttpPost]
-        public Task<HttpResponseMessage> PesquisarClientePorCodigo([FromBody]JObject jObject)
+        public IHttpActionResult PesquisarClientePorCodigo([FromBody]JObject jObject)
         {
             var codigoCliente = jObject["codigoCliente"].ToObject<int>();
-            HttpResponseMessage response;
             try
             {
                 var pessoa = _pessoaService.ObterPessoaPorCodigo(codigoCliente);
-                response =
-                    ReturnSuccess(pessoa.PessoaFisica != null
-                        ? Mapper.Map<ClienteModel>(pessoa.PessoaFisica)
-                        : Mapper.Map<ClienteModel>(pessoa.PessoaJuridica));
+                return OkRetornoBase(pessoa.PessoaFisica != null
+                    ? Mapper.Map<ClienteModel>(pessoa.PessoaFisica)
+                    : Mapper.Map<ClienteModel>(pessoa.PessoaJuridica));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("EditarCliente")]
         [Authorize(Roles = "EditarCliente")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
         [HttpPut]
-        public Task<HttpResponseMessage> EditarCliente(ClienteModel model)
+        public IHttpActionResult EditarCliente(ClienteModel model)
         {
-            HttpResponseMessage response;
-
             try
             {
                 var pessoa = Mapper.Map<Pessoa>(model);
@@ -140,38 +117,29 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
                     pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
                 }
                 _pessoaService.AtualizarPessoa(pessoa);
-                response = ReturnSuccess();
+                return OkRetornoBase();
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("ExcluirCliente/{codigoCliente:int:min(1)}")]
         [Authorize(Roles = "ExcluirCliente")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
         [HttpDelete]
-        public Task<HttpResponseMessage> ExcluirCliente(int codigoCliente)
+        public IHttpActionResult ExcluirCliente(int codigoCliente)
         {
-            HttpResponseMessage response;
             try
             {
                 _pessoaService.ExcluirPessoa(codigoCliente);
-                response = ReturnSuccess();
+                return OkRetornoBase();
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         protected override void Dispose(bool disposing)

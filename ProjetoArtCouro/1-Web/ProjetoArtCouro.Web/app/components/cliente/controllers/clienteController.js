@@ -125,7 +125,7 @@
         $scope.nomeCabecalho = "Novo Cliente";
         $scope.salvar = function (valido) {
             if (valido) {
-                var model = $scope.model;
+                var model = angular.copy($scope.model);
                 model["EstadoCivilId"] = model.EstadoCivil;
                 model["PapelPessoa"] = tipoPapelPessoaEnum.CLIENTE;
                 model["Endereco"] = {
@@ -180,7 +180,7 @@
         $scope.nomeCabecalho = "Editar Cliente";
         $scope.salvar = function (valido) {
             if (valido) {
-                var model = $scope.model;
+                var model = angular.copy($scope.model);
                 model["EstadoCivilId"] = model.EstadoCivil;
                 model["PapelPessoa"] = tipoPapelPessoaEnum.CLIENTE;
                 model["Endereco"] = {

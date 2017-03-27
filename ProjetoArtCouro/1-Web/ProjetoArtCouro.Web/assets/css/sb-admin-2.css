@@ -1,11 +1,6 @@
 ﻿html, body {
     margin: 0;
-    height: 100%;
 }
-
-    body .app {
-        height: 100%;
-    }
 
     body #wrapper {
         background-color: #3a3633;
@@ -14,11 +9,6 @@
     body > div > div {
         height: inherit;
     }
-
-.login-backgroud {
-    background-color: #f2f3f3;
-    height: 100%;
-}
 
 #wrapper {
     width: 100%;

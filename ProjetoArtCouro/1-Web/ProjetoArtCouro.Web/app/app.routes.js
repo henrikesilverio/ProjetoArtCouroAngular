@@ -25,6 +25,10 @@
         $stateProvider
             .state("root", {
                 abstract: true,
+                controller: function ($scope) {
+                    $scope.data = new Date();
+                },
+                controllerAs: "ctrl",
                 templateUrl: "app/shared/main/mainView.html",
                 data: {
                     requiresLogin: true
@@ -51,6 +55,10 @@
                 //Cadastro
             }).state("cadastro", {
                 abstract: true,
+                controller: function ($scope) {
+                    $scope.data = new Date();
+                },
+                controllerAs: "ctrl",
                 templateUrl: "app/shared/main/mainView.html",
                 data: {
                     requiresLogin: true
@@ -73,9 +81,23 @@
                 controller: "editarClienteCtrl",
                 controllerAs: "ctrl",
                 templateUrl: "app/components/cliente/views/clienteView.html"
-            }).state("cadastro.fornecedor", {
-                url: "/fornecedor",
+
+            }).state("cadastro.pesquisaFornecedor", {
+                url: "/PesquisaFornecedor",
+                controller: "pesquisaFornecedorCtrl",
+                controllerAs: "ctrl",
+                templateUrl: "app/components/fornecedor/views/pesquisaFornecedorView.html"
+            }).state("cadastro.novoFornecedor", {
+                url: "/NovoFornecedor",
+                controller: "novoFornecedorCtrl",
+                controllerAs: "ctrl",
                 templateUrl: "app/components/fornecedor/views/fornecedorView.html"
+            }).state("cadastro.editarFornecedor", {
+                url: "/EditarFornecedor/:codigoFornecedor",
+                controller: "editarFornecedorCtrl",
+                controllerAs: "ctrl",
+                templateUrl: "app/components/fornecedor/views/fornecedorView.html"
+
             }).state("cadastro.funcionario", {
                 url: "/funcionario",
                 templateUrl: "app/components/funcionario/views/funcionarioView.html"
@@ -94,6 +116,10 @@
                 //Operações
             }).state("operacoes", {
                 abstract: true,
+                controller: function ($scope) {
+                    $scope.data = new Date();
+                },
+                controllerAs: "ctrl",
                 templateUrl: "app/shared/main/mainView.html",
                 data: {
                     requiresLogin: true
@@ -116,6 +142,10 @@
                 //Relatorios
             }).state("relatorios", {
                 abstract: true,
+                controller: function ($scope) {
+                    $scope.data = new Date();
+                },
+                controllerAs: "ctrl",
                 templateUrl: "app/shared/main/mainView.html",
                 data: {
                     requiresLogin: true
@@ -128,6 +158,10 @@
                 templateUrl: "app/components/estoque/views/estoqueView.html"
             }).state("configuracoes", {
                 abstract: true,
+                controller: function ($scope) {
+                    $scope.data = new Date();
+                },
+                controllerAs: "ctrl",
                 templateUrl: "app/shared/main/mainView.html",
                 data: {
                     requiresLogin: true

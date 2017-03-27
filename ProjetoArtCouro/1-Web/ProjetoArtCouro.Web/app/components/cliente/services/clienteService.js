@@ -13,15 +13,14 @@
 
         function error(err, deferred) {
             deferred.reject(err);
-            if (err.data) {
-                toastr.error(err.data.mensagem);
-            }
-            if (err.message) {
-                toastr.error(err.message);
-                console.log(err.messageDetail);
+            if (_.isEmpty(err)) {
+                toastr.error("Objeto erro vazio.");
             }
             else {
-                toastr.error(err.mensagem);
+                toastr.error(err.exceptionMessage);
+                console.log(err.message);
+                console.log(err.exceptionType);
+                console.log(err.stackTrace);
             }
         }
 

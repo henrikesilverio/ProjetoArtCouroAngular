@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 using AutoMapper;
 using ProjetoArtCouro.Api.Extensions;
 using ProjetoArtCouro.Domain.Models.Common;
@@ -36,6 +37,21 @@ namespace ProjetoArtCouro.Api.Helpers
             };
             var response = Request.CreateResponse(HttpStatusCode.OK, retornoBase);
             return response;
+        }
+
+        public OkNegotiatedContentResult<RetornoBase<T>> OkRetornoBase<T>(T retorno)
+        {
+            var retornoBase = new RetornoBase<T>
+            {
+                ObjetoRetorno = retorno
+            };
+            return Ok(retornoBase);
+        }
+
+        public OkNegotiatedContentResult<RetornoBase<object>> OkRetornoBase()
+        {
+            var retornoBase = new RetornoBase<object>();
+            return Ok(retornoBase);
         }
     }
 }

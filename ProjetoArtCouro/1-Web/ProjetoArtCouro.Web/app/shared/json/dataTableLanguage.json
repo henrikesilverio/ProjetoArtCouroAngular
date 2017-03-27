@@ -1,6 +1,6 @@
 ﻿{
-  "sInfo": "_START_ a _END_ em _TOTAL_ Cliente",
-  "sInfoEmpty": "Nenhum cliente",
+  "sInfo": "_START_ a _END_ em _TOTAL_",
+  "sInfoEmpty": "",
   "sEmptyTable": "Informe os filtros para pesquisar",
   "sInfoFiltered": "",
   "sZeroRecords": "Não há registros para o filtro informado",

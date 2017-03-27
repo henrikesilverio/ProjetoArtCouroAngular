@@ -2,18 +2,35 @@
     "use strict";
 
     function pesquisaClienteService($http, $q, urls, toastr) {
+        function successWithReturn(deferred, response) {
+            deferred.resolve(response.objetoRetorno);
+        }
+
+        function successWithoutReturn(deferred, response) {
+            deferred.resolve(response);
+            toastr.success(response.mensagem);
+        }
+
+        function error(err, deferred) {
+            deferred.reject(err);
+            if (_.isEmpty(err)) {
+                toastr.error("Objeto erro vazio.");
+            }
+            else {
+                toastr.error(err.exceptionMessage);
+                console.log(err.message);
+                console.log(err.exceptionType);
+                console.log(err.stackTrace);
+            }
+        }
+
         function pesquisaCliente(model) {
             var deferred = $q.defer();
             $http.post(urls.BASE_API + "/api/Cliente/PesquisarCliente", model)
                 .success(function (response) {
-                    deferred.resolve(response.objetoRetorno);
+                    successWithReturn(deferred, response);
                 }).error(function (err) {
-                    deferred.reject(err);
-                    if (err.data) {
-                        toastr.error(err.data.mensagem);
-                    } else {
-                        toastr.error(err.message);
-                    }
+                    error(err, deferred);
                 });
             return deferred.promise;
         }
@@ -22,15 +39,9 @@
             var deferred = $q.defer();
             $http.delete(urls.BASE_API + "/api/Cliente/ExcluirCliente/" + codigoCliente)
                 .success(function (response) {
-                    deferred.resolve(response.objetoRetorno);
-                    toastr.success(response.mensagem);
+                    successWithoutReturn(deferred, response);
                 }).error(function (err) {
-                    deferred.reject(err);
-                    if (err.data) {
-                        toastr.error(err.data.mensagem);
-                    } else {
-                        toastr.error(err.message);
-                    }
+                    error(err, deferred);
                 });
             return deferred.promise;
         }

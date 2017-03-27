@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using Newtonsoft.Json.Linq;
@@ -29,9 +27,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
         [InvalidateCacheOutput("ObterListaFornecedor")]
         [HttpPost]
-        public Task<HttpResponseMessage> CriarFornecedor(FornecedorModel model)
+        public IHttpActionResult CriarFornecedor(FornecedorModel model)
         {
-            HttpResponseMessage response;
             try
             {
                 var pessoa = Mapper.Map<Pessoa>(model);
@@ -50,94 +47,71 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
                     pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
                     _pessoaService.CriarPessoaJuridica(pessoa);
                 }
-                response = ReturnSuccess();
+                return OkRetornoBase();
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("PesquisarFornecedor")]
         [Authorize(Roles = "PesquisaFornecedor")]
         [HttpPost]
-        public Task<HttpResponseMessage> PesquisarFornecedor(PesquisaFornecedorModel model)
+        public IHttpActionResult PesquisarFornecedor(PesquisaFornecedorModel model)
         {
-            HttpResponseMessage response;
             try
             {
                 if (model.EPessoaFisica)
                 {
                     var listaPessoaFisica = _pessoaService.PesquisarPessoaFisica(model.CodigoFornecedor ?? 0, model.Nome,
                     model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Fornecedor);
-                    response = ReturnSuccess(Mapper.Map<List<FornecedorModel>>(listaPessoaFisica));
+                    return OkRetornoBase(Mapper.Map<List<FornecedorModel>>(listaPessoaFisica));
                 }
-                else
-                {
-                    var listaPessoaJuridica = _pessoaService.PesquisarPessoaJuridica(model.CodigoFornecedor ?? 0, model.Nome,
+                var listaPessoaJuridica = _pessoaService.PesquisarPessoaJuridica(model.CodigoFornecedor ?? 0, model.Nome,
                     model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Fornecedor);
-                    response = ReturnSuccess(Mapper.Map<List<FornecedorModel>>(listaPessoaJuridica));
-                }
+                return OkRetornoBase(Mapper.Map<List<FornecedorModel>>(listaPessoaJuridica));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("PesquisarFornecedorPorCodigo")]
         [Authorize(Roles = "EditarFornecedor")]
         [HttpPost]
-        public Task<HttpResponseMessage> PesquisarFornecedorPorCodigo([FromBody]JObject jObject)
+        public IHttpActionResult PesquisarFornecedorPorCodigo([FromBody]JObject jObject)
         {
             var codigoFornecedor = jObject["codigoFornecedor"].ToObject<int>();
-            HttpResponseMessage response;
             try
             {
                 var pessoa = _pessoaService.ObterPessoaPorCodigo(codigoFornecedor);
-                response =
-                    ReturnSuccess(pessoa.PessoaFisica != null
-                        ? Mapper.Map<FornecedorModel>(pessoa.PessoaFisica)
-                        : Mapper.Map<FornecedorModel>(pessoa.PessoaJuridica));
+                return OkRetornoBase(pessoa.PessoaFisica != null
+                    ? Mapper.Map<FornecedorModel>(pessoa.PessoaFisica)
+                    : Mapper.Map<FornecedorModel>(pessoa.PessoaJuridica));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("ObterListaFornecedor")]
         [Authorize(Roles = "NovaVenda")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpGet]
-        public Task<HttpResponseMessage> ObterListaFornecedor()
+        public IHttpActionResult ObterListaFornecedor()
         {
-            HttpResponseMessage response;
             try
             {
                 var listaPessoa = _pessoaService.ObterListaPessoaFisicaEJuridicaPorPapel(TipoPapelPessoaEnum.Fornecedor);
-                response = ReturnSuccess(Mapper.Map<List<FornecedorModel>>(listaPessoa));
+                return OkRetornoBase(Mapper.Map<List<FornecedorModel>>(listaPessoa));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("EditarFornecedor")]
@@ -145,10 +119,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
         [InvalidateCacheOutput("ObterListaFornecedor")]
         [HttpPut]
-        public Task<HttpResponseMessage> EditarFornecedor(FornecedorModel model)
+        public IHttpActionResult EditarFornecedor(FornecedorModel model)
         {
-            HttpResponseMessage response;
-
             try
             {
                 var pessoa = Mapper.Map<Pessoa>(model);
@@ -164,40 +136,30 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
                     pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
                 }
                 _pessoaService.AtualizarPessoa(pessoa);
-                response = ReturnSuccess();
+                return OkRetornoBase();
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
-        [Route("ExcluirFornecedor")]
+        [Route("ExcluirFornecedor/{codigoFornecedor:int:min(1)}")]
         [Authorize(Roles = "ExcluirFornecedor")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
         [InvalidateCacheOutput("ObterListaFornecedor")]
         [HttpDelete]
-        public Task<HttpResponseMessage> ExcluirFornecedor([FromBody]JObject jObject)
+        public IHttpActionResult ExcluirFornecedor(int codigoFornecedor)
         {
-            var codigoFornecedor = jObject["codigoFornecedor"].ToObject<int>();
-            HttpResponseMessage response;
             try
             {
                 _pessoaService.ExcluirPessoa(codigoFornecedor);
-                response = ReturnSuccess();
+                return OkRetornoBase();
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         protected override void Dispose(bool disposing)
