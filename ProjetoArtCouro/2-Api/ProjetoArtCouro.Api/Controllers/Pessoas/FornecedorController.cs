@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using AutoMapper;
-using Newtonsoft.Json.Linq;
 using ProjetoArtCouro.Api.Extensions;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
@@ -25,7 +24,9 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Route("CriarFornecedor")]
         [Authorize(Roles = "NovoFornecedor")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
+        [InvalidateCacheOutput("PesquisarFornecedor")]
         [InvalidateCacheOutput("ObterListaFornecedor")]
+        [InvalidateCacheOutput("ObterFornecedorPorCodigo")]
         [HttpPost]
         public IHttpActionResult CriarFornecedor(FornecedorModel model)
         {
@@ -57,6 +58,7 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
 
         [Route("PesquisarFornecedor")]
         [Authorize(Roles = "PesquisaFornecedor")]
+        [CacheOutput(ServerTimeSpan = 10000)]
         [HttpPost]
         public IHttpActionResult PesquisarFornecedor(PesquisaFornecedorModel model)
         {
@@ -78,12 +80,12 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
             }
         }
 
-        [Route("PesquisarFornecedorPorCodigo")]
+        [Route("ObterFornecedorPorCodigo/{codigoFornecedor:int:min(1)}")]
         [Authorize(Roles = "EditarFornecedor")]
-        [HttpPost]
-        public IHttpActionResult PesquisarFornecedorPorCodigo([FromBody]JObject jObject)
+        [CacheOutput(ServerTimeSpan = 10000)]
+        [HttpGet]
+        public IHttpActionResult ObterFornecedorPorCodigo(int codigoFornecedor)
         {
-            var codigoFornecedor = jObject["codigoFornecedor"].ToObject<int>();
             try
             {
                 var pessoa = _pessoaService.ObterPessoaPorCodigo(codigoFornecedor);
@@ -117,7 +119,9 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Route("EditarFornecedor")]
         [Authorize(Roles = "EditarFornecedor")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
+        [InvalidateCacheOutput("PesquisarFornecedor")]
         [InvalidateCacheOutput("ObterListaFornecedor")]
+        [InvalidateCacheOutput("ObterFornecedorPorCodigo")]
         [HttpPut]
         public IHttpActionResult EditarFornecedor(FornecedorModel model)
         {
@@ -147,7 +151,9 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Route("ExcluirFornecedor/{codigoFornecedor:int:min(1)}")]
         [Authorize(Roles = "ExcluirFornecedor")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
+        [InvalidateCacheOutput("PesquisarFornecedor")]
         [InvalidateCacheOutput("ObterListaFornecedor")]
+        [InvalidateCacheOutput("ObterFornecedorPorCodigo")]
         [HttpDelete]
         public IHttpActionResult ExcluirFornecedor(int codigoFornecedor)
         {

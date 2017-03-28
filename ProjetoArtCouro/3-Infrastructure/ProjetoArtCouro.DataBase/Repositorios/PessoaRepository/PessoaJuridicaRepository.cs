@@ -29,7 +29,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
 
         public List<PessoaJuridica> ObterLista()
         {
-            return _context.PessoasJuridicas.ToList();
+            return _context.PessoasJuridicas.AsNoTracking().ToList();
         }
 
         public List<PessoaJuridica> ObterLista(int codigo, string nome, string cnpj, string email, TipoPapelPessoaEnum papelCodigo)
@@ -38,7 +38,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
                 .Include("Pessoa")
                 .Include("Pessoa.Papeis")
                 .Include("Pessoa.MeiosComunicacao")
-                .Include("Pessoa.Enderecos")
+                .Include("Pessoa.Enderecos").AsNoTracking()
                         select pessoa;
 
             if (!codigo.Equals(0))

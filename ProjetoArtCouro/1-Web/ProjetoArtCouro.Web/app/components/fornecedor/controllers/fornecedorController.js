@@ -157,7 +157,7 @@
 
     function editarFornecedorCtrl($scope, $state, $stateParams, fornecedorService, tipoPapelPessoaEnum) {
         carregarModel($scope, fornecedorService);
-        fornecedorService.pesquisarFornecedorPorCodigo($stateParams.codigoFornecedor).then(function (data) {
+        fornecedorService.obterFornecedorPorCodigo($stateParams.codigoFornecedor).then(function (data) {
             $scope.model.CodigoFornecedor = data.codigo;
             $scope.model.CNPJ = data.cnpj;
             $scope.model.Contato = data.contato;

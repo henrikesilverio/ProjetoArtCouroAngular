@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Newtonsoft.Json.Linq;
 using ProjetoArtCouro.Api.Extensions;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
@@ -9,6 +8,7 @@ using ProjetoArtCouro.Domain.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using WebApi.OutputCache.V2;
 
 namespace ProjetoArtCouro.Api.Controllers.Pessoas
 {
@@ -25,6 +25,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Route("CriarCliente")]
         [Authorize(Roles = "NovoCliente")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
+        [InvalidateCacheOutput("PesquisarCliente")]
+        [InvalidateCacheOutput("ObterClientePorCodigo")]
         [HttpPost]
         public IHttpActionResult CriarCliente(ClienteModel model)
         {
@@ -56,6 +58,7 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
 
         [Route("PesquisarCliente")]
         [Authorize(Roles = "PesquisaCliente")]
+        [CacheOutput(ServerTimeSpan = 10000)]
         [HttpPost]
         public IHttpActionResult PesquisarCliente(PesquisaClienteModel model)
         {
@@ -77,12 +80,12 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
             }
         }
 
-        [Route("PesquisarClientePorCodigo")]
+        [Route("ObterClientePorCodigo/{codigoCliente:int:min(1)}")]
         [Authorize(Roles = "EditarCliente")]
-        [HttpPost]
-        public IHttpActionResult PesquisarClientePorCodigo([FromBody]JObject jObject)
+        [CacheOutput(ServerTimeSpan = 10000)]
+        [HttpGet]
+        public IHttpActionResult ObterClientePorCodigo(int codigoCliente)
         {
-            var codigoCliente = jObject["codigoCliente"].ToObject<int>();
             try
             {
                 var pessoa = _pessoaService.ObterPessoaPorCodigo(codigoCliente);
@@ -99,6 +102,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Route("EditarCliente")]
         [Authorize(Roles = "EditarCliente")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
+        [InvalidateCacheOutput("PesquisarCliente")]
+        [InvalidateCacheOutput("ObterClientePorCodigo")]
         [HttpPut]
         public IHttpActionResult EditarCliente(ClienteModel model)
         {
@@ -128,6 +133,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Route("ExcluirCliente/{codigoCliente:int:min(1)}")]
         [Authorize(Roles = "ExcluirCliente")]
         [InvalidateCacheOutputCustom("ObterListaPessoa", "PessoaController")]
+        [InvalidateCacheOutput("PesquisarCliente")]
+        [InvalidateCacheOutput("ObterClientePorCodigo")]
         [HttpDelete]
         public IHttpActionResult ExcluirCliente(int codigoCliente)
         {

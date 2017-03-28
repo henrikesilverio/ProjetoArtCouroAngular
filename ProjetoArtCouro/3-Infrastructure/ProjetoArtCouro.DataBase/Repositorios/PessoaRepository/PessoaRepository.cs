@@ -78,7 +78,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
             var query = from pessoa in _context.Pessoas
                 .Include("Papeis")
                 .Include("PessoaFisica")
-                .Include("PessoaJuridica")
+                .Include("PessoaJuridica").AsNoTracking()
                         select pessoa;
 
             if (papelCodigo != TipoPapelPessoaEnum.Nenhum)

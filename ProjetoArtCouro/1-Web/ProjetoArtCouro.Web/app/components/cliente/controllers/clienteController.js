@@ -157,7 +157,7 @@
 
     function editarClienteCtrl($scope, $state, $stateParams, clienteService, tipoPapelPessoaEnum) {
         carregarModel($scope, clienteService);
-        clienteService.pesquisarClientePorCodigo($stateParams.codigoCliente).then(function (data) {
+        clienteService.obterClientePorCodigo($stateParams.codigoCliente).then(function (data) {
             $scope.model.CodigoCliente = data.codigo;
             $scope.model.CNPJ = data.cnpj;
             $scope.model.Contato = data.contato;

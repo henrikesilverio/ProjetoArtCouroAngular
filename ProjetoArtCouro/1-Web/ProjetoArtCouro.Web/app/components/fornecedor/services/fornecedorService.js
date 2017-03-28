@@ -46,10 +46,9 @@
             return deferred.promise;
         }
 
-        function pesquisarFornecedorPorCodigo(codigoFornecedor) {
+        function obterFornecedorPorCodigo(codigoFornecedor) {
             var deferred = $q.defer();
-            $http.post(urls.BASE_API + "/api/Fornecedor/PesquisarFornecedorPorCodigo",
-                { "codigoFornecedor": codigoFornecedor })
+            $http.get(urls.BASE_API + "/api/Fornecedor/ObterFornecedorPorCodigo/" + codigoFornecedor)
                 .success(function (response) {
                     successWithReturn(deferred, response);
                 }).error(function (err) {
@@ -83,7 +82,7 @@
         return {
             criarFornecedor: criarFornecedor,
             editarFornecedor: editarFornecedor,
-            pesquisarFornecedorPorCodigo: pesquisarFornecedorPorCodigo,
+            obterFornecedorPorCodigo: obterFornecedorPorCodigo,
             obterListaEstado: obterListaEstado,
             obterListaEstadoCivil: obterListaEstadoCivil
         };

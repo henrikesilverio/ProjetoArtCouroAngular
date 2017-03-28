@@ -46,10 +46,9 @@
             return deferred.promise;
         }
 
-        function pesquisarClientePorCodigo(codigoCliente) {
+        function obterClientePorCodigo(codigoCliente) {
             var deferred = $q.defer();
-            $http.post(urls.BASE_API + "/api/Cliente/PesquisarClientePorCodigo",
-                { "codigoCliente": codigoCliente })
+            $http.get(urls.BASE_API + "/api/Cliente/ObterClientePorCodigo/" + codigoCliente)
                 .success(function (response) {
                     successWithReturn(deferred, response);
                 }).error(function (err) {
@@ -83,7 +82,7 @@
         return {
             criarCliente: criarCliente,
             editarCliente: editarCliente,
-            pesquisarClientePorCodigo: pesquisarClientePorCodigo,
+            obterClientePorCodigo: obterClientePorCodigo,
             obterListaEstado: obterListaEstado,
             obterListaEstadoCivil: obterListaEstadoCivil
         };
