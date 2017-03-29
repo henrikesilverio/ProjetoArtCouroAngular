@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
 using ProjetoArtCouro.Domain.Models.Enums;
@@ -23,9 +24,9 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         private readonly IPessoaJuridicaRepository _pessoaJuridicaRepository;
 
         public PessoaService(IEnderecoRepository enderecoRepository, IEstadoCivilRepository estadoCivilRepository,
-            IEstadoRepository estadoRepository, IMeioComunicacaoRepository meioComunicacaoRepository, IPessoaRepository pessoaRepository,
-            IPessoaFisicaRepository pessoaFisicaRepository, IPessoaJuridicaRepository pessoaJuridicaRepository,
-            IPapelRepository papelRepository)
+            IEstadoRepository estadoRepository, IMeioComunicacaoRepository meioComunicacaoRepository,
+            IPessoaRepository pessoaRepository, IPessoaFisicaRepository pessoaFisicaRepository,
+            IPessoaJuridicaRepository pessoaJuridicaRepository, IPapelRepository papelRepository)
         {
             _enderecoRepository = enderecoRepository;
             _estadoCivilRepository = estadoCivilRepository;
@@ -35,6 +36,39 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             _pessoaRepository = pessoaRepository;
             _pessoaFisicaRepository = pessoaFisicaRepository;
             _pessoaJuridicaRepository = pessoaJuridicaRepository;
+        }
+
+        public void Dispose()
+        {
+            _enderecoRepository.Dispose();
+            _estadoCivilRepository.Dispose();
+            _estadoRepository.Dispose();
+            _meioComunicacaoRepository.Dispose();
+            _papelRepository.Dispose();
+            _pessoaRepository.Dispose();
+            _pessoaFisicaRepository.Dispose();
+            _pessoaJuridicaRepository.Dispose();
+        }
+
+        public void CriarPessoa(PessoaModel model)
+        {
+            var pessoa = Mapper.Map<Pessoa>(model);
+            pessoa.Papeis = new List<Papel> { new Papel { PapelCodigo = model.PapelPessoa } };
+            //Remove informações que não vão ser gravadas.
+            ((List<MeioComunicacao>)pessoa.MeiosComunicacao)
+                .RemoveAll(x => string.IsNullOrEmpty(x.MeioComunicacaoNome)
+                                && x.MeioComunicacaoCodigo.Equals(0));
+
+            if (model.EPessoaFisica)
+            {
+                pessoa.PessoaFisica = Mapper.Map<PessoaFisica>(model);
+                CriarPessoaFisica(pessoa);
+            }
+            else
+            {
+                pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
+                CriarPessoaJuridica(pessoa);
+            }
         }
 
         public void CriarPessoaFisica(Pessoa pessoa)
@@ -48,7 +82,10 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             AssertionConcern.AssertArgumentNotNull(firstOrDefault, string.Format(Erros.NullParameter, "Papeis"));
             if (firstOrDefault != null)
             {
-                pessoa.Papeis = new List<Papel>() { _papelRepository.ObterPorCodigo(firstOrDefault.PapelCodigo) };
+                pessoa.Papeis = new List<Papel>
+                {
+                    _papelRepository.ObterPorCodigo(firstOrDefault.PapelCodigo)
+                };
             }
 
             if (existePessoaFisica != null)
@@ -76,7 +113,10 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             AssertionConcern.AssertArgumentNotNull(firstOrDefault, string.Format(Erros.NullParameter, "Papeis"));
             if (firstOrDefault != null)
             {
-                pessoa.Papeis = new List<Papel>() { _papelRepository.ObterPorCodigo(firstOrDefault.PapelCodigo) };
+                pessoa.Papeis = new List<Papel>
+                {
+                    _papelRepository.ObterPorCodigo(firstOrDefault.PapelCodigo)
+                };
             }
 
             if (existePessoaJuridica != null)
@@ -91,8 +131,22 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             }
         }
 
-        public void AtualizarPessoa(Pessoa pessoa)
+        public void AtualizarPessoa(PessoaModel model)
         {
+            var pessoa = Mapper.Map<Pessoa>(model);
+            //Remove informações que não vão ser gravadas.
+            ((List<MeioComunicacao>) pessoa.MeiosComunicacao)
+                .RemoveAll(x => string.IsNullOrEmpty(x.MeioComunicacaoNome)
+                                && x.MeioComunicacaoCodigo.Equals(0));
+            if (model.EPessoaFisica)
+            {
+                pessoa.PessoaFisica = Mapper.Map<PessoaFisica>(model);
+            }
+            else
+            {
+                pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
+            }
+
             var pessoaAtual = _pessoaRepository.ObterPorCodigoComPessoaCompleta(pessoa.PessoaCodigo);
             AssertionConcern.AssertArgumentNotNull(pessoaAtual, Erros.PersonDoesNotExist);
 
@@ -102,10 +156,14 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
                 pessoaAtual.PessoaFisica.RG = pessoa.PessoaFisica.RG;
                 pessoaAtual.PessoaFisica.Sexo = pessoa.PessoaFisica.Sexo;
                 pessoaAtual.PessoaFisica.EstadoCivil = _estadoCivilRepository.ObterPorCodigo(pessoa.PessoaFisica.EstadoCivil.EstadoCivilCodigo);
+                pessoaAtual.Validar();
+                pessoaAtual.PessoaFisica.Validar();
             }
             else
             {
                 pessoaAtual.PessoaJuridica.Contato = pessoa.PessoaJuridica.Contato;
+                pessoaAtual.Validar();
+                pessoaAtual.PessoaJuridica.Validar();
             }
 
             //Adiciona um novo endereço ou modifica o exitente para principal
@@ -230,7 +288,7 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
                 return;
             }
             AssertionConcern.AssertArgumentNotEquals(meioComunicacaoAtualizar, null, Erros.EmptyPhone);
-            if (meioComunicacaoAtualizar != null && meioComunicacaoAtualizar.MeioComunicacaoCodigo.Equals(0) && 
+            if (meioComunicacaoAtualizar != null && meioComunicacaoAtualizar.MeioComunicacaoCodigo.Equals(0) &&
                 !pessoaAtual.MeiosComunicacao.Any(x => x.MeioComunicacaoNome.Equals(meioComunicacaoAtualizar.MeioComunicacaoNome)))
             {
                 meioComunicacaoAtualizar.Pessoa = pessoaAtual;
@@ -245,18 +303,6 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
                     item.Principal = item.MeioComunicacaoCodigo.Equals(meioComunicacaoAtualizar.MeioComunicacaoCodigo);
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            _enderecoRepository.Dispose();
-            _estadoCivilRepository.Dispose();
-            _estadoRepository.Dispose();
-            _meioComunicacaoRepository.Dispose();
-            _papelRepository.Dispose();
-            _pessoaRepository.Dispose();
-            _pessoaFisicaRepository.Dispose();
-            _pessoaJuridicaRepository.Dispose();
         }
     }
 }

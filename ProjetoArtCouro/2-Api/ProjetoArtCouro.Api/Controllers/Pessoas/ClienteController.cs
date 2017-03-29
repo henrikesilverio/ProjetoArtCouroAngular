@@ -2,7 +2,6 @@
 using ProjetoArtCouro.Api.Extensions;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
-using ProjetoArtCouro.Domain.Entities.Pessoas;
 using ProjetoArtCouro.Domain.Models.Cliente;
 using ProjetoArtCouro.Domain.Models.Enums;
 using System;
@@ -32,22 +31,7 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         {
             try
             {
-                var pessoa = Mapper.Map<Pessoa>(model);
-                pessoa.Papeis = new List<Papel> { new Papel { PapelCodigo = model.PapelPessoa } };
-                //Remove informações que não vão ser gravadas.
-                ((List<MeioComunicacao>)pessoa.MeiosComunicacao).RemoveAll(
-                    x => string.IsNullOrEmpty(x.MeioComunicacaoNome) && x.MeioComunicacaoCodigo.Equals(0));
-
-                if (model.EPessoaFisica)
-                {
-                    pessoa.PessoaFisica = Mapper.Map<PessoaFisica>(model);
-                    _pessoaService.CriarPessoaFisica(pessoa);
-                }
-                else
-                {
-                    pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
-                    _pessoaService.CriarPessoaJuridica(pessoa);
-                }
+                _pessoaService.CriarPessoa(model);
                 return OkRetornoBase();
             }
             catch (Exception ex)
@@ -109,19 +93,7 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         {
             try
             {
-                var pessoa = Mapper.Map<Pessoa>(model);
-                //Remove informações que não vão ser gravadas.
-                ((List<MeioComunicacao>)pessoa.MeiosComunicacao).RemoveAll(
-                    x => string.IsNullOrEmpty(x.MeioComunicacaoNome) && x.MeioComunicacaoCodigo.Equals(0));
-                if (model.EPessoaFisica)
-                {
-                    pessoa.PessoaFisica = Mapper.Map<PessoaFisica>(model);
-                }
-                else
-                {
-                    pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
-                }
-                _pessoaService.AtualizarPessoa(pessoa);
+                _pessoaService.AtualizarPessoa(model);
                 return OkRetornoBase();
             }
             catch (Exception ex)

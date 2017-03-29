@@ -45,7 +45,10 @@
     <Compile Include="Resources\Mensagens.Designer.cs" />
     <Compile Include="Validation\AssertionConcern.cs" />
     <Compile Include="Validation\EmailAssertionConcern.cs" />
+    <Compile Include="Validation\Notifiable.cs" />
+    <Compile Include="Validation\Notification.cs" />
     <Compile Include="Validation\PasswordAssertionConcern.cs" />
+    <Compile Include="Validation\ValidationContract.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Erros.resx" />

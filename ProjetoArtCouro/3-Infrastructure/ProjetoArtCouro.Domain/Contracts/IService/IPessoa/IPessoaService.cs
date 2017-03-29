@@ -17,9 +17,10 @@ namespace ProjetoArtCouro.Domain.Contracts.IService.IPessoa
         List<PessoaFisica> PesquisarPessoaFisica(int codigo, string nome, string cpf, string email, TipoPapelPessoaEnum papelCodigo);
         List<PessoaJuridica> PesquisarPessoaJuridica(int codigo, string nome, string cnpj, string email, TipoPapelPessoaEnum papelCodigo);
         Pessoa ObterPessoaPorCodigo(int codigo);
+        void CriarPessoa(PessoaModel model);
         void CriarPessoaFisica(Pessoa pessoa);
         void CriarPessoaJuridica(Pessoa pessoa);
-        void AtualizarPessoa(Pessoa pessoa);
+        void AtualizarPessoa(PessoaModel pessoa);
         void ExcluirPessoa(int pessoaCodigo);
         List<PessoaModel> TesteProjecao();
     }

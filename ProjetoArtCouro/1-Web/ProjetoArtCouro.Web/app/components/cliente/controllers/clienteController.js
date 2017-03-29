@@ -7,7 +7,7 @@
             "Nome": "",
             "CPF": "",
             "RG": "",
-            "EPessoaFisica": "True",
+            "EPessoaFisica": true,
             "EstadoCivil": "",
             "EstadosCivis": [],
             "Endereco": "",
@@ -158,6 +158,7 @@
     function editarClienteCtrl($scope, $state, $stateParams, clienteService, tipoPapelPessoaEnum) {
         carregarModel($scope, clienteService);
         clienteService.obterClientePorCodigo($stateParams.codigoCliente).then(function (data) {
+            $scope.model.EPessoaFisica = data.ePessoaFisica;
             $scope.model.CodigoCliente = data.codigo;
             $scope.model.CNPJ = data.cnpj;
             $scope.model.Contato = data.contato;
@@ -166,7 +167,7 @@
             $scope.model.CPF = data.cpf;
             $scope.model.RG = data.rg;
             $scope.model.Sexo = data.sexo;
-            $scope.model.EstadoCivil = data.estadoCivilId.toString();
+            $scope.model.EstadoCivil = data.ePessoaFisica ? data.estadoCivilId.toString() : "";
             $scope.model.Endereco = data.endereco.enderecoId.toString();
             $scope.model.Telefone = data.meioComunicacao.telefoneId.toString();
             $scope.model.Enderecos = [];

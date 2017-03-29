@@ -127,19 +127,7 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         {
             try
             {
-                var pessoa = Mapper.Map<Pessoa>(model);
-                //Remove informações que não vão ser gravadas.
-                ((List<MeioComunicacao>)pessoa.MeiosComunicacao).RemoveAll(
-                    x => string.IsNullOrEmpty(x.MeioComunicacaoNome) && x.MeioComunicacaoCodigo.Equals(0));
-                if (model.EPessoaFisica)
-                {
-                    pessoa.PessoaFisica = Mapper.Map<PessoaFisica>(model);
-                }
-                else
-                {
-                    pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
-                }
-                _pessoaService.AtualizarPessoa(pessoa);
+                _pessoaService.AtualizarPessoa(model);
                 return OkRetornoBase();
             }
             catch (Exception ex)

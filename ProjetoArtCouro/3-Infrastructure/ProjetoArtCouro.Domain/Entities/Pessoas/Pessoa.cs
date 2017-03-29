@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Entities.Vendas;
-using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Pessoas
 {
-    public class Pessoa
+    public class Pessoa : Notifiable
     {
         public Guid PessoaId { get; set; }
         public int PessoaCodigo { get; set; }
@@ -22,10 +22,15 @@ namespace ProjetoArtCouro.Domain.Entities.Pessoas
 
         public void Validar()
         {
-            AssertionConcern.AssertArgumentNotEmpty(Nome, Erros.EmptyName);
-            AssertionConcern.AssertArgumentNotNull(Papeis, Erros.PaperEmptyPerson);
-            AssertionConcern.AssertArgumentNotNull(MeiosComunicacao, Erros.MeansOfCommunicationEmpty);
-            AssertionConcern.AssertArgumentNotNull(Enderecos, Erros.EmptyAddress);
+            new ValidationContract<Pessoa>(this)
+                .IsRequired(x => x.Nome, Erros.EmptyName)
+                .IsNotNull(x => x.Papeis, Erros.PaperEmptyPerson)
+                .IsNotNull(x => x.MeiosComunicacao, Erros.MeansOfCommunicationEmpty)
+                .IsNotNull(x => x.Enderecos, Erros.EmptyAddress);
+            if (!IsValid())
+            {
+                throw new InvalidOperationException(GetMergeNotifications());
+            }
         }
     }
 }

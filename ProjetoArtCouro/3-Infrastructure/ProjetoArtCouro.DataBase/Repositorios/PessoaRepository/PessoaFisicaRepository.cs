@@ -35,10 +35,11 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
         public List<PessoaFisica> ObterLista(int codigo, string nome, string cpf, string email, TipoPapelPessoaEnum papelCodigo)
         {
             var query = from pessoa in _context.PessoasFisicas
-                .Include("Pessoa")
-                .Include("Pessoa.Papeis")
-                .Include("Pessoa.MeiosComunicacao")
-                .Include("Pessoa.Enderecos").AsNoTracking()
+                    .Include("Pessoa")
+                    .Include("Pessoa.Papeis")
+                    .Include("Pessoa.MeiosComunicacao")
+                    .Include("Pessoa.Enderecos")
+                    .AsNoTracking()
                 select pessoa;
 
             if (!codigo.Equals(0))

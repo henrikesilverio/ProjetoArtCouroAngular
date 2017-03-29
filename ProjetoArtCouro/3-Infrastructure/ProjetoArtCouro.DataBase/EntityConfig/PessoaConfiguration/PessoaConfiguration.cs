@@ -21,6 +21,8 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.PessoaConfiguration
                 .HasMaxLength(150)
                 .HasColumnType("varchar");
 
+            Ignore(x => x.Notifications);
+
             //Relacionamento 1 : N
             HasMany(x => x.Enderecos)
                 .WithRequired(x => x.Pessoa)

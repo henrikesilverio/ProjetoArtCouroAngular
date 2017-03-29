@@ -51,6 +51,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
                 .Include("MeiosComunicacao")
                 .Include("Enderecos")
                 .Include("Enderecos.Estado")
+                .AsNoTracking()
                 .FirstOrDefault(x => x.PessoaFisica.CPF.Equals(cpf));
         }
 
@@ -62,6 +63,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
                 .Include("MeiosComunicacao")
                 .Include("Enderecos")
                 .Include("Enderecos.Estado")
+                .AsNoTracking()
                 .FirstOrDefault(x => x.PessoaJuridica.CNPJ.Equals(cnpj));
         }
 
@@ -70,16 +72,18 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
             return _context.Pessoas
                 .Include("PessoaFisica")
                 .Include("PessoaJuridica")
+                .AsNoTracking()
                 .ToList();
         }
 
         public List<Pessoa> ObterListaComPessoaFisicaEJuridicaPorPapel(TipoPapelPessoaEnum papelCodigo)
         {
             var query = from pessoa in _context.Pessoas
-                .Include("Papeis")
-                .Include("PessoaFisica")
-                .Include("PessoaJuridica").AsNoTracking()
-                        select pessoa;
+                    .Include("Papeis")
+                    .Include("PessoaFisica")
+                    .Include("PessoaJuridica")
+                    .AsNoTracking()
+                select pessoa;
 
             if (papelCodigo != TipoPapelPessoaEnum.Nenhum)
             {
