@@ -14,17 +14,17 @@
                                     <label class="control-label">Tipo de pessoa</label>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="EPessoaFisica" value="True" ng-model="model.EPessoaFisica" ng-disabled="ehEdicao">
+                                            <input type="radio" name="EPessoaFisica" ng-value="true" ng-model="model.EPessoaFisica" ng-disabled="ehEdicao">
                                             Pessoa Física
                                         </label>
                                         <label>
-                                            <input type="radio" name="EPessoaFisica" value="False" ng-model="model.EPessoaFisica" ng-disabled="ehEdicao">
+                                            <input type="radio" name="EPessoaFisica" ng-value="false" ng-model="model.EPessoaFisica" ng-disabled="ehEdicao">
                                             Pessoa Juridica
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica == 'True'">
+                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica">
                                 <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8"
                                      ng-class="{'has-error': (submitted || fornecedor.Nome.$dirty) && fornecedor.Nome.$error.required}">
                                     <label class="control-label" for="Nome">Nome</label>
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica == 'True'">
+                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica">
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || fornecedor.RG.$dirty) && fornecedor.RG.$error.required}">
                                     <label class="control-label" for="RG">RG</label>
@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica == 'False'">
+                            <div class="row animated fadeInUp" ng-if="!model.EPessoaFisica">
                                 <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8"
                                      ng-class="{'has-error': (submitted || fornecedor.RazaoSocial.$dirty) && fornecedor.RazaoSocial.$error.required}">
                                     <label class="control-label" for="RazaoSocial">Nome</label>
@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica == 'False'">
+                            <div class="row animated fadeInUp" ng-if="!model.EPessoaFisica">
                                 <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6"
                                      ng-class="{'has-error': (submitted || fornecedor.Contato.$dirty) && fornecedor.Contato.$error.required}">
                                     <label class="control-label" for="Contato">Contato</label>

@@ -20,6 +20,10 @@
         return data.meioComunicacao.email || "N/I";
     }
 
+    function nome(data) {
+        return data.nome || data.razaoSocial;
+    }
+
     function modalExcluirCtrl($scope, $uibModalInstance, excluir) {
         $scope.confirmModalModel = {
             title: "Atenção!",
@@ -40,7 +44,7 @@
             "Nome": "",
             "CPFCNPJ": "",
             "Email": "",
-            "EPessoaFisica": "True"
+            "EPessoaFisica": true
         };
         $scope.nomeTabela = "Tabela de Fornecedores";
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function () {
@@ -85,7 +89,7 @@
 
         $scope.dtColumns = [
             DTColumnBuilder.newColumn("codigo").withTitle("Código").withOption("width", "10%"),
-            DTColumnBuilder.newColumn("nome").withTitle("Nome").withOption("width", "35%"),
+            DTColumnBuilder.newColumn(nome).withTitle("Nome").withOption("width", "35%"),
             DTColumnBuilder.newColumn(cpfOrCnpj).withTitle("CPF/CNPJ").withOption("width", "20%"),
             DTColumnBuilder.newColumn(email).withTitle("Email").withOption("width", "20%"),
             DTColumnBuilder.newColumn(actionsHtml).withTitle("Ações").withOption("width", "15%").withOption("class", "text-center").notSortable()

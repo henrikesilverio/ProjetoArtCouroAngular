@@ -7,7 +7,7 @@
             "Nome": "",
             "CPF": "",
             "RG": "",
-            "EPessoaFisica": "True",
+            "EPessoaFisica": true,
             "EstadoCivil": "",
             "EstadosCivis": [],
             "Endereco": "",
@@ -125,7 +125,7 @@
         $scope.nomeCabecalho = "Novo Fornecedor";
         $scope.salvar = function (valido) {
             if (valido) {
-                var model = $scope.model;
+                var model = angular.copy($scope.model);
                 model["EstadoCivilId"] = model.EstadoCivil;
                 model["PapelPessoa"] = tipoPapelPessoaEnum.FORNECEDOR;
                 model["Endereco"] = {
@@ -158,6 +158,7 @@
     function editarFornecedorCtrl($scope, $state, $stateParams, fornecedorService, tipoPapelPessoaEnum) {
         carregarModel($scope, fornecedorService);
         fornecedorService.obterFornecedorPorCodigo($stateParams.codigoFornecedor).then(function (data) {
+            $scope.model.EPessoaFisica = data.ePessoaFisica;
             $scope.model.CodigoFornecedor = data.codigo;
             $scope.model.CNPJ = data.cnpj;
             $scope.model.Contato = data.contato;
@@ -166,7 +167,7 @@
             $scope.model.CPF = data.cpf;
             $scope.model.RG = data.rg;
             $scope.model.Sexo = data.sexo;
-            $scope.model.EstadoCivil = data.estadoCivilId.toString();
+            $scope.model.EstadoCivil = data.ePessoaFisica ? data.estadoCivilId.toString() : "";
             $scope.model.Endereco = data.endereco.enderecoId.toString();
             $scope.model.Telefone = data.meioComunicacao.telefoneId.toString();
             $scope.model.Enderecos = [];
@@ -180,7 +181,7 @@
         $scope.nomeCabecalho = "Editar Fornecedor";
         $scope.salvar = function (valido) {
             if (valido) {
-                var model = $scope.model;
+                var model = angular.copy($scope.model);
                 model["EstadoCivilId"] = model.EstadoCivil;
                 model["PapelPessoa"] = tipoPapelPessoaEnum.FORNECEDOR;
                 model["Endereco"] = {
