@@ -146,7 +146,7 @@
                                      ng-class="{'has-error': (submitted || fornecedor.Numero.$dirty) && fornecedor.Numero.$error.required}">
                                     <label class="control-label" for="Numero">Numero</label>
                                     <input type="text" class="form-control" id="Numero" name="Numero" placeholder="Numero"
-                                           ng-model="model.Numero" maxlength="8" required>
+                                           ng-model="model.Numero" maxlength="6" required>
                                     <div ng-show="(submitted || fornecedor.Numero.$dirty) && fornecedor.Numero.$error.required" class="error">
                                         <span>Campo Obrigatório.</span>
                                     </div>

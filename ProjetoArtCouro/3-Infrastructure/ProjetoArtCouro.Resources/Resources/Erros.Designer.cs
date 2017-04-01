@@ -250,6 +250,24 @@ namespace ProjetoArtCouro.Resources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O campo {0} é obrigatório.
+        /// </summary>
+        public static string FieldIsRequired {
+            get {
+                return ResourceManager.GetString("FieldIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {0} tem no maximo {1} caracteres.
+        /// </summary>
+        public static string FieldMustHaveMaxCharacters {
+            get {
+                return ResourceManager.GetString("FieldMustHaveMaxCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forma de pagamento não existe.
         /// </summary>
         public static string FormOfPaymentDoesNotExist {

@@ -23,7 +23,8 @@ namespace ProjetoArtCouro.Domain.Entities.Pessoas
         public void Validar()
         {
             new ValidationContract<Pessoa>(this)
-                .IsRequired(x => x.Nome, Erros.EmptyName)
+                .IsRequired(x => x.Nome)
+                .HasMaxLenght(x => x.Nome, 150)
                 .IsNotNull(x => x.Papeis, Erros.PaperEmptyPerson)
                 .IsNotNull(x => x.MeiosComunicacao, Erros.MeansOfCommunicationEmpty)
                 .IsNotNull(x => x.Enderecos, Erros.EmptyAddress);
