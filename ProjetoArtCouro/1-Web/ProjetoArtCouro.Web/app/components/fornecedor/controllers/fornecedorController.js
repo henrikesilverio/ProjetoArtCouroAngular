@@ -119,10 +119,45 @@
         });
     }
 
+    function eventos($scope) {
+        $scope.limparCamposTipoPessoa = function () {
+            $scope.model.Nome = "";
+            $scope.model.CPF = "";
+            $scope.model.CNPJ = "";
+            $scope.model.Contato = "";
+            $scope.model.RG = "";
+            $scope.model.Sexo = "";
+            $scope.model.EstadoCivil = "";
+        }
+
+        $scope.limparCamposEndereco = function () {
+            $scope.model.Logradouro = "";
+            $scope.model.Numero = "";
+            $scope.model.Bairro = "";
+            $scope.model.Complemento = "";
+            $scope.model.Cidade = "";
+            $scope.model.CEP = "";
+            $scope.model.Estado = "";
+        }
+
+        $scope.limparCampoNovoTelefone = function () {
+            $scope.model.NovoTelefone = "";
+        }
+
+        $scope.limparCampoNovoCelular = function () {
+            $scope.model.NovoCelular = "";
+        }
+
+        $scope.limparCampoEmail = function () {
+            $scope.model.NovoEmail = "";
+        }
+    }
+
     function novoFornecedorCtrl($scope, $state, fornecedorService, tipoPapelPessoaEnum) {
         carregarModel($scope, fornecedorService);
         $scope.ehEdicao = false;
         $scope.nomeCabecalho = "Novo Fornecedor";
+        eventos($scope);
         $scope.salvar = function (valido) {
             if (valido) {
                 var model = angular.copy($scope.model);
@@ -179,6 +214,7 @@
         });
         $scope.ehEdicao = true;
         $scope.nomeCabecalho = "Editar Fornecedor";
+        eventos($scope);
         $scope.salvar = function (valido) {
             if (valido) {
                 var model = angular.copy($scope.model);

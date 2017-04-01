@@ -43,11 +43,14 @@
             "CodigoFornecedor": "",
             "Nome": "",
             "CPFCNPJ": "",
+            "CPF": "",
+            "CNPJ": "",
             "Email": "",
             "EPessoaFisica": true
         };
         $scope.nomeTabela = "Tabela de Fornecedores";
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function () {
+            $scope.model.CPFCNPJ = $scope.model.EPessoaFisica ? $scope.model.CPF : $scope.model.CNPJ;
             return pesquisaFornecedorService.pesquisaFornecedor($scope.model);
         })
             .withBootstrap()
@@ -60,6 +63,10 @@
                 "t<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>")
             .withLanguageSource("app/shared/json/dataTableLanguage.json");
 
+        $scope.liparCamposCPFCNPJ = function () {
+            $scope.model.CPF = "";
+            $scope.model.CNPJ = "";
+        }
 
         $scope.editar = function (codigoFornecedor) {
             if (codigoFornecedor) {

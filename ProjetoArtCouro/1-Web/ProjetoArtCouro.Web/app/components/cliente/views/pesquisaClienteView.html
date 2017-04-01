@@ -8,34 +8,59 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form role="form">
+                        <form role="form" name="pesquisaCliente">
                             <div class="row">
-                                <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-7">
+                                <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8">
                                     <label class="control-label" for="Nome">Nome</label>
-                                    <input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" ng-model="model.Nome">
+                                    <input type="text" class="form-control" id="Nome" name="Nome" placeholder="Nome" 
+                                           ng-model="model.Nome" maxlength="80">
                                 </div>
-                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-5">
-                                    <label class="control-label" for="CPFCNPJ">CPF/CNPJ</label>
-                                    <input type="text" class="form-control" id="CPFCNPJ" name="CPFCNPJ" placeholder="CPF/CNPJ" ng-model="model.CPFCNPJ">
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4" 
+                                     ng-if="model.EPessoaFisica" ng-class="{'has-error': pesquisaCliente.CPF.$dirty && pesquisaCliente.CPF.$error.cpfValido}">
+                                    <label class="control-label" for="CPF">CPF</label>
+                                    <input type="text" class="form-control" id="CPF" name="CPF" placeholder="CPF" 
+                                           ng-model="model.CPF" maxlength="14" cpf-mask cpf-valido>
+                                    <div ng-show="pesquisaCliente.CPF.$dirty && pesquisaCliente.CPF.$error.cpfValido" class="error">
+                                        <span ng-show="pesquisaCliente.CPF.$error.cpfValido">CPF inválido.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4" 
+                                     ng-if="!model.EPessoaFisica" ng-class="{'has-error': pesquisaCliente.CNPJ.$dirty && pesquisaCliente.CNPJ.$error.cnpjValido}">
+                                    <label class="control-label" for="CNPJ">CNPJ</label>
+                                    <input type="text" class="form-control" id="CNPJ" name="CNPJ" placeholder="CNPJ"
+                                           ng-model="model.CNPJ" maxlength="18" cnpj-mask cnpj-valido>
+                                    <div ng-show="pesquisaCliente.CNPJ.$dirty && pesquisaCliente.CNPJ.$error.cnpjValido" class="error">
+                                        <span ng-show="pesquisaCliente.CNPJ.$error.cnpjValido">CNPJ inválido.</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
+                                     ng-class="{'has-error': pesquisaCliente.Email.$dirty && pesquisaCliente.Email.$error.emailValido}">
                                     <label class="control-label" for="Email">Email</label>
-                                    <input type="text" class="form-control" id="Email" name="Email" placeholder="Email" ng-model="model.Email">
+                                    <input type="text" class="form-control" id="Email" name="Email" placeholder="Email"
+                                           ng-model="model.Email" maxlength="50" email-valido>
+                                    <div ng-show="pesquisaCliente.Email.$dirty && pesquisaCliente.Email.$error.emailValido" class="error">
+                                        <span>Email inválido.</span>
+                                    </div>
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <label class="control-label" for="CodigoCliente">Código</label>
-                                    <input type="text" class="form-control" id="CodigoCliente" name="CodigoCliente" placeholder="Código" ng-model="model.CodigoCliente">
+                                    <input type="text" class="form-control" id="CodigoCliente" name="CodigoCliente" 
+                                           placeholder="Código" ng-model="model.CodigoCliente" maxlength="9">
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <label class="control-label">Tipo de pessoa</label>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="EPessoaFisica" ng-value="true" checked="checked" ng-model="model.EPessoaFisica">Pessoa Física
+                                            <input type="radio" name="EPessoaFisica" ng-value="true" 
+                                                   ng-model="model.EPessoaFisica" ng-change="liparCamposCPFCNPJ()">
+                                            Pessoa Física
                                         </label>
                                         <label>
-                                            <input type="radio" name="EPessoaFisica" ng-value="false" ng-model="model.EPessoaFisica">Pessoa Juridica
+                                            <input type="radio" name="EPessoaFisica" ng-value="false" 
+                                                   ng-model="model.EPessoaFisica" ng-change="liparCamposCPFCNPJ()">
+                                            Pessoa Juridica
                                         </label>
                                     </div>
                                 </div>
@@ -47,7 +72,8 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-lg-12">
-                        <button ng-click="pesquisar()" class="btn btn-primary pull-right">Pesquisar</button>
+                        <button class="btn btn-primary pull-right" ng-click="pesquisar()" 
+                                ng-disabled="pesquisaCliente.$invalid">Pesquisar</button>
                         <button ui-sref="cadastro.novoCliente" class="btn btn-success pull-right">Novo</button>
                     </div>
                 </div>
@@ -65,8 +91,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="table table-bordered table-hover">
-                        </table>
+                        <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="table table-bordered table-hover"></table>
                     </div>
                 </div>
             </div>

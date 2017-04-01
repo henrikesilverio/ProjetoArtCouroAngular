@@ -77,7 +77,7 @@
         if (value.length === 0) {
             return true;
         }
-        
+
         if (value.length !== 14) {
             return false;
         }
@@ -131,118 +131,130 @@
     }
 
     angular.module("sbAdminApp")
-        .directive("cpfMask", function() {
+        .directive("cpfMask", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask("000.000.000-00");
                 }
             }
-        }).directive("cnpjMask", function() {
+        }).directive("cnpjMask", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask("00.000.000/0000-00");
                 }
             }
-        }).directive("cpfCnpjMask", function() {
+        }).directive("cpfCnpjMask", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask(cpfCnpjMaskBehavior, documentoOptions);
                 }
             }
-        }).directive("cepMask", function() {
+        }).directive("cepMask", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask("00000-000");
                 }
             }
-        }).directive("telefoneMask", function() {
+        }).directive("telefoneMask", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask("(00) 0000-0000");
                 }
             }
-        }).directive("dataMask", function() {
+        }).directive("dataMask", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask("00/00/0000");
                 }
             }
-        }).directive("somenteLetraMask", function() {
+        }).directive("somenteLetraMask", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
                 }
             }
-        }).directive("somenteCinquentaLetrasMask", function() {
+        }).directive("somenteCinquentaLetrasMask", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
                 }
             }
-        }).directive("somenteDoisDigitos", function() {
+        }).directive("somenteDoisDigitos", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask("00");
                 }
             }
-        }).directive("somenteVinteDigitos", function() {
+        }).directive("somenteVinteDigitos", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask("00000000000000000000");
                 }
             }
-        }).directive("milharMask", function() {
+        }).directive("milharMask", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask("0.000.000", { reverse: true });
                 }
             }
-        }).directive("celularMask", function() {
+        }).directive("celularMask", function () {
             return {
                 restrict: "A",
-                link: function(scope, element) {
+                link: function (scope, element) {
                     $(element).mask(spMaskBehavior, spOptions);
                 }
             }
-        }).directive("cpfValido", function() {
+        }).directive("cpfValido", function () {
             return {
                 restrict: "A",
                 require: "ngModel",
-                link: function(scope, element, attrs, ctrl) {
-                    scope.$watch(attrs.ngModel, function() {
-                        ctrl.$setValidity("cpfValido", validationCPF(element[0].value));
-                    });
-                }
-            }
-        }).directive("cnpjValido", function() {
-            return {
-                restrict: "A",
-                require: "ngModel",
-                link: function(scope, element, attrs, ctrl) {
-                    scope.$watch(attrs.ngModel, function() {
-                        ctrl.$setValidity("cnpjValido", validationCNPJ(element[0].value));
-                    });
-                }
-            }
-        }).directive("emailValido", function() {
-            return {
-                restrict: "A",
-                require: "ngModel",
-                link: function(scope, element, attrs, ctrl) {
+                link: function (scope, element, attrs, ctrl) {
                     scope.$watch(attrs.ngModel, function () {
-                        var regexPattern = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/g;
-                        ctrl.$setValidity("emailValido", regexPattern.test(element[0].value));
+                        if (element[0].value === "") {
+                            ctrl.$setValidity("cpfValido", true);
+                        } else {
+                            ctrl.$setValidity("cpfValido", validationCPF(element[0].value));
+                        }
+                    });
+                }
+            }
+        }).directive("cnpjValido", function () {
+            return {
+                restrict: "A",
+                require: "ngModel",
+                link: function (scope, element, attrs, ctrl) {
+                    scope.$watch(attrs.ngModel, function () {
+                        if (element[0].value === "") {
+                            ctrl.$setValidity("cnpjValido", true);
+                        } else {
+                            ctrl.$setValidity("cnpjValido", validationCNPJ(element[0].value));
+                        }
+                    });
+                }
+            }
+        }).directive("emailValido", function () {
+            return {
+                restrict: "A",
+                require: "ngModel",
+                link: function (scope, element, attrs, ctrl) {
+                    scope.$watch(attrs.ngModel, function () {
+                        if (element[0].value === "") {
+                            ctrl.$setValidity("emailValido", true);
+                        } else {
+                            var regexPattern = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/g;
+                            ctrl.$setValidity("emailValido", regexPattern.test(element[0].value));
+                        }
                     });
                 }
             }

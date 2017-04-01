@@ -14,11 +14,13 @@
                                     <label class="control-label">Tipo de pessoa</label>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="EPessoaFisica" ng-value="true" ng-model="model.EPessoaFisica" ng-disabled="ehEdicao">
+                                            <input type="radio" name="EPessoaFisica" ng-value="true" 
+                                                   ng-model="model.EPessoaFisica" ng-disabled="ehEdicao" ng-change="limparCamposTipoPessoa()">
                                             Pessoa Física
                                         </label>
                                         <label>
-                                            <input type="radio" name="EPessoaFisica" ng-value="false" ng-model="model.EPessoaFisica" ng-disabled="ehEdicao">
+                                            <input type="radio" name="EPessoaFisica" ng-value="false" 
+                                                   ng-model="model.EPessoaFisica" ng-disabled="ehEdicao" ng-change="limparCamposTipoPessoa()">
                                             Pessoa Juridica
                                         </label>
                                     </div>
@@ -120,7 +122,8 @@
                                 <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8"
                                      ng-class="{'has-error': (submitted || cliente.Endereco.$dirty) && cliente.Endereco.$error.required}">
                                     <label class="control-label" for="Endereco">Endereços</label>
-                                    <select class="form-control" id="Endereco" name="Endereco" ng-model="model.Endereco" required>
+                                    <select class="form-control" id="Endereco" name="Endereco" 
+                                            ng-model="model.Endereco" ng-change="limparCamposEndereco()" required>
                                         <option ng-selected="{{opcao.id == model.Endereco}}"
                                                 ng-repeat="opcao in model.Enderecos"
                                                 value="{{opcao.id}}">
@@ -206,7 +209,8 @@
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.Telefone.$dirty) && cliente.Telefone.$error.required}">
                                     <label class="control-label" for="Telefone">Telefones</label>
-                                    <select class="form-control" id="Telefone" name="Telefone" ng-model="model.Telefone" required>
+                                    <select class="form-control" id="Telefone" name="Telefone" 
+                                            ng-model="model.Telefone" ng-change="limparCampoNovoTelefone()" required>
                                         <option ng-selected="{{opcao.id == model.Telefone}}"
                                                 ng-repeat="opcao in model.Telefones"
                                                 value="{{opcao.id}}">
@@ -219,7 +223,8 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <label class="control-label" for="Celular">Celulares</label>
-                                    <select class="form-control" id="Celular" name="Celular" ng-model="model.Celular">
+                                    <select class="form-control" id="Celular" name="Celular" 
+                                            ng-model="model.Celular" ng-change="limparCampoNovoCelular()">
                                         <option ng-selected="{{opcao.id == model.Celular}}"
                                                 ng-repeat="opcao in model.Celulares"
                                                 value="{{opcao.id}}">
@@ -229,7 +234,8 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <label class="control-label" for="Email">Emails</label>
-                                    <select class="form-control" id="Email" name="Email" ng-model="model.Email">
+                                    <select class="form-control" id="Email" name="Email" 
+                                            ng-model="model.Email" ng-change="limparCampoEmail()">
                                         <option ng-selected="{{opcao.id == model.Email}}"
                                                 ng-repeat="opcao in model.Emails"
                                                 value="{{opcao.id}}">
