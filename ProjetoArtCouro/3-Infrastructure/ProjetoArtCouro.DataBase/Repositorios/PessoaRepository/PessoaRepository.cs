@@ -51,7 +51,6 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
                 .Include("MeiosComunicacao")
                 .Include("Enderecos")
                 .Include("Enderecos.Estado")
-                .AsNoTracking()
                 .FirstOrDefault(x => x.PessoaFisica.CPF.Equals(cpf));
         }
 
@@ -63,7 +62,6 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
                 .Include("MeiosComunicacao")
                 .Include("Enderecos")
                 .Include("Enderecos.Estado")
-                .AsNoTracking()
                 .FirstOrDefault(x => x.PessoaJuridica.CNPJ.Equals(cnpj));
         }
 

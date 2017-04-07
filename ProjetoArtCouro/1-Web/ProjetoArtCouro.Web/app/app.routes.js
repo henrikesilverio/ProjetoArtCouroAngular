@@ -98,9 +98,22 @@
                 controllerAs: "ctrl",
                 templateUrl: "app/components/fornecedor/views/fornecedorView.html"
 
-            }).state("cadastro.funcionario", {
+            }).state("cadastro.pesquisaFuncionario", {
                 url: "/funcionario",
+                controller: "pesquisaFuncionarioCtrl",
+                controllerAs: "ctrl",
+                templateUrl: "app/components/funcionario/views/pesquisaFuncionarioView.html"
+            }).state("cadastro.novoFuncionario", {
+                url: "/NovoFuncionario",
+                controller: "novoFuncionarioCtrl",
+                controllerAs: "ctrl",
                 templateUrl: "app/components/funcionario/views/funcionarioView.html"
+            }).state("cadastro.editarFuncionario", {
+                url: "/EditarFuncionario/:codigoFuncionario",
+                controller: "editarFuncionarioCtrl",
+                controllerAs: "ctrl",
+                templateUrl: "app/components/funcionario/views/funcionarioView.html"
+
             }).state("cadastro.produto", {
                 url: "/produto",
                 templateUrl: "app/components/produto/views/produtoView.html"

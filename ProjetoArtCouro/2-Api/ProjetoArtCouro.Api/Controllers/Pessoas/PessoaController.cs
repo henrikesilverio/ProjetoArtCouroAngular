@@ -87,14 +87,13 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         }
 
         [Route("TesteProjecao")]
-        [HttpGet]
+        [HttpPost]
         public Task<HttpResponseMessage> TesteProjecao()
         {
             HttpResponseMessage response;
             try
             {
-                var listaPessoa = _pessoaService.TesteProjecao();
-                response = ReturnSuccess(listaPessoa);
+                response = ReturnSuccess();
             }
             catch (Exception ex)
             {
