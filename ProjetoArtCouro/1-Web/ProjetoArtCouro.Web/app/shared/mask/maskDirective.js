@@ -215,6 +215,13 @@
                     $(element).mask(spMaskBehavior, spOptions);
                 }
             }
+        }).directive("dinheiroMask", function () {
+            return {
+                restrict: "A",
+                link: function (scope, element) {
+                    $(element).mask("0.000.000,00", { reverse: true });
+                }
+            }
         }).directive("cpfValido", function () {
             return {
                 restrict: "A",

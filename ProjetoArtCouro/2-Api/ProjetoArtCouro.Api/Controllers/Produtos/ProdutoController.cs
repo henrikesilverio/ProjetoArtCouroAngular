@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
-using Newtonsoft.Json.Linq;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IProduto;
 using ProjetoArtCouro.Domain.Entities.Produtos;
@@ -27,113 +24,87 @@ namespace ProjetoArtCouro.Api.Controllers.Produtos
         [Authorize(Roles = "PesquisaProduto, NovaVenda")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpGet]
-        public Task<HttpResponseMessage> ObterListaProduto()
+        public IHttpActionResult ObterListaProduto()
         {
-            HttpResponseMessage response;
             try
             {
                 var listaProduto = _produtoService.ObterListaProduto();
-                response = ReturnSuccess(Mapper.Map<List<ProdutoModel>>(listaProduto));
+                return OkRetornoBase(Mapper.Map<List<ProdutoModel>>(listaProduto));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("ObterListaUnidade")]
         [Authorize(Roles = "PesquisaProduto")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpGet]
-        public Task<HttpResponseMessage> ObterListaUnidade()
+        public IHttpActionResult ObterListaUnidade()
         {
-            HttpResponseMessage response;
             try
             {
                 var listaUnidade = _produtoService.ObterListaUnidade();
-                response = ReturnSuccess(Mapper.Map<List<LookupModel>>(listaUnidade));
+                return OkRetornoBase(Mapper.Map<List<LookupModel>>(listaUnidade));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("CriarProduto")]
         [Authorize(Roles = "NovoProduto")]
         [InvalidateCacheOutput("ObterListaProduto")]
         [HttpPost]
-        public Task<HttpResponseMessage> CriarProduto(ProdutoModel model)
+        public IHttpActionResult CriarProduto(ProdutoModel model)
         {
-            HttpResponseMessage response;
             try
             {
                 var produto = Mapper.Map<Produto>(model);
                 var produtoRetorno = _produtoService.CriarProduto(produto);
-                response = ReturnSuccess(Mapper.Map<ProdutoModel>(produtoRetorno));
+                return OkRetornoBase(Mapper.Map<ProdutoModel>(produtoRetorno));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("EditarProduto")]
         [Authorize(Roles = "EditarProduto")]
         [InvalidateCacheOutput("ObterListaProduto")]
         [HttpPut]
-        public Task<HttpResponseMessage> EditarProduto(ProdutoModel model)
+        public IHttpActionResult EditarProduto(ProdutoModel model)
         {
-            HttpResponseMessage response;
             try
             {
                 var produto = Mapper.Map<Produto>(model);
                 var produtoRetorno = _produtoService.AtualizarProduto(produto);
-                response = ReturnSuccess(Mapper.Map<ProdutoModel>(produtoRetorno));
+                return OkRetornoBase(Mapper.Map<ProdutoModel>(produtoRetorno));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
-        [Route("ExcluirProduto")]
+        [Route("ExcluirProduto/{codigoProduto:int:min(1)}")]
         [Authorize(Roles = "ExcluirProduto")]
         [InvalidateCacheOutput("ObterListaProduto")]
         [HttpDelete]
-        public Task<HttpResponseMessage> ExcluirProduto([FromBody]JObject jObject)
+        public IHttpActionResult ExcluirProduto(int codigoProduto)
         {
-            var codigoProduto = jObject["codigoProduto"].ToObject<int>();
-            HttpResponseMessage response;
             try
             {
                 _produtoService.ExcluirProduto(codigoProduto);
-                response = ReturnSuccess();
+                return OkRetornoBase();
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         protected override void Dispose(bool disposing)

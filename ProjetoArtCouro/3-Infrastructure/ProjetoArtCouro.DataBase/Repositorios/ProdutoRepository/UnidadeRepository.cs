@@ -27,7 +27,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.ProdutoRepository
 
         public List<Unidade> ObterLista()
         {
-            return _context.Unidades.ToList();
+            return _context.Unidades.AsNoTracking().ToList();
         }
 
         public void Criar(Unidade unidade)

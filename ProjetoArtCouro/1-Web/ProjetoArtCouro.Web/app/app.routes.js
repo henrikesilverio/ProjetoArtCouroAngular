@@ -66,6 +66,7 @@
                 resolve: {
                     loadScripts: loadScripts
                 }
+                // Cliente
             }).state("cadastro.pesquisaCliente", {
                 url: "/PesquisaCliente",
                 controller: "pesquisaClienteCtrl",
@@ -81,7 +82,7 @@
                 controller: "editarClienteCtrl",
                 controllerAs: "ctrl",
                 templateUrl: "app/components/cliente/views/clienteView.html"
-
+                // Fornecedor
             }).state("cadastro.pesquisaFornecedor", {
                 url: "/PesquisaFornecedor",
                 controller: "pesquisaFornecedorCtrl",
@@ -97,7 +98,7 @@
                 controller: "editarFornecedorCtrl",
                 controllerAs: "ctrl",
                 templateUrl: "app/components/fornecedor/views/fornecedorView.html"
-
+                // Funcionario
             }).state("cadastro.pesquisaFuncionario", {
                 url: "/funcionario",
                 controller: "pesquisaFuncionarioCtrl",
@@ -113,16 +114,21 @@
                 controller: "editarFuncionarioCtrl",
                 controllerAs: "ctrl",
                 templateUrl: "app/components/funcionario/views/funcionarioView.html"
-
+                // Produto
             }).state("cadastro.produto", {
                 url: "/produto",
+                controller: "produtoCtrl",
+                controllerAs: "ctrl",
                 templateUrl: "app/components/produto/views/produtoView.html"
+                // Forma de Pagamento
             }).state("cadastro.formaPagamento", {
                 url: "/formaPagamento",
                 templateUrl: "app/components/formaPagamento/views/formaPagamentoView.html"
+                // Condicao de Pagamento
             }).state("cadastro.condicaoPagamento", {
                 url: "/condicaoPagamento",
                 templateUrl: "app/components/condicaoPagamento/views/condicaoPagamentoView.html"
+                // Usuarios
             }).state("cadastro.usuarios", {
                 url: "/usuarios",
                 templateUrl: "app/components/usuario/views/usuarioView.html"

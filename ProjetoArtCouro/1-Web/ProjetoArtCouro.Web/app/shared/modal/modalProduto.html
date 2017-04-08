@@ -1,0 +1,69 @@
+﻿<div class="modal-content">
+    <div class="inmodal">
+        <div class="modal-header">
+            <h4 class="modal-title">{{ confirmModalModel.titulo }}</h4>
+        </div>
+        <div class="modal-body">
+            <form role="form" name="produto" ng-submit="editar(produto.$valid)">
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                         ng-class="{'has-error': (submitted || produto.Descricao.$dirty) && produto.Descricao.$error.required}">
+                        <label class="control-label" for="Descricao">Descrição</label>
+                        <input type="text" class="form-control" id="Descricao" name="Descricao" placeholder="Descrição"
+                               ng-model="model.Descricao" maxlength="80" required>
+                        <div ng-show="(submitted || produto.Descricao.$dirty) && produto.Descricao.$error.required" class="error">
+                            <span>Campo Obrigatório.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
+                         ng-class="{'has-error': (submitted || produto.Unidade.$dirty) && produto.Unidade.$error.required}">
+                        <label class="control-label" for="Unidade">Unidade</label>
+                        <select class="form-control" id="Unidade" name="Unidade" ng-model="model.Unidade" required>
+                            <option ng-selected="{{opcao.codigo == model.Unidade}}"
+                                    ng-repeat="opcao in model.Unidades"
+                                    value="{{opcao.codigo}}">
+                                {{opcao.nome}}
+                            </option>
+                        </select>
+                        <div ng-show="(submitted || produto.Unidade.$dirty) && produto.Unidade.$error.required" class="error">
+                            <span>Campo Obrigatório.</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
+                         ng-class="{'has-error': produto.PrecoCusto.$dirty && produto.PrecoCusto.$error.required}">
+                        <label class="control-label" for="PrecoCusto">Preço custo</label>
+                        <input type="text" class="form-control" id="PrecoCusto" name="PrecoCusto" placeholder="Preço custo"
+                               ng-model="model.PrecoCusto" maxlength="12" required dinheiro-mask>
+                        <div ng-show="produto.PrecoCusto.$dirty && produto.PrecoCusto.$error.required" class="error">
+                            <span>Campo Obrigatório.</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
+                         ng-class="{'has-error': produto.PrecoVenda.$dirty && produto.PrecoVenda.$error.required}">
+                        <label class="control-label" for="PrecoVenda">Preço venda</label>
+                        <input type="text" class="form-control" id="PrecoVenda" name="PrecoVenda" placeholder="Preço venda"
+                               ng-model="model.PrecoVenda" maxlength="12" required dinheiro-mask>
+                        <div ng-show="produto.PrecoVenda.$dirty && produto.PrecoVenda.$error.required" class="error">
+                            <span>Campo Obrigatório.</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    ng-click="confirmModalModel.salvar()"
+                    ng-disabled="produto.$invalid">
+                <i class="fa fa-check"></i> Salvar
+            </button>
+            <button type="button"
+                    class="btn btn-warning"
+                    ng-click="confirmModalModel.cancelar()">
+                <i class="fa fa fa-arrow-left"></i> Cancelar
+            </button>
+        </div>
+    </div>
+</div>
