@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Web", "1-Web", "{F4955C0C-BC9F-4C4F-81B3-5AB0BDA38140}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ProjetoArtCouro.Web(2)", "1-Web\ProjetoArtCouro.Web\", "{E3E3D6E4-3FDD-4D2D-A466-793B5A87A57D}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ProjetoArtCouro.Web", "1-Web\ProjetoArtCouro.Web\", "{E3E3D6E4-3FDD-4D2D-A466-793B5A87A57D}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_13208"

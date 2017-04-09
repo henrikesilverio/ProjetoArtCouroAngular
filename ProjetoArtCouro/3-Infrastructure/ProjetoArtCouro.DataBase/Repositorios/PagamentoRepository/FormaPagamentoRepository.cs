@@ -27,7 +27,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PagamentoRepository
 
         public List<FormaPagamento> ObterLista()
         {
-            return _context.FormasPagamento.ToList();
+            return _context.FormasPagamento.AsNoTracking().ToList();
         }
 
         public FormaPagamento Criar(FormaPagamento formaPagamento)

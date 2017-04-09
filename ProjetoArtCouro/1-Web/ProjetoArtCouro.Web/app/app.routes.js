@@ -123,6 +123,8 @@
                 // Forma de Pagamento
             }).state("cadastro.formaPagamento", {
                 url: "/formaPagamento",
+                controller: "formaPagamentoCtrl",
+                controllerAs: "ctrl",
                 templateUrl: "app/components/formaPagamento/views/formaPagamentoView.html"
                 // Condicao de Pagamento
             }).state("cadastro.condicaoPagamento", {

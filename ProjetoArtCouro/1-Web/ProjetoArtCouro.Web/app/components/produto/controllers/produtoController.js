@@ -51,13 +51,13 @@
 
         $scope.nomeTabela = "Tabela de produtos";
 
-        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
-                return produtoService.obterListaProduto($scope.model);
-            })
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function () {
+            return produtoService.obterListaProduto($scope.model);
+        })
             .withBootstrap()
             .withDisplayLength(15)
             .withOption("createdRow",
-                function(nRow) {
+                function (nRow) {
                     $compile(nRow)($scope);
                 })
             .withDOM("<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>" +
@@ -84,17 +84,17 @@
         $scope.adicionar = function (formulario) {
             if (formulario.$valid) {
                 var model = angular.copy($scope.model);
-                var unidade = _.find($scope.model.Unidades, function(item) {
+                var unidade = _.find($scope.model.Unidades, function (item) {
                     return item.codigo.toString() === $scope.model.Unidade;
                 });
                 model["UnidadeId"] = unidade.codigo;
                 model["UnidadeNome"] = unidade.nome;
                 produtoService.criarProduto(model)
                     .then(function () {
-                        $scope.model.Descricao = "",
-                        $scope.model.Unidade = "",
-                        $scope.model.PrecoCusto = "",
-                        $scope.model.PrecoVenda = "",
+                        $scope.model.Descricao = "";
+                        $scope.model.Unidade = "";
+                        $scope.model.PrecoCusto = "";
+                        $scope.model.PrecoVenda = "";
                         $scope.dtInstance.reloadData();
                         formulario.$setPristine();
                     });
