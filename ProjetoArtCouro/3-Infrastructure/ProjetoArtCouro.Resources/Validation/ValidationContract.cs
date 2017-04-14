@@ -56,6 +56,27 @@ namespace ProjetoArtCouro.Resources.Validation
         }
 
         /// <summary>
+        /// Given a decimal, add a notification if it's null or empty
+        /// </summary>
+        /// <param name="selector">Property</param>
+        /// <param name="message">Error Message (Optional)</param>
+        /// <returns></returns>
+        public ValidationContract<T> IsRequired(Expression<Func<T, decimal>> selector, string message = "")
+        {
+            var val = selector.Compile().Invoke(_validatable);
+            var name = ((MemberExpression)selector.Body).Member.Name;
+
+            if (string.IsNullOrEmpty(val.ToString()))
+            {
+                _validatable.AddNotification(name, string.IsNullOrEmpty(message)
+                    ? string.Format(Erros.FieldIsRequired, name)
+                    : message);
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Given an object, add a notification if it's null
         /// </summary>
         /// <param name="selector">Property</param>
@@ -69,6 +90,25 @@ namespace ProjetoArtCouro.Resources.Validation
             if (val == null)
             {
                 _validatable.AddNotification(name, string.IsNullOrEmpty(message) ? $"Field {name} cannot be null." : message);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Given an object, add a notification if it's null
+        /// </summary>
+        /// <param name="selector">Property</param>
+        /// <param name="message">Error Message (Optional)</param>
+        /// <returns></returns>
+        public ValidationContract<T> IsNotZero(Expression<Func<T, decimal>> selector, string message = "")
+        {
+            var val = selector.Compile().Invoke(_validatable);
+            var name = ((MemberExpression)selector.Body).Member.Name;
+
+            if (val == 0.0M)
+            {
+                _validatable.AddNotification(name, string.IsNullOrEmpty(message) ? $"Field {name} cannot be zero." : message);
             }
 
             return this;

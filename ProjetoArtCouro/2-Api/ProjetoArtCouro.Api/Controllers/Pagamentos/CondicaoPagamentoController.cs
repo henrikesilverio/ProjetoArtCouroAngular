@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
-using Newtonsoft.Json.Linq;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPagamento;
 using ProjetoArtCouro.Domain.Entities.Pagamentos;
@@ -26,91 +23,70 @@ namespace ProjetoArtCouro.Api.Controllers.Pagamentos
         [Authorize(Roles = "PesquisaCondicaoPagamento, NovaVenda")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpGet]
-        public Task<HttpResponseMessage> ObterListaCondicaoPagamento()
+        public IHttpActionResult ObterListaCondicaoPagamento()
         {
-            HttpResponseMessage response;
             try
             {
                 var listaCondicaoPagamento = _condicaoPagamentoService.ObterListaCondicaoPagamento();
-                response = ReturnSuccess(Mapper.Map<List<CondicaoPagamentoModel>>(listaCondicaoPagamento));
+                return OkRetornoBase(Mapper.Map<List<CondicaoPagamentoModel>>(listaCondicaoPagamento));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("CriarCondicaoPagamento")]
         [Authorize(Roles = "NovaCondicaoPagamento")]
         [InvalidateCacheOutput("ObterListaCondicaoPagamento")]
         [HttpPost]
-        public Task<HttpResponseMessage> CriarCondicaoPagamento(CondicaoPagamentoModel model)
+        public IHttpActionResult CriarCondicaoPagamento(CondicaoPagamentoModel model)
         {
-            HttpResponseMessage response;
             try
             {
                 var condicaoPagamento = Mapper.Map<CondicaoPagamento>(model);
                 var condicaoPagamentoRetorno = _condicaoPagamentoService.CriarCondicaoPagamento(condicaoPagamento);
-                response = ReturnSuccess(Mapper.Map<CondicaoPagamentoModel>(condicaoPagamentoRetorno));
+                return OkRetornoBase(Mapper.Map<CondicaoPagamentoModel>(condicaoPagamentoRetorno));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         [Route("EditarCondicaoPagamento")]
         [Authorize(Roles = "EditarCondicaoPagamento")]
         [InvalidateCacheOutput("ObterListaCondicaoPagamento")]
         [HttpPut]
-        public Task<HttpResponseMessage> EditarCondicaoPagamento(CondicaoPagamentoModel model)
+        public IHttpActionResult EditarCondicaoPagamento(CondicaoPagamentoModel model)
         {
-            HttpResponseMessage response;
             try
             {
                 var condicaoPagamento = Mapper.Map<CondicaoPagamento>(model);
                 var condicaoPagamentoRetorno = _condicaoPagamentoService.AtualizarCondicaoPagamento(condicaoPagamento);
-                response = ReturnSuccess(Mapper.Map<CondicaoPagamentoModel>(condicaoPagamentoRetorno));
+                return OkRetornoBase(Mapper.Map<CondicaoPagamentoModel>(condicaoPagamentoRetorno));
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
-        [Route("ExcluirCondicaoPagamento")]
+        [Route("ExcluirCondicaoPagamento/{codigoCondicaoPagamento:int:min(1)}")]
         [Authorize(Roles = "ExcluirCondicaoPagamento")]
         [InvalidateCacheOutput("ObterListaCondicaoPagamento")]
         [HttpDelete]
-        public Task<HttpResponseMessage> ExcluirCondicaoPagamento([FromBody]JObject jObject)
+        public IHttpActionResult ExcluirCondicaoPagamento(int codigoCondicaoPagamento)
         {
-            var codigoCondicaoPagamento = jObject["codigoCondicaoPagamento"].ToObject<int>();
-            HttpResponseMessage response;
             try
             {
                 _condicaoPagamentoService.ExcluirCondicaoPagamento(codigoCondicaoPagamento);
-                response = ReturnSuccess();
+                return OkRetornoBase();
             }
             catch (Exception ex)
             {
-                response = ReturnError(ex);
+                return InternalServerError(ex);
             }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
         }
 
         protected override void Dispose(bool disposing)

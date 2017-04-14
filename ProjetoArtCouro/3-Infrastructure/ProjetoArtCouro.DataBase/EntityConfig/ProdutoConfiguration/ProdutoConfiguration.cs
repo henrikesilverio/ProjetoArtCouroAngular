@@ -28,6 +28,8 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.ProdutoConfiguration
             Property(x => x.PrecoCusto)
                 .IsRequired()
                 .HasColumnType("decimal");
+
+            Ignore(x => x.Notifications);
         }
     }
 }

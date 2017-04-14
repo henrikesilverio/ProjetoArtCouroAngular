@@ -1,11 +1,11 @@
 ﻿using System;
 using ProjetoArtCouro.Domain.Entities.Estoques;
-using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Produtos
 {
-    public class Produto
+    public class Produto : Notifiable
     {
         public Guid ProdutoId { get; set; }
         public int ProdutoCodigo { get; set; }
@@ -17,11 +17,18 @@ namespace ProjetoArtCouro.Domain.Entities.Produtos
 
         public void Validar()
         {
-            AssertionConcern.AssertArgumentNotNull(ProdutoNome, string.Format(Erros.NullParameter, "ProdutoNome"));
-            AssertionConcern.AssertArgumentNotEmpty(ProdutoNome, string.Format(Erros.EmptyParameter, "ProdutoNome"));
-            AssertionConcern.AssertArgumentNotEquals(0.0M, PrecoCusto, string.Format(Erros.NotZeroParameter, "PrecoCusto"));
-            AssertionConcern.AssertArgumentNotEquals(0.0M, PrecoVenda, string.Format(Erros.NotZeroParameter, "PrecoVenda"));
-            AssertionConcern.AssertArgumentNotNull(Unidade, string.Format(Erros.NullParameter, "Unidade"));
+            new ValidationContract<Produto>(this)
+                .IsRequired(x => x.ProdutoNome)
+                .HasMaxLenght(x => x.ProdutoNome, 200)
+                .IsRequired(x => x.PrecoVenda)
+                .IsNotZero(x => x.PrecoVenda)
+                .IsRequired(x => x.PrecoCusto)
+                .IsNotZero(x => x.PrecoCusto)
+                .IsNotNull(x => x.Unidade, Erros.NullParameter);
+            if (!IsValid())
+            {
+                throw new InvalidOperationException(GetMergeNotifications());
+            }
         }
     }
 }

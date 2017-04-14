@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using ProjetoArtCouro.Resource.Validation;
-using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Produtos
 {
-    public class Unidade
+    public class Unidade : Notifiable
     {
         public Guid UnidadeId { get; set; }
         public int UnidadeCodigo { get; set; }
@@ -14,7 +13,14 @@ namespace ProjetoArtCouro.Domain.Entities.Produtos
 
         public void Validar()
         {
-            AssertionConcern.AssertArgumentNotEquals(0, UnidadeCodigo, string.Format(Erros.NotZeroParameter, "UnidadeCodigo"));
+            new ValidationContract<Unidade>(this)
+                .IsNotZero(x => x.UnidadeCodigo)
+                .IsRequired(x => x.UnidadeNome)
+                .HasMaxLenght(x => x.UnidadeNome, 30);
+            if (!IsValid())
+            {
+                throw new InvalidOperationException(GetMergeNotifications());
+            }
         }
     }
 }

@@ -21,6 +21,8 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.ProdutoConfiguration
                .HasMaxLength(30)
                .HasColumnType("varchar");
 
+            Ignore(x => x.Notifications);
+
             //Relacionamento 1 : N
             HasMany(x => x.Produto)
                 .WithRequired(x => x.Unidade);

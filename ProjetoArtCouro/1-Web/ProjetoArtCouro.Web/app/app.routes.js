@@ -129,6 +129,8 @@
                 // Condicao de Pagamento
             }).state("cadastro.condicaoPagamento", {
                 url: "/condicaoPagamento",
+                controller: "condicaoPagamentoCtrl",
+                controllerAs: "ctrl",
                 templateUrl: "app/components/condicaoPagamento/views/condicaoPagamentoView.html"
                 // Usuarios
             }).state("cadastro.usuarios", {

@@ -1,1 +1,81 @@
-﻿
+﻿<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-edit"></i>
+                <strong>Cadastro</strong> / Condição de pagamento
+            </div>
+            <form role="form" name="condicaoPagamento" ng-submit="adicionar(condicaoPagamento)">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-7"
+                                     ng-class="{'has-error': condicaoPagamento.Descricao.$dirty && condicaoPagamento.Descricao.$error.required}">
+                                    <label class="control-label" for="Descricao">Descrição</label>
+                                    <input type="text" class="form-control" id="Descricao" name="Descricao" placeholder="Descrição"
+                                           ng-model="model.Descricao" maxlength="50" required>
+                                    <div ng-show="condicaoPagamento.Descricao.$dirty && condicaoPagamento.Descricao.$error.required" class="error">
+                                        <span>Campo Obrigatório.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-3"
+                                     ng-class="{'has-error': condicaoPagamento.QuantidadeParcelas.$dirty && condicaoPagamento.QuantidadeParcelas.$error.required}">
+                                    <label class="control-label" for="Descricao">Quantidade de parcelas</label>
+                                    <input type="text" class="form-control" id="QuantidadeParcelas" name="QuantidadeParcelas" placeholder="Quantidade de parcelas"
+                                           ng-model="model.QuantidadeParcelas" maxlength="2" somente-dois-digitos required>
+                                    <div ng-show="condicaoPagamento.QuantidadeParcelas.$dirty && condicaoPagamento.QuantidadeParcelas.$error.required" class="error">
+                                        <span>Campo Obrigatório.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-2"
+                                     ng-class="{'has-error': condicaoPagamento.Ativo.$dirty && condicaoPagamento.Ativo.$error.required}">
+                                    <label class="control-label">Ativo</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="Ativo" ng-value="true" ng-model="model.Ativo" required>
+                                            Sim
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="Ativo" ng-value="false" ng-model="model.Ativo" required>
+                                            Não
+                                        </label>
+                                    </div>
+                                    <div ng-show="condicaoPagamento.Ativo.$dirty && condicaoPagamento.Ativo.$error.required" class="error">
+                                        <span>Campo Obrigatório.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-primary pull-right" ng-disabled="condicaoPagamento.$invalid">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-table"></i>
+                <strong>{{nomeTabela}}</strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="table table-bordered table-hover"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
