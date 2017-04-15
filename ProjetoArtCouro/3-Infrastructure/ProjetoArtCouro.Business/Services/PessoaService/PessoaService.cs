@@ -74,6 +74,7 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         public void CriarPessoaFisica(Pessoa pessoa)
         {
             pessoa.Validar();
+            pessoa.PessoaFisica.Pessoa = pessoa;
             pessoa.PessoaFisica.Validar();
             //Verifica se a pessoa existe, caso exista atualiza o papel da pessoa
             var existePessoaFisica = _pessoaRepository.ObterPorCPFComPessoaCompleta(pessoa.PessoaFisica.CPF);
@@ -105,6 +106,7 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         public void CriarPessoaJuridica(Pessoa pessoa)
         {
             pessoa.Validar();
+            pessoa.PessoaJuridica.Pessoa = pessoa;
             pessoa.PessoaJuridica.Validar();
             //Verifica se a pessoa existe, caso exista atualiza o papel da pessoa
             var existePessoaJuridica = _pessoaRepository.ObterPorCNPJComPessoaCompleta(pessoa.PessoaJuridica.CNPJ);
