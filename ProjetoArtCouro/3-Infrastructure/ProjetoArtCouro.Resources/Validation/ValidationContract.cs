@@ -89,14 +89,16 @@ namespace ProjetoArtCouro.Resources.Validation
 
             if (val == null)
             {
-                _validatable.AddNotification(name, string.IsNullOrEmpty(message) ? $"Field {name} cannot be null." : message);
+                _validatable.AddNotification(name, string.IsNullOrEmpty(message)
+                    ? string.Format(Erros.FieldCannotBeNull, name)
+                    : message);
             }
 
             return this;
         }
 
         /// <summary>
-        /// Given an object, add a notification if it's null
+        /// Given an decimal, add a notification if it's null
         /// </summary>
         /// <param name="selector">Property</param>
         /// <param name="message">Error Message (Optional)</param>
@@ -108,7 +110,31 @@ namespace ProjetoArtCouro.Resources.Validation
 
             if (val == 0.0M)
             {
-                _validatable.AddNotification(name, string.IsNullOrEmpty(message) ? $"Field {name} cannot be zero." : message);
+                _validatable.AddNotification(name, string.IsNullOrEmpty(message) 
+                    ? string.Format(Erros.FieldCannotBeZero, name)
+                    : message);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Given an object, add a notification if it's equals
+        /// </summary>
+        /// <param name="selector">Property</param>
+        /// <param name="value">Value compare</param>
+        /// <param name="message">Error Message (Optional)</param>
+        /// <returns></returns>
+        public ValidationContract<T> IsNotEquals(Expression<Func<T, Enum>> selector, object value, string message = "")
+        {
+            var val = selector.Compile().Invoke(_validatable);
+            var name = ((MemberExpression) ((UnaryExpression) selector.Body).Operand).Member.Name;
+
+            if (val.Equals(value))
+            {
+                _validatable.AddNotification(name, string.IsNullOrEmpty(message)
+                    ? string.Format(Erros.FieldCannotBe, name, (int)value)
+                    : message);
             }
 
             return this;

@@ -1,4 +1,5 @@
 ﻿using System;
+using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Pessoas
@@ -32,7 +33,8 @@ namespace ProjetoArtCouro.Domain.Entities.Pessoas
                 .HasMaxLenght(x => x.Complemento, 50)
                 .IsRequired(x => x.Cidade)
                 .HasMaxLenght(x => x.Cidade, 50)
-                .IsRequired(x => x.Principal);
+                .IsRequired(x => x.Principal)
+                .IsNotNull(x => x.Estado, Erros.EmptyState);
             if (!IsValid())
             {
                 throw new InvalidOperationException(GetMergeNotifications());

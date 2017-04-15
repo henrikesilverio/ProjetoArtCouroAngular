@@ -348,4 +348,16 @@
   <data name="FieldIsRequired" xml:space="preserve">
     <value>O campo {0} é obrigatório</value>
   </data>
+  <data name="FieldCannotBe" xml:space="preserve">
+    <value>O campo {0} não pode ser {1}.</value>
+  </data>
+  <data name="FieldCannotBeNull" xml:space="preserve">
+    <value>O campo {0} não pode ser nulo.</value>
+  </data>
+  <data name="FieldCannotBeZero" xml:space="preserve">
+    <value>O campo {0} não pode ser zero.</value>
+  </data>
+  <data name="EmptyState" xml:space="preserve">
+    <value>Estado vazio</value>
+  </data>
 </root>

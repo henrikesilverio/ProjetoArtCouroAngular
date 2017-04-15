@@ -27,7 +27,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PagamentoRepository
 
         public List<CondicaoPagamento> ObterLista()
         {
-            return _context.CondicoesPagamento.ToList();
+            return _context.CondicoesPagamento.AsNoTracking().ToList();
         }
 
         public CondicaoPagamento Criar(CondicaoPagamento condicaoPagamento)

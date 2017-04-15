@@ -41,7 +41,7 @@ namespace ProjetoArtCouro.Resources.Validation
 
         public string GetMergeNotifications()
         {
-            return string.Join(" - ", Notifications.Select(x => $"Campo: {x.Property} | {x.Message}"));
+            return string.Join(" - ", Notifications.Select(x => x.Message));
         }
 
         public bool IsValid() => !_notifications.Any();

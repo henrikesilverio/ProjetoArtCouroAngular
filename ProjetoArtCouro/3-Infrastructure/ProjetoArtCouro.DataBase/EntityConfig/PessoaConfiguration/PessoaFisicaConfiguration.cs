@@ -32,6 +32,8 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.PessoaConfiguration
                 .IsRequired()
                 .HasColumnType("varchar")
                 .HasMaxLength(10);
+
+            Ignore(x => x.Notifications);
         }
     }
 }

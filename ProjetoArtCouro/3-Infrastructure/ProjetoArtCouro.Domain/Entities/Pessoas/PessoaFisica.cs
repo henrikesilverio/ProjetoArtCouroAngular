@@ -1,10 +1,10 @@
 ﻿using System;
-using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Pessoas
 {
-    public class PessoaFisica
+    public class PessoaFisica : Notifiable
     {
         public Guid PessoaId { get; set; }
         public int PessoaFisicaCodigo { get; set; }
@@ -16,10 +16,18 @@ namespace ProjetoArtCouro.Domain.Entities.Pessoas
 
         public void Validar()
         {
-            AssertionConcern.AssertArgumentNotEmpty(CPF, Erros.EmptyCPF);
-            AssertionConcern.AssertArgumentNotEmpty(RG, Erros.EmptyRG);
-            AssertionConcern.AssertArgumentNotEmpty(Sexo, Erros.EmptySex);
-            AssertionConcern.AssertArgumentNotNull(EstadoCivil, Erros.EmptyMaritalStatus);
+            new ValidationContract<PessoaFisica>(this)
+                .IsRequired(x => x.CPF)
+                .IsRequired(x => x.RG)
+                .HasMaxLenght(x => x.RG, 15)
+                .IsRequired(x => x.Sexo)
+                .HasMaxLenght(x => x.Sexo, 10)
+                .IsNotNull(x => x.Pessoa, Erros.EmptyPerson)
+                .IsNotNull(x => x.EstadoCivil, Erros.EmptyMaritalStatus);
+            if (!IsValid())
+            {
+                throw new InvalidOperationException(GetMergeNotifications());
+            }
         }
     }
 }

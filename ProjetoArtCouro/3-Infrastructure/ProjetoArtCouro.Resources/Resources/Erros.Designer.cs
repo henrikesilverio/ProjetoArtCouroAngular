@@ -232,6 +232,15 @@ namespace ProjetoArtCouro.Resources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estado vazio.
+        /// </summary>
+        public static string EmptyState {
+            get {
+                return ResourceManager.GetString("EmptyState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Falha ao carregar permissões.
         /// </summary>
         public static string FailedToLoadPermissions {
@@ -246,6 +255,33 @@ namespace ProjetoArtCouro.Resources.Resources {
         public static string FailuretoUpdatePermissionsUserOnline {
             get {
                 return ResourceManager.GetString("FailuretoUpdatePermissionsUserOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {0} não pode ser {1}..
+        /// </summary>
+        public static string FieldCannotBe {
+            get {
+                return ResourceManager.GetString("FieldCannotBe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {0} não pode ser nulo..
+        /// </summary>
+        public static string FieldCannotBeNull {
+            get {
+                return ResourceManager.GetString("FieldCannotBeNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {0} não pode ser zero..
+        /// </summary>
+        public static string FieldCannotBeZero {
+            get {
+                return ResourceManager.GetString("FieldCannotBeZero", resourceCulture);
             }
         }
         

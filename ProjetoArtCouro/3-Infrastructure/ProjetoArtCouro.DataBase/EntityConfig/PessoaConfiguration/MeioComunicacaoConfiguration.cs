@@ -28,6 +28,8 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.PessoaConfiguration
             Property(x => x.Principal)
                 .IsRequired()
                 .HasColumnType("bit");
+
+            Ignore(x => x.Notifications);
         }
     }
 }
