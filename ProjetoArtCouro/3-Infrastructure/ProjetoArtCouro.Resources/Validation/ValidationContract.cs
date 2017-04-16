@@ -24,7 +24,7 @@ namespace ProjetoArtCouro.Resources.Validation
             var val = selector.Compile().Invoke(_validatable);
             var name = ((MemberExpression)selector.Body).Member.Name;
 
-            if (string.IsNullOrEmpty(val))
+            if (string.IsNullOrWhiteSpace(val))
             {
                 _validatable.AddNotification(name, string.IsNullOrEmpty(message)
                     ? string.Format(Erros.FieldIsRequired, name)
