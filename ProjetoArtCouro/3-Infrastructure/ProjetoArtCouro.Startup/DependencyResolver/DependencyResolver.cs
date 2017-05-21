@@ -37,7 +37,7 @@ namespace ProjetoArtCouro.Startup.DependencyResolver
     {
         public static void Resolve(UnityContainer container)
         {
-            container.RegisterType<DataBaseContext, DataBaseContext>(new HierarchicalLifetimeManager());
+            container.RegisterType<DataBaseContext, DataBaseContext>(new HierarchicalLifetimeManager(), new InjectionConstructor());
             container.RegisterType<IUsuarioService, UsuarioService>(new HierarchicalLifetimeManager());
             container.RegisterType<IUsuarioRepository, UsuarioRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IPermissaoRepository, PermissaoRepository>(new HierarchicalLifetimeManager());

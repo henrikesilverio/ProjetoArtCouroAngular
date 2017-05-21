@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Data.Common;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using ProjetoArtCouro.DataBase.EntityConfig.CompraConfiguration;
 using ProjetoArtCouro.DataBase.EntityConfig.EstoqueConfiguration;
@@ -28,6 +29,14 @@ namespace ProjetoArtCouro.DataBase.DataBase
             Configuration.LazyLoadingEnabled = false;
         }
 
+        public DataBaseContext(DbConnection dbConnection, DbModelBuilder modelBuilder)
+            : base(dbConnection, modelBuilder.Build(dbConnection).Compile(), true)
+        {
+            Database.Initialize(true);
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+        }
+
         public DbSet<CondicaoPagamento> CondicoesPagamento { get; set; }
         public DbSet<ContaPagar> ContasPagar { get; set; }
         public DbSet<ContaReceber> ContasReceber { get; set; }
@@ -35,7 +44,7 @@ namespace ProjetoArtCouro.DataBase.DataBase
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Estoque> Estoques { get; set; }
-        public DbSet<EstadoCivil> EstadosCivis { get; set; }
+        public virtual DbSet<EstadoCivil> EstadosCivis { get; set; }
         public DbSet<FormaPagamento> FormasPagamento { get; set; }
         public DbSet<GrupoPermissao> GruposPermissao { get; set; }
         public DbSet<ItemCompra> ItensCompra { get; set; }
