@@ -35,10 +35,10 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
         public Produto CriarProduto(Produto produto)
         {
             produto.Validar();
-            produto.Unidade.Validar();
             var unidade = _unidadeRepository.ObterPorCodigo(produto.Unidade.UnidadeCodigo);
             AssertionConcern.AssertArgumentNotEquals(unidade, null, Erros.UnitDoesNotExist);
             produto.Unidade = unidade;
+            produto.Unidade.Validar();
             return _produtoRepository.Criar(produto);
         }
 

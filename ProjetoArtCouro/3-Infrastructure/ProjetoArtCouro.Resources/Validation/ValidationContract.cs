@@ -103,6 +103,27 @@ namespace ProjetoArtCouro.Resources.Validation
         /// <param name="selector">Property</param>
         /// <param name="message">Error Message (Optional)</param>
         /// <returns></returns>
+        public ValidationContract<T> IsNotZero(Expression<Func<T, int>> selector, string message = "")
+        {
+            var val = selector.Compile().Invoke(_validatable);
+            var name = ((MemberExpression)selector.Body).Member.Name;
+
+            if (val == 0.0M)
+            {
+                _validatable.AddNotification(name, string.IsNullOrEmpty(message)
+                    ? string.Format(Erros.FieldCannotBeZero, name)
+                    : message);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Given an decimal, add a notification if it's null
+        /// </summary>
+        /// <param name="selector">Property</param>
+        /// <param name="message">Error Message (Optional)</param>
+        /// <returns></returns>
         public ValidationContract<T> IsNotZero(Expression<Func<T, decimal>> selector, string message = "")
         {
             var val = selector.Compile().Invoke(_validatable);

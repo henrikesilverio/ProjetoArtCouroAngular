@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using Microsoft.Practices.Unity;
 using ProjetoArtCouro.Business.Services.AutenticacaoService;
 using ProjetoArtCouro.Business.Services.CompraService;
 using ProjetoArtCouro.Business.Services.EstoqueService;
@@ -30,6 +31,7 @@ using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
 using ProjetoArtCouro.Domain.Contracts.IService.IProduto;
 using ProjetoArtCouro.Domain.Contracts.IService.IUsuario;
 using ProjetoArtCouro.Domain.Contracts.IService.IVenda;
+using System.Runtime.Caching;
 
 namespace ProjetoArtCouro.Startup.DependencyResolver
 {
@@ -38,6 +40,7 @@ namespace ProjetoArtCouro.Startup.DependencyResolver
         public static void Resolve(UnityContainer container)
         {
             container.RegisterType<DataBaseContext, DataBaseContext>(new HierarchicalLifetimeManager(), new InjectionConstructor());
+            container.RegisterInstance(new CacheItemPolicy {SlidingExpiration = TimeSpan.FromHours(2)});
             container.RegisterType<IUsuarioService, UsuarioService>(new HierarchicalLifetimeManager());
             container.RegisterType<IUsuarioRepository, UsuarioRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IPermissaoRepository, PermissaoRepository>(new HierarchicalLifetimeManager());
