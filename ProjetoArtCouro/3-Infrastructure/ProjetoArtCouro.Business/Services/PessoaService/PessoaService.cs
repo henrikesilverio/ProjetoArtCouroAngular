@@ -258,7 +258,7 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             //Adiciona um novo endereço ou modifica o exitente para principal
             var enderecoAtualizar = pessoa.Enderecos.FirstOrDefault();
             AssertionConcern.AssertArgumentNotEquals(enderecoAtualizar, null, Erros.EmptyAddress);
-            if (enderecoAtualizar != null && enderecoAtualizar.EnderecoCodigo.Equals(0) &&
+            if (enderecoAtualizar != null && enderecoAtualizar.EnderecoCodigo == -1 &&
                 !pessoaAtual.Enderecos.Any(x =>
                     x.Bairro.Equals(enderecoAtualizar.Bairro) &&
                     x.CEP.Equals(enderecoAtualizar.CEP) &&
@@ -271,12 +271,12 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
                 var novoEndereco = _enderecoRepository.Criar(enderecoAtualizar);
                 pessoaAtual.Enderecos.Add(novoEndereco);
             }
-            else if (enderecoAtualizar != null && !enderecoAtualizar.EnderecoCodigo.Equals(0))
+            else if (enderecoAtualizar != null && enderecoAtualizar.EnderecoCodigo != -1)
             {
                 //Encotra o endereço que sera o principal
                 foreach (var item in pessoaAtual.Enderecos)
                 {
-                    item.Principal = item.EnderecoCodigo.Equals(enderecoAtualizar.EnderecoCodigo);
+                    item.Principal = item.EnderecoCodigo == enderecoAtualizar.EnderecoCodigo;
                 }
             }
         }
@@ -284,20 +284,20 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         private void AtualizarMeioCominicacaoPessoa(Pessoa pessoa, Pessoa pessoaAtual, TipoComunicacaoEnum tipoComunicacao)
         {
             //Adiciona um meio de cominicação ou modifica o exitente para principal
-            var meioComunicacaoAtualizar = pessoa.MeiosComunicacao.FirstOrDefault(x => x.TipoComunicacao.Equals(tipoComunicacao));
+            var meioComunicacaoAtualizar = pessoa.MeiosComunicacao.FirstOrDefault(x => x.TipoComunicacao == tipoComunicacao);
             if (meioComunicacaoAtualizar == null && (tipoComunicacao == TipoComunicacaoEnum.Email || tipoComunicacao == TipoComunicacaoEnum.Celular))
             {
                 return;
             }
             AssertionConcern.AssertArgumentNotEquals(meioComunicacaoAtualizar, null, Erros.EmptyPhone);
-            if (meioComunicacaoAtualizar != null && meioComunicacaoAtualizar.MeioComunicacaoCodigo.Equals(0) &&
+            if (meioComunicacaoAtualizar != null && meioComunicacaoAtualizar.MeioComunicacaoCodigo == -1 &&
                 !pessoaAtual.MeiosComunicacao.Any(x => x.MeioComunicacaoNome.Equals(meioComunicacaoAtualizar.MeioComunicacaoNome)))
             {
                 meioComunicacaoAtualizar.Pessoa = pessoaAtual;
                 var novoMeioComunicacao = _meioComunicacaoRepository.Criar(meioComunicacaoAtualizar);
                 pessoaAtual.MeiosComunicacao.Add(novoMeioComunicacao);
             }
-            else if (meioComunicacaoAtualizar != null && !meioComunicacaoAtualizar.MeioComunicacaoCodigo.Equals(0))
+            else if (meioComunicacaoAtualizar != null && meioComunicacaoAtualizar.MeioComunicacaoCodigo != -1)
             {
                 //Encotra o endereço que sera o principal
                 foreach (var item in pessoaAtual.MeiosComunicacao)

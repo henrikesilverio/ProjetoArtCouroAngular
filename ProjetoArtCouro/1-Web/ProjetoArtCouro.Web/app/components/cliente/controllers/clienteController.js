@@ -10,53 +10,17 @@
             "EPessoaFisica": true,
             "EstadoCivil": "",
             "EstadosCivis": [],
-            "Endereco": "",
-            "Enderecos": [
-                {
-                    "id": "",
-                    "nome": "Selecione"
-                },
-                {
-                    "id": -1,
-                    "nome": "Novo"
-                }
-            ],
-            "Telefone": "",
+            "Endereco": undefined,
+            "Enderecos": [],
+            "Telefone": undefined,
             "NovoTelefone": "",
-            "Telefones": [
-                {
-                    "id": "",
-                    "nome": "Selecione"
-                },
-                {
-                    "id": -1,
-                    "nome": "Novo"
-                }
-            ],
-            "Celular": "",
+            "Telefones": [],
+            "Celular": undefined,
             "NovoCelular": "",
-            "Celulares": [
-                {
-                    "id": "",
-                    "nome": "Selecione"
-                },
-                {
-                    "id": -1,
-                    "nome": "Novo"
-                }
-            ],
-            "Email": "",
+            "Celulares": [],
+            "Email": undefined,
             "NovoEmail": "",
-            "Emails": [
-                {
-                    "id": "",
-                    "nome": "Selecione"
-                },
-                {
-                    "id": -1,
-                    "nome": "Novo"
-                }
-            ],
+            "Emails": [],
             "Logradouro": "",
             "Numero": "",
             "Bairro": "",
@@ -66,6 +30,19 @@
             "Estado": "",
             "Estados": []
         };
+
+        _.each(["Enderecos", "Telefones", "Celulares", "Emails"], function (propriedade) {
+            $scope.model[propriedade] = [
+                {
+                    "id": "",
+                    "nome": "Selecione"
+                },
+                {
+                    "id": -1,
+                    "nome": "Novo"
+                }
+            ];
+        });
 
         clienteService.obterListaEstado().then(function (data) {
             $scope.model.Estados = data;
@@ -109,7 +86,7 @@
                 });
             }
             $scope.model[mapeamento.model].unshift({
-                "codigo": "",
+                "codigo": undefined,
                 "nome": "Selecione"
             });
             $scope.model[mapeamento.model].push({

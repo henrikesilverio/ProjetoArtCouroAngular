@@ -26,7 +26,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica">
+                            <div class="row nga-fast nga-stagger-fast nga-fade" ng-if="model.EPessoaFisica">
                                 <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8"
                                      ng-class="{'has-error': (submitted || cliente.Nome.$dirty) && cliente.Nome.$error.required}">
                                     <label class="control-label" for="Nome">Nome</label>
@@ -46,7 +46,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="model.EPessoaFisica">
+                            <div class="row nga-fast nga-stagger-fast nga-fade" ng-if="model.EPessoaFisica">
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.RG.$dirty) && cliente.RG.$error.required}">
                                     <label class="control-label" for="RG">RG</label>
@@ -87,7 +87,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="!model.EPessoaFisica">
+                            <div class="row nga-fast nga-stagger-fast nga-fade" ng-if="!model.EPessoaFisica">
                                 <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8"
                                      ng-class="{'has-error': (submitted || cliente.RazaoSocial.$dirty) && cliente.RazaoSocial.$error.required}">
                                     <label class="control-label" for="RazaoSocial">Nome</label>
@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="!model.EPessoaFisica">
+                            <div class="row nga-fast nga-stagger-fast nga-fade" ng-if="!model.EPessoaFisica">
                                 <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6"
                                      ng-class="{'has-error': (submitted || cliente.Contato.$dirty) && cliente.Contato.$error.required}">
                                     <label class="control-label" for="Contato">Contato</label>
@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="model.Endereco == -1">
+                            <div class="row nga-fast nga-stagger-fast nga-fade" ng-if="model.Endereco == -1">
                                 <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8"
                                      ng-class="{'has-error': (submitted || cliente.Logradouro.$dirty) && cliente.Logradouro.$error.required}">
                                     <label class="control-label" for="Logradouro">Logradouro</label>
@@ -155,7 +155,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="model.Endereco == -1">
+                            <div class="row nga-fast nga-stagger-fast nga-fade" ng-if="model.Endereco == -1">
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.Bairro.$dirty) && cliente.Bairro.$error.required}">
                                     <label class="control-label" for="Bairro">Bairro</label>
@@ -180,7 +180,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row animated fadeInUp" ng-if="model.Endereco == -1">
+                            <div class="row nga-fast nga-stagger-fast nga-fade" ng-if="model.Endereco == -1">
                                 <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4"
                                      ng-class="{'has-error': (submitted || cliente.CEP.$dirty) && cliente.CEP.$error.required}">
                                     <label class="control-label" for="CEP">CEP</label>
@@ -245,7 +245,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 animated fadeInUp" ng-if="model.Telefone == -1"
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 nga-fast nga-stagger-fast nga-fade" ng-if="model.Telefone == -1"
                                      ng-class="{'has-error': (submitted || cliente.NovoTelefone.$dirty) && cliente.NovoTelefone.$error.required}">
                                     <label class="control-label" for="NovoTelefone">Novo Telefone</label>
                                     <input type="text" class="form-control" id="NovoTelefone" name="NovoTelefone" placeholder="Novo Telefone"
@@ -254,15 +254,15 @@
                                         <span>Campo Obrigatório.</span>
                                     </div>
                                 </div>
-                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 animated fadeInUp" ng-if="model.Celular == -1"
-                                     ng-class="{'col-sm-offset-4': model.Telefone == undefined}">
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 nga-fast nga-stagger-fast nga-fade" ng-if="model.Celular == -1"
+                                     ng-class="{'col-sm-offset-4': model.Telefone != -1}">
                                     <label class="control-label" for="NovoCelular">Novo Celular</label>
                                     <input type="text" class="form-control" id="NovoCelular" name="NovoCelular" placeholder="Novo Celular" 
                                            ng-model="model.NovoCelular" celular-mask>
                                 </div>
-                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 animated fadeInUp" ng-if="model.Email == -1"
-                                     ng-class="{'col-sm-offset-8': model.Telefone == '' && model.Celular == '', 
-                                     'col-sm-offset-4': model.Telefone != '' && model.Celular == '', 
+                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4 nga-fast nga-stagger-fast nga-fade" ng-if="model.Email == -1"
+                                     ng-class="{'col-sm-offset-8': model.Telefone != -1 && model.Celular != -1, 
+                                     'col-sm-offset-4': model.Telefone == -1 && model.Celular != -1, 
                                      'has-error': (submitted || cliente.NovoEmail.$dirty) && cliente.NovoEmail.$error.emailValido}">
                                     <label class="control-label" for="NovoEmail">Novo Email</label>
                                     <input type="text" class="form-control" id="NovoEmail" name="NovoEmail" placeholder="Novo Email"
