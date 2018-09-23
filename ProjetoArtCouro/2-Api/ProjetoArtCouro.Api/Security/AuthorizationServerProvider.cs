@@ -2,13 +2,13 @@
 using Microsoft.Practices.Unity;
 using ProjetoArtCouro.Domain.Contracts.IService.IAutenticacao;
 using ProjetoArtCouro.Resources.Resources;
-using ProjetoArtCouro.Startup.DependencyResolver;
 using System;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security;
+using System.Web.Http;
 
 namespace ProjetoArtCouro.Api.Security
 {
@@ -16,9 +16,10 @@ namespace ProjetoArtCouro.Api.Security
     {
         private IAutenticacao _autenticacaoService;
 
-        public AuthorizationServerProvider(IAutenticacao autenticacaoService)
+        public AuthorizationServerProvider()
         {
-            _autenticacaoService = autenticacaoService;
+            _autenticacaoService = (IAutenticacao)GlobalConfiguration
+                .Configuration.DependencyResolver.GetService(typeof(IAutenticacao));
         }
 
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
@@ -32,9 +33,6 @@ namespace ProjetoArtCouro.Api.Security
 
             try
             {
-                var container = new UnityContainer();
-                DependencyResolver.Resolve(container);
-                _autenticacaoService = container.Resolve<IAutenticacao>();
                 var user = _autenticacaoService.AutenticarUsuario(context.UserName, context.Password);
 
                 if (user == null)

@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IException\IBusinessException.cs" />
+    <Compile Include="Contracts\IException\IDomainException.cs" />
     <Compile Include="Contracts\IRepository\ICompra\ICompraRepository.cs" />
     <Compile Include="Contracts\IRepository\ICompra\IContaPagarRepository.cs" />
     <Compile Include="Contracts\IRepository\ICompra\IItemCompraRepository.cs" />
@@ -102,6 +104,8 @@
     <Compile Include="Entities\Vendas\ContaReceber.cs" />
     <Compile Include="Entities\Vendas\ItemVenda.cs" />
     <Compile Include="Entities\Vendas\Venda.cs" />
+    <Compile Include="Exceptions\BusinessException.cs" />
+    <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Models\Cliente\ClienteModel.cs" />
     <Compile Include="Models\Cliente\PesquisaClienteModel.cs" />
     <Compile Include="Models\Common\EnderecoModel.cs" />

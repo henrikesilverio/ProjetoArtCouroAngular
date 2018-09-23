@@ -32,15 +32,19 @@ using ProjetoArtCouro.Domain.Contracts.IService.IProduto;
 using ProjetoArtCouro.Domain.Contracts.IService.IUsuario;
 using ProjetoArtCouro.Domain.Contracts.IService.IVenda;
 using System.Runtime.Caching;
+using System.Web.Http.Dependencies;
 
 namespace ProjetoArtCouro.Startup.DependencyResolver
 {
     public static class DependencyResolver
     {
-        public static void Resolve(UnityContainer container)
+        public static IDependencyResolver Resolve()
         {
+            var container = new UnityContainer();
+
             container.RegisterType<DataBaseContext, DataBaseContext>(new HierarchicalLifetimeManager(), new InjectionConstructor());
             container.RegisterInstance(new CacheItemPolicy {SlidingExpiration = TimeSpan.FromHours(2)});
+
             container.RegisterType<IUsuarioService, UsuarioService>(new HierarchicalLifetimeManager());
             container.RegisterType<IUsuarioRepository, UsuarioRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IPermissaoRepository, PermissaoRepository>(new HierarchicalLifetimeManager());
@@ -83,7 +87,7 @@ namespace ProjetoArtCouro.Startup.DependencyResolver
             container.RegisterType<IEstoqueService, EstoqueService>(new HierarchicalLifetimeManager());
             container.RegisterType<IEstoqueRepository, EstoqueRepository>(new HierarchicalLifetimeManager());
 
-            //container.RegisterType<User, User>(new HierarchicalLifetimeManager());
+            return new UnityResolver(container);
         }
     }
 }

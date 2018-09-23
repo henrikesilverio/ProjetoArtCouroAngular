@@ -1,4 +1,5 @@
 ﻿using System;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resources.Validation;
 
@@ -26,7 +27,7 @@ namespace ProjetoArtCouro.Domain.Entities.Pessoas
                 .IsNotNull(x => x.EstadoCivil, Erros.EmptyMaritalStatus);
             if (!IsValid())
             {
-                throw new InvalidOperationException(GetMergeNotifications());
+                throw new DomainException(GetMergeNotifications());
             }
         }
     }

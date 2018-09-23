@@ -9,9 +9,9 @@ namespace ProjetoArtCouro.Api.Security
 {
     public class JwtFormat : ISecureDataFormat<AuthenticationTicket>
     {
-        private static byte[] _key = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["secret"]);
-        private static string _issuer = ConfigurationManager.AppSettings["issuer"];
-        private static string _audience = ConfigurationManager.AppSettings["audience"];
+        private static readonly byte[] _key = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["secret"]);
+        private static readonly string _issuer = ConfigurationManager.AppSettings["issuer"];
+        private static readonly string _audience = ConfigurationManager.AppSettings["audience"];
 
         private readonly OAuthAuthorizationServerOptions _options;
 

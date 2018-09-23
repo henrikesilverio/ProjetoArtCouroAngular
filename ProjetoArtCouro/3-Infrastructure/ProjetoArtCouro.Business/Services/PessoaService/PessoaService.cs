@@ -9,6 +9,7 @@ using ProjetoArtCouro.Domain.Entities.Pessoas;
 using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
+using ProjetoArtCouro.Domain.Exceptions;
 
 namespace ProjetoArtCouro.Business.Services.PessoaService
 {
@@ -80,7 +81,10 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             var existePessoaFisica = _pessoaRepository.ObterPorCPFComPessoaCompleta(pessoa.PessoaFisica.CPF);
             //Recupera informações do banco
             var firstOrDefault = pessoa.Papeis.FirstOrDefault();
-            AssertionConcern.AssertArgumentNotNull(firstOrDefault, string.Format(Erros.NullParameter, "Papeis"));
+            if (firstOrDefault == null)
+            {
+                throw new BusinessException(string.Format(Erros.NullParameter, "Papeis"));
+            }
             if (firstOrDefault != null)
             {
                 pessoa.Papeis = new List<Papel>
@@ -112,7 +116,10 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             var existePessoaJuridica = _pessoaRepository.ObterPorCNPJComPessoaCompleta(pessoa.PessoaJuridica.CNPJ);
             //Recupera informações do banco
             var firstOrDefault = pessoa.Papeis.FirstOrDefault();
-            AssertionConcern.AssertArgumentNotNull(firstOrDefault, string.Format(Erros.NullParameter, "Papeis"));
+            if (firstOrDefault == null)
+            {
+                throw new BusinessException(string.Format(Erros.NullParameter, "Papeis"));
+            }
             if (firstOrDefault != null)
             {
                 pessoa.Papeis = new List<Papel>

@@ -1,14 +1,14 @@
-﻿using Microsoft.Practices.Unity;
-using Owin;
+﻿using Owin;
 using ProjetoArtCouro.Api.AutoMapper;
-using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Api.Security;
-using ProjetoArtCouro.Domain.Contracts.IService.IAutenticacao;
 using ProjetoArtCouro.Startup.DependencyResolver;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using ProjetoArtCouro.Api.Helpers;
+using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
+using System.Net.Http.Extensions.Compression.Core.Compressors;
 
 namespace ProjetoArtCouro.Api
 {
@@ -18,22 +18,26 @@ namespace ProjetoArtCouro.Api
         {
             var config = new HttpConfiguration();
 
-            //Resolução de depêndencia
-            var container = new UnityContainer();
-            DependencyResolver.Resolve(container);
-            config.DependencyResolver = new UnityResolver(container);
+            ConfigureDependencyResolver(config);
 
             ConfigureWebApi(config);
-            ConfigureOAuth(app, config);
+
+            ConfigureFilter(config);
+
+            ConfigureCompressionHandler(config);
+
+            ConfigureOAuth(app);
 
             app.UseWebApi(config);
-
-            //Configuração da serialização json
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
+            
             //Incluir os mapeamento de classe
             AutoMapperConfig.RegisterMappings();
+        }
+
+        public void ConfigureDependencyResolver(HttpConfiguration config)
+        {
+            config.DependencyResolver = DependencyResolver.Resolve();
+            GlobalConfiguration.Configuration.DependencyResolver = config.DependencyResolver;
         }
 
         public void ConfigureWebApi(HttpConfiguration config)
@@ -45,15 +49,27 @@ namespace ProjetoArtCouro.Api
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/id",
-                defaults: new { id = RouteParameter.Optional }
-                );
+                defaults: new { id = RouteParameter.Optional });
+
+            //Configuração da serialização json
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
         }
 
-        public void ConfigureOAuth(IAppBuilder app, HttpConfiguration config)
+        public void ConfigureOAuth(IAppBuilder app)
         {
-            var autenticacaoService = (IAutenticacao)config.DependencyResolver.GetService(typeof(IAutenticacao));
-            app.UseOAuthAuthorizationServer(new OAuthServerOptions(autenticacaoService));
+            app.UseOAuthAuthorizationServer(new OAuthServerOptions());
             app.UseJwtBearerAuthentication(new JwtOptions());
+        }
+
+        public void ConfigureFilter(HttpConfiguration config)
+        {
+            config.Filters.Add(new ExceptionFilter());
+        }
+
+        public static void ConfigureCompressionHandler(HttpConfiguration config)
+        {
+            //config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
         }
     }
 }

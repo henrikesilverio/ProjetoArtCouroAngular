@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Web.Http.Dependencies;
-using Microsoft.Practices.Unity;
 
-namespace ProjetoArtCouro.Api.Helpers
+namespace ProjetoArtCouro.Startup.DependencyResolver
 {
     public class UnityResolver : IDependencyResolver
     {
@@ -11,11 +11,7 @@ namespace ProjetoArtCouro.Api.Helpers
 
         public UnityResolver(IUnityContainer container)
         {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
-            Container = container;
+            Container = container ?? throw new ArgumentNullException("container");
         }
 
         public object GetService(Type serviceType)

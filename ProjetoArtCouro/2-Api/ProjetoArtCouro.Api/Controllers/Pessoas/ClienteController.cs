@@ -29,15 +29,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpPost]
         public IHttpActionResult CriarCliente(ClienteModel model)
         {
-            try
-            {
-                _pessoaService.CriarPessoa(model);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _pessoaService.CriarPessoa(model);
+            return OkRetornoBase();
         }
 
         [Route("PesquisarCliente")]

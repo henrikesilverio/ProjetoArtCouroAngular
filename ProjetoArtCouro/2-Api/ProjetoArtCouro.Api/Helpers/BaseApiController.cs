@@ -4,12 +4,10 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
 using AutoMapper;
-using ProjetoArtCouro.Api.Extensions;
 using ProjetoArtCouro.Domain.Models.Common;
 
 namespace ProjetoArtCouro.Api.Helpers
 {
-    [DeflateCompression]
     public class BaseApiController : ApiController
     {
         public HttpResponseMessage ReturnError(Exception ex)

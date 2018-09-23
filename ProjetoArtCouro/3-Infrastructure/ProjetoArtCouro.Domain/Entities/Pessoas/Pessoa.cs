@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Entities.Vendas;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resources.Validation;
 
@@ -30,7 +31,7 @@ namespace ProjetoArtCouro.Domain.Entities.Pessoas
                 .IsNotNull(x => x.Enderecos, Erros.EmptyAddress);
             if (!IsValid())
             {
-                throw new InvalidOperationException(GetMergeNotifications());
+                throw new DomainException(GetMergeNotifications());
             }
         }
     }
