@@ -1,4 +1,5 @@
 ﻿using System;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Resources.Validation;
 
@@ -23,7 +24,7 @@ namespace ProjetoArtCouro.Domain.Entities.Pessoas
                 .IsRequired(x => x.Principal);
             if (!IsValid())
             {
-                throw new InvalidOperationException(GetMergeNotifications());
+                throw new DomainException(GetMergeNotifications());
             }
         }
     }

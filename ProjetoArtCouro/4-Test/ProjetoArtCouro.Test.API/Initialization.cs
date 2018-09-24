@@ -46,9 +46,9 @@ namespace ProjetoArtCouro.Test.API
         [Then(@"retorne sucesso")]
         public void EntaoRetorneSucesso()
         {
-            //var testShared = _scenarioContext["TestShared"] as ITestShared;
-            //Assert.AreNotEqual(testShared, null, "Teste compartilhado não implementado");
-            //testShared.ValidateReturnSuccess();
+            var testShared = _scenarioContext["TestShared"] as ITestShared;
+            Assert.AreNotEqual(testShared, null, "Teste compartilhado não implementado");
+            testShared.ValidateReturnSuccess();
         }
 
         [Then(@"retorne erro")]

@@ -13,7 +13,6 @@ namespace ProjetoArtCouro.Domain.Models.Common
         [Display(Name = "Name", ResourceType = typeof(Mensagens))]
         public string Nome { get; set; }
 
-        //[CPFValidation(ErrorMessageResourceType = typeof(Erros), ErrorMessageResourceName = "InvalidCPF")]
         [Required(ErrorMessageResourceType = typeof(Erros), ErrorMessageResourceName = "RequiredField")]
         [Display(Name = "CPF", ResourceType = typeof(Mensagens))]
         public string CPF { get; set; }
@@ -34,7 +33,6 @@ namespace ProjetoArtCouro.Domain.Models.Common
         [Display(Name = "Name", ResourceType = typeof(Mensagens))]
         public string RazaoSocial { get; set; }
 
-        //[CNPJValidation(ErrorMessageResourceType = typeof(Erros), ErrorMessageResourceName = "InvalidCNPJ")]
         [Required(ErrorMessageResourceType = typeof(Erros), ErrorMessageResourceName = "RequiredField")]
         [Display(Name = "CNPJ", ResourceType = typeof(Mensagens))]
         public string CNPJ { get; set; }

@@ -74,7 +74,7 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
 
         public void CriarPessoaFisica(Pessoa pessoa)
         {
-            pessoa.Validar();
+            ValidarPessoa(pessoa);
             pessoa.PessoaFisica.Pessoa = pessoa;
             pessoa.PessoaFisica.Validar();
             //Verifica se a pessoa existe, caso exista atualiza o papel da pessoa
@@ -85,13 +85,11 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             {
                 throw new BusinessException(string.Format(Erros.NullParameter, "Papeis"));
             }
-            if (firstOrDefault != null)
+
+            pessoa.Papeis = new List<Papel>
             {
-                pessoa.Papeis = new List<Papel>
-                {
-                    _papelRepository.ObterPorCodigo(firstOrDefault.PapelCodigo)
-                };
-            }
+                _papelRepository.ObterPorCodigo(firstOrDefault.PapelCodigo)
+            };
 
             if (existePessoaFisica != null)
             {
@@ -144,7 +142,7 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         {
             var pessoa = Mapper.Map<Pessoa>(model);
             //Remove informações que não vão ser gravadas.
-            ((List<MeioComunicacao>) pessoa.MeiosComunicacao)
+            ((List<MeioComunicacao>)pessoa.MeiosComunicacao)
                 .RemoveAll(x => string.IsNullOrEmpty(x.MeioComunicacaoNome)
                                 && x.MeioComunicacaoCodigo.Equals(0));
             if (model.EPessoaFisica)
@@ -258,6 +256,20 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         public List<PessoaModel> TesteProjecao()
         {
             return _pessoaRepository.TesteProjecao();
+        }
+
+        private void ValidarPessoa(Pessoa pessoa)
+        {
+            pessoa.Validar();
+            pessoa.Enderecos.First().Validar();
+            if (pessoa.MeiosComunicacao.All(x => x.TipoComunicacao != TipoComunicacaoEnum.Telefone))
+            {
+                throw new BusinessException(Erros.EmptyPhone);
+            } 
+            foreach (var meioComunicacao in pessoa.MeiosComunicacao)
+            {
+                meioComunicacao.Validar();
+            }
         }
 
         private void AtualizarEnderecoPessoa(Pessoa pessoa, Pessoa pessoaAtual)

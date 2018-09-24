@@ -69,7 +69,7 @@ namespace ProjetoArtCouro.Api
 
         public static void ConfigureCompressionHandler(HttpConfiguration config)
         {
-            //config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
+            config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
         }
     }
 }

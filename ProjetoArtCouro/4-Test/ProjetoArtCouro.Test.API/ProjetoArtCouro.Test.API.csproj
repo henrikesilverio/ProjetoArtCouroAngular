@@ -46,8 +46,9 @@
       <DependentUpon>ClienteController.feature</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Pessoas\ClienteControllerSteps.cs" />
+    <Compile Include="Controllers\Pessoas\ClienteTestShared.cs" />
+    <Compile Include="Infra\ITestShared.cs" />
     <Compile Include="Infra\ServiceRequest.cs" />
-    <Compile Include="Infra\StartupTest.cs" />
     <Compile Include="Infra\TokenModel.cs" />
     <Compile Include="Initialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
