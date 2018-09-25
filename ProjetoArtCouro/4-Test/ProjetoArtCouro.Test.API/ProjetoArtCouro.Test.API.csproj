@@ -112,6 +112,10 @@
       <Project>{2D5D8C1C-11B1-41E7-A5D9-25655EA44C60}</Project>
       <Name>ProjetoArtCouro.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.DataBase\ProjetoArtCouro.DataBase.csproj">
+      <Project>{44529C22-2343-41C9-8D59-82656C9827AD}</Project>
+      <Name>ProjetoArtCouro.DataBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.Domain\ProjetoArtCouro.Domain.csproj">
       <Project>{D0278CC6-DC16-48E5-9626-B19142B60808}</Project>
       <Name>ProjetoArtCouro.Domain</Name>

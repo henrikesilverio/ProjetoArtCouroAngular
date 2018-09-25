@@ -2,7 +2,7 @@
 using Microsoft.Owin.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjetoArtCouro.Api;
-using ProjetoArtCouro.Api.AutoMapper;
+using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Test.API.Infra;
 using System.Net;
 using System.Net.Http;
@@ -28,19 +28,19 @@ namespace ProjetoArtCouro.Test.API
         public void BeforeScenario()
         {
             var server = TestServer.Create<Startup>();
+            var context = new DataBaseContext();
 
             _objectContainer.RegisterInstanceAs(server, typeof(TestServer));
+            _objectContainer.RegisterInstanceAs(context, typeof(DataBaseContext), null, true);
             _objectContainer.RegisterTypeAs<ServiceRequest, ServiceRequest>();
-
-            AutoMapperConfig.RegisterMappings();
         }
 
         [AfterScenario]
         public void AfterScenario()
         {
-            //var testShared = _scenarioContext["TestShared"] as ITestShared;
-            //Assert.AreNotEqual(testShared, null, "Teste compartilhado não implementado");
-            //testShared.ClearData();
+            var testShared = _scenarioContext["TestShared"] as ITestShared;
+            Assert.AreNotEqual(testShared, null, "Teste compartilhado não implementado");
+            testShared.ClearData();
         }
 
         [Then(@"retorne sucesso")]

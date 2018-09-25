@@ -54,5 +54,38 @@ namespace ProjetoArtCouro.Api.AutoMapper
             }
             return meioComunicacaoModel;
         }
+
+        private void MapearPorTipoComunicacao(
+            ICollection<MeioComunicacao> entidades,
+            MeioComunicacao entidade,
+            MeioComunicacaoModel modelo,
+            TipoComunicacaoEnum tipo)
+        {
+            var propriedades = new[]
+            {
+                new { Tipo = TipoComunicacaoEnum.Telefone, Propriedades = new [] { "TelefoneId", "Telefone", "Telefones" } },
+                new { Tipo = TipoComunicacaoEnum.Celular, Propriedades = new [] { "CelularId", "Celular", "Celulares" } },
+                new { Tipo = TipoComunicacaoEnum.Email, Propriedades = new [] { "EmailId", "Email", "Emails" } }
+            }.FirstOrDefault(x => x.Tipo == tipo)?.Propriedades;
+
+            if (propriedades != null)
+            {
+                var id = modelo.GetType().GetProperty(propriedades[0]);
+                id.SetValue(modelo, entidade.MeioComunicacaoCodigo);
+
+                var nome = modelo.GetType().GetProperty(propriedades[1]);
+                nome.SetValue(modelo, entidade.MeioComunicacaoNome);
+
+                var lista = modelo.GetType().GetProperty(propriedades[2]);
+                lista.SetValue(modelo, entidades
+                    .Where(x => x.TipoComunicacao == tipo)
+                    .Select(x => new LookupModel
+                    {
+                        Codigo = x.MeioComunicacaoCodigo,
+                        Nome = x.MeioComunicacaoNome
+                    })
+                    .ToList());
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Models.Cliente;
 using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Test.API.Infra;
@@ -21,12 +22,13 @@ namespace ProjetoArtCouro.Test.API.Controllers.Pessoas
 
         public ClienteControllerSteps(
             ScenarioContext scenarioContext,
-            ServiceRequest serviceRequest)
+            ServiceRequest serviceRequest,
+            DataBaseContext context)
         {
             _scenarioContext = scenarioContext;
             _serviceRequest = serviceRequest;
             _scenarioContext.Add("ClienteModel", null);
-            _scenarioContext["TestShared"] = new ClienteTestShared(_scenarioContext);
+            _scenarioContext["TestShared"] = new ClienteTestShared(_scenarioContext, context);
         }
 
         [Given(@"que preencha os dados do cliente com as seguintes informações:")]
