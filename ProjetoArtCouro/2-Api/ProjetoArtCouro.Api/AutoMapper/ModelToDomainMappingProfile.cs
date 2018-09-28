@@ -21,6 +21,7 @@ using ProjetoArtCouro.Domain.Models.Funcionario;
 using ProjetoArtCouro.Domain.Models.Produto;
 using ProjetoArtCouro.Domain.Models.Usuario;
 using ProjetoArtCouro.Domain.Models.Venda;
+using ProjetoArtCouro.Api.AutoMapper.Converters;
 
 namespace ProjetoArtCouro.Api.AutoMapper
 {
@@ -146,30 +147,11 @@ namespace ProjetoArtCouro.Api.AutoMapper
             CreateMap<PessoaModel, Pessoa>()
                 .ForMember(d => d.PessoaCodigo, m => m.MapFrom(s => s.Codigo))
                 .ForMember(d => d.Nome, m => m.MapFrom(s => s.EPessoaFisica ? s.Nome : s.RazaoSocial))
-                .ForMember(d => d.MeiosComunicacao, m => m.MapFrom(s => new List<MeioComunicacao>
+                .ForMember(d => d.Papeis, m => m.MapFrom(s => new List<Papel>
                 {
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.TelefoneId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Telefone,
-                        TipoComunicacao = TipoComunicacaoEnum.Telefone,
-                        Principal = true
-                    },
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.CelularId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Celular,
-                        TipoComunicacao = TipoComunicacaoEnum.Celular,
-                        Principal = true
-                    },
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.EmailId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Email,
-                        TipoComunicacao = TipoComunicacaoEnum.Email,
-                        Principal = true
-                    }
+                    new Papel { PapelCodigo = s.PapelPessoa }
                 }))
+                .ForMember(d => d.MeiosComunicacao, m => m.MapFrom(s => s.MeioComunicacao))
                 .ForMember(d => d.Enderecos, m => m.MapFrom(s => new List<Endereco>
                 {
                     new Endereco
@@ -184,136 +166,14 @@ namespace ProjetoArtCouro.Api.AutoMapper
                         Estado = new Estado {EstadoCodigo = s.Endereco.UFId ?? 0},
                         Principal = true
                     }
-                }));
+                }))
+                .Include<ClienteModel, Pessoa>()
+                .Include<FuncionarioModel, Pessoa>()
+                .Include<FornecedorModel, Pessoa>();
 
-            CreateMap<ClienteModel, Pessoa>()
-                .ForMember(d => d.PessoaCodigo, m => m.MapFrom(s => s.Codigo))
-                .ForMember(d => d.Nome, m => m.MapFrom(s => s.EPessoaFisica ? s.Nome : s.RazaoSocial))
-                .ForMember(d => d.MeiosComunicacao, m => m.MapFrom(s => new List<MeioComunicacao>
-                {
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.TelefoneId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Telefone,
-                        TipoComunicacao = TipoComunicacaoEnum.Telefone,
-                        Principal = true
-                    },
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.CelularId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Celular,
-                        TipoComunicacao = TipoComunicacaoEnum.Celular,
-                        Principal = true
-                    },
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.EmailId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Email,
-                        TipoComunicacao = TipoComunicacaoEnum.Email,
-                        Principal = true
-                    }
-                }))
-                .ForMember(d => d.Enderecos, m => m.MapFrom(s => new List<Endereco>
-                {
-                    new Endereco
-                    {
-                        EnderecoCodigo = s.Endereco.EnderecoId ?? 0,
-                        Logradouro = s.Endereco.Logradouro,
-                        Numero = s.Endereco.Numero,
-                        Bairro = s.Endereco.Bairro,
-                        Complemento = s.Endereco.Complemento,
-                        Cidade = s.Endereco.Cidade,
-                        CEP = s.Endereco.Cep,
-                        Estado = new Estado {EstadoCodigo = s.Endereco.UFId ?? 0},
-                        Principal = true
-                    }
-                }));
-
-            CreateMap<FuncionarioModel, Pessoa>()
-                .ForMember(d => d.PessoaCodigo, m => m.MapFrom(s => s.Codigo))
-                .ForMember(d => d.Nome, m => m.MapFrom(s => s.EPessoaFisica ? s.Nome : s.RazaoSocial))
-                .ForMember(d => d.MeiosComunicacao, m => m.MapFrom(s => new List<MeioComunicacao>
-                {
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.TelefoneId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Telefone,
-                        TipoComunicacao = TipoComunicacaoEnum.Telefone,
-                        Principal = true
-                    },
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.CelularId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Celular,
-                        TipoComunicacao = TipoComunicacaoEnum.Celular,
-                        Principal = true
-                    },
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.EmailId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Email,
-                        TipoComunicacao = TipoComunicacaoEnum.Email,
-                        Principal = true
-                    }
-                }))
-                .ForMember(d => d.Enderecos, m => m.MapFrom(s => new List<Endereco>
-                {
-                    new Endereco
-                    {
-                        EnderecoCodigo = s.Endereco.EnderecoId ?? 0,
-                        Logradouro = s.Endereco.Logradouro,
-                        Numero = s.Endereco.Numero,
-                        Bairro = s.Endereco.Bairro,
-                        Complemento = s.Endereco.Complemento,
-                        Cidade = s.Endereco.Cidade,
-                        CEP = s.Endereco.Cep,
-                        Estado = new Estado {EstadoCodigo = s.Endereco.UFId ?? 0},
-                        Principal = true
-                    }
-                }));
-
-            CreateMap<FornecedorModel, Pessoa>()
-                .ForMember(d => d.PessoaCodigo, m => m.MapFrom(s => s.Codigo))
-                .ForMember(d => d.Nome, m => m.MapFrom(s => s.EPessoaFisica ? s.Nome : s.RazaoSocial))
-                .ForMember(d => d.MeiosComunicacao, m => m.MapFrom(s => new List<MeioComunicacao>
-                {
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.TelefoneId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Telefone,
-                        TipoComunicacao = TipoComunicacaoEnum.Telefone,
-                        Principal = true
-                    },
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.CelularId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Celular,
-                        TipoComunicacao = TipoComunicacaoEnum.Celular,
-                        Principal = true
-                    },
-                    new MeioComunicacao
-                    {
-                        MeioComunicacaoCodigo = s.MeioComunicacao.EmailId ?? 0,
-                        MeioComunicacaoNome = s.MeioComunicacao.Email,
-                        TipoComunicacao = TipoComunicacaoEnum.Email,
-                        Principal = true
-                    }
-                }))
-                .ForMember(d => d.Enderecos, m => m.MapFrom(s => new List<Endereco>
-                {
-                    new Endereco
-                    {
-                        EnderecoCodigo = s.Endereco.EnderecoId ?? 0,
-                        Logradouro = s.Endereco.Logradouro,
-                        Numero = s.Endereco.Numero,
-                        Bairro = s.Endereco.Bairro,
-                        Complemento = s.Endereco.Complemento,
-                        Cidade = s.Endereco.Cidade,
-                        CEP = s.Endereco.Cep,
-                        Estado = new Estado {EstadoCodigo = s.Endereco.UFId ?? 0},
-                        Principal = true
-                    }
-                }));
+            CreateMap<ClienteModel, Pessoa>();
+            CreateMap<FuncionarioModel, Pessoa>();
+            CreateMap<FornecedorModel, Pessoa>();
 
             CreateMap<PessoaModel, EstadoCivil>()
                 .ForMember(d => d.EstadoCivilId, m => m.Ignore())
@@ -334,6 +194,9 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 .ForMember(d => d.EstadoCivilId, m => m.Ignore())
                 .ForMember(d => d.EstadoCivilNome, m => m.Ignore())
                 .ForMember(d => d.EstadoCivilCodigo, m => m.MapFrom(s => s.EstadoCivilId));
+
+            CreateMap<MeioComunicacaoModel, ICollection<MeioComunicacao>>()
+                .ConvertUsing<MeioComunicacaoConverter>();
         }
 
         private void MapperUser()

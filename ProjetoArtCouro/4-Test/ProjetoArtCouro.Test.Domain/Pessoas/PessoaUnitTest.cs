@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Resources;
 
 namespace ProjetoArtCouro.Test.Domain.Pessoas
@@ -18,7 +19,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 var pessoa = new Pessoa();
                 pessoa.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 Assert.AreNotEqual(e.Message, "", "Nao retornou mensagens");
                 var mensagens = e.Message.Split('-');
@@ -63,7 +64,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 pessoa.Validar();
             }
-            catch (Exception e)
+            catch (DomainException e)
             {
                 Assert.AreNotEqual(e.Message, "", "Nao retornou mensagens");
                 var mensagens = e.Message.Split('-');
@@ -89,7 +90,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 pessoa.Validar();
             }
-            catch (Exception e)
+            catch (DomainException e)
             {
                 Assert.AreNotEqual(e.Message, "", "Nao retornou mensagens");
                 var mensagens = e.Message.Split('-');
@@ -114,7 +115,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 pessoa.Validar();
             }
-            catch (Exception e)
+            catch (DomainException e)
             {
                 Assert.AreNotEqual(e.Message, "", "Nao retornou mensagens");
                 var mensagens = e.Message.Split('-');
@@ -139,7 +140,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 pessoa.Validar();
             }
-            catch (Exception e)
+            catch (DomainException e)
             {
                 Assert.AreNotEqual(e.Message, "", "Nao retornou mensagens");
                 var mensagens = e.Message.Split('-');
@@ -164,7 +165,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 pessoa.Validar();
             }
-            catch (Exception e)
+            catch (DomainException e)
             {
                 Assert.AreNotEqual(e.Message, "", "Nao retornou mensagens");
                 var mensagens = e.Message.Split('-');

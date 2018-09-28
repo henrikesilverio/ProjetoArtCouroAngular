@@ -4,9 +4,9 @@ using AutoMapper;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
 using ProjetoArtCouro.Domain.Models.Common;
 
-namespace ProjetoArtCouro.Api.AutoMapper
+namespace ProjetoArtCouro.Api.AutoMapper.Converters
 {
-    public class EnderecoConverter : ITypeConverter<ICollection<Endereco>, EnderecoModel>
+    public class EnderecoModelConverter : ITypeConverter<ICollection<Endereco>, EnderecoModel>
     {
         public EnderecoModel Convert(ICollection<Endereco> source, EnderecoModel destination, ResolutionContext context)
         {

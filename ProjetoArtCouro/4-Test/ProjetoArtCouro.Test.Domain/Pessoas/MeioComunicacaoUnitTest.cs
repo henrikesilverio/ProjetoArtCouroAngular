@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Resources.Resources;
 
@@ -18,7 +19,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 var meioComunicacao = new MeioComunicacao();
                 meioComunicacao.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 2);
                 Assert.IsTrue(
@@ -54,7 +55,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 meioComunicacao.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(
@@ -77,7 +78,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 meioComunicacao.Validar();
             }
-            catch (Exception e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "MeioComunicacaoNome", 250))),
@@ -97,7 +98,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 meioComunicacao.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldCannotBe, "TipoComunicacao", 0))),

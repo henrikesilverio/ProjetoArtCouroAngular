@@ -32,6 +32,6 @@ namespace ProjetoArtCouro.Domain.Models.Common
             ErrorMessageResourceType = typeof(Erros), ErrorMessageResourceName = "InvalidEmail")]
         public string Email { get; set; }
 
-        public List<LookupModel> Emalis { get; set; }
+        public List<LookupModel> Emails { get; set; }
     }
 }

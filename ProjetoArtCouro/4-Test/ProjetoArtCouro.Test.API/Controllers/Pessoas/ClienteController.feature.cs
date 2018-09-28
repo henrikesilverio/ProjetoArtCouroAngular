@@ -168,6 +168,209 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Cadastrar um cliente do tipo pessoa juridica preenchendo todos os campos")]
+        public virtual void CadastrarUmClienteDoTipoPessoaJuridicaPreenchendoTodosOsCampos()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cadastrar um cliente do tipo pessoa juridica preenchendo todos os campos", null, ((string[])(null)));
+#line 36
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table5.AddRow(new string[] {
+                        "RazaoSocial",
+                        "Baianus Tuning LTDA"});
+            table5.AddRow(new string[] {
+                        "CNPJ",
+                        "77.656.976/0001-41"});
+            table5.AddRow(new string[] {
+                        "Contato",
+                        "Henrique"});
+            table5.AddRow(new string[] {
+                        "EPessoaFisica",
+                        "false"});
+            table5.AddRow(new string[] {
+                        "PapelPessoa",
+                        "4"});
+#line 37
+ testRunner.Given("que preencha os dados do cliente com as seguintes informações:", ((string)(null)), table5, "Dado ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table6.AddRow(new string[] {
+                        "Logradouro",
+                        "Rua da vida"});
+            table6.AddRow(new string[] {
+                        "Bairro",
+                        "Jardim mundo"});
+            table6.AddRow(new string[] {
+                        "Numero",
+                        "400"});
+            table6.AddRow(new string[] {
+                        "Cidade",
+                        "Sarandi"});
+            table6.AddRow(new string[] {
+                        "Cep",
+                        "87112-540"});
+            table6.AddRow(new string[] {
+                        "UFId",
+                        "16"});
+#line 44
+ testRunner.And("que preecha os dados do endereço do cliente com as seguintes informações:", ((string)(null)), table6, "E ");
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table7.AddRow(new string[] {
+                        "Telefone",
+                        "(44) 3232-5566"});
+#line 52
+ testRunner.And("que preecha os dados de meios de comunicação do cliente com as seguintes informaç" +
+                    "ões:", ((string)(null)), table7, "E ");
+#line 55
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Cliente/CriarCliente\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 56
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Pesquisar um cliente do tipo pessoa fisica sem filtros")]
+        public virtual void PesquisarUmClienteDoTipoPessoaFisicaSemFiltros()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pesquisar um cliente do tipo pessoa fisica sem filtros", null, ((string[])(null)));
+#line 58
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table8.AddRow(new string[] {
+                        "EPessoaFisica",
+                        "true"});
+#line 59
+ testRunner.Given("que preencha os dados do filtro de pesquisa de cliente com as seguintes informaçõ" +
+                    "es:", ((string)(null)), table8, "Dado ");
+#line 62
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Cliente/PesquisarCliente\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 63
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Pesquisar um cliente do tipo pessoa fisica por código, nome, CPFCNPJ, email")]
+        public virtual void PesquisarUmClienteDoTipoPessoaFisicaPorCodigoNomeCPFCNPJEmail()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pesquisar um cliente do tipo pessoa fisica por código, nome, CPFCNPJ, email", null, ((string[])(null)));
+#line 65
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table9.AddRow(new string[] {
+                        "Nome",
+                        "Henrique"});
+            table9.AddRow(new string[] {
+                        "CPF",
+                        "123.456.789.09"});
+            table9.AddRow(new string[] {
+                        "RG",
+                        "224445556"});
+            table9.AddRow(new string[] {
+                        "Sexo",
+                        "M"});
+            table9.AddRow(new string[] {
+                        "EstadoCivilId",
+                        "1"});
+            table9.AddRow(new string[] {
+                        "EPessoaFisica",
+                        "true"});
+            table9.AddRow(new string[] {
+                        "PapelPessoa",
+                        "4"});
+#line 66
+ testRunner.Given("que preencha os dados do cliente com as seguintes informações:", ((string)(null)), table9, "Dado ");
+#line hidden
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table10.AddRow(new string[] {
+                        "Logradouro",
+                        "Rua da vida"});
+            table10.AddRow(new string[] {
+                        "Bairro",
+                        "Jardim mundo"});
+            table10.AddRow(new string[] {
+                        "Numero",
+                        "400"});
+            table10.AddRow(new string[] {
+                        "Cidade",
+                        "Sarandi"});
+            table10.AddRow(new string[] {
+                        "Cep",
+                        "87112-540"});
+            table10.AddRow(new string[] {
+                        "UFId",
+                        "16"});
+#line 75
+ testRunner.And("que preecha os dados do endereço do cliente com as seguintes informações:", ((string)(null)), table10, "E ");
+#line hidden
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table11.AddRow(new string[] {
+                        "Telefone",
+                        "(44) 3232-5566"});
+            table11.AddRow(new string[] {
+                        "Email",
+                        "teste@gmail.com"});
+#line 83
+ testRunner.And("que preecha os dados de meios de comunicação do cliente com as seguintes informaç" +
+                    "ões:", ((string)(null)), table11, "E ");
+#line 87
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Cliente/CriarCliente\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 88
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table12.AddRow(new string[] {
+                        "CodigoCliente",
+                        "1"});
+            table12.AddRow(new string[] {
+                        "Nome",
+                        "Henrique"});
+            table12.AddRow(new string[] {
+                        "CPFCNPJ",
+                        "123.456.789.09"});
+            table12.AddRow(new string[] {
+                        "Email",
+                        "teste@gmail.com"});
+            table12.AddRow(new string[] {
+                        "EPessoaFisica",
+                        "true"});
+#line 89
+ testRunner.Given("que preencha os dados do filtro de pesquisa de cliente com as seguintes informaçõ" +
+                    "es:", ((string)(null)), table12, "Dado ");
+#line 96
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Cliente/PesquisarCliente\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 97
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

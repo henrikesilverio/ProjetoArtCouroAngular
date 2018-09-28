@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Resources;
 
 namespace ProjetoArtCouro.Test.Domain.Pessoas
@@ -17,7 +18,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 var endereco = new Endereco();
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 6);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "CEP"))),
@@ -65,7 +66,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "CEP"))),
@@ -89,7 +90,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "CEP", 9))),
@@ -112,7 +113,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Logradouro"))),
@@ -136,7 +137,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Logradouro", 200))),
@@ -159,7 +160,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Bairro"))),
@@ -183,7 +184,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Bairro", 50))),
@@ -206,7 +207,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Numero"))),
@@ -230,7 +231,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Numero", 6))),
@@ -255,7 +256,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Complemento", 50))),
@@ -278,7 +279,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Cidade"))),
@@ -302,7 +303,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Cidade", 50))),
@@ -325,7 +326,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 endereco.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(Erros.EmptyState)),

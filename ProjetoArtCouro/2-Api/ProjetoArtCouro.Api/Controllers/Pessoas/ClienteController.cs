@@ -39,22 +39,15 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpPost]
         public IHttpActionResult PesquisarCliente(PesquisaClienteModel model)
         {
-            try
+            if (model.EPessoaFisica)
             {
-                if (model.EPessoaFisica)
-                {
-                    var listaPessoaFisica = _pessoaService.PesquisarPessoaFisica(model.CodigoCliente ?? 0, model.Nome,
-                    model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Cliente);
-                    return OkRetornoBase(Mapper.Map<List<ClienteModel>>(listaPessoaFisica));
-                }
-                var listaPessoaJuridica = _pessoaService.PesquisarPessoaJuridica(model.CodigoCliente ?? 0, model.Nome,
+                var listaPessoaFisica = _pessoaService.PesquisarPessoaFisica(model.CodigoCliente ?? 0, model.Nome,
                 model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Cliente);
-                return OkRetornoBase(Mapper.Map<List<ClienteModel>>(listaPessoaJuridica));
+                return OkRetornoBase(Mapper.Map<List<ClienteModel>>(listaPessoaFisica));
             }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var listaPessoaJuridica = _pessoaService.PesquisarPessoaJuridica(model.CodigoCliente ?? 0, model.Nome,
+            model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Cliente);
+            return OkRetornoBase(Mapper.Map<List<ClienteModel>>(listaPessoaJuridica));
         }
 
         [Route("ObterClientePorCodigo/{codigoCliente:int:min(1)}")]

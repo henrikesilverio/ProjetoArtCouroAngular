@@ -48,7 +48,9 @@ namespace ProjetoArtCouro.Test.API
         {
             var testShared = _scenarioContext["TestShared"] as ITestShared;
             Assert.AreNotEqual(testShared, null, "Teste compartilhado não implementado");
+            _scenarioContext.Remove("ReturnBase");
             testShared.ValidateReturnSuccess();
+            _scenarioContext.Remove("Response");
         }
 
         [Then(@"retorne erro")]
@@ -79,6 +81,7 @@ namespace ProjetoArtCouro.Test.API
             var response = (HttpResponseMessage)_scenarioContext["Response"];
             Assert.AreNotEqual(null, response.Content);
             Assert.AreEqual(statusCode, response.StatusCode);
+            _scenarioContext.Remove("Response");
 
             //if (statusCode != HttpStatusCode.NotFound)
             //{

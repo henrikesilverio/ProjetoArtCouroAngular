@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
+using ProjetoArtCouro.Api.AutoMapper.Converters;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Entities.Estoques;
@@ -254,11 +255,10 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 });
 
             CreateMap<ICollection<MeioComunicacao>, MeioComunicacaoModel>()
-                .ConvertUsing<MeioComunicacaoConverter>();
+                .ConvertUsing<MeioComunicacaoModelConverter>();
 
             CreateMap<ICollection<Endereco>, EnderecoModel>()
-                .ConvertUsing<EnderecoConverter>();
-
+                .ConvertUsing<EnderecoModelConverter>();
         }
 
         private void MapperUser()

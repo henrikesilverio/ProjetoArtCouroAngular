@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Resources;
 
 namespace ProjetoArtCouro.Test.Domain.Pessoas
@@ -18,7 +19,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 var pessoaJuridica = new PessoaJuridica();
                 pessoaJuridica.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 2);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "CNPJ"))),
@@ -51,7 +52,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 pessoaJuridica.Validar();
             }
-            catch (Exception e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "CNPJ"))),
@@ -72,7 +73,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 pessoaJuridica.Validar();
             }
-            catch (Exception e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Contato", 100))),
@@ -91,7 +92,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 pessoaJuridica.Validar();
             }
-            catch (Exception e)
+            catch (DomainException e)
             {
                 var mensagens = ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(Erros.EmptyPerson)),

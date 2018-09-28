@@ -54,11 +54,12 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         public void CriarPessoa(PessoaModel model)
         {
             var pessoa = Mapper.Map<Pessoa>(model);
-            pessoa.Papeis = new List<Papel> { new Papel { PapelCodigo = model.PapelPessoa } };
-            //Remove informações que não vão ser gravadas.
-            ((List<MeioComunicacao>)pessoa.MeiosComunicacao)
-                .RemoveAll(x => string.IsNullOrEmpty(x.MeioComunicacaoNome)
-                                && x.MeioComunicacaoCodigo.Equals(0));
+            ValidarPessoa(pessoa);
+
+            pessoa.Papeis = new List<Papel>
+            {
+                _papelRepository.ObterPorCodigo(pessoa.Papeis.First().PapelCodigo)
+            };
 
             if (model.EPessoaFisica)
             {
@@ -74,23 +75,10 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
 
         public void CriarPessoaFisica(Pessoa pessoa)
         {
-            ValidarPessoa(pessoa);
             pessoa.PessoaFisica.Pessoa = pessoa;
             pessoa.PessoaFisica.Validar();
-            //Verifica se a pessoa existe, caso exista atualiza o papel da pessoa
+
             var existePessoaFisica = _pessoaRepository.ObterPorCPFComPessoaCompleta(pessoa.PessoaFisica.CPF);
-            //Recupera informações do banco
-            var firstOrDefault = pessoa.Papeis.FirstOrDefault();
-            if (firstOrDefault == null)
-            {
-                throw new BusinessException(string.Format(Erros.NullParameter, "Papeis"));
-            }
-
-            pessoa.Papeis = new List<Papel>
-            {
-                _papelRepository.ObterPorCodigo(firstOrDefault.PapelCodigo)
-            };
-
             if (existePessoaFisica != null)
             {
                 existePessoaFisica.Papeis.Add(pessoa.Papeis.First());
@@ -107,25 +95,10 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
 
         public void CriarPessoaJuridica(Pessoa pessoa)
         {
-            pessoa.Validar();
             pessoa.PessoaJuridica.Pessoa = pessoa;
             pessoa.PessoaJuridica.Validar();
-            //Verifica se a pessoa existe, caso exista atualiza o papel da pessoa
-            var existePessoaJuridica = _pessoaRepository.ObterPorCNPJComPessoaCompleta(pessoa.PessoaJuridica.CNPJ);
-            //Recupera informações do banco
-            var firstOrDefault = pessoa.Papeis.FirstOrDefault();
-            if (firstOrDefault == null)
-            {
-                throw new BusinessException(string.Format(Erros.NullParameter, "Papeis"));
-            }
-            if (firstOrDefault != null)
-            {
-                pessoa.Papeis = new List<Papel>
-                {
-                    _papelRepository.ObterPorCodigo(firstOrDefault.PapelCodigo)
-                };
-            }
 
+            var existePessoaJuridica = _pessoaRepository.ObterPorCNPJComPessoaCompleta(pessoa.PessoaJuridica.CNPJ);
             if (existePessoaJuridica != null)
             {
                 existePessoaJuridica.Papeis.Add(pessoa.Papeis.First());
@@ -198,7 +171,7 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
                 string.IsNullOrEmpty(email) &&
                 papelCodigo.Equals(TipoPapelPessoaEnum.Nenhum))
             {
-                throw new Exception(Erros.EmptyParameters);
+                throw new BusinessException(Erros.EmptyParameters);
             };
 
             return _pessoaFisicaRepository.ObterLista(codigo, nome, cpf, email, papelCodigo);
@@ -212,7 +185,7 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
                 string.IsNullOrEmpty(email) &&
                 papelCodigo.Equals(TipoPapelPessoaEnum.Nenhum))
             {
-                throw new Exception(Erros.EmptyParameters);
+                throw new BusinessException(Erros.EmptyParameters);
             }
 
             return _pessoaJuridicaRepository.ObterLista(codigo, nome, cnpj, email, papelCodigo);
@@ -262,13 +235,20 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         {
             pessoa.Validar();
             pessoa.Enderecos.First().Validar();
+
             if (pessoa.MeiosComunicacao.All(x => x.TipoComunicacao != TipoComunicacaoEnum.Telefone))
             {
                 throw new BusinessException(Erros.EmptyPhone);
-            } 
+            }
+
             foreach (var meioComunicacao in pessoa.MeiosComunicacao)
             {
                 meioComunicacao.Validar();
+            }
+
+            if (!pessoa.Papeis.Any())
+            {
+                throw new BusinessException(string.Format(Erros.NullParameter, "Papeis"));
             }
         }
 
