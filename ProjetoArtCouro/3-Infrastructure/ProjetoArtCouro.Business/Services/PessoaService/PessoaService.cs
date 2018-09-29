@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
@@ -10,6 +9,7 @@ using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Exceptions;
+using ProjetoArtCouro.Domain.Models.Pessoa;
 
 namespace ProjetoArtCouro.Business.Services.PessoaService
 {
@@ -114,10 +114,6 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         public void AtualizarPessoa(PessoaModel model)
         {
             var pessoa = Mapper.Map<Pessoa>(model);
-            //Remove informações que não vão ser gravadas.
-            ((List<MeioComunicacao>)pessoa.MeiosComunicacao)
-                .RemoveAll(x => string.IsNullOrEmpty(x.MeioComunicacaoNome)
-                                && x.MeioComunicacaoCodigo.Equals(0));
             if (model.EPessoaFisica)
             {
                 pessoa.PessoaFisica = Mapper.Map<PessoaFisica>(model);
@@ -128,7 +124,10 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             }
 
             var pessoaAtual = _pessoaRepository.ObterPorCodigoComPessoaCompleta(pessoa.PessoaCodigo);
-            AssertionConcern.AssertArgumentNotNull(pessoaAtual, Erros.PersonDoesNotExist);
+            if (pessoaAtual == null)
+            {
+                throw new BusinessException(Erros.PersonDoesNotExist);
+            }
 
             pessoaAtual.Nome = pessoa.Nome;
             if (pessoaAtual.PessoaFisica != null)
@@ -157,43 +156,51 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
 
         public void ExcluirPessoa(int pessoaCodigo)
         {
-            AssertionConcern.AssertArgumentNotEquals(pessoaCodigo, 0, Erros.InvalidCode);
+            if (pessoaCodigo == 0)
+            {
+                throw new BusinessException(Erros.InvalidCode);
+            }
+
             var pessoa = _pessoaRepository.ObterPorCodigoComPessoaCompleta(pessoaCodigo);
-            AssertionConcern.AssertArgumentNotNull(pessoa, Erros.PersonDoesNotExist);
+
+            if (pessoa == null)
+            {
+                throw new BusinessException(Erros.PersonDoesNotExist);
+            }
+
             _pessoaRepository.Deletar(pessoa);
         }
 
-        public List<PessoaFisica> PesquisarPessoaFisica(int codigo, string nome, string cpf, string email, TipoPapelPessoaEnum papelCodigo)
+        public List<PessoaModel> PesquisarPessoa(PesquisaPessoaModel filtro)
         {
-            if (codigo.Equals(0) &&
-                string.IsNullOrEmpty(nome) &&
-                string.IsNullOrEmpty(cpf) &&
-                string.IsNullOrEmpty(email) &&
-                papelCodigo.Equals(TipoPapelPessoaEnum.Nenhum))
+            if (filtro.Codigo == 0 &&
+                string.IsNullOrEmpty(filtro.Nome) &&
+                string.IsNullOrEmpty(filtro.CPFCNPJ) &&
+                string.IsNullOrEmpty(filtro.Email) &&
+                filtro.TipoPapelPessoa == TipoPapelPessoaEnum.Nenhum)
             {
                 throw new BusinessException(Erros.EmptyParameters);
             };
 
-            return _pessoaFisicaRepository.ObterLista(codigo, nome, cpf, email, papelCodigo);
-        }
-
-        public List<PessoaJuridica> PesquisarPessoaJuridica(int codigo, string nome, string cnpj, string email, TipoPapelPessoaEnum papelCodigo)
-        {
-            if (codigo.Equals(0) &&
-                string.IsNullOrEmpty(nome) &&
-                string.IsNullOrEmpty(cnpj) &&
-                string.IsNullOrEmpty(email) &&
-                papelCodigo.Equals(TipoPapelPessoaEnum.Nenhum))
+            if (filtro.EPessoaFisica)
             {
-                throw new BusinessException(Erros.EmptyParameters);
+                var pessoasFisicas = _pessoaFisicaRepository
+                    .ObterLista(filtro.Codigo ?? 0, filtro.Nome, filtro.CPFCNPJ, filtro.Email, filtro.TipoPapelPessoa);
+                return Mapper.Map<List<PessoaModel>>(pessoasFisicas);
             }
-
-            return _pessoaJuridicaRepository.ObterLista(codigo, nome, cnpj, email, papelCodigo);
+            var pessoasJuridicas = _pessoaJuridicaRepository
+                .ObterLista(filtro.Codigo ?? 0, filtro.Nome, filtro.CPFCNPJ, filtro.Email, filtro.TipoPapelPessoa);
+            return Mapper.Map<List<PessoaModel>>(pessoasJuridicas);
         }
 
-        public Pessoa ObterPessoaPorCodigo(int codigo)
+        public PessoaModel ObterPessoaPorCodigo(int codigo)
         {
-            return _pessoaRepository.ObterPorCodigoComPessoaCompleta(codigo);
+            var pessoa = _pessoaRepository.ObterPorCodigoComPessoaCompleta(codigo);
+            if (pessoa.PessoaJuridica == null)
+            {
+                return Mapper.Map<PessoaModel>(pessoa.PessoaFisica);
+            }
+            return Mapper.Map<PessoaModel>(pessoa.PessoaJuridica);
         }
 
         public List<Estado> ObterEstados()

@@ -43,24 +43,15 @@ namespace ProjetoArtCouro.Test.API.Infra
             return ExecuteAction(objectParameter, apiEndPoint, HttpMethod.Get);
         }
 
-        public HttpResponseMessage Delete(object objectParameter, string apiEndPoint)
+        public HttpResponseMessage Delete(string apiEndPoint)
         {
-            return ExecuteAction(objectParameter, apiEndPoint, HttpMethod.Delete);
-        }
-
-        public HttpResponseMessage Delete(int objectParameter, string apiEndPoint)
-        {
-            return ExecuteAction(objectParameter, apiEndPoint, HttpMethod.Delete);
+            return ExecuteAction(null, apiEndPoint, HttpMethod.Delete);
         }
 
         private HttpResponseMessage ExecuteAction(object objectParameter, string apiEndPoint, HttpMethod method)
         {
             var serviceUrl = "http://localhost/";
-            if (method == HttpMethod.Delete)
-            {
-                apiEndPoint += "/" + objectParameter.ToString();
-            }
-            else if (method == HttpMethod.Get && objectParameter != null)
+            if (method == HttpMethod.Get && objectParameter != null)
             {
                 apiEndPoint = AppendQueryString(apiEndPoint, objectParameter);
             }

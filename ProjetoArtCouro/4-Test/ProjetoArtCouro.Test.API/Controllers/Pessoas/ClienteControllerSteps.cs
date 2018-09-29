@@ -2,6 +2,7 @@
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Models.Cliente;
 using ProjetoArtCouro.Domain.Models.Common;
+using ProjetoArtCouro.Domain.Models.Pessoa;
 using ProjetoArtCouro.Test.API.Infra;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
@@ -48,13 +49,34 @@ namespace ProjetoArtCouro.Test.API.Controllers.Pessoas
         [Given(@"que preencha os dados do filtro de pesquisa de cliente com as seguintes informações:")]
         public void DadoQuePreenchaOsDadosDoFiltroDePesquisaDeClienteComAsSeguintesInformacoes(Table table)
         {
-            _scenarioContext["Conteudo"] = table.CreateInstance<PesquisaClienteModel>();
+            _scenarioContext["Conteudo"] = table.CreateInstance<PesquisaPessoaModel>();
+        }
+
+        [When(@"realizar uma chamada Get ao endereço '(.*)'")]
+        public void QuandoRealizarUmaChamadaGetAoEndereco(string endereco)
+        {
+            var response = _serviceRequest.Get(endereco);
+            _scenarioContext.Add("Response", response);
         }
 
         [When(@"realizar uma chamada Post ao endereço '(.*)'")]
         public void QuandoRealizarUmaChamadaPostAoEndereco(string endereco)
         {
             var response = _serviceRequest.Post(_scenarioContext["Conteudo"], endereco);
+            _scenarioContext.Add("Response", response);
+        }
+
+        [When(@"realizar uma chamada Put ao endereço '(.*)'")]
+        public void QuandoRealizarUmaChamadaPutAoEndereco(string endereco)
+        {
+            var response = _serviceRequest.Put(_scenarioContext["Conteudo"], endereco);
+            _scenarioContext.Add("Response", response);
+        }
+
+        [When(@"realizar uma chamada Delete ao endereço '(.*)'")]
+        public void QuandoRealizarUmaChamadaDeleteAoEndereco(string endereco)
+        {
+            var response = _serviceRequest.Delete(endereco);
             _scenarioContext.Add("Response", response);
         }
     }

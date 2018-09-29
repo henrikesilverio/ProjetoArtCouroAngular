@@ -7,6 +7,7 @@ using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Models.Funcionario;
+using ProjetoArtCouro.Domain.Models.Pessoa;
 using WebApi.OutputCache.V2;
 
 namespace ProjetoArtCouro.Api.Controllers.Pessoas
@@ -43,24 +44,11 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Authorize(Roles = "PesquisaFuncionario")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpPost]
-        public IHttpActionResult PesquisarFuncionario(PesquisaFuncionarioModel model)
+        public IHttpActionResult PesquisarFuncionario(PesquisaPessoaModel model)
         {
-            try
-            {
-                if (model.EPessoaFisica)
-                {
-                    var listaPessoaFisica = _pessoaService.PesquisarPessoaFisica(model.CodigoFuncionario ?? 0, model.Nome,
-                    model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Funcionario);
-                    return OkRetornoBase(Mapper.Map<List<FuncionarioModel>>(listaPessoaFisica));
-                }
-                var listaPessoaJuridica = _pessoaService.PesquisarPessoaJuridica(model.CodigoFuncionario ?? 0, model.Nome,
-                model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Funcionario);
-                return OkRetornoBase(Mapper.Map<List<FuncionarioModel>>(listaPessoaJuridica));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            model.TipoPapelPessoa = TipoPapelPessoaEnum.Funcionario;
+            var pessoas = _pessoaService.PesquisarPessoa(model);
+            return OkRetornoBase(pessoas);
         }
 
         [Route("ObterFuncionarioPorCodigo/{codigoFuncionario:int:min(1)}")]
@@ -69,17 +57,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpGet]
         public IHttpActionResult ObterFuncionarioPorCodigo(int codigoFuncionario)
         {
-            try
-            {
-                var pessoa = _pessoaService.ObterPessoaPorCodigo(codigoFuncionario);
-                return OkRetornoBase(pessoa.PessoaFisica != null
-                    ? Mapper.Map<FuncionarioModel>(pessoa.PessoaFisica)
-                    : Mapper.Map<FuncionarioModel>(pessoa.PessoaJuridica));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var pessoaModel = _pessoaService.ObterPessoaPorCodigo(codigoFuncionario);
+            return OkRetornoBase(pessoaModel);
         }
 
         [Route("EditarFuncionario")]

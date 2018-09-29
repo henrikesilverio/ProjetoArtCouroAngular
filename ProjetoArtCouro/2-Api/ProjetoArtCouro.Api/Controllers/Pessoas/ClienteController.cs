@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using ProjetoArtCouro.Api.Extensions;
+﻿using ProjetoArtCouro.Api.Extensions;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
 using ProjetoArtCouro.Domain.Models.Cliente;
 using ProjetoArtCouro.Domain.Models.Enums;
-using System;
-using System.Collections.Generic;
+using ProjetoArtCouro.Domain.Models.Pessoa;
 using System.Web.Http;
 using WebApi.OutputCache.V2;
 
@@ -37,17 +35,11 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Authorize(Roles = "PesquisaCliente")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpPost]
-        public IHttpActionResult PesquisarCliente(PesquisaClienteModel model)
+        public IHttpActionResult PesquisarCliente(PesquisaPessoaModel model)
         {
-            if (model.EPessoaFisica)
-            {
-                var listaPessoaFisica = _pessoaService.PesquisarPessoaFisica(model.CodigoCliente ?? 0, model.Nome,
-                model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Cliente);
-                return OkRetornoBase(Mapper.Map<List<ClienteModel>>(listaPessoaFisica));
-            }
-            var listaPessoaJuridica = _pessoaService.PesquisarPessoaJuridica(model.CodigoCliente ?? 0, model.Nome,
-            model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Cliente);
-            return OkRetornoBase(Mapper.Map<List<ClienteModel>>(listaPessoaJuridica));
+            model.TipoPapelPessoa = TipoPapelPessoaEnum.Cliente;
+            var pessoas = _pessoaService.PesquisarPessoa(model);
+            return OkRetornoBase(pessoas);
         }
 
         [Route("ObterClientePorCodigo/{codigoCliente:int:min(1)}")]
@@ -56,17 +48,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpGet]
         public IHttpActionResult ObterClientePorCodigo(int codigoCliente)
         {
-            try
-            {
-                var pessoa = _pessoaService.ObterPessoaPorCodigo(codigoCliente);
-                return OkRetornoBase(pessoa.PessoaFisica != null
-                    ? Mapper.Map<ClienteModel>(pessoa.PessoaFisica)
-                    : Mapper.Map<ClienteModel>(pessoa.PessoaJuridica));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var pessoaModel = _pessoaService.ObterPessoaPorCodigo(codigoCliente);
+            return OkRetornoBase(pessoaModel);
         }
 
         [Route("EditarCliente")]
@@ -77,15 +60,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpPut]
         public IHttpActionResult EditarCliente(ClienteModel model)
         {
-            try
-            {
-                _pessoaService.AtualizarPessoa(model);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _pessoaService.AtualizarPessoa(model);
+            return OkRetornoBase();
         }
 
         [Route("ExcluirCliente/{codigoCliente:int:min(1)}")]
@@ -96,15 +72,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpDelete]
         public IHttpActionResult ExcluirCliente(int codigoCliente)
         {
-            try
-            {
-                _pessoaService.ExcluirPessoa(codigoCliente);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _pessoaService.ExcluirPessoa(codigoCliente);
+            return OkRetornoBase();
         }
 
         protected override void Dispose(bool disposing)

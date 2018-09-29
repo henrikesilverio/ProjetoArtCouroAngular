@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Resources.Resources;
+using System.ComponentModel.DataAnnotations;
 
-namespace ProjetoArtCouro.Domain.Models.Funcionario
+namespace ProjetoArtCouro.Domain.Models.Pessoa
 {
-    public class PesquisaFuncionarioModel
+    public class PesquisaPessoaModel
     {
         [Display(Name = "Code", ResourceType = typeof(Mensagens))]
-        public int? CodigoFuncionario { get; set; }
+        public int? Codigo { get; set; }
 
         [Display(Name = "Name", ResourceType = typeof(Mensagens))]
         public string Nome { get; set; }
@@ -19,5 +20,7 @@ namespace ProjetoArtCouro.Domain.Models.Funcionario
 
         [Display(Name = "TypeOfPerson", ResourceType = typeof(Mensagens))]
         public bool EPessoaFisica { get; set; }
+
+        public TipoPapelPessoaEnum TipoPapelPessoa { get; set; }
     }
 }

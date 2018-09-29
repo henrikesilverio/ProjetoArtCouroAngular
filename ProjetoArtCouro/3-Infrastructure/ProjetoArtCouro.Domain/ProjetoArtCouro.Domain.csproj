@@ -107,7 +107,6 @@
     <Compile Include="Exceptions\BusinessException.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Models\Cliente\ClienteModel.cs" />
-    <Compile Include="Models\Cliente\PesquisaClienteModel.cs" />
     <Compile Include="Models\Common\EnderecoModel.cs" />
     <Compile Include="Models\Common\ErroBase.cs" />
     <Compile Include="Models\Common\ExceptionModel.cs" />
@@ -127,10 +126,9 @@
     <Compile Include="Models\Estoque\PesquisaEstoqueModel.cs" />
     <Compile Include="Models\FormaPagamento\FormaPagamentoModel.cs" />
     <Compile Include="Models\Fornecedor\FornecedorModel.cs" />
-    <Compile Include="Models\Fornecedor\PesquisaFornecedorModel.cs" />
     <Compile Include="Models\Funcionario\FuncionarioModel.cs" />
-    <Compile Include="Models\Funcionario\PesquisaFuncionarioModel.cs" />
     <Compile Include="Models\Login\LoginModel.cs" />
+    <Compile Include="Models\Pessoa\PesquisaPessoaModel.cs" />
     <Compile Include="Models\Produto\ProdutoModel.cs" />
     <Compile Include="Models\Usuario\ConfiguracaoUsuarioModel.cs" />
     <Compile Include="Models\Usuario\GrupoModel.cs" />

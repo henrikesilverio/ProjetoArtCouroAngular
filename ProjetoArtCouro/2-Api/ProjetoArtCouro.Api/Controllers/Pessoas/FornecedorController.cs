@@ -7,6 +7,7 @@ using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Models.Fornecedor;
+using ProjetoArtCouro.Domain.Models.Pessoa;
 using WebApi.OutputCache.V2;
 
 namespace ProjetoArtCouro.Api.Controllers.Pessoas
@@ -44,24 +45,11 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Authorize(Roles = "PesquisaFornecedor")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpPost]
-        public IHttpActionResult PesquisarFornecedor(PesquisaFornecedorModel model)
+        public IHttpActionResult PesquisarFornecedor(PesquisaPessoaModel model)
         {
-            try
-            {
-                if (model.EPessoaFisica)
-                {
-                    var listaPessoaFisica = _pessoaService.PesquisarPessoaFisica(model.CodigoFornecedor ?? 0, model.Nome,
-                    model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Fornecedor);
-                    return OkRetornoBase(Mapper.Map<List<FornecedorModel>>(listaPessoaFisica));
-                }
-                var listaPessoaJuridica = _pessoaService.PesquisarPessoaJuridica(model.CodigoFornecedor ?? 0, model.Nome,
-                    model.CPFCNPJ, model.Email, TipoPapelPessoaEnum.Fornecedor);
-                return OkRetornoBase(Mapper.Map<List<FornecedorModel>>(listaPessoaJuridica));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            model.TipoPapelPessoa = TipoPapelPessoaEnum.Fornecedor;
+            var pessoas = _pessoaService.PesquisarPessoa(model);
+            return OkRetornoBase(pessoas);
         }
 
         [Route("ObterFornecedorPorCodigo/{codigoFornecedor:int:min(1)}")]
@@ -70,17 +58,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpGet]
         public IHttpActionResult ObterFornecedorPorCodigo(int codigoFornecedor)
         {
-            try
-            {
-                var pessoa = _pessoaService.ObterPessoaPorCodigo(codigoFornecedor);
-                return OkRetornoBase(pessoa.PessoaFisica != null
-                    ? Mapper.Map<FornecedorModel>(pessoa.PessoaFisica)
-                    : Mapper.Map<FornecedorModel>(pessoa.PessoaJuridica));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var pessoaModel = _pessoaService.ObterPessoaPorCodigo(codigoFornecedor);
+            return OkRetornoBase(pessoaModel);
         }
 
         [Route("ObterListaFornecedor")]
