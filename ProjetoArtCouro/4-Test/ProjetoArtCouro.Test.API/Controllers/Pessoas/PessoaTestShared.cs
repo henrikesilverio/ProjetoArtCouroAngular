@@ -1,19 +1,19 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Test.API.Infra;
 using System.Net;
-using TechTalk.SpecFlow;
 using System.Net.Http;
-using ProjetoArtCouro.DataBase.DataBase;
+using TechTalk.SpecFlow;
 
 namespace ProjetoArtCouro.Test.API.Controllers.Pessoas
 {
-    public class ClienteTestShared : ITestShared
+    public class PessoaTestShared : ITestShared
     {
         private readonly ScenarioContext _scenarioContext;
         private readonly DataBaseContext _context;
 
-        public ClienteTestShared(
+        public PessoaTestShared(
             ScenarioContext scenarioContext,
             DataBaseContext context)
         {

@@ -15,6 +15,7 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
     public class PessoaController : BaseApiController
     {
         private readonly IPessoaService _pessoaService;
+
         public PessoaController(IPessoaService pessoaService)
         {
             _pessoaService = pessoaService;
@@ -75,25 +76,6 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
             {
                 var listaPessoa = _pessoaService.ObterListaPessoa();
                 response = ReturnSuccess(Mapper.Map<List<PessoaModel>>(listaPessoa));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
-        }
-
-        [Route("TesteProjecao")]
-        [HttpPost]
-        public Task<HttpResponseMessage> TesteProjecao()
-        {
-            HttpResponseMessage response;
-            try
-            {
-                response = ReturnSuccess();
             }
             catch (Exception ex)
             {

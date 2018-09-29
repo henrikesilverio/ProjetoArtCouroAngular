@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using AutoMapper;
 using ProjetoArtCouro.Api.Extensions;
@@ -16,6 +15,7 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
     public class FornecedorController : BaseApiController
     {
         private readonly IPessoaService _pessoaService;
+
         public FornecedorController(IPessoaService pessoaService)
         {
             _pessoaService = pessoaService;
@@ -30,15 +30,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpPost]
         public IHttpActionResult CriarFornecedor(FornecedorModel model)
         {
-            try
-            {
-                _pessoaService.CriarPessoa(model);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _pessoaService.CriarPessoa(model);
+            return OkRetornoBase();
         }
 
         [Route("PesquisarFornecedor")]
@@ -68,15 +61,9 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpGet]
         public IHttpActionResult ObterListaFornecedor()
         {
-            try
-            {
-                var listaPessoa = _pessoaService.ObterListaPessoaFisicaEJuridicaPorPapel(TipoPapelPessoaEnum.Fornecedor);
-                return OkRetornoBase(Mapper.Map<List<FornecedorModel>>(listaPessoa));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var listaPessoa = _pessoaService
+                .ObterListaPessoaFisicaEJuridicaPorPapel(TipoPapelPessoaEnum.Fornecedor);
+            return OkRetornoBase(Mapper.Map<List<FornecedorModel>>(listaPessoa));
         }
 
         [Route("EditarFornecedor")]
@@ -88,15 +75,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpPut]
         public IHttpActionResult EditarFornecedor(FornecedorModel model)
         {
-            try
-            {
-                _pessoaService.AtualizarPessoa(model);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _pessoaService.AtualizarPessoa(model);
+            return OkRetornoBase();
         }
 
         [Route("ExcluirFornecedor/{codigoFornecedor:int:min(1)}")]
@@ -108,15 +88,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpDelete]
         public IHttpActionResult ExcluirFornecedor(int codigoFornecedor)
         {
-            try
-            {
-                _pessoaService.ExcluirPessoa(codigoFornecedor);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _pessoaService.ExcluirPessoa(codigoFornecedor);
+            return OkRetornoBase();
         }
 
         protected override void Dispose(bool disposing)

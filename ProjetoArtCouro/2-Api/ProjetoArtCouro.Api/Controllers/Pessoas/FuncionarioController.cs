@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Http;
-using AutoMapper;
+﻿using System.Web.Http;
 using ProjetoArtCouro.Api.Extensions;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
@@ -16,6 +13,7 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
     public class FuncionarioController : BaseApiController
     {
         private readonly IPessoaService _pessoaService;
+
         public FuncionarioController(IPessoaService pessoaService)
         {
             _pessoaService = pessoaService;
@@ -29,15 +27,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpPost]
         public IHttpActionResult CriarFuncionario(FuncionarioModel model)
         {
-            try
-            {
-                _pessoaService.CriarPessoa(model);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _pessoaService.CriarPessoa(model);
+            return OkRetornoBase();
         }
 
         [Route("PesquisarFuncionario")]
@@ -69,15 +60,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpPut]
         public IHttpActionResult EditarFuncionario(FuncionarioModel model)
         {
-            try
-            {
-                _pessoaService.AtualizarPessoa(model);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _pessoaService.AtualizarPessoa(model);
+            return OkRetornoBase();
         }
 
         [Route("ExcluirFuncionario/{codigoFuncionario:int:min(1)}")]
@@ -88,15 +72,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpDelete]
         public IHttpActionResult ExcluirFuncionario(int codigoFuncionario)
         {
-            try
-            {
-                _pessoaService.ExcluirPessoa(codigoFuncionario);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _pessoaService.ExcluirPessoa(codigoFuncionario);
+            return OkRetornoBase();
         }
 
         protected override void Dispose(bool disposing)

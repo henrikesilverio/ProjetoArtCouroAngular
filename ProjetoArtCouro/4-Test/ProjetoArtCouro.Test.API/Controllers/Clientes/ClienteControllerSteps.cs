@@ -3,7 +3,6 @@ using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Models.Cliente;
 using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Domain.Models.Pessoa;
-using ProjetoArtCouro.Test.API.Infra;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -13,17 +12,14 @@ namespace ProjetoArtCouro.Test.API.Controllers.Pessoas
     public class ClienteControllerSteps
     {
         private readonly ScenarioContext _scenarioContext;
-        private readonly ServiceRequest _serviceRequest;
 
         public ClienteControllerSteps(
             ScenarioContext scenarioContext,
-            ServiceRequest serviceRequest,
             DataBaseContext context)
         {
             _scenarioContext = scenarioContext;
-            _serviceRequest = serviceRequest;
             _scenarioContext.Add("Conteudo", null);
-            _scenarioContext["TestShared"] = new ClienteTestShared(_scenarioContext, context);
+            _scenarioContext["TestShared"] = new PessoaTestShared(_scenarioContext, context);
         }
 
         [Given(@"que preencha os dados do cliente com as seguintes informações:")]
@@ -50,34 +46,6 @@ namespace ProjetoArtCouro.Test.API.Controllers.Pessoas
         public void DadoQuePreenchaOsDadosDoFiltroDePesquisaDeClienteComAsSeguintesInformacoes(Table table)
         {
             _scenarioContext["Conteudo"] = table.CreateInstance<PesquisaPessoaModel>();
-        }
-
-        [When(@"realizar uma chamada Get ao endereço '(.*)'")]
-        public void QuandoRealizarUmaChamadaGetAoEndereco(string endereco)
-        {
-            var response = _serviceRequest.Get(endereco);
-            _scenarioContext.Add("Response", response);
-        }
-
-        [When(@"realizar uma chamada Post ao endereço '(.*)'")]
-        public void QuandoRealizarUmaChamadaPostAoEndereco(string endereco)
-        {
-            var response = _serviceRequest.Post(_scenarioContext["Conteudo"], endereco);
-            _scenarioContext.Add("Response", response);
-        }
-
-        [When(@"realizar uma chamada Put ao endereço '(.*)'")]
-        public void QuandoRealizarUmaChamadaPutAoEndereco(string endereco)
-        {
-            var response = _serviceRequest.Put(_scenarioContext["Conteudo"], endereco);
-            _scenarioContext.Add("Response", response);
-        }
-
-        [When(@"realizar uma chamada Delete ao endereço '(.*)'")]
-        public void QuandoRealizarUmaChamadaDeleteAoEndereco(string endereco)
-        {
-            var response = _serviceRequest.Delete(endereco);
-            _scenarioContext.Add("Response", response);
         }
     }
 }

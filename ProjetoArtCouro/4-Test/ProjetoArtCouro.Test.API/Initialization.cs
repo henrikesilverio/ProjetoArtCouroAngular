@@ -15,6 +15,7 @@ namespace ProjetoArtCouro.Test.API
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
+        private ServiceRequest _serviceRequest;
 
         public Initialization(IObjectContainer objectContainer,
             ScenarioContext scenatriContext)
@@ -29,6 +30,7 @@ namespace ProjetoArtCouro.Test.API
         {
             var server = TestServer.Create<Startup>();
             var context = new DataBaseContext();
+            _serviceRequest = new ServiceRequest(server);
 
             _objectContainer.RegisterInstanceAs(server, typeof(TestServer));
             _objectContainer.RegisterInstanceAs(context, typeof(DataBaseContext), null, true);
@@ -41,6 +43,34 @@ namespace ProjetoArtCouro.Test.API
             var testShared = _scenarioContext["TestShared"] as ITestShared;
             Assert.AreNotEqual(testShared, null, "Teste compartilhado não implementado");
             testShared.ClearData();
+        }
+
+        [When(@"realizar uma chamada Get ao endereço '(.*)'")]
+        public void QuandoRealizarUmaChamadaGetAoEndereco(string endereco)
+        {
+            var response = _serviceRequest.Get(endereco);
+            _scenarioContext.Add("Response", response);
+        }
+
+        [When(@"realizar uma chamada Post ao endereço '(.*)'")]
+        public void QuandoRealizarUmaChamadaPostAoEndereco(string endereco)
+        {
+            var response = _serviceRequest.Post(_scenarioContext["Conteudo"], endereco);
+            _scenarioContext.Add("Response", response);
+        }
+
+        [When(@"realizar uma chamada Put ao endereço '(.*)'")]
+        public void QuandoRealizarUmaChamadaPutAoEndereco(string endereco)
+        {
+            var response = _serviceRequest.Put(_scenarioContext["Conteudo"], endereco);
+            _scenarioContext.Add("Response", response);
+        }
+
+        [When(@"realizar uma chamada Delete ao endereço '(.*)'")]
+        public void QuandoRealizarUmaChamadaDeleteAoEndereco(string endereco)
+        {
+            var response = _serviceRequest.Delete(endereco);
+            _scenarioContext.Add("Response", response);
         }
 
         [Then(@"retorne sucesso")]

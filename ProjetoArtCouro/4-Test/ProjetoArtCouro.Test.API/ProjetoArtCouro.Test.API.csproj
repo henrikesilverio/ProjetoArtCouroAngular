@@ -40,13 +40,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Pessoas\ClienteController.feature.cs">
+    <Compile Include="Controllers\Clientes\ClienteController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClienteController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\Pessoas\ClienteControllerSteps.cs" />
-    <Compile Include="Controllers\Pessoas\ClienteTestShared.cs" />
+    <Compile Include="Controllers\Clientes\ClienteControllerSteps.cs" />
+    <Compile Include="Controllers\Fornecedores\FornecedorController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FornecedorController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Fornecedores\FornecedorControllerSteps.cs" />
+    <Compile Include="Controllers\Funcionarios\FuncionarioController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FuncionarioController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Funcionarios\FuncionarioControllerSteps.cs" />
+    <Compile Include="Controllers\Pessoas\PessoaTestShared.cs" />
     <Compile Include="Infra\ITestShared.cs" />
     <Compile Include="Infra\ServiceRequest.cs" />
     <Compile Include="Infra\TokenModel.cs" />
@@ -101,9 +113,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Controllers\Pessoas\ClienteController.feature">
+    <None Include="Controllers\Clientes\ClienteController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ClienteController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Controllers\Fornecedores\FornecedorController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>FornecedorController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Controllers\Funcionarios\FuncionarioController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>FuncionarioController.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -121,6 +141,7 @@
       <Name>ProjetoArtCouro.Domain</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
