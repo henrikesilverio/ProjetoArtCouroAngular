@@ -3,13 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace ProjetoArtCouro.Resource.Validation
 {
-    public class AssertionConcern
+    public class AssertionConcern<T> where T : Exception, new()
     {
         public static void AssertArgumentEquals(object object1, object object2, string message)
         {
             if (!object1.Equals(object2))
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -17,7 +17,15 @@ namespace ProjetoArtCouro.Resource.Validation
         {
             if (boolValue)
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
+            }
+        }
+
+        public static void AssertArgumentTrue(bool boolValue, string message)
+        {
+            if (!boolValue)
+            {
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -26,7 +34,7 @@ namespace ProjetoArtCouro.Resource.Validation
             var length = stringValue.Trim().Length;
             if (length > maximum)
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -38,7 +46,7 @@ namespace ProjetoArtCouro.Resource.Validation
             var length = stringValue.Trim().Length;
             if (length < minimum || length > maximum)
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -48,7 +56,7 @@ namespace ProjetoArtCouro.Resource.Validation
 
             if (!regex.IsMatch(stringValue))
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -56,7 +64,7 @@ namespace ProjetoArtCouro.Resource.Validation
         {
             if (stringValue == null || stringValue.Trim().Length == 0)
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -64,7 +72,7 @@ namespace ProjetoArtCouro.Resource.Validation
         {
             if (object1.Equals(object2))
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -72,7 +80,7 @@ namespace ProjetoArtCouro.Resource.Validation
         {
             if (object1 == null)
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -80,7 +88,7 @@ namespace ProjetoArtCouro.Resource.Validation
         {
             if (value < minimum || value > maximum)
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -88,7 +96,7 @@ namespace ProjetoArtCouro.Resource.Validation
         {
             if (value < minimum || value > maximum)
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -96,7 +104,7 @@ namespace ProjetoArtCouro.Resource.Validation
         {
             if (value < minimum || value > maximum)
             {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -104,31 +112,7 @@ namespace ProjetoArtCouro.Resource.Validation
         {
             if (value < minimum || value > maximum)
             {
-                throw new InvalidOperationException(message);
-            }
-        }
-
-        public static void AssertArgumentTrue(bool boolValue, string message)
-        {
-            if (!boolValue)
-            {
-                throw new InvalidOperationException(message);
-            }
-        }
-
-        public static void AssertStateFalse(bool boolValue, string message)
-        {
-            if (boolValue)
-            {
-                throw new InvalidOperationException(message);
-            }
-        }
-
-        public static void AssertStateTrue(bool boolValue, string message)
-        {
-            if (!boolValue)
-            {
-                throw new InvalidOperationException(message);
+                throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
@@ -199,16 +183,6 @@ namespace ProjetoArtCouro.Resource.Validation
         protected void SelfAssertArgumentTrue(bool boolValue, string message)
         {
             AssertArgumentTrue(boolValue, message);
-        }
-
-        protected void SelfAssertStateFalse(bool boolValue, string message)
-        {
-            AssertStateFalse(boolValue, message);
-        }
-
-        protected void SelfAssertStateTrue(bool boolValue, string message)
-        {
-            AssertStateTrue(boolValue, message);
         }
     }
 }

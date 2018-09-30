@@ -26,14 +26,14 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public void Registrar(string nome, string senha, string confimaSenha, int codigoGrupo)
         {
-            AssertionConcern.AssertArgumentNotEmpty(nome, Erros.InvalidUserName);
+            //AssertionConcern.AssertArgumentNotEmpty(nome, Erros.InvalidUserName);
             var temUsuario = _usuarioRepository.ObterPorUsuarioNome(nome.ToLower());
             if (temUsuario != null)
             {
                 throw new Exception(Erros.DuplicateUserName);
             };
             var temGrupo = _grupoPermissaoRepository.ObterPorCodigoComPermissoes(codigoGrupo);
-            AssertionConcern.AssertArgumentNotEquals(temGrupo, null, Erros.GroupDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(temGrupo, null, Erros.GroupDoesNotExist);
             var usuario = new Usuario()
             {
                 UsuarioNome = nome.ToLower(),
@@ -48,7 +48,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public void AlterarSenha(Usuario usuario)
         {
-            AssertionConcern.AssertArgumentNotEmpty(usuario.UsuarioNome, Erros.InvalidUserName);
+            //AssertionConcern.AssertArgumentNotEmpty(usuario.UsuarioNome, Erros.InvalidUserName);
             var usuarioAtual = _usuarioRepository.ObterComPermissoesPorUsuarioNome(usuario.UsuarioNome);
             usuarioAtual.Senha = PasswordAssertionConcern.Encrypt(usuario.Senha);
             usuarioAtual.Validar();
@@ -58,12 +58,12 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
         public void EditarUsuario(Usuario usuario)
         {
             var usuarioAtual = _usuarioRepository.ObterPorCodigoComPermissoesEGrupo(usuario.UsuarioCodigo);
-            AssertionConcern.AssertArgumentNotNull(usuarioAtual, Erros.UserDoesNotExist);
+            //AssertionConcern.AssertArgumentNotNull(usuarioAtual, Erros.UserDoesNotExist);
             if (usuarioAtual.GrupoPermissao.GrupoPermissaoCodigo != usuario.GrupoPermissao.GrupoPermissaoCodigo)
             {
                 var novoGrupo =
                 _grupoPermissaoRepository.ObterPorCodigoComPermissoes(usuario.GrupoPermissao.GrupoPermissaoCodigo);
-                AssertionConcern.AssertArgumentNotNull(novoGrupo, Erros.GroupDoesNotExist);
+                //AssertionConcern.AssertArgumentNotNull(novoGrupo, Erros.GroupDoesNotExist);
                 usuarioAtual.GrupoPermissao = novoGrupo;
             }
             usuarioAtual.Ativo = usuario.Ativo;
@@ -78,7 +78,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
         public void ExcluirUsuario(int codigoUsuario)
         {
             var usuario = _usuarioRepository.ObterPorCodigo(codigoUsuario);
-            AssertionConcern.AssertArgumentNotNull(usuario, Erros.UserDoesNotExist);
+            //AssertionConcern.AssertArgumentNotNull(usuario, Erros.UserDoesNotExist);
             _usuarioRepository.Deletar(usuario);
         }
 
@@ -125,7 +125,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public void CriarGrupoPermissao(GrupoPermissao grupoPermissao)
         {
-            AssertionConcern.AssertArgumentNotEmpty(grupoPermissao.GrupoPermissaoNome, Erros.EmptyGroupName);
+            //AssertionConcern.AssertArgumentNotEmpty(grupoPermissao.GrupoPermissaoNome, Erros.EmptyGroupName);
             var temGrupo = _grupoPermissaoRepository.ObterPorGrupoPermissaoNome(grupoPermissao.GrupoPermissaoNome.ToLower());
             if (temGrupo != null)
             {
@@ -137,7 +137,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public void EditarGrupoPermissao(GrupoPermissao grupoPermissao)
         {
-            AssertionConcern.AssertArgumentNotEmpty(grupoPermissao.GrupoPermissaoNome, Erros.EmptyGroupName);
+            //AssertionConcern.AssertArgumentNotEmpty(grupoPermissao.GrupoPermissaoNome, Erros.EmptyGroupName);
             var bdGrupoPermissao =
                 _grupoPermissaoRepository.ObterPorCodigoComPermissoesEUsuarios(grupoPermissao.GrupoPermissaoCodigo);
             var listaPermissao = _permissaoRepository.ObterLista();
@@ -157,13 +157,13 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public void EditarPermissaoUsuario(int codigoUsuario, List<Permissao> permissoes)
         {
-            AssertionConcern.AssertArgumentNotEquals(codigoUsuario, 0, Erros.UserDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(codigoUsuario, 0, Erros.UserDoesNotExist);
             if (!permissoes.Any())
             {
                 throw new Exception(Erros.EmptyAllowList);
             }
             var temUsuario = _usuarioRepository.ObterPorCodigoComPermissoes(codigoUsuario);
-            AssertionConcern.AssertArgumentNotEquals(temUsuario, null, Erros.UserDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(temUsuario, null, Erros.UserDoesNotExist);
             var listaPermissao = _permissaoRepository.ObterLista();
             permissoes = permissoes.Select(x =>
                 listaPermissao.FirstOrDefault(a => a.PermissaoCodigo.Equals(x.PermissaoCodigo))).ToList();
@@ -175,7 +175,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
         public void ExcluirGrupoPermissao(int codigoGrupoPermissao)
         {
             var grupoPermissao = _grupoPermissaoRepository.ObterPorCodigo(codigoGrupoPermissao);
-            AssertionConcern.AssertArgumentNotNull(grupoPermissao, Erros.GroupDoesNotExist);
+            //AssertionConcern.AssertArgumentNotNull(grupoPermissao, Erros.GroupDoesNotExist);
             _grupoPermissaoRepository.Deletar(grupoPermissao);
         }
 

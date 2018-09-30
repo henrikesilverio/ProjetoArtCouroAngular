@@ -70,7 +70,7 @@ namespace ProjetoArtCouro.Business.Services.CompraService
         {
             compra.Validar();
             compra.ItensCompra.ForEach(x => x.Validar());
-            AssertionConcern.AssertArgumentEquals(compra.StatusCompra, StatusCompraEnum.Aberto, Erros.StatusOfDifferentPurchasingOpen);
+            //AssertionConcern.AssertArgumentEquals(compra.StatusCompra, StatusCompraEnum.Aberto, Erros.StatusOfDifferentPurchasingOpen);
             AplicaValidacoesPadrao(compra);
             var usuario = _usuarioRepository.ObterPorCodigo(compra.Usuario.UsuarioCodigo);
             compra.Usuario = usuario;
@@ -84,8 +84,8 @@ namespace ProjetoArtCouro.Business.Services.CompraService
         {
             compra.Validar();
             compra.ItensCompra.ForEach(x => x.Validar());
-            AssertionConcern.AssertArgumentNotEquals(0, compra.CompraCodigo,
-                string.Format(Erros.NotZeroParameter, "CompraCodigo"));
+            //AssertionConcern.AssertArgumentNotEquals(0, compra.CompraCodigo,
+                //string.Format(Erros.NotZeroParameter, "CompraCodigo"));
             var compraAtual = _compraRepository.ObterPorCodigoComItensCompra(compra.CompraCodigo);
             if (compra.StatusCompra == StatusCompraEnum.Aberto)
             {
@@ -109,8 +109,8 @@ namespace ProjetoArtCouro.Business.Services.CompraService
         public void ExcluirCompra(int codigoCompra)
         {
             var compra = _compraRepository.ObterPorCodigo(codigoCompra);
-            AssertionConcern.AssertArgumentNotEquals(compra, null, Erros.PurchaseDoesNotExist);
-            AssertionConcern.AssertArgumentNotEquals(compra.StatusCompra, StatusVendaEnum.Confirmado, Erros.PurchaseConfirmedCanNotBeExcluded);
+            //AssertionConcern.AssertArgumentNotEquals(compra, null, Erros.PurchaseDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(compra.StatusCompra, StatusVendaEnum.Confirmado, Erros.PurchaseConfirmedCanNotBeExcluded);
             _compraRepository.Deletar(compra);
         }
 
@@ -132,21 +132,21 @@ namespace ProjetoArtCouro.Business.Services.CompraService
 
         private static void AplicaValidacoesPadrao(Compra compra)
         {
-            AssertionConcern.AssertArgumentEquals(compra.ItensCompra.Sum(x => x.ValorBruto), compra.ValorTotalBruto,
-                    Erros.SumDoNotMatchTotalCrudeValue);
+            //AssertionConcern.AssertArgumentEquals(compra.ItensCompra.Sum(x => x.ValorBruto), compra.ValorTotalBruto,
+                    //Erros.SumDoNotMatchTotalCrudeValue);
             var valorTotalLiquidoSemFrete = compra.ItensCompra.Sum(x => x.ValorLiquido);
             var valorTotalLiquidoComFrete = valorTotalLiquidoSemFrete + compra.ValorTotalFrete;
-            AssertionConcern.AssertArgumentEquals(valorTotalLiquidoComFrete, compra.ValorTotalLiquido,
-                Erros.SumDoNotMatchTotalValueLiquid);
+            //AssertionConcern.AssertArgumentEquals(valorTotalLiquidoComFrete, compra.ValorTotalLiquido,
+                //Erros.SumDoNotMatchTotalValueLiquid);
         }
 
         private void AdicionaFornecedorFormaECondicaoDePagamento(Compra compra, Compra compraAtual)
         {
-            AssertionConcern.AssertArgumentNotEquals(0, compra.Fornecedor.PessoaCodigo, Erros.ProviderNotSet);
-            AssertionConcern.AssertArgumentNotEquals(0, compra.FormaPagamento.FormaPagamentoCodigo,
-                Erros.NotSetPayment);
-            AssertionConcern.AssertArgumentNotEquals(0, compra.CondicaoPagamento.CondicaoPagamentoCodigo,
-                Erros.PaymentConditionNotSet);
+            //AssertionConcern.AssertArgumentNotEquals(0, compra.Fornecedor.PessoaCodigo, Erros.ProviderNotSet);
+            //AssertionConcern.AssertArgumentNotEquals(0, compra.FormaPagamento.FormaPagamentoCodigo,
+            //    Erros.NotSetPayment);
+            //AssertionConcern.AssertArgumentNotEquals(0, compra.CondicaoPagamento.CondicaoPagamentoCodigo,
+            //    Erros.PaymentConditionNotSet);
             var fornecedor = _pessoaRepository.ObterPorCodigo(compra.Fornecedor.PessoaCodigo);
             var formaPagamento = _formaPagamentoRepository.ObterPorCodigo(compra.FormaPagamento.FormaPagamentoCodigo);
             var condicaoPagamento =

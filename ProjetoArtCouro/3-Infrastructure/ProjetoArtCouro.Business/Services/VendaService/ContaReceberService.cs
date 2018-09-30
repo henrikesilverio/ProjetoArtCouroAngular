@@ -36,7 +36,7 @@ namespace ProjetoArtCouro.Business.Services.VendaService
 
         public void ReceberContas(List<ContaReceber> contasReceber)
         {
-            AssertionConcern.AssertArgumentFalse(contasReceber.Any(x => x.ContaReceberCodigo.Equals(0)), Erros.ThereReceivableWithZeroCode);
+            //AssertionConcern.AssertArgumentFalse(contasReceber.Any(x => x.ContaReceberCodigo.Equals(0)), Erros.ThereReceivableWithZeroCode);
             contasReceber.ForEach(x =>
             {
                 var contaReceberAtual = _contaReceberRepository.ObterPorCodigoComVenda(x.ContaReceberCodigo);

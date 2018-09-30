@@ -18,12 +18,12 @@ namespace ProjetoArtCouro.Domain.Entities.Compras
 
         public void Validar()
         {
-            AssertionConcern.AssertArgumentNotEquals(0, ProdutoCodigo, string.Format(Erros.NotZeroParameter, "ProdutoCodigo"));
-            AssertionConcern.AssertArgumentNotEmpty(ProdutoNome, string.Format(Erros.EmptyParameter, "ProdutoNome"));
-            AssertionConcern.AssertArgumentNotEquals(0, Quantidade, string.Format(Erros.NotZeroParameter, "Quantidade"));
-            AssertionConcern.AssertArgumentNotEquals(0.0M, PrecoVenda, string.Format(Erros.NotZeroParameter, "PrecoVenda"));
-            AssertionConcern.AssertArgumentNotEquals(0.0M, ValorBruto, string.Format(Erros.NotZeroParameter, "ValorBruto"));
-            AssertionConcern.AssertArgumentNotEquals(0.0M, ValorLiquido, string.Format(Erros.NotZeroParameter, "ValorLiquido"));
+            //AssertionConcern.AssertArgumentNotEquals(0, ProdutoCodigo, string.Format(Erros.NotZeroParameter, "ProdutoCodigo"));
+            //AssertionConcern.AssertArgumentNotEmpty(ProdutoNome, string.Format(Erros.EmptyParameter, "ProdutoNome"));
+            //AssertionConcern.AssertArgumentNotEquals(0, Quantidade, string.Format(Erros.NotZeroParameter, "Quantidade"));
+            //AssertionConcern.AssertArgumentNotEquals(0.0M, PrecoVenda, string.Format(Erros.NotZeroParameter, "PrecoVenda"));
+            //AssertionConcern.AssertArgumentNotEquals(0.0M, ValorBruto, string.Format(Erros.NotZeroParameter, "ValorBruto"));
+            //AssertionConcern.AssertArgumentNotEquals(0.0M, ValorLiquido, string.Format(Erros.NotZeroParameter, "ValorLiquido"));
         }
     }
 }

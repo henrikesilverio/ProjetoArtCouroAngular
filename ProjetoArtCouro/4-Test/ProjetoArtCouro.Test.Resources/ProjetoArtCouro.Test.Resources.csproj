@@ -51,9 +51,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\AssertionConcernUnitTest.cs" />
     <Compile Include="Validation\ValidationContractUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.Domain\ProjetoArtCouro.Domain.csproj">
+      <Project>{D0278CC6-DC16-48E5-9626-B19142B60808}</Project>
+      <Name>ProjetoArtCouro.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.Resources\ProjetoArtCouro.Resources.csproj">
       <Project>{5bafb16b-6802-4d6d-8045-bf640fb83a57}</Project>
       <Name>ProjetoArtCouro.Resources</Name>

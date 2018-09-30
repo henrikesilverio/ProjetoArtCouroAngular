@@ -36,7 +36,7 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
         {
             produto.Validar();
             var unidade = _unidadeRepository.ObterPorCodigo(produto.Unidade.UnidadeCodigo);
-            AssertionConcern.AssertArgumentNotEquals(unidade, null, Erros.UnitDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(unidade, null, Erros.UnitDoesNotExist);
             produto.Unidade = unidade;
             produto.Unidade.Validar();
             return _produtoRepository.Criar(produto);
@@ -45,12 +45,12 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
         public Produto AtualizarProduto(Produto produto)
         {
             produto.Validar();
-            AssertionConcern.AssertArgumentNotEquals(0, produto.ProdutoCodigo, string.Format(Erros.NotZeroParameter, "ProdutoCodigo"));
+            //AssertionConcern.AssertArgumentNotEquals(0, produto.ProdutoCodigo, string.Format(Erros.NotZeroParameter, "ProdutoCodigo"));
             produto.Unidade.Validar();
             var unidade = _unidadeRepository.ObterPorCodigo(produto.Unidade.UnidadeCodigo);
-            AssertionConcern.AssertArgumentNotEquals(unidade, null, Erros.UnitDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(unidade, null, Erros.UnitDoesNotExist);
             var produtoAtual = _produtoRepository.ObterComUnidadePorCodigo(produto.ProdutoCodigo);
-            AssertionConcern.AssertArgumentNotEquals(produtoAtual, null, Erros.ProductDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(produtoAtual, null, Erros.ProductDoesNotExist);
             produtoAtual.PrecoCusto = produto.PrecoCusto;
             produtoAtual.PrecoVenda = produto.PrecoVenda;
             produtoAtual.ProdutoNome = produto.ProdutoNome;
@@ -61,7 +61,7 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
         public void ExcluirProduto(int produtoCodigo)
         {
             var produtoAtual = _produtoRepository.ObterPorCodigo(produtoCodigo);
-            AssertionConcern.AssertArgumentNotEquals(produtoAtual, null, Erros.ProductDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(produtoAtual, null, Erros.ProductDoesNotExist);
             _produtoRepository.Deletar(produtoAtual);
         }
 

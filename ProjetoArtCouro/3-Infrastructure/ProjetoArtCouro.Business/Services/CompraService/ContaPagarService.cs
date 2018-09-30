@@ -35,7 +35,7 @@ namespace ProjetoArtCouro.Business.Services.CompraService
 
         public void PagarContas(List<ContaPagar> contasPagar)
         {
-            AssertionConcern.AssertArgumentFalse(contasPagar.Any(x => x.ContaPagarCodigo.Equals(0)), Erros.ThereAccountPayableWithCodeZero);
+            //AssertionConcern.AssertArgumentFalse(contasPagar.Any(x => x.ContaPagarCodigo.Equals(0)), Erros.ThereAccountPayableWithCodeZero);
             contasPagar.ForEach(x =>
             {
                 var contaPagarAtual = _contaPagarRepository.ObterPorCodigoComCompra(x.ContaPagarCodigo);

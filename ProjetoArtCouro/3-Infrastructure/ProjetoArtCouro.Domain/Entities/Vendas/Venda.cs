@@ -28,16 +28,16 @@ namespace ProjetoArtCouro.Domain.Entities.Vendas
 
         public void Validar()
         {
-            AssertionConcern.AssertArgumentNotEquals(new DateTime(), DataCadastro,
-                string.Format(Erros.InvalidParameter, "DataCadastro"));
-            AssertionConcern.AssertArgumentNotEquals(StatusVenda, StatusVendaEnum.None,
-                string.Format(Erros.InvalidParameter, "StatusVenda"));
-            AssertionConcern.AssertArgumentNotEquals(0.0M, ValorTotalBruto,
-                string.Format(Erros.NotZeroParameter, "ValorTotalBruto"));
-            AssertionConcern.AssertArgumentNotEquals(0.0M, ValorTotalLiquido,
-                string.Format(Erros.NotZeroParameter, "ValorTotalLiquido"));
-            AssertionConcern.AssertArgumentNotEquals(0, Usuario.UsuarioCodigo, Erros.UserNotSet);
-            AssertionConcern.AssertArgumentTrue(ItensVenda.Any(), Erros.SaleItemsNotSet);
+            //AssertionConcern.AssertArgumentNotEquals(new DateTime(), DataCadastro,
+            //    string.Format(Erros.InvalidParameter, "DataCadastro"));
+            //AssertionConcern.AssertArgumentNotEquals(StatusVenda, StatusVendaEnum.None,
+            //    string.Format(Erros.InvalidParameter, "StatusVenda"));
+            //AssertionConcern.AssertArgumentNotEquals(0.0M, ValorTotalBruto,
+            //    string.Format(Erros.NotZeroParameter, "ValorTotalBruto"));
+            //AssertionConcern.AssertArgumentNotEquals(0.0M, ValorTotalLiquido,
+            //    string.Format(Erros.NotZeroParameter, "ValorTotalLiquido"));
+            //AssertionConcern.AssertArgumentNotEquals(0, Usuario.UsuarioCodigo, Erros.UserNotSet);
+            //AssertionConcern.AssertArgumentTrue(ItensVenda.Any(), Erros.SaleItemsNotSet);
         }
     }
 }

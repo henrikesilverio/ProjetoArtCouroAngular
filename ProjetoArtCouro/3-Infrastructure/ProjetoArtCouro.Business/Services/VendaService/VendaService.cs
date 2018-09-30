@@ -69,7 +69,7 @@ namespace ProjetoArtCouro.Business.Services.VendaService
         {
             venda.Validar();
             venda.ItensVenda.ForEach(x => x.Validar());
-            AssertionConcern.AssertArgumentEquals(venda.StatusVenda, StatusVendaEnum.Aberto, Erros.StatusOfDifferentSalesOpen);
+            //AssertionConcern.AssertArgumentEquals(venda.StatusVenda, StatusVendaEnum.Aberto, Erros.StatusOfDifferentSalesOpen);
             AplicaValidacoesPadrao(venda);
             var usuario = _usuarioRepository.ObterPorCodigo(venda.Usuario.UsuarioCodigo);
             venda.Usuario = usuario;
@@ -83,8 +83,8 @@ namespace ProjetoArtCouro.Business.Services.VendaService
         {
             venda.Validar();
             venda.ItensVenda.ForEach(x => x.Validar());
-            AssertionConcern.AssertArgumentNotEquals(0, venda.VendaCodigo,
-                string.Format(Erros.NotZeroParameter, "VendaCodigo"));
+            //AssertionConcern.AssertArgumentNotEquals(0, venda.VendaCodigo,
+                //string.Format(Erros.NotZeroParameter, "VendaCodigo"));
             VerificarEstoque(venda.ItensVenda);
             var vendaAtual = _vendaRepository.ObterPorCodigoComItensVenda(venda.VendaCodigo);
             if (venda.StatusVenda == StatusVendaEnum.Aberto)
@@ -109,8 +109,8 @@ namespace ProjetoArtCouro.Business.Services.VendaService
         public void ExcluirVenda(int codigoVenda)
         {
             var venda = _vendaRepository.ObterPorCodigo(codigoVenda);
-            AssertionConcern.AssertArgumentNotEquals(venda, null, Erros.SaleDoesNotExist);
-            AssertionConcern.AssertArgumentNotEquals(venda.StatusVenda, StatusVendaEnum.Confirmado, Erros.SaleConfirmedCanNotBeExcluded);
+            //AssertionConcern.AssertArgumentNotEquals(venda, null, Erros.SaleDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(venda.StatusVenda, StatusVendaEnum.Confirmado, Erros.SaleConfirmedCanNotBeExcluded);
             _vendaRepository.Deletar(venda);
         }
 
@@ -132,22 +132,22 @@ namespace ProjetoArtCouro.Business.Services.VendaService
 
         private static void AplicaValidacoesPadrao(Venda venda)
         {
-            AssertionConcern.AssertArgumentEquals(venda.ItensVenda.Sum(x => x.ValorBruto), venda.ValorTotalBruto,
-                    Erros.SumDoNotMatchTotalCrudeValue);
-            AssertionConcern.AssertArgumentEquals(venda.ItensVenda.Sum(x => x.ValorDesconto),
-                venda.ValorTotalDesconto,
-                Erros.SumDoNotMatchTotalValueDiscount);
-            AssertionConcern.AssertArgumentEquals(venda.ItensVenda.Sum(x => x.ValorLiquido), venda.ValorTotalLiquido,
-                Erros.SumDoNotMatchTotalValueLiquid);
+            //AssertionConcern.AssertArgumentEquals(venda.ItensVenda.Sum(x => x.ValorBruto), venda.ValorTotalBruto,
+            //        Erros.SumDoNotMatchTotalCrudeValue);
+            //AssertionConcern.AssertArgumentEquals(venda.ItensVenda.Sum(x => x.ValorDesconto),
+            //    venda.ValorTotalDesconto,
+            //    Erros.SumDoNotMatchTotalValueDiscount);
+            //AssertionConcern.AssertArgumentEquals(venda.ItensVenda.Sum(x => x.ValorLiquido), venda.ValorTotalLiquido,
+            //    Erros.SumDoNotMatchTotalValueLiquid);
         }
 
         private void AdicionaClienteFormaECondicaoDePagamento(Venda venda, Venda vendaAtual)
         {
-            AssertionConcern.AssertArgumentNotEquals(0, venda.Cliente.PessoaCodigo, Erros.ClientNotSet);
-            AssertionConcern.AssertArgumentNotEquals(0, venda.FormaPagamento.FormaPagamentoCodigo,
-                Erros.NotSetPayment);
-            AssertionConcern.AssertArgumentNotEquals(0, venda.CondicaoPagamento.CondicaoPagamentoCodigo,
-                Erros.PaymentConditionNotSet);
+            //AssertionConcern.AssertArgumentNotEquals(0, venda.Cliente.PessoaCodigo, Erros.ClientNotSet);
+            //AssertionConcern.AssertArgumentNotEquals(0, venda.FormaPagamento.FormaPagamentoCodigo,
+            //    Erros.NotSetPayment);
+            //AssertionConcern.AssertArgumentNotEquals(0, venda.CondicaoPagamento.CondicaoPagamentoCodigo,
+            //    Erros.PaymentConditionNotSet);
             var cliente = _pessoaRepository.ObterPorCodigo(venda.Cliente.PessoaCodigo);
             var formaPagamento = _formaPagamentoRepository.ObterPorCodigo(venda.FormaPagamento.FormaPagamentoCodigo);
             var condicaoPagamento =
@@ -214,8 +214,8 @@ namespace ProjetoArtCouro.Business.Services.VendaService
                         estoque.Quantidade));
                 }
             });
-            AssertionConcern.AssertArgumentFalse(produtosQueFaltamNoEstoque.Any(),
-                MensagemDeEstoqueInsuficiente(produtosQueFaltamNoEstoque));
+            //AssertionConcern.AssertArgumentFalse(produtosQueFaltamNoEstoque.Any(),
+            //    MensagemDeEstoqueInsuficiente(produtosQueFaltamNoEstoque));
         }
 
         private static string MensagemDeEstoqueInsuficiente(List<Tuple<string, int, int>> produtosQueFaltamNoEstoque)

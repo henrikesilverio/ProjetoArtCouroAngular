@@ -17,13 +17,13 @@ namespace ProjetoArtCouro.Domain.Entities.Compras
 
         public void Validar()
         {
-            AssertionConcern.AssertArgumentNotEquals(new DateTime(), DataVencimento,
-                string.Format(Erros.InvalidParameter, "DataVencimento"));
-            AssertionConcern.AssertArgumentNotEquals(0.0M, ValorDocumento,
-                string.Format(Erros.NotZeroParameter, "ValorDocumento"));
-            AssertionConcern.AssertArgumentNotEquals(StatusContaPagar, StatusContaPagarEnum.None,
-                string.Format(Erros.InvalidParameter, "StatusContaPagar"));
-            AssertionConcern.AssertArgumentNotNull(Compra, Erros.PurchaseNotSet);
+            //AssertionConcern.AssertArgumentNotEquals(new DateTime(), DataVencimento,
+            //    string.Format(Erros.InvalidParameter, "DataVencimento"));
+            //AssertionConcern.AssertArgumentNotEquals(0.0M, ValorDocumento,
+            //    string.Format(Erros.NotZeroParameter, "ValorDocumento"));
+            //AssertionConcern.AssertArgumentNotEquals(StatusContaPagar, StatusContaPagarEnum.None,
+            //    string.Format(Erros.InvalidParameter, "StatusContaPagar"));
+            //AssertionConcern.AssertArgumentNotNull(Compra, Erros.PurchaseNotSet);
         }
     }
 }

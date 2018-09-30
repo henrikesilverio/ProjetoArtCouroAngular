@@ -124,10 +124,7 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             }
 
             var pessoaAtual = _pessoaRepository.ObterPorCodigoComPessoaCompleta(pessoa.PessoaCodigo);
-            if (pessoaAtual == null)
-            {
-                throw new BusinessException(Erros.PersonDoesNotExist);
-            }
+            AssertionConcern<BusinessException>.AssertArgumentNotNull(pessoaAtual, Erros.PersonDoesNotExist);
 
             pessoaAtual.Nome = pessoa.Nome;
             if (pessoaAtual.PessoaFisica != null)
@@ -156,18 +153,9 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
 
         public void ExcluirPessoa(int pessoaCodigo)
         {
-            if (pessoaCodigo == 0)
-            {
-                throw new BusinessException(Erros.InvalidCode);
-            }
-
+            AssertionConcern<BusinessException>.AssertArgumentNotEquals(pessoaCodigo, 0, Erros.InvalidCode);
             var pessoa = _pessoaRepository.ObterPorCodigoComPessoaCompleta(pessoaCodigo);
-
-            if (pessoa == null)
-            {
-                throw new BusinessException(Erros.PersonDoesNotExist);
-            }
-
+            AssertionConcern<BusinessException>.AssertArgumentNotNull(pessoa, Erros.PersonDoesNotExist);
             _pessoaRepository.Deletar(pessoa);
         }
 
@@ -243,19 +231,17 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             pessoa.Validar();
             pessoa.Enderecos.First().Validar();
 
-            if (pessoa.MeiosComunicacao.All(x => x.TipoComunicacao != TipoComunicacaoEnum.Telefone))
-            {
-                throw new BusinessException(Erros.EmptyPhone);
-            }
+            AssertionConcern<BusinessException>
+                .AssertArgumentTrue(pessoa.Papeis.Any(),
+                string.Format(Erros.NullParameter, "Papeis"));
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentFalse(pessoa.MeiosComunicacao
+                .All(x => x.TipoComunicacao != TipoComunicacaoEnum.Telefone), Erros.EmptyPhone);
 
             foreach (var meioComunicacao in pessoa.MeiosComunicacao)
             {
                 meioComunicacao.Validar();
-            }
-
-            if (!pessoa.Papeis.Any())
-            {
-                throw new BusinessException(string.Format(Erros.NullParameter, "Papeis"));
             }
         }
 
@@ -263,7 +249,9 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         {
             //Adiciona um novo endereço ou modifica o exitente para principal
             var enderecoAtualizar = pessoa.Enderecos.FirstOrDefault();
-            AssertionConcern.AssertArgumentNotEquals(enderecoAtualizar, null, Erros.EmptyAddress);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(enderecoAtualizar, null, Erros.EmptyAddress);
+
             if (enderecoAtualizar != null && enderecoAtualizar.EnderecoCodigo == -1 &&
                 !pessoaAtual.Enderecos.Any(x =>
                     x.Bairro.Equals(enderecoAtualizar.Bairro) &&
@@ -295,7 +283,10 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             {
                 return;
             }
-            AssertionConcern.AssertArgumentNotEquals(meioComunicacaoAtualizar, null, Erros.EmptyPhone);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(meioComunicacaoAtualizar, null, Erros.EmptyPhone);
+
             if (meioComunicacaoAtualizar != null && meioComunicacaoAtualizar.MeioComunicacaoCodigo == -1 &&
                 !pessoaAtual.MeiosComunicacao.Any(x => x.MeioComunicacaoNome.Equals(meioComunicacaoAtualizar.MeioComunicacaoNome)))
             {

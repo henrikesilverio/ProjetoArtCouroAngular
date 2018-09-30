@@ -22,8 +22,8 @@ namespace ProjetoArtCouro.Domain.Entities.Usuarios
 
         public void Validar()
         {
-            AssertionConcern.AssertArgumentLength(UsuarioNome, 3, 250, Erros.InvalidUserName);
-            PasswordAssertionConcern.AssertIsValid(Senha);
+            //AssertionConcern.AssertArgumentLength(UsuarioNome, 3, 250, Erros.InvalidUserName);
+            //PasswordAssertionConcern.AssertIsValid(Senha);
         }
     }
 }

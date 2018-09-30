@@ -9,7 +9,7 @@ namespace ProjetoArtCouro.Resources.Validation
     {
         public static void AssertIsValid(string password)
         {
-            AssertionConcern.AssertArgumentNotNull(password, Erros.InvalidUserPassword);
+            //AssertionConcern.AssertArgumentNotNull(password, Erros.InvalidUserPassword);
         }
 
         public static string Encrypt(string password)

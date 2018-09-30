@@ -34,8 +34,8 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
         public FormaPagamento AtualizarFormaPagamento(FormaPagamento formaPagamento)
         {
             formaPagamento.Validar();
-            AssertionConcern.AssertArgumentNotEquals(0, formaPagamento.FormaPagamentoCodigo,
-                string.Format(Erros.NotZeroParameter, "FormaPagamentoCodigo"));
+            //AssertionConcern.AssertArgumentNotEquals(0, formaPagamento.FormaPagamentoCodigo,
+                //string.Format(Erros.NotZeroParameter, "FormaPagamentoCodigo"));
             var formaPagamentoAtual =
                 _formaPagamentoRepository.ObterPorCodigo(formaPagamento.FormaPagamentoCodigo);
             formaPagamentoAtual.Ativo = formaPagamento.Ativo;
@@ -46,7 +46,7 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
         public void ExcluirFormaPagamento(int formaPagamentoCodigo)
         {
             var formaPagamentoAtual = _formaPagamentoRepository.ObterPorCodigo(formaPagamentoCodigo);
-            AssertionConcern.AssertArgumentNotEquals(formaPagamentoAtual, null, Erros.FormOfPaymentDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(formaPagamentoAtual, null, Erros.FormOfPaymentDoesNotExist);
             _formaPagamentoRepository.Deletar(formaPagamentoAtual);
         }
 

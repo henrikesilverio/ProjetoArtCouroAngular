@@ -34,8 +34,8 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
         public CondicaoPagamento AtualizarCondicaoPagamento(CondicaoPagamento condicaoPagamento)
         {
             condicaoPagamento.Validar();
-            AssertionConcern.AssertArgumentNotEquals(0, condicaoPagamento.CondicaoPagamentoCodigo,
-                string.Format(Erros.NotZeroParameter, "CondicaoPagamentoCodigo"));
+            //AssertionConcern.AssertArgumentNotEquals(0, condicaoPagamento.CondicaoPagamentoCodigo,
+                //string.Format(Erros.NotZeroParameter, "CondicaoPagamentoCodigo"));
             var condicaoPagamentoAtual =
                 _condicaoPagamentoRepository.ObterPorCodigo(condicaoPagamento.CondicaoPagamentoCodigo);
             condicaoPagamentoAtual.Ativo = condicaoPagamento.Ativo;
@@ -47,7 +47,7 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
         public void ExcluirCondicaoPagamento(int condicaoPagamentoCodigo)
         {
             var condicaoPagamentoAtual = _condicaoPagamentoRepository.ObterPorCodigo(condicaoPagamentoCodigo);
-            AssertionConcern.AssertArgumentNotEquals(condicaoPagamentoAtual, null, Erros.PaymentConditionDoesNotExist);
+            //AssertionConcern.AssertArgumentNotEquals(condicaoPagamentoAtual, null, Erros.PaymentConditionDoesNotExist);
             _condicaoPagamentoRepository.Deletar(condicaoPagamentoAtual);
         }
 
