@@ -1,49 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Caching;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IProduto;
 using ProjetoArtCouro.Domain.Entities.Produtos;
-using Z.EntityFramework.Plus;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.ProdutoRepository
 {
     public class ProdutoRepository : IProdutoRepository
     {
         private readonly DataBaseContext _context;
-        private readonly CacheItemPolicy _cacheItemPolicy;
-        public ProdutoRepository(DataBaseContext context, CacheItemPolicy cacheItemPolicy)
+
+        public ProdutoRepository(DataBaseContext context)
         {
             _context = context;
-            _cacheItemPolicy = cacheItemPolicy;
         }
 
         public Produto ObterPorId(Guid id)
         {
-            return _context.Produtos.FromCache(_cacheItemPolicy).FirstOrDefault(x => x.ProdutoId.Equals(id));
+            return _context.Produtos.FirstOrDefault(x => x.ProdutoId.Equals(id));
         }
 
         public Produto ObterPorCodigo(int codigo)
         {
-            return _context.Produtos.FromCache(_cacheItemPolicy).FirstOrDefault(x => x.ProdutoCodigo.Equals(codigo));
+            return _context.Produtos.FirstOrDefault(x => x.ProdutoCodigo.Equals(codigo));
         }
 
         public Produto ObterComUnidadePorCodigo(int codigo)
         {
             return _context.Produtos.Include("Unidade")
-                .FromCache(_cacheItemPolicy)
                 .FirstOrDefault(x => x.ProdutoCodigo.Equals(codigo));
         }
 
         public List<Produto> ObterLista()
         {
-            return _context.Produtos.FromCache(_cacheItemPolicy).ToList();
+            return _context.Produtos.ToList();
         }
 
         public List<Produto> ObterListaComUnidade()
         {
-            return _context.Produtos.Include("Unidade").FromCache(_cacheItemPolicy).ToList();
+            return _context.Produtos.Include("Unidade").ToList();
         }
 
         public Produto Criar(Produto produto)

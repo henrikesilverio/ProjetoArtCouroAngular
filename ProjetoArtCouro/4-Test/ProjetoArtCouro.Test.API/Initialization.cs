@@ -3,7 +3,9 @@ using Microsoft.Owin.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjetoArtCouro.Api;
 using ProjetoArtCouro.DataBase.DataBase;
+using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Test.API.Infra;
+using System.Collections;
 using System.Net;
 using System.Net.Http;
 using TechTalk.SpecFlow;
@@ -78,7 +80,7 @@ namespace ProjetoArtCouro.Test.API
         {
             var testShared = _scenarioContext["TestShared"] as ITestShared;
             Assert.AreNotEqual(testShared, null, "Teste compartilhado não implementado");
-            _scenarioContext.Remove("ReturnBase");
+            _scenarioContext.Remove("RetornoBase");
             testShared.ValidateReturnSuccess();
             _scenarioContext.Remove("Response");
         }
@@ -95,16 +97,16 @@ namespace ProjetoArtCouro.Test.API
             ErrorReturn((HttpStatusCode)statusCode);
         }
 
-        //[Then(@"que o retorno tenha uma lista com '(.*)' itens")]
-        //public void EntaoQueORetornoTenhaUmaListaComItens(int count)
-        //{
-        //    var returnBase = _scenarioContext["ReturnBase"] as ReturnBase<object>;
-        //    Assert.IsNotNull(returnBase, "ReturnBase está nulo");
+        [Then(@"que o retorno tenha uma lista com '(.*)' itens")]
+        public void EntaoQueORetornoTenhaUmaListaComItens(int count)
+        {
+            var retornoBase = _scenarioContext["RetornoBase"] as RetornoBase<object>;
+            Assert.IsNotNull(retornoBase, "RetornoBase está nulo");
 
-        //    var objectReturn = returnBase.ObjectReturn as IList;
-        //    Assert.IsNotNull(objectReturn, "ObjectReturn está nulo");
-        //    Assert.AreEqual(objectReturn.Count, count, "Quantidade de invalida");
-        //}
+            var objetoRetorno = retornoBase.ObjetoRetorno as IList;
+            Assert.IsNotNull(objetoRetorno, "ObjetoRetorno está nulo");
+            Assert.AreEqual(objetoRetorno.Count, count, "Quantidade de invalida");
+        }
 
         private void ErrorReturn(HttpStatusCode statusCode)
         {

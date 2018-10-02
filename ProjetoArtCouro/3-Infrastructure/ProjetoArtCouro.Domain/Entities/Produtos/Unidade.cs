@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Produtos
@@ -19,7 +20,7 @@ namespace ProjetoArtCouro.Domain.Entities.Produtos
                 .HasMaxLenght(x => x.UnidadeNome, 30);
             if (!IsValid())
             {
-                throw new InvalidOperationException(GetMergeNotifications());
+                throw new DomainException(GetMergeNotifications());
             }
         }
     }

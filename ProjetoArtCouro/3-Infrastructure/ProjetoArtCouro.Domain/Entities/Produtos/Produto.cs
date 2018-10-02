@@ -1,5 +1,6 @@
 ﻿using System;
 using ProjetoArtCouro.Domain.Entities.Estoques;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resources.Validation;
 
@@ -27,7 +28,7 @@ namespace ProjetoArtCouro.Domain.Entities.Produtos
                 .IsNotNull(x => x.Unidade, Erros.NullParameter);
             if (!IsValid())
             {
-                throw new InvalidOperationException(GetMergeNotifications());
+                throw new DomainException(GetMergeNotifications());
             }
         }
     }

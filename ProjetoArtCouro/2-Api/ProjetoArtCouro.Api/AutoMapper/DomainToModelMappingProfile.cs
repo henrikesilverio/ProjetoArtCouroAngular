@@ -158,7 +158,7 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 .ForMember(d => d.Descricao, m => m.MapFrom(s => s.ProdutoNome))
                 .ForMember(d => d.PrecoCusto, m => m.MapFrom(s => s.PrecoCusto.ToString("C2")))
                 .ForMember(d => d.PrecoVenda, m => m.MapFrom(s => s.PrecoVenda.ToString("C2")))
-                .ForMember(d => d.UnidadeId, m => m.MapFrom(s => s.Unidade.UnidadeCodigo))
+                .ForMember(d => d.UnidadeCodigo, m => m.MapFrom(s => s.Unidade.UnidadeCodigo))
                 .ForMember(d => d.ProdutoCodigo, m => m.MapFrom(s => s.ProdutoCodigo))
                 .ForMember(d => d.UnidadeNome, m => m.MapFrom(s => s.Unidade.UnidadeNome));
 

@@ -118,7 +118,7 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 .ForMember(d => d.ProdutoNome, m => m.MapFrom(s => s.Descricao))
                 .ForMember(d => d.PrecoCusto, m => m.MapFrom(s => decimal.Parse(s.PrecoCusto)))
                 .ForMember(d => d.PrecoVenda, m => m.MapFrom(s => decimal.Parse(s.PrecoVenda)))
-                .ForMember(d => d.Unidade, m => m.MapFrom(s => new Unidade { UnidadeCodigo = s.UnidadeId }));
+                .ForMember(d => d.Unidade, m => m.MapFrom(s => new Unidade { UnidadeCodigo = s.UnidadeCodigo }));
 
             CreateMap<CondicaoPagamentoModel, CondicaoPagamento>();
 
