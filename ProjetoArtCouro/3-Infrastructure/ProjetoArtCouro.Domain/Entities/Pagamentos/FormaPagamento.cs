@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Entities.Vendas;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Pagamentos
 {
-    public class FormaPagamento
+    public class FormaPagamento : Notifiable
     {
         public Guid FormaPagamentoId { get; set; }
         public int FormaPagamentoCodigo { get; set; }
@@ -18,8 +20,14 @@ namespace ProjetoArtCouro.Domain.Entities.Pagamentos
 
         public void Validar()
         {
-            //AssertionConcern.AssertArgumentNotNull(Descricao, string.Format(Erros.NullParameter, "Descricao"));
-            //AssertionConcern.AssertArgumentNotEmpty(Descricao, string.Format(Erros.EmptyParameter, "Descricao"));
+            new ValidationContract<FormaPagamento>(this)
+                .IsRequired(x => x.Descricao)
+                .HasMaxLenght(x => x.Descricao, 30)
+                .IsRequired(x => x.Ativo);
+            if (!IsValid())
+            {
+                throw new DomainException(GetMergeNotifications());
+            }
         }
     }
 }

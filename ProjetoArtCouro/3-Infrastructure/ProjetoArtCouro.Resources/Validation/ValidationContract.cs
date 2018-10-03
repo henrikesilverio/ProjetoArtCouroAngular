@@ -77,6 +77,27 @@ namespace ProjetoArtCouro.Resources.Validation
         }
 
         /// <summary>
+        /// Given a int, add a notification if it's null or empty
+        /// </summary>
+        /// <param name="selector">Property</param>
+        /// <param name="message">Error Message (Optional)</param>
+        /// <returns></returns>
+        public ValidationContract<T> IsRequired(Expression<Func<T, int>> selector, string message = "")
+        {
+            var val = selector.Compile().Invoke(_validatable);
+            var name = ((MemberExpression)selector.Body).Member.Name;
+
+            if (string.IsNullOrEmpty(val.ToString()))
+            {
+                _validatable.AddNotification(name, string.IsNullOrEmpty(message)
+                    ? string.Format(Erros.FieldIsRequired, name)
+                    : message);
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Given an object, add a notification if it's null
         /// </summary>
         /// <param name="selector">Property</param>

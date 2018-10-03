@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Http;
-using AutoMapper;
+﻿using System.Web.Http;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPagamento;
-using ProjetoArtCouro.Domain.Entities.Pagamentos;
 using ProjetoArtCouro.Domain.Models.CondicaoPagamento;
 using WebApi.OutputCache.V2;
 
@@ -14,26 +10,10 @@ namespace ProjetoArtCouro.Api.Controllers.Pagamentos
     public class CondicaoPagamentoController : BaseApiController
     {
         private readonly ICondicaoPagamentoService _condicaoPagamentoService;
+
         public CondicaoPagamentoController(ICondicaoPagamentoService condicaoPagamentoService)
         {
             _condicaoPagamentoService = condicaoPagamentoService;
-        }
-
-        [Route("ObterListaCondicaoPagamento")]
-        [Authorize(Roles = "PesquisaCondicaoPagamento, NovaVenda")]
-        [CacheOutput(ServerTimeSpan = 10000)]
-        [HttpGet]
-        public IHttpActionResult ObterListaCondicaoPagamento()
-        {
-            try
-            {
-                var listaCondicaoPagamento = _condicaoPagamentoService.ObterListaCondicaoPagamento();
-                return OkRetornoBase(Mapper.Map<List<CondicaoPagamentoModel>>(listaCondicaoPagamento));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
         }
 
         [Route("CriarCondicaoPagamento")]
@@ -42,16 +22,18 @@ namespace ProjetoArtCouro.Api.Controllers.Pagamentos
         [HttpPost]
         public IHttpActionResult CriarCondicaoPagamento(CondicaoPagamentoModel model)
         {
-            try
-            {
-                var condicaoPagamento = Mapper.Map<CondicaoPagamento>(model);
-                var condicaoPagamentoRetorno = _condicaoPagamentoService.CriarCondicaoPagamento(condicaoPagamento);
-                return OkRetornoBase(Mapper.Map<CondicaoPagamentoModel>(condicaoPagamentoRetorno));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var condicaoPagamentoModel = _condicaoPagamentoService.CriarCondicaoPagamento(model);
+            return OkRetornoBase(condicaoPagamentoModel);
+        }
+
+        [Route("ObterListaCondicaoPagamento")]
+        [Authorize(Roles = "PesquisaCondicaoPagamento, NovaVenda")]
+        [CacheOutput(ServerTimeSpan = 10000)]
+        [HttpGet]
+        public IHttpActionResult ObterListaCondicaoPagamento()
+        {
+            var listaCondicaoPagamentoModel = _condicaoPagamentoService.ObterListaCondicaoPagamento();
+            return OkRetornoBase(listaCondicaoPagamentoModel);
         }
 
         [Route("EditarCondicaoPagamento")]
@@ -60,16 +42,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pagamentos
         [HttpPut]
         public IHttpActionResult EditarCondicaoPagamento(CondicaoPagamentoModel model)
         {
-            try
-            {
-                var condicaoPagamento = Mapper.Map<CondicaoPagamento>(model);
-                var condicaoPagamentoRetorno = _condicaoPagamentoService.AtualizarCondicaoPagamento(condicaoPagamento);
-                return OkRetornoBase(Mapper.Map<CondicaoPagamentoModel>(condicaoPagamentoRetorno));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var condicaoPagamentoModel = _condicaoPagamentoService.AtualizarCondicaoPagamento(model);
+            return OkRetornoBase(condicaoPagamentoModel);
         }
 
         [Route("ExcluirCondicaoPagamento/{codigoCondicaoPagamento:int:min(1)}")]
@@ -78,15 +52,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pagamentos
         [HttpDelete]
         public IHttpActionResult ExcluirCondicaoPagamento(int codigoCondicaoPagamento)
         {
-            try
-            {
-                _condicaoPagamentoService.ExcluirCondicaoPagamento(codigoCondicaoPagamento);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _condicaoPagamentoService.ExcluirCondicaoPagamento(codigoCondicaoPagamento);
+            return OkRetornoBase();
         }
 
         protected override void Dispose(bool disposing)

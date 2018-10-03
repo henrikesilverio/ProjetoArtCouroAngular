@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Http;
-using AutoMapper;
+﻿using System.Web.Http;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPagamento;
-using ProjetoArtCouro.Domain.Entities.Pagamentos;
 using ProjetoArtCouro.Domain.Models.FormaPagamento;
 using WebApi.OutputCache.V2;
 
@@ -14,26 +10,10 @@ namespace ProjetoArtCouro.Api.Controllers.Pagamentos
     public class FormaPagamentoController : BaseApiController
     {
         private readonly IFormaPagamentoService _formaPagamentoService;
+
         public FormaPagamentoController(IFormaPagamentoService formaPagamentoService)
         {
             _formaPagamentoService = formaPagamentoService;
-        }
-
-        [Route("ObterListaFormaPagamento")]
-        [Authorize(Roles = "PesquisaFormaPagamento, NovaVenda")]
-        [CacheOutput(ServerTimeSpan = 10000)]
-        [HttpGet]
-        public IHttpActionResult ObterListaFormaPagamento()
-        {
-            try
-            {
-                var listaformaPagamento = _formaPagamentoService.ObterListaFormaPagamento();
-                return OkRetornoBase(Mapper.Map<List<FormaPagamentoModel>>(listaformaPagamento));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
         }
 
         [Route("CriarFormaPagamento")]
@@ -42,16 +22,18 @@ namespace ProjetoArtCouro.Api.Controllers.Pagamentos
         [HttpPost]
         public IHttpActionResult CriarFormaPagamento(FormaPagamentoModel model)
         {
-            try
-            {
-                var formaPagamento = Mapper.Map<FormaPagamento>(model);
-                var formaPagamentoRetorno = _formaPagamentoService.CriarFormaPagamento(formaPagamento);
-                return OkRetornoBase(Mapper.Map<FormaPagamentoModel>(formaPagamentoRetorno));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var formaPagamentoModel = _formaPagamentoService.CriarFormaPagamento(model);
+            return OkRetornoBase(formaPagamentoModel);
+        }
+
+        [Route("ObterListaFormaPagamento")]
+        [Authorize(Roles = "PesquisaFormaPagamento, NovaVenda")]
+        [CacheOutput(ServerTimeSpan = 10000)]
+        [HttpGet]
+        public IHttpActionResult ObterListaFormaPagamento()
+        {
+            var listaformaPagamentoModel = _formaPagamentoService.ObterListaFormaPagamento();
+            return OkRetornoBase(listaformaPagamentoModel);
         }
 
         [Route("EditarFormaPagamento")]
@@ -60,16 +42,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pagamentos
         [HttpPut]
         public IHttpActionResult EditarFormaPagamento(FormaPagamentoModel model)
         {
-            try
-            {
-                var formaPagamento = Mapper.Map<FormaPagamento>(model);
-                var formaPagamentoRetorno = _formaPagamentoService.AtualizarFormaPagamento(formaPagamento);
-                return OkRetornoBase(Mapper.Map<FormaPagamentoModel>(formaPagamentoRetorno));
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var formaPagamentoModel = _formaPagamentoService.AtualizarFormaPagamento(model);
+            return OkRetornoBase(formaPagamentoModel);
         }
 
         [Route("ExcluirFormaPagamento/{codigoFormaPagamento:int:min(1)}")]
@@ -78,15 +52,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pagamentos
         [HttpDelete]
         public IHttpActionResult ExcluirFormaPagamento(int codigoFormaPagamento)
         {
-            try
-            {
-                _formaPagamentoService.ExcluirFormaPagamento(codigoFormaPagamento);
-                return OkRetornoBase();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            _formaPagamentoService.ExcluirFormaPagamento(codigoFormaPagamento);
+            return OkRetornoBase();
         }
 
         protected override void Dispose(bool disposing)

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Pagamentos;
+using ProjetoArtCouro.Domain.Models.FormaPagamento;
 
 namespace ProjetoArtCouro.Domain.Contracts.IService.IPagamento
 {
     public interface IFormaPagamentoService : IDisposable
     {
-        List<FormaPagamento> ObterListaFormaPagamento();
+        List<FormaPagamentoModel> ObterListaFormaPagamento();
         FormaPagamento ObterFormaPagamentoPorCodigo(int codigo);
-        FormaPagamento CriarFormaPagamento(FormaPagamento formaPagamento);
-        FormaPagamento AtualizarFormaPagamento(FormaPagamento formaPagamento);
+        FormaPagamentoModel CriarFormaPagamento(FormaPagamentoModel model);
+        FormaPagamentoModel AtualizarFormaPagamento(FormaPagamentoModel model);
         void ExcluirFormaPagamento(int formaPagamentoCodigo);
     }
 }

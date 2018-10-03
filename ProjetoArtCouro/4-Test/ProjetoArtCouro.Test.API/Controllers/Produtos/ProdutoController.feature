@@ -19,7 +19,7 @@ Cenario: Cadastrar um produto preenchendo todos os campos
 	Quando realizar uma chamada Post ao endereço 'api/Produto/CriarProduto'
 	Entao retorne sucesso
 
-Cenario: Pesquisar todos os produtos com produtos cadastrados
+Cenario: Pesquisar todos os produtos cadastrados
 	Dado que preencha os dados do produto com as seguintes informações:
 	| Field         | Value  |
 	| Descricao     | Sapato |

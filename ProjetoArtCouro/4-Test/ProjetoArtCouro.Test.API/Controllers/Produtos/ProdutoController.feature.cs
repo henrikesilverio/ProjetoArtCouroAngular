@@ -127,10 +127,10 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Pesquisar todos os produtos com produtos cadastrados")]
-        public virtual void PesquisarTodosOsProdutosComProdutosCadastrados()
+        [NUnit.Framework.DescriptionAttribute("Pesquisar todos os produtos cadastrados")]
+        public virtual void PesquisarTodosOsProdutosCadastrados()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pesquisar todos os produtos com produtos cadastrados", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pesquisar todos os produtos cadastrados", null, ((string[])(null)));
 #line 22
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();

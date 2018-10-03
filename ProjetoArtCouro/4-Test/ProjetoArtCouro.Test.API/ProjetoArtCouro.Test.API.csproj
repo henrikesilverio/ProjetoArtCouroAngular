@@ -40,6 +40,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Pagamentos\CondicaoPagamentoControllerSteps.cs" />
     <Compile Include="Controllers\Clientes\ClienteController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -58,6 +59,19 @@
       <DependentUpon>FuncionarioController.feature</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Funcionarios\FuncionarioControllerSteps.cs" />
+    <Compile Include="Controllers\Pagamentos\CondicaoPagamentoController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CondicaoPagamentoController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Pagamentos\CondicaoPagamentoTestShared.cs" />
+    <Compile Include="Controllers\Pagamentos\FormaPagamentoController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormaPagamentoController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Pagamentos\FormaPagamentoControllerSteps.cs" />
+    <Compile Include="Controllers\Pagamentos\FormaPagamentoTestShared.cs" />
     <Compile Include="Controllers\Pessoas\PessoaTestShared.cs" />
     <Compile Include="Controllers\Produtos\ProdutoController.feature.cs">
       <AutoGen>True</AutoGen>
@@ -131,6 +145,14 @@
     <None Include="Controllers\Funcionarios\FuncionarioController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>FuncionarioController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Controllers\Pagamentos\CondicaoPagamentoController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CondicaoPagamentoController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Controllers\Pagamentos\FormaPagamentoController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>FormaPagamentoController.feature.cs</LastGenOutput>
     </None>
     <None Include="Controllers\Produtos\ProdutoController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

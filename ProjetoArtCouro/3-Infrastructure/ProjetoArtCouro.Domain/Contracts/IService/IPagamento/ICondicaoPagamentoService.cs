@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Pagamentos;
+using ProjetoArtCouro.Domain.Models.CondicaoPagamento;
 
 namespace ProjetoArtCouro.Domain.Contracts.IService.IPagamento
 {
     public interface ICondicaoPagamentoService : IDisposable
     {
-        List<CondicaoPagamento> ObterListaCondicaoPagamento();
+        List<CondicaoPagamentoModel> ObterListaCondicaoPagamento();
         CondicaoPagamento ObterCondicaoPagamentoPorCodigo(int codigo);
-        CondicaoPagamento CriarCondicaoPagamento(CondicaoPagamento condicaoPagamento);
-        CondicaoPagamento AtualizarCondicaoPagamento(CondicaoPagamento condicaoPagamento);
+        CondicaoPagamentoModel CriarCondicaoPagamento(CondicaoPagamentoModel model);
+        CondicaoPagamentoModel AtualizarCondicaoPagamento(CondicaoPagamentoModel model);
         void ExcluirCondicaoPagamento(int condicaoPagamentoCodigo);
     }
 }

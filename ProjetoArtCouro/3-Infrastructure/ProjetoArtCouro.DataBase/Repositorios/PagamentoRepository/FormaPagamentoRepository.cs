@@ -10,6 +10,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PagamentoRepository
     public class FormaPagamentoRepository : IFormaPagamentoRepository
     {
         private readonly DataBaseContext _context;
+
         public FormaPagamentoRepository(DataBaseContext context)
         {
             _context = context;

@@ -6,14 +6,14 @@ using System.Net;
 using System.Net.Http;
 using TechTalk.SpecFlow;
 
-namespace ProjetoArtCouro.Test.API.Controllers.Pessoas
+namespace ProjetoArtCouro.Test.API.Controllers.Pagamentos
 {
-    public class PessoaTestShared : ITestShared
+    public class CondicaoPagamentoTestShared : ITestShared
     {
         private readonly ScenarioContext _scenarioContext;
         private readonly DataBaseContext _context;
 
-        public PessoaTestShared(
+        public CondicaoPagamentoTestShared(
             ScenarioContext scenarioContext,
             DataBaseContext context)
         {
@@ -25,12 +25,7 @@ namespace ProjetoArtCouro.Test.API.Controllers.Pessoas
         {
             var commands = new[]
             {
-                "DELETE FROM [MeioComunicacao] DBCC CHECKIDENT('MeioComunicacao', RESEED, 0)",
-                "DELETE FROM [Endereco] DBCC CHECKIDENT('Endereco', RESEED, 0)",
-                "DELETE FROM [PessoaFisica] DBCC CHECKIDENT('PessoaFisica', RESEED, 0)",
-                "DELETE FROM [PessoaJuridica] DBCC CHECKIDENT('PessoaFisica', RESEED, 0)",
-                "DELETE FROM [PessoaPapel]",
-                "DELETE FROM [Pessoa] DBCC CHECKIDENT('Pessoa', RESEED, 0)"
+                "DELETE FROM [CondicaoPagamento] DBCC CHECKIDENT('CondicaoPagamento', RESEED, 0)"
             };
 
             foreach (var command in commands)

@@ -2,8 +2,11 @@
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPagamento;
 using ProjetoArtCouro.Domain.Contracts.IService.IPagamento;
 using ProjetoArtCouro.Domain.Entities.Pagamentos;
-using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Domain.Models.FormaPagamento;
+using AutoMapper;
 using ProjetoArtCouro.Resource.Validation;
+using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Domain.Exceptions;
 
 namespace ProjetoArtCouro.Business.Services.PagamentoService
 {
@@ -15,9 +18,10 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
             _formaPagamentoRepository = formaPagamentoRepository;
         }
 
-        public List<FormaPagamento> ObterListaFormaPagamento()
+        public List<FormaPagamentoModel> ObterListaFormaPagamento()
         {
-            return _formaPagamentoRepository.ObterLista();
+            var listaformaPagamento = _formaPagamentoRepository.ObterLista();
+            return Mapper.Map<List<FormaPagamentoModel>>(listaformaPagamento);
         }
 
         public FormaPagamento ObterFormaPagamentoPorCodigo(int codigo)
@@ -25,28 +29,44 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
             return _formaPagamentoRepository.ObterPorCodigo(codigo);
         }
 
-        public FormaPagamento CriarFormaPagamento(FormaPagamento formaPagamento)
+        public FormaPagamentoModel CriarFormaPagamento(FormaPagamentoModel model)
         {
+            var formaPagamento = Mapper.Map<FormaPagamento>(model);
+
             formaPagamento.Validar();
-            return _formaPagamentoRepository.Criar(formaPagamento);
+            var formaPagamentoIncluida = _formaPagamentoRepository.Criar(formaPagamento);
+
+            return Mapper.Map<FormaPagamentoModel>(formaPagamentoIncluida);
         }
 
-        public FormaPagamento AtualizarFormaPagamento(FormaPagamento formaPagamento)
+        public FormaPagamentoModel AtualizarFormaPagamento(FormaPagamentoModel model)
         {
+            var formaPagamento = Mapper.Map<FormaPagamento>(model);
             formaPagamento.Validar();
-            //AssertionConcern.AssertArgumentNotEquals(0, formaPagamento.FormaPagamentoCodigo,
-                //string.Format(Erros.NotZeroParameter, "FormaPagamentoCodigo"));
+
+            AssertionConcern<BusinessException>.AssertArgumentNotEquals(0, formaPagamento.FormaPagamentoCodigo,
+                string.Format(Erros.NotZeroParameter, "FormaPagamentoCodigo"));
+
             var formaPagamentoAtual =
                 _formaPagamentoRepository.ObterPorCodigo(formaPagamento.FormaPagamentoCodigo);
+
             formaPagamentoAtual.Ativo = formaPagamento.Ativo;
             formaPagamentoAtual.Descricao = formaPagamento.Descricao;
-            return _formaPagamentoRepository.Atualizar(formaPagamentoAtual);
+            var formaPagamentoAtualizada = _formaPagamentoRepository
+                .Atualizar(formaPagamentoAtual);
+
+            return Mapper.Map<FormaPagamentoModel>(formaPagamentoAtualizada);
         }
 
         public void ExcluirFormaPagamento(int formaPagamentoCodigo)
         {
+            AssertionConcern<BusinessException>.AssertArgumentNotEquals(0, formaPagamentoCodigo,
+                string.Format(Erros.NotZeroParameter, "FormaPagamentoCodigo"));
+
             var formaPagamentoAtual = _formaPagamentoRepository.ObterPorCodigo(formaPagamentoCodigo);
-            //AssertionConcern.AssertArgumentNotEquals(formaPagamentoAtual, null, Erros.FormOfPaymentDoesNotExist);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(formaPagamentoAtual, null, Erros.FormOfPaymentDoesNotExist);
+
             _formaPagamentoRepository.Deletar(formaPagamentoAtual);
         }
 

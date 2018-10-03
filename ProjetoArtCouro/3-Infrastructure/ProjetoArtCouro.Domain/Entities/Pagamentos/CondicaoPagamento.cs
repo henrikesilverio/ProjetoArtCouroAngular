@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Entities.Vendas;
-using ProjetoArtCouro.Resource.Validation;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Pagamentos
 {
-    public class CondicaoPagamento
+    public class CondicaoPagamento : Notifiable
     {
         public Guid CondicaoPagamentoId { get; set; }
         public int CondicaoPagamentoCodigo { get; set; }
@@ -19,9 +20,16 @@ namespace ProjetoArtCouro.Domain.Entities.Pagamentos
 
         public void Validar()
         {
-            //AssertionConcern.AssertArgumentNotNull(Descricao, string.Format(Erros.NullParameter, "Descricao"));
-            //AssertionConcern.AssertArgumentNotEmpty(Descricao, string.Format(Erros.EmptyParameter, "Descricao"));
-            //AssertionConcern.AssertArgumentNotEquals(0, QuantidadeParcelas, string.Format(Erros.NotZeroParameter, "QuantidadeParcelas"));
+            new ValidationContract<CondicaoPagamento>(this)
+                .IsRequired(x => x.Descricao)
+                .HasMaxLenght(x => x.Descricao, 30)
+                .IsRequired(x => x.Ativo)
+                .IsRequired(x => x.QuantidadeParcelas)
+                .IsNotZero(x => x.QuantidadeParcelas, Erros.NotZeroParameter);
+            if (!IsValid())
+            {
+                throw new DomainException(GetMergeNotifications());
+            }
         }
     }
 }
