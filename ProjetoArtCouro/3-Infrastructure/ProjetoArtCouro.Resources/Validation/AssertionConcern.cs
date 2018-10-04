@@ -76,6 +76,14 @@ namespace ProjetoArtCouro.Resource.Validation
             }
         }
 
+        public static void AssertArgumentNull(object value, string message)
+        {
+            if (value != null)
+            {
+                throw (T)Activator.CreateInstance(typeof(T), message);
+            }
+        }
+
         public static void AssertArgumentNotNull(object object1, string message)
         {
             if (object1 == null)

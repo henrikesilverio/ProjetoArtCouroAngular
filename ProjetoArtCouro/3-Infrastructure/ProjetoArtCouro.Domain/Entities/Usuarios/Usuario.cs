@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Entities.Vendas;
-using ProjetoArtCouro.Resource.Validation;
-using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Usuarios
 {
-    public class Usuario
+    public class Usuario : Notifiable
     {
         public Guid UsuarioId { get; set; }
         public int UsuarioCodigo { get; set; }
@@ -22,8 +21,16 @@ namespace ProjetoArtCouro.Domain.Entities.Usuarios
 
         public void Validar()
         {
-            //AssertionConcern.AssertArgumentLength(UsuarioNome, 3, 250, Erros.InvalidUserName);
-            //PasswordAssertionConcern.AssertIsValid(Senha);
+            new ValidationContract<Usuario>(this)
+                .IsRequired(x => x.UsuarioNome)
+                .HasMaxLenght(x => x.UsuarioNome, 60)
+                .IsRequired(x => x.Senha)
+                .HasMaxLenght(x => x.Senha, 32)
+                .IsRequired(x => x.Ativo);
+            if (!IsValid())
+            {
+                throw new DomainException(GetMergeNotifications());
+            }
         }
     }
 }

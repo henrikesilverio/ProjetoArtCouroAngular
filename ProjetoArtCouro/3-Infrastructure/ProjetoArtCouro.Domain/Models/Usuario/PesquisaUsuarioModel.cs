@@ -12,6 +12,6 @@ namespace ProjetoArtCouro.Domain.Models.Usuario
         public bool? Ativo { get; set; }
 
         [Display(Name = "Groups", ResourceType = typeof(Mensagens))]
-        public int? GrupoId { get; set; }
+        public int? GrupoCodigo { get; set; }
     }
 }

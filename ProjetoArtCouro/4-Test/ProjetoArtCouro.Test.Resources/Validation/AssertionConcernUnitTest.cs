@@ -128,6 +128,21 @@ namespace ProjetoArtCouro.Test.Resources.Validation
         }
 
         [TestMethod]
+        public void TestAssertArgumentNull()
+        {
+            try
+            {
+                AssertionConcern<BusinessException>.AssertArgumentNull(new object(), "Valor tem que ser nulo");
+                Assert.Fail("Deveria retornar um erro");
+            }
+            catch (BusinessException ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(BusinessException));
+                Assert.AreEqual(ex.Message, "Valor tem que ser nulo", "Mensagem invalida");
+            }
+        }
+
+        [TestMethod]
         public void TestAssertArgumentNotNull()
         {
             try
@@ -138,8 +153,7 @@ namespace ProjetoArtCouro.Test.Resources.Validation
             catch (BusinessException ex)
             {
                 Assert.IsInstanceOfType(ex, typeof(BusinessException));
-                Assert.AreEqual(ex.Message, "Valor não pode ser nulo" +
-                    "", "Mensagem invalida");
+                Assert.AreEqual(ex.Message, "Valor não pode ser nulo", "Mensagem invalida");
             }
         }
 

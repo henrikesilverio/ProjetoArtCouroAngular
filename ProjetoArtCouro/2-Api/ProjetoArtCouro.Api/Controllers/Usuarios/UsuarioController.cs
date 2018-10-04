@@ -30,197 +30,89 @@ namespace ProjetoArtCouro.Api.Controllers.Usuarios
         [Route("CriarUsuario")]
         [Authorize(Roles = "NovoUsuario")]
         [InvalidateCacheOutput("ObterListaUsuario")]
+        [InvalidateCacheOutput("PesquisarUsuarioPorCodigo")]
         [HttpPost]
-        public Task<HttpResponseMessage> CriarUsuario(UsuarioModel model)
+        public IHttpActionResult CriarUsuario(UsuarioModel model)
         {
-            HttpResponseMessage response;
-            try
-            {
-                if (model.GrupoId == null)
-                {
-                    throw new Exception(string.Format(Erros.NullParameter, "GrupoId"));
-                }
-                _usuarioService.Registrar(model.UsuarioNome, model.Senha, model.ConfirmarSenha, model.GrupoId.Value);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
-        }
-
-        [Route("EditarUsuario")]
-        [Authorize(Roles = "EditarUsuario")]
-        [InvalidateCacheOutput("ObterListaUsuario")]
-        [HttpPut]
-        public Task<HttpResponseMessage> EditarUsuario(UsuarioModel model)
-        {
-            HttpResponseMessage response;
-            try
-            {
-                var usuario = Mapper.Map<Usuario>(model);
-                _usuarioService.EditarUsuario(usuario);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
-        }
-
-        [Route("AlterarSenha")]
-        [Authorize(Roles = "AlterarSenha")]
-        [HttpPut]
-        public Task<HttpResponseMessage> AlterarSenha(UsuarioModel model)
-        {
-            HttpResponseMessage response;
-            try
-            {
-                var identity = (ClaimsPrincipal) Thread.CurrentPrincipal;
-                var usuarioNome = identity.Claims.Where(c => c.Type == ClaimTypes.GivenName)
-                    .Select(c => c.Value).SingleOrDefault();
-                var usuario = new Usuario
-                {
-                    UsuarioNome = usuarioNome,
-                    Senha = model.Senha
-                };
-                _usuarioService.AlterarSenha(usuario);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
-        }
-
-        [Route("ObterPermissoesUsuarioLogado")]
-        [Authorize]
-        [HttpGet]
-        public Task<HttpResponseMessage> ObterPermissoesUsuarioLogado()
-        {
-            HttpResponseMessage response;
-            try
-            {
-                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-                var usuarioNome = identity.Claims.Where(c => c.Type == ClaimTypes.GivenName)
-                    .Select(c => c.Value).SingleOrDefault();
-                var listaPermissao = _usuarioService.ObterPermissoesUsuarioLogado(usuarioNome);
-                response = ReturnSuccess(Mapper.Map<List<PermissaoModel>>(listaPermissao));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
-        }
-
-        [Route("ExcluirUsuario")]
-        [Authorize(Roles = "ExcluirUsuario")]
-        [InvalidateCacheOutput("ObterListaUsuario")]
-        [HttpDelete]
-        public Task<HttpResponseMessage> ExcluirUsuario([FromBody]JObject jObject)
-        {
-            var codigoUsuario = jObject["codigoUsuario"].ToObject<int>();
-            HttpResponseMessage response;
-            try
-            {
-                _usuarioService.ExcluirUsuario(codigoUsuario);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
-        }
-
-        [Route("PesquisarUsuario")]
-        [Authorize(Roles = "PesquisaUsuario")]
-        [HttpPost]
-        public Task<HttpResponseMessage> PesquisarUsuario(PesquisaUsuarioModel model)
-        {
-            HttpResponseMessage response;
-            try
-            {
-                var listaUsuario = _usuarioService.PesquisarUsuario(model.UsuarioNome, model.GrupoId, model.Ativo);
-                response = ReturnSuccess(Mapper.Map<List<UsuarioModel>>(listaUsuario));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
-        }
-
-        [Route("PesquisarUsuarioPorCodigo")]
-        [Authorize(Roles = "EditarUsuario")]
-        [HttpPost]
-        public Task<HttpResponseMessage> PesquisarUsuarioPorCodigo([FromBody]JObject jObject)
-        {
-            var codigoUsuario = jObject["codigoUsuario"].ToObject<int>();
-            HttpResponseMessage response;
-            try
-            {
-                var usuario = _usuarioService.PesquisarUsuarioPorCodigo(codigoUsuario);
-                response = ReturnSuccess(Mapper.Map<UsuarioModel>(usuario));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            _usuarioService.CriarUsuario(model);
+            return OkRetornoBase();
         }
 
         [Route("ObterListaUsuario")]
         [Authorize(Roles = "ConfiguracaoUsuario")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpGet]
-        public Task<HttpResponseMessage> ObterListaUsuario()
+        public IHttpActionResult ObterListaUsuario()
         {
-            HttpResponseMessage response;
-            try
-            {
-                var listaUsuario = _usuarioService.ObterListaUsuario();
-                response = ReturnSuccess(Mapper.Map<List<UsuarioModel>>(listaUsuario));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
+            var listaUsuario = _usuarioService.ObterListaUsuario();
+            return OkRetornoBase(Mapper.Map<List<UsuarioModel>>(listaUsuario));
+        }
 
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+        [Route("PesquisarUsuario")]
+        [Authorize(Roles = "PesquisaUsuario")]
+        [HttpPost]
+        public IHttpActionResult PesquisarUsuario(PesquisaUsuarioModel model)
+        {
+            var listaUsuario = _usuarioService.PesquisarUsuario(model);
+            return OkRetornoBase(listaUsuario);
+        }
+
+        [Route("PesquisarUsuarioPorCodigo/{codigoUsuario:int:min(1)}")]
+        [Authorize(Roles = "EditarUsuario")]
+        [CacheOutput(ServerTimeSpan = 10000)]
+        [HttpGet]
+        public IHttpActionResult PesquisarUsuarioPorCodigo(int codigoUsuario)
+        {
+            var usuarioModel = _usuarioService.PesquisarUsuarioPorCodigo(codigoUsuario);
+            return OkRetornoBase(usuarioModel);
+        }
+
+        [Route("ObterPermissoesUsuarioLogado")]
+        [Authorize]
+        [HttpGet]
+        public IHttpActionResult ObterPermissoesUsuarioLogado()
+        {
+            var listaPermissao = _usuarioService
+                .ObterPermissoesUsuarioLogado(User.Identity.Name);
+            return OkRetornoBase(listaPermissao);
+        }
+
+        [Route("EditarUsuario")]
+        [Authorize(Roles = "EditarUsuario")]
+        [InvalidateCacheOutput("ObterListaUsuario")]
+        [InvalidateCacheOutput("PesquisarUsuarioPorCodigo")]
+        [HttpPut]
+        public IHttpActionResult EditarUsuario(UsuarioModel model)
+        {
+            _usuarioService.EditarUsuario(model);
+            return OkRetornoBase();
+        }
+
+        [Route("AlterarSenha")]
+        [Authorize(Roles = "AlterarSenha")]
+        [HttpPut]
+        public IHttpActionResult AlterarSenha(UsuarioModel model)
+        {
+            _usuarioService.AlterarSenha(User.Identity.Name, model.Senha);
+            return OkRetornoBase();
+        }
+
+        [Route("ExcluirUsuario/{codigoUsuario:int:min(1)}")]
+        [Authorize(Roles = "ExcluirUsuario")]
+        [InvalidateCacheOutput("ObterListaUsuario")]
+        [InvalidateCacheOutput("PesquisarUsuarioPorCodigo")]
+        [HttpDelete]
+        public IHttpActionResult ExcluirUsuario(int codigoUsuario)
+        {
+            _usuarioService.ExcluirUsuario(codigoUsuario);
+            return OkRetornoBase();
         }
 
         [Route("EditarPermissaoUsuario")]
         [Authorize(Roles = "ConfiguracaoUsuario")]
         [InvalidateCacheOutput("ObterListaUsuario")]
         [InvalidateCacheOutput("ObterListaPermissao")]
+        [InvalidateCacheOutput("PesquisarUsuarioPorCodigo")]
         [HttpPut]
         public Task<HttpResponseMessage> EditarPermissaoUsuario(ConfiguracaoUsuarioModel model)
         {

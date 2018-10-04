@@ -80,6 +80,13 @@
     </Compile>
     <Compile Include="Controllers\Produtos\ProdutoControllerSteps.cs" />
     <Compile Include="Controllers\Produtos\ProdutoTestShared.cs" />
+    <Compile Include="Controllers\Usuarios\UsuarioController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsuarioController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Usuarios\UsuarioControllerSteps.cs" />
+    <Compile Include="Controllers\Usuarios\UsuarioTestShared.cs" />
     <Compile Include="Infra\ITestShared.cs" />
     <Compile Include="Infra\ServiceRequest.cs" />
     <Compile Include="Infra\TokenModel.cs" />
@@ -157,6 +164,10 @@
     <None Include="Controllers\Produtos\ProdutoController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ProdutoController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Controllers\Usuarios\UsuarioController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UsuarioController.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

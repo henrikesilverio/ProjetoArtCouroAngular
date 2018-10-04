@@ -32,7 +32,7 @@ namespace ProjetoArtCouro.Domain.Models.Usuario
 
         [Required(ErrorMessageResourceName = "RequiredField", ErrorMessageResourceType = typeof(Erros))]
         [Display(Name = "PermissionsGroups", ResourceType = typeof(Mensagens))]
-        public int? GrupoId { get; set; }
+        public int GrupoCodigo { get; set; }
 
         public List<PermissaoModel> Permissoes { get; set; }
     }

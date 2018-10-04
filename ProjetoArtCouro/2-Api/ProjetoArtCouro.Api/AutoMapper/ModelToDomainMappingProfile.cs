@@ -203,7 +203,7 @@ namespace ProjetoArtCouro.Api.AutoMapper
         {
             CreateMap<UsuarioModel, Usuario>()
                 .ForMember(d => d.GrupoPermissao,
-                    m => m.MapFrom(s => new GrupoPermissao { GrupoPermissaoCodigo = s.GrupoId.Value }));
+                    m => m.MapFrom(s => new GrupoPermissao { GrupoPermissaoCodigo = s.GrupoCodigo }));
 
             CreateMap<PermissaoModel, Permissao>()
                 .ForMember(d => d.PermissaoCodigo, m => m.MapFrom(s => s.Codigo))

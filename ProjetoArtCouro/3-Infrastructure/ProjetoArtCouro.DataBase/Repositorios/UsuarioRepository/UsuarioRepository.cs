@@ -41,7 +41,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.UsuarioRepository
 
         public Usuario ObterPorUsuarioNome(string usuarioNome)
         {
-            return _context.Usuarios.FirstOrDefault(x => x.UsuarioNome.Equals(usuarioNome));
+            return _context.Usuarios.FirstOrDefault(x => x.UsuarioNome == usuarioNome);
         }
 
         public Usuario ObterComPermissoesPorUsuarioNome(string usuarioNome)
