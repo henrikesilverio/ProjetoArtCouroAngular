@@ -111,19 +111,52 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public void ExcluirUsuario(int codigoUsuario)
         {
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(codigoUsuario, 0,
+                string.Format(Erros.NotZeroParameter, "codigoUsuario"));
+
             var usuario = _usuarioRepository.ObterPorCodigo(codigoUsuario);
-            //AssertionConcern.AssertArgumentNotNull(usuario, Erros.UserDoesNotExist);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(usuario, Erros.UserDoesNotExist);
+
             _usuarioRepository.Deletar(usuario);
         }
 
-        public List<Usuario> ObterListaUsuario()
+        public void EditarPermissaoUsuario(ConfiguracaoUsuarioModel model)
         {
-            return _usuarioRepository.ObterListaComPermissoes();
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(model.UsuarioCodigo, 0,
+                string.Format(Erros.NotZeroParameter, "codigoUsuario"));
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentTrue(model.Permissoes.Any(), Erros.EmptyAllowList);
+
+            var usuario = _usuarioRepository.ObterPorCodigoComPermissoes(model.UsuarioCodigo);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(usuario, null, Erros.UserDoesNotExist);
+
+            var permissoes = Mapper.Map<List<Permissao>>(model.Permissoes);
+            var permissoesDB = _permissaoRepository.ObterLista();
+
+            usuario.Permissoes.Clear();
+            usuario.Permissoes = permissoesDB
+                .Where(permissao => permissoes
+                .Any(x => x.PermissaoCodigo == permissao.PermissaoCodigo))
+                .ToList();
+
+            _usuarioRepository.Atualizar(usuario);
         }
 
-        public List<Permissao> ObterListaPermissao()
+        public List<UsuarioModel> ObterListaUsuario()
         {
-            return _permissaoRepository.ObterLista();
+            var usuarios = _usuarioRepository.ObterListaComPermissoes();
+            return Mapper.Map<List<UsuarioModel>>(usuarios);
+        }
+
+        public List<PermissaoModel> ObterListaPermissao()
+        {
+            var permissoes = _permissaoRepository.ObterLista();
+            return Mapper.Map<List<PermissaoModel>>(permissoes);
         }
 
         public List<PermissaoModel> ObterPermissoesUsuarioLogado(string usuarioNome)
@@ -132,84 +165,85 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             return Mapper.Map<List<PermissaoModel>>(usuario.Permissoes.ToList());
         }
 
-        public GrupoPermissao ObterGrupoPermissaoPorCodigo(int codigo)
+        public GrupoModel ObterGrupoPermissaoPorCodigo(int codigoGrupo)
         {
-            return _grupoPermissaoRepository.ObterPorCodigoComPermissoes(codigo);
+            var grupo = _grupoPermissaoRepository.ObterPorCodigoComPermissoes(codigoGrupo);
+            return Mapper.Map<GrupoModel>(grupo);
         }
 
-        public List<GrupoPermissao> PesquisarGrupo(string nome, int? codigo, bool todos)
+        public List<GrupoModel> PesquisarGrupo(PesquisaGrupoModel model)
         {
-            return todos ? _grupoPermissaoRepository.ObterLista() : _grupoPermissaoRepository.ObterLista(nome, codigo);
-        }
-
-        public List<GrupoPermissao> ObterListaGrupoPermissao()
-        {
-            return _grupoPermissaoRepository.ObterLista();
-        }
-
-        public void CriarGrupoPermissao(GrupoPermissao grupoPermissao)
-        {
-            //AssertionConcern.AssertArgumentNotEmpty(grupoPermissao.GrupoPermissaoNome, Erros.EmptyGroupName);
-            var temGrupo = _grupoPermissaoRepository.ObterPorGrupoPermissaoNome(grupoPermissao.GrupoPermissaoNome.ToLower());
-            if (temGrupo != null)
+            var grupos = new List<GrupoPermissao>();
+            if (model.Todos)
             {
-                throw new Exception(Erros.DuplicateGruopName);
-            };
-            AtualizarListaPermissao(grupoPermissao);
-            _grupoPermissaoRepository.Criar(grupoPermissao);
-        }
-
-        public void EditarGrupoPermissao(GrupoPermissao grupoPermissao)
-        {
-            //AssertionConcern.AssertArgumentNotEmpty(grupoPermissao.GrupoPermissaoNome, Erros.EmptyGroupName);
-            var bdGrupoPermissao =
-                _grupoPermissaoRepository.ObterPorCodigoComPermissoesEUsuarios(grupoPermissao.GrupoPermissaoCodigo);
-            var listaPermissao = _permissaoRepository.ObterLista();
-            if (!listaPermissao.Any())
-            {
-                throw new Exception(Erros.PermissionsNotRegistered);
+                grupos = _grupoPermissaoRepository.ObterLista();
             }
-            bdGrupoPermissao.Permissoes.Clear();
-            var listaAdicionar = grupoPermissao.Permissoes.Select(x =>
-                listaPermissao.FirstOrDefault(a => a.PermissaoCodigo.Equals(x.PermissaoCodigo))).ToList();
-            listaAdicionar.ForEach(x =>
+            else
             {
-                bdGrupoPermissao.Permissoes.Add(x);
-            });
-            _grupoPermissaoRepository.Atualizar(bdGrupoPermissao);
+                grupos = _grupoPermissaoRepository.ObterLista(model.GrupoNome, model.GrupoCodigo);
+            }
+            return Mapper.Map<List<GrupoModel>>(grupos);
         }
 
-        public void EditarPermissaoUsuario(int codigoUsuario, List<Permissao> permissoes)
+        public List<GrupoModel> ObterListaGrupoPermissao()
         {
-            //AssertionConcern.AssertArgumentNotEquals(codigoUsuario, 0, Erros.UserDoesNotExist);
-            if (!permissoes.Any())
-            {
-                throw new Exception(Erros.EmptyAllowList);
-            }
-            var temUsuario = _usuarioRepository.ObterPorCodigoComPermissoes(codigoUsuario);
-            //AssertionConcern.AssertArgumentNotEquals(temUsuario, null, Erros.UserDoesNotExist);
+            var grupos = _grupoPermissaoRepository.ObterLista();
+            return Mapper.Map<List<GrupoModel>>(grupos);
+        }
+
+        public void CriarGrupoPermissao(GrupoModel model)
+        {
+            var grupo = Mapper.Map<GrupoPermissao>(model);
+            grupo.Validar();
+
+            var temGrupo = _grupoPermissaoRepository.ObterPorGrupoPermissaoNome(grupo.GrupoPermissaoNome.ToLower());
+            AssertionConcern<BusinessException>
+                .AssertArgumentNull(temGrupo, Erros.DuplicateGruopName);
+
+            AtualizarListaPermissao(grupo);
+            _grupoPermissaoRepository.Criar(grupo);
+        }
+
+        public void EditarGrupoPermissao(GrupoModel model)
+        {
+            var grupo = Mapper.Map<GrupoPermissao>(model);
+            grupo.Validar();
+
+            var grupoPermissaoDB =
+                _grupoPermissaoRepository.ObterPorCodigoComPermissoesEUsuarios(grupo.GrupoPermissaoCodigo);
+
             var listaPermissao = _permissaoRepository.ObterLista();
-            permissoes = permissoes.Select(x =>
-                listaPermissao.FirstOrDefault(a => a.PermissaoCodigo.Equals(x.PermissaoCodigo))).ToList();
-            temUsuario.Permissoes.Clear();
-            temUsuario.Permissoes = permissoes;
-            _usuarioRepository.Atualizar(temUsuario);
+            AssertionConcern<BusinessException>
+                .AssertArgumentTrue(listaPermissao.Any(), Erros.PermissionsNotRegistered);
+
+            grupoPermissaoDB.Permissoes.Clear();
+            grupoPermissaoDB.Permissoes = grupo.Permissoes
+                .Select(x => listaPermissao
+                .FirstOrDefault(a => a.PermissaoCodigo == x.PermissaoCodigo))
+                .ToList();
+
+            _grupoPermissaoRepository.Atualizar(grupoPermissaoDB);
         }
 
         public void ExcluirGrupoPermissao(int codigoGrupoPermissao)
         {
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(codigoGrupoPermissao, 0,
+                string.Format(Erros.NotZeroParameter, "codigoGrupoPermissao"));
+
             var grupoPermissao = _grupoPermissaoRepository.ObterPorCodigo(codigoGrupoPermissao);
-            //AssertionConcern.AssertArgumentNotNull(grupoPermissao, Erros.GroupDoesNotExist);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(grupoPermissao, Erros.GroupDoesNotExist);
+
             _grupoPermissaoRepository.Deletar(grupoPermissao);
         }
 
         private void AtualizarListaPermissao(GrupoPermissao grupoPermissao)
         {
             var listaPermissao = _permissaoRepository.ObterLista();
-            if (!listaPermissao.Any())
-            {
-                throw new Exception(Erros.PermissionsNotRegistered);
-            }
+            AssertionConcern<BusinessException>
+                .AssertArgumentTrue(listaPermissao.Any(), Erros.PermissionsNotRegistered);
+
             grupoPermissao.Permissoes = grupoPermissao.Permissoes.Select(x =>
                 listaPermissao.FirstOrDefault(a => a.PermissaoCodigo.Equals(x.PermissaoCodigo))).ToList();
             grupoPermissao.GrupoPermissaoNome = grupoPermissao.GrupoPermissaoNome.ToUpper();

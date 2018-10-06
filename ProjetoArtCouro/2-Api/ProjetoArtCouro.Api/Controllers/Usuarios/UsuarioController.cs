@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Http;
-using AutoMapper;
-using Newtonsoft.Json.Linq;
+﻿using System.Web.Http;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IUsuario;
-using ProjetoArtCouro.Domain.Entities.Usuarios;
 using ProjetoArtCouro.Domain.Models.Usuario;
-using ProjetoArtCouro.Resources.Resources;
 using WebApi.OutputCache.V2;
 
 namespace ProjetoArtCouro.Api.Controllers.Usuarios
@@ -44,8 +33,8 @@ namespace ProjetoArtCouro.Api.Controllers.Usuarios
         [HttpGet]
         public IHttpActionResult ObterListaUsuario()
         {
-            var listaUsuario = _usuarioService.ObterListaUsuario();
-            return OkRetornoBase(Mapper.Map<List<UsuarioModel>>(listaUsuario));
+            var listaUsuarioModel = _usuarioService.ObterListaUsuario();
+            return OkRetornoBase(listaUsuarioModel);
         }
 
         [Route("PesquisarUsuario")]
@@ -114,71 +103,10 @@ namespace ProjetoArtCouro.Api.Controllers.Usuarios
         [InvalidateCacheOutput("ObterListaPermissao")]
         [InvalidateCacheOutput("PesquisarUsuarioPorCodigo")]
         [HttpPut]
-        public Task<HttpResponseMessage> EditarPermissaoUsuario(ConfiguracaoUsuarioModel model)
+        public IHttpActionResult EditarPermissaoUsuario(ConfiguracaoUsuarioModel model)
         {
-            HttpResponseMessage response;
-            try
-            {
-                if (!model.UsuarioId.HasValue)
-                {
-                    throw new Exception(string.Format(Erros.NullParameter, "UsuarioId"));
-                }
-                _usuarioService.EditarPermissaoUsuario(model.UsuarioId.Value,
-                    Mapper.Map<List<Permissao>>(model.Permissoes));
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
-        }
-
-        [Route("PesquisarGrupo")]
-        [Authorize(Roles = "PesquisaGrupo")]
-        [HttpPost]
-        public Task<HttpResponseMessage> PesquisarGrupo(PesquisaGrupoModel model)
-        {
-            HttpResponseMessage response;
-            try
-            {
-                var listaGrupo = _usuarioService.PesquisarGrupo(model.GrupoNome, model.GrupoCodigo, model.Todos);
-                response = ReturnSuccess(Mapper.Map<List<GrupoModel>>(listaGrupo));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
-        }
-
-        [Route("PesquisarGrupoPorCodigo")]
-        [Authorize(Roles = "EditarGrupo")]
-        [InvalidateCacheOutput("ObterListaUsuario")]
-        [HttpPost]
-        public Task<HttpResponseMessage> PesquisarGrupoPorCodigo([FromBody]JObject jObject)
-        {
-            var codigoGrupo = jObject["codigoGrupo"].ToObject<int>();
-            HttpResponseMessage response;
-            try
-            {
-                var grupoPermissao = _usuarioService.ObterGrupoPermissaoPorCodigo(codigoGrupo);
-                response = ReturnSuccess(Mapper.Map<GrupoModel>(grupoPermissao));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            _usuarioService.EditarPermissaoUsuario(model);
+            return OkRetornoBase();
         }
 
         [Route("CriarGrupo")]
@@ -186,23 +114,39 @@ namespace ProjetoArtCouro.Api.Controllers.Usuarios
         [InvalidateCacheOutput("ObterListaUsuario")]
         [InvalidateCacheOutput("ObterListaGrupo")]
         [HttpPost]
-        public Task<HttpResponseMessage> CriarGrupo(GrupoModel model)
+        public IHttpActionResult CriarGrupo(GrupoModel model)
         {
-            HttpResponseMessage response;
-            try
-            {
-                var grupoPermissao = Mapper.Map<GrupoPermissao>(model);
-                _usuarioService.CriarGrupoPermissao(grupoPermissao);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
+            _usuarioService.CriarGrupoPermissao(model);
+            return OkRetornoBase();
+        }
 
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+        [Route("ObterListaGrupo")]
+        [Authorize(Roles = "PesquisaUsuario, NovoUsuario, EditarUsuario")]
+        [CacheOutput(ServerTimeSpan = 10000)]
+        [HttpGet]
+        public IHttpActionResult ObterListaGrupo()
+        {
+            var listaGrupoModel = _usuarioService.ObterListaGrupoPermissao();
+            return OkRetornoBase(listaGrupoModel);
+        }
+
+        [Route("PesquisarGrupo")]
+        [Authorize(Roles = "PesquisaGrupo")]
+        [HttpPost]
+        public IHttpActionResult PesquisarGrupo(PesquisaGrupoModel model)
+        {
+            var listaGrupoModel = _usuarioService.PesquisarGrupo(model);
+            return OkRetornoBase(listaGrupoModel);
+        }
+
+        [Route("PesquisarGrupoPorCodigo/{codigoGrupo:int:min(1)}")]
+        [Authorize(Roles = "EditarGrupo")]
+        [InvalidateCacheOutput("ObterListaUsuario")]
+        [HttpGet]
+        public IHttpActionResult PesquisarGrupoPorCodigo(int codigoGrupo)
+        {
+            var grupoModel = _usuarioService.ObterGrupoPermissaoPorCodigo(codigoGrupo);
+            return OkRetornoBase(grupoModel);
         }
 
         [Route("EditarGrupo")]
@@ -210,91 +154,31 @@ namespace ProjetoArtCouro.Api.Controllers.Usuarios
         [InvalidateCacheOutput("ObterListaUsuario")]
         [InvalidateCacheOutput("ObterListaGrupo")]
         [HttpPut]
-        public Task<HttpResponseMessage> EditarGrupo(GrupoModel model)
+        public IHttpActionResult EditarGrupo(GrupoModel model)
         {
-            HttpResponseMessage response;
-            try
-            {
-                var grupoPermissao = Mapper.Map<GrupoPermissao>(model);
-                _usuarioService.EditarGrupoPermissao(grupoPermissao);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            _usuarioService.EditarGrupoPermissao(model);
+            return OkRetornoBase();
         }
 
-        [Route("ExcluirGrupo")]
+        [Route("ExcluirGrupo/{codigoGrupo:int:min(1)}")]
         [Authorize(Roles = "ExcluirGrupo")]
         [InvalidateCacheOutput("ObterListaUsuario")]
         [InvalidateCacheOutput("ObterListaGrupo")]
         [HttpDelete]
-        public Task<HttpResponseMessage> ExcluirGrupo([FromBody]JObject jObject)
+        public IHttpActionResult ExcluirGrupo(int codigoGrupo)
         {
-            var codigoGrupo = jObject["codigoGrupo"].ToObject<int>();
-            HttpResponseMessage response;
-            try
-            {
-                _usuarioService.ExcluirGrupoPermissao(codigoGrupo);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
-        }
-
-        [Route("ObterListaGrupo")]
-        [Authorize(Roles = "PesquisaUsuario, NovoUsuario, EditarUsuario")]
-        [CacheOutput(ServerTimeSpan = 10000)]
-        [HttpGet]
-        public Task<HttpResponseMessage> ObterListaGrupo()
-        {
-            HttpResponseMessage response;
-            try
-            {
-                var listaGrupo = _usuarioService.ObterListaGrupoPermissao();
-                response = ReturnSuccess(Mapper.Map<List<GrupoModel>>(listaGrupo));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            _usuarioService.ExcluirGrupoPermissao(codigoGrupo);
+            return OkRetornoBase();
         }
 
         [Route("ObterListaPermissao")]
         [Authorize(Roles = "NovoGrupo, EditarGrupo, ConfiguracaoUsuario")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpGet]
-        public Task<HttpResponseMessage> ObterListaPermissao()
+        public IHttpActionResult ObterListaPermissao()
         {
-            HttpResponseMessage response;
-            try
-            {
-                var listaPermissao = _usuarioService.ObterListaPermissao();
-                response = ReturnSuccess(Mapper.Map<List<PermissaoModel>>(listaPermissao));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var listaPermissaoModel = _usuarioService.ObterListaPermissao();
+            return OkRetornoBase(listaPermissaoModel);
         }
 
         protected override void Dispose(bool disposing)

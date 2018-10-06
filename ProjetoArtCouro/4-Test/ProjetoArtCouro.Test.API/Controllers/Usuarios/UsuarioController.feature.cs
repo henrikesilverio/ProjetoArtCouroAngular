@@ -356,10 +356,10 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Excluir um usuário por código")]
-        public virtual void ExcluirUmUsuarioPorCodigo()
+        [NUnit.Framework.DescriptionAttribute("Editar permissões do usuário")]
+        public virtual void EditarPermissoesDoUsuario()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Excluir um usuário por código", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Editar permissões do usuário", null, ((string[])(null)));
 #line 94
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
@@ -388,9 +388,391 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/CriarUsuario\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line 103
  testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table12.AddRow(new string[] {
+                        "UsuarioCodigo",
+                        "2"});
 #line 104
+ testRunner.Given("que preencha os dados de configuracao do usuario com as seguintes informações:", ((string)(null)), table12, "Dado ");
+#line hidden
+            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Codigo"});
+            table13.AddRow(new string[] {
+                        "1"});
+            table13.AddRow(new string[] {
+                        "2"});
+            table13.AddRow(new string[] {
+                        "3"});
+#line 107
+ testRunner.And("que preencha os dados das permissoes do usuario com as seguintes informações:", ((string)(null)), table13, "E ");
+#line 112
+ testRunner.When("realizar uma chamada Put ao endereço \'api/Usuario/EditarPermissaoUsuario\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 113
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Excluir um usuário por código")]
+        public virtual void ExcluirUmUsuarioPorCodigo()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Excluir um usuário por código", null, ((string[])(null)));
+#line 115
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table14.AddRow(new string[] {
+                        "UsuarioNome",
+                        "Operador"});
+            table14.AddRow(new string[] {
+                        "Senha",
+                        "!@#Mudar"});
+            table14.AddRow(new string[] {
+                        "ConfirmarSenha",
+                        "!@#Mudar"});
+            table14.AddRow(new string[] {
+                        "Ativo",
+                        "True"});
+            table14.AddRow(new string[] {
+                        "GrupoCodigo",
+                        "1"});
+#line 116
+ testRunner.Given("que preencha os dados do usuario com as seguintes informações:", ((string)(null)), table14, "Dado ");
+#line 123
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/CriarUsuario\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 124
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line 125
  testRunner.When("realizar uma chamada Delete ao endereço \'api/Usuario/ExcluirUsuario/2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
-#line 105
+#line 126
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Tentar cadastrar um grupo sem preencher todos os campos")]
+        public virtual void TentarCadastrarUmGrupoSemPreencherTodosOsCampos()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Tentar cadastrar um grupo sem preencher todos os campos", null, ((string[])(null)));
+#line 128
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+#line 129
+ testRunner.Given("que preencha os dados do grupo com as seguintes informações:", ((string)(null)), table15, "Dado ");
+#line 131
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/CriarGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 132
+ testRunner.Then("retorne erro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Cadastrar um grupo preenchendo todos os campos")]
+        public virtual void CadastrarUmGrupoPreenchendoTodosOsCampos()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cadastrar um grupo preenchendo todos os campos", null, ((string[])(null)));
+#line 134
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table16.AddRow(new string[] {
+                        "GrupoNome",
+                        "Novo"});
+#line 135
+ testRunner.Given("que preencha os dados do grupo com as seguintes informações:", ((string)(null)), table16, "Dado ");
+#line hidden
+            TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Codigo"});
+            table17.AddRow(new string[] {
+                        "1"});
+            table17.AddRow(new string[] {
+                        "2"});
+            table17.AddRow(new string[] {
+                        "3"});
+#line 138
+ testRunner.And("que preencha os dados das permissoes do usuario com as seguintes informações:", ((string)(null)), table17, "E ");
+#line 143
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/CriarGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 144
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Pesquisar todos os grupo")]
+        public virtual void PesquisarTodosOsGrupo()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pesquisar todos os grupo", null, ((string[])(null)));
+#line 146
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table18.AddRow(new string[] {
+                        "GrupoNome",
+                        "Novo"});
+#line 147
+ testRunner.Given("que preencha os dados do grupo com as seguintes informações:", ((string)(null)), table18, "Dado ");
+#line hidden
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Codigo"});
+            table19.AddRow(new string[] {
+                        "1"});
+            table19.AddRow(new string[] {
+                        "2"});
+            table19.AddRow(new string[] {
+                        "3"});
+#line 150
+ testRunner.And("que preencha os dados das permissoes do usuario com as seguintes informações:", ((string)(null)), table19, "E ");
+#line 155
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/CriarGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 156
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line 157
+ testRunner.When("realizar uma chamada Get ao endereço \'api/Usuario/ObterListaGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 158
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line 159
+ testRunner.And("que o retorno tenha uma lista com \'2\' itens", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Pesquisar um grupo sem filtros")]
+        public virtual void PesquisarUmGrupoSemFiltros()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pesquisar um grupo sem filtros", null, ((string[])(null)));
+#line 161
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+#line 162
+ testRunner.Given("que preencha os dados do filtro de pesquisa de grupo com as seguintes informações" +
+                    ":", ((string)(null)), table20, "Dado ");
+#line 164
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/PesquisarGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 165
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Pesquisar um grupo por código e nome")]
+        public virtual void PesquisarUmGrupoPorCodigoENome()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pesquisar um grupo por código e nome", null, ((string[])(null)));
+#line 167
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table21.AddRow(new string[] {
+                        "GrupoNome",
+                        "Novo"});
+#line 168
+ testRunner.Given("que preencha os dados do grupo com as seguintes informações:", ((string)(null)), table21, "Dado ");
+#line hidden
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Codigo"});
+            table22.AddRow(new string[] {
+                        "1"});
+            table22.AddRow(new string[] {
+                        "2"});
+            table22.AddRow(new string[] {
+                        "3"});
+#line 171
+ testRunner.And("que preencha os dados das permissoes do usuario com as seguintes informações:", ((string)(null)), table22, "E ");
+#line 176
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/CriarGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 177
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table23.AddRow(new string[] {
+                        "GrupoCodigo",
+                        "2"});
+            table23.AddRow(new string[] {
+                        "GrupoNome",
+                        "Novo"});
+#line 178
+ testRunner.Given("que preencha os dados do filtro de pesquisa de grupo com as seguintes informações" +
+                    ":", ((string)(null)), table23, "Dado ");
+#line 182
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/PesquisarGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 183
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line 184
+ testRunner.And("que o retorno tenha uma lista com \'1\' itens", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Pesquisar um grupo por código")]
+        public virtual void PesquisarUmGrupoPorCodigo()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pesquisar um grupo por código", null, ((string[])(null)));
+#line 186
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table24.AddRow(new string[] {
+                        "GrupoNome",
+                        "Novo"});
+#line 187
+ testRunner.Given("que preencha os dados do grupo com as seguintes informações:", ((string)(null)), table24, "Dado ");
+#line hidden
+            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Codigo"});
+            table25.AddRow(new string[] {
+                        "1"});
+            table25.AddRow(new string[] {
+                        "2"});
+            table25.AddRow(new string[] {
+                        "3"});
+#line 190
+ testRunner.And("que preencha os dados das permissoes do usuario com as seguintes informações:", ((string)(null)), table25, "E ");
+#line 195
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/CriarGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 196
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line 197
+ testRunner.When("realizar uma chamada Get ao endereço \'api/Usuario/PesquisarGrupoPorCodigo/2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 198
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Editar um grupo preenchendo todos os campos")]
+        public virtual void EditarUmGrupoPreenchendoTodosOsCampos()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Editar um grupo preenchendo todos os campos", null, ((string[])(null)));
+#line 200
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table26.AddRow(new string[] {
+                        "GrupoNome",
+                        "Novo"});
+#line 201
+ testRunner.Given("que preencha os dados do grupo com as seguintes informações:", ((string)(null)), table26, "Dado ");
+#line hidden
+            TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Codigo"});
+            table27.AddRow(new string[] {
+                        "1"});
+            table27.AddRow(new string[] {
+                        "2"});
+            table27.AddRow(new string[] {
+                        "3"});
+#line 204
+ testRunner.And("que preencha os dados das permissoes do usuario com as seguintes informações:", ((string)(null)), table27, "E ");
+#line 209
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/CriarGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 210
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table28.AddRow(new string[] {
+                        "GrupoCodigo",
+                        "2"});
+            table28.AddRow(new string[] {
+                        "GrupoNome",
+                        "Velho"});
+#line 211
+ testRunner.Given("que preencha os dados do grupo com as seguintes informações:", ((string)(null)), table28, "Dado ");
+#line hidden
+            TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Codigo"});
+            table29.AddRow(new string[] {
+                        "4"});
+            table29.AddRow(new string[] {
+                        "5"});
+            table29.AddRow(new string[] {
+                        "6"});
+#line 215
+ testRunner.And("que preencha os dados das permissoes do usuario com as seguintes informações:", ((string)(null)), table29, "E ");
+#line 220
+ testRunner.When("realizar uma chamada Put ao endereço \'api/Usuario/EditarGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 221
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Excluir um grupo por código")]
+        public virtual void ExcluirUmGrupoPorCodigo()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Excluir um grupo por código", null, ((string[])(null)));
+#line 223
+this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line hidden
+            TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table30.AddRow(new string[] {
+                        "GrupoNome",
+                        "Novo"});
+#line 224
+ testRunner.Given("que preencha os dados do grupo com as seguintes informações:", ((string)(null)), table30, "Dado ");
+#line hidden
+            TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Codigo"});
+            table31.AddRow(new string[] {
+                        "1"});
+            table31.AddRow(new string[] {
+                        "2"});
+            table31.AddRow(new string[] {
+                        "3"});
+#line 227
+ testRunner.And("que preencha os dados das permissoes do usuario com as seguintes informações:", ((string)(null)), table31, "E ");
+#line 232
+ testRunner.When("realizar uma chamada Post ao endereço \'api/Usuario/CriarGrupo\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 233
+ testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
+#line 234
+ testRunner.When("realizar uma chamada Delete ao endereço \'api/Usuario/ExcluirGrupo/2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+#line 235
  testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
 #line hidden
             this.ScenarioCleanup();

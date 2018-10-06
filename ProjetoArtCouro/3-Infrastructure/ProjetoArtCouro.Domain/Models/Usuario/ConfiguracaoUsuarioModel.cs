@@ -8,7 +8,7 @@ namespace ProjetoArtCouro.Domain.Models.Usuario
     {
         [Required(ErrorMessageResourceName = "RequiredField", ErrorMessageResourceType = typeof(Erros))]
         [Display(Name = "Users", ResourceType = typeof(Mensagens))]
-        public int? UsuarioId { get; set; }
+        public int UsuarioCodigo { get; set; }
 
         [Required(ErrorMessageResourceName = "RequiredField", ErrorMessageResourceType = typeof(Erros))]
         [Display(Name = "Permissions", ResourceType = typeof(Mensagens))]

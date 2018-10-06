@@ -13,17 +13,17 @@ namespace ProjetoArtCouro.Resource.Validation
             }
         }
 
-        public static void AssertArgumentFalse(bool boolValue, string message)
+        public static void AssertArgumentFalse(bool value, string message)
         {
-            if (boolValue)
+            if (value)
             {
                 throw (T)Activator.CreateInstance(typeof(T), message);
             }
         }
 
-        public static void AssertArgumentTrue(bool boolValue, string message)
+        public static void AssertArgumentTrue(bool value, string message)
         {
-            if (!boolValue)
+            if (!value)
             {
                 throw (T)Activator.CreateInstance(typeof(T), message);
             }

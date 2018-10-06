@@ -7,7 +7,7 @@ namespace ProjetoArtCouro.Domain.Models.Usuario
     public class GrupoModel
     {
         [Display(Name = "GroupCode", ResourceType = typeof(Mensagens))]
-        public int? GrupoCodigo { get; set; }
+        public int GrupoCodigo { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Erros), ErrorMessageResourceName = "RequiredField")]
         [Display(Name = "GroupName", ResourceType = typeof(Mensagens))]
