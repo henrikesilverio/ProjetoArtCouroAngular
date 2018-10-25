@@ -13,7 +13,7 @@ namespace ProjetoArtCouro.Domain.Models.Venda
         public string DataCadastro { get; set; }
 
         [Display(Name = "Status", ResourceType = typeof(Mensagens))]
-        public string Status { get; set; }
+        public string StatusVenda { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Erros), ErrorMessageResourceName = "RequiredField")]
         [Display(Name = "Customers", ResourceType = typeof (Mensagens))]

@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Http;
-using AutoMapper;
-using Newtonsoft.Json.Linq;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IVenda;
-using ProjetoArtCouro.Domain.Entities.Usuarios;
-using ProjetoArtCouro.Domain.Entities.Vendas;
 using ProjetoArtCouro.Domain.Models.Venda;
 
 namespace ProjetoArtCouro.Api.Controllers.Vendas
@@ -29,124 +21,48 @@ namespace ProjetoArtCouro.Api.Controllers.Vendas
         [Route("CriarVenda")]
         [Authorize(Roles = "NovaVenda")]
         [HttpPost]
-        public Task<HttpResponseMessage> CriarVenda(VendaModel model)
+        public IHttpActionResult CriarVenda(VendaModel model)
         {
-            HttpResponseMessage response;
-            try
-            {
-                var venda = Mapper.Map<Venda>(model);
-                var usuario = new Usuario
-                {
-                    UsuarioCodigo = ObterCodigoUsuarioLogado()
-                };
-                venda.Usuario = usuario;
-                _vendaService.CriarVenda(venda);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var usuarioCodigo = ObterCodigoUsuarioLogado();
+            _vendaService.CriarVenda(usuarioCodigo, model);
+            return OkRetornoBase();
         }
 
         [Route("PesquisarVenda")]
         [Authorize(Roles = "PesquisaVenda")]
         [HttpPost]
-        public Task<HttpResponseMessage> PesquisarVenda(PesquisaVendaModel model)
+        public IHttpActionResult PesquisarVenda(PesquisaVendaModel model)
         {
-            HttpResponseMessage response;
-            try
-            {
-                var usuarioCodigo = ObterCodigoUsuarioLogado();
-                var vendas = _vendaService.PesquisarVenda(model.CodigoVenda ?? 0, model.CodigoCliente ?? 0,
-                    model.DataCadastro.ToDateTimeWithoutHour(), model.StatusId ?? 0, model.NomeCliente, model.CPFCNPJ,
-                    usuarioCodigo);
-                response = ReturnSuccess(Mapper.Map<List<VendaModel>>(vendas));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var usuarioCodigo = ObterCodigoUsuarioLogado();
+            var vendas = _vendaService.PesquisarVenda(usuarioCodigo, model);
+            return OkRetornoBase(vendas);
         }
 
-        [Route("PesquisarVendaPorCodigo")]
+        [Route("PesquisarVendaPorCodigo/{codigoVenda:int:min(1)}")]
         [Authorize(Roles = "EditarVenda")]
-        [HttpPost]
-        public Task<HttpResponseMessage> PesquisarVendaPorCodigo([FromBody]JObject jObject)
+        [HttpGet]
+        public IHttpActionResult PesquisarVendaPorCodigo(int codigoVenda)
         {
-            var codigoVenda = jObject["codigoVenda"].ToObject<int>();
-            HttpResponseMessage response;
-            try
-            {
-                var venda = _vendaService.ObterVendaPorCodigo(codigoVenda);
-                response = ReturnSuccess(Mapper.Map<VendaModel>(venda));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var venda = _vendaService.ObterVendaPorCodigo(codigoVenda);
+            return OkRetornoBase(venda);
         }
 
         [Route("EditarVenda")]
         [Authorize(Roles = "EditarVenda")]
         [HttpPut]
-        public Task<HttpResponseMessage> EditarVenda(VendaModel model)
+        public IHttpActionResult EditarVenda(VendaModel model)
         {
-            HttpResponseMessage response;
-
-            try
-            {
-                var venda = Mapper.Map<Venda>(model);
-                var usuario = new Usuario
-                {
-                    UsuarioCodigo = ObterCodigoUsuarioLogado()
-                };
-                venda.Usuario = usuario;
-                _vendaService.AtualizarVenda(venda);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            _vendaService.AtualizarVenda(model);
+            return OkRetornoBase();
         }
 
-        [Route("ExcluirVenda")]
+        [Route("ExcluirVenda/{codigoVenda:int:min(1)}")]
         [Authorize(Roles = "ExcluirVenda")]
         [HttpDelete]
-        public Task<HttpResponseMessage> ExcluirVenda([FromBody]JObject jObject)
+        public IHttpActionResult ExcluirVenda(int codigoVenda)
         {
-            var codigoVenda = jObject["codigoVenda"].ToObject<int>();
-            HttpResponseMessage response;
-            try
-            {
-                _vendaService.ExcluirVenda(codigoVenda);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            _vendaService.ExcluirVenda(codigoVenda);
+            return OkRetornoBase();
         }
 
         private static int ObterCodigoUsuarioLogado()

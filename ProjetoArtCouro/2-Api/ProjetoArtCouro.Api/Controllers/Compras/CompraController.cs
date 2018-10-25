@@ -1,15 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using Newtonsoft.Json.Linq;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.ICompra;
-using ProjetoArtCouro.Domain.Entities.Compras;
-using ProjetoArtCouro.Domain.Entities.Usuarios;
 using ProjetoArtCouro.Domain.Models.Compra;
 using System.Web.Http;
 
@@ -47,7 +40,7 @@ namespace ProjetoArtCouro.Api.Controllers.Compras
 
         [Route("PesquisarCompraPorCodigo/{codigoCompra:int:min(1)}")]
         [Authorize(Roles = "EditarCompra")]
-        [HttpPost]
+        [HttpGet]
         public IHttpActionResult PesquisarCompraPorCodigo(int codigoCompra)
         {
             var compra = _compraService.ObterCompraPorCodigo(codigoCompra);

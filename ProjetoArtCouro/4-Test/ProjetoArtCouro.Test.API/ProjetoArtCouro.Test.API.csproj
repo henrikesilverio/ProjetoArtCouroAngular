@@ -94,6 +94,13 @@
     </Compile>
     <Compile Include="Controllers\Usuarios\UsuarioControllerSteps.cs" />
     <Compile Include="Controllers\Usuarios\UsuarioTestShared.cs" />
+    <Compile Include="Controllers\Vendas\VendaController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VendaController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Vendas\VendaControllerSteps.cs" />
+    <Compile Include="Controllers\Vendas\VendaTestShared.cs" />
     <Compile Include="Infra\ITestShared.cs" />
     <Compile Include="Infra\ServiceRequest.cs" />
     <Compile Include="Infra\TokenModel.cs" />
@@ -179,6 +186,10 @@
     <None Include="Controllers\Usuarios\UsuarioController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>UsuarioController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Controllers\Vendas\VendaController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>VendaController.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

@@ -55,7 +55,7 @@ namespace ProjetoArtCouro.Business.Services.CompraService
             compra.Validar();
 
             AssertionConcern<BusinessException>
-                .AssertArgumentTrue(compra.ItensCompra.Any(), Erros.SaleItemsNotSet);
+                .AssertArgumentTrue(compra.ItensCompra.Any(), Erros.PurchaseItemsNotInformed);
 
             compra.ItensCompra.ForEach(x => x.Validar());
 
@@ -95,7 +95,7 @@ namespace ProjetoArtCouro.Business.Services.CompraService
             compra.Validar();
 
             AssertionConcern<BusinessException>
-                .AssertArgumentTrue(compra.ItensCompra.Any(), Erros.SaleItemsNotSet);
+                .AssertArgumentTrue(compra.ItensCompra.Any(), Erros.PurchaseItemsNotInformed);
 
             compra.ItensCompra.ForEach(x => x.Validar());
 

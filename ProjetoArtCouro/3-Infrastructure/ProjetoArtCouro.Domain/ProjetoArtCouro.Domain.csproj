@@ -138,6 +138,7 @@
     <Compile Include="Models\Usuario\PesquisaUsuarioModel.cs" />
     <Compile Include="Models\Usuario\UsuarioModel.cs" />
     <Compile Include="Models\Venda\ItemVendaModel.cs" />
+    <Compile Include="Models\Venda\PesquisaVenda.cs" />
     <Compile Include="Models\Venda\PesquisaVendaModel.cs" />
     <Compile Include="Models\Venda\VendaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

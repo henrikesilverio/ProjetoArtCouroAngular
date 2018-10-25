@@ -360,4 +360,7 @@
   <data name="EmptyState" xml:space="preserve">
     <value>Estado vazio</value>
   </data>
+  <data name="PurchaseItemsNotInformed" xml:space="preserve">
+    <value>Itens da compra não informado.</value>
+  </data>
 </root>

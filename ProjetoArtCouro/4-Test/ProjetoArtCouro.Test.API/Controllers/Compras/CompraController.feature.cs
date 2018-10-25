@@ -436,7 +436,7 @@ this.FeatureBackground();
 #line 112
  testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
 #line 113
- testRunner.When("realizar uma chamada Post ao endereço \'api/Compra/PesquisarCompraPorCodigo/1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+ testRunner.When("realizar uma chamada Get ao endereço \'api/Compra/PesquisarCompraPorCodigo/1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line 114
  testRunner.Then("retorne sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entao ");
 #line hidden

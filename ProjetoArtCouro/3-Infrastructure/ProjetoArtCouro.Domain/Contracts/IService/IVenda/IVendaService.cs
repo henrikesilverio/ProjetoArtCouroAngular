@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using ProjetoArtCouro.Domain.Entities.Vendas;
+using ProjetoArtCouro.Domain.Models.Venda;
 
 namespace ProjetoArtCouro.Domain.Contracts.IService.IVenda
 {
     public interface IVendaService : IDisposable
     {
-        List<Venda> PesquisarVenda(int codigoVenda, int codigoCliente, DateTime dataCadastro,
-        int statusVenda, string nomeCliente, string documento, int codigoUsuario);
-        Venda ObterVendaPorCodigo(int codigoVenda);
-        void CriarVenda(Venda venda);
-        void AtualizarVenda(Venda venda);
+        void CriarVenda(int usuarioCodigo, VendaModel model);
+        List<VendaModel> PesquisarVenda(int codigoUsuario, PesquisaVendaModel model);
+        VendaModel ObterVendaPorCodigo(int codigoVenda);
+        void AtualizarVenda(VendaModel model);
         void ExcluirVenda(int codigoVenda);
     }
 }

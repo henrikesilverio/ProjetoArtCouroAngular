@@ -6,6 +6,7 @@ using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.ICompra;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Models.Compra;
+using ProjetoArtCouro.Domain.Models.Enums;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
 {
@@ -64,7 +65,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
                 query = query.Where(x => DbFunctions.TruncateTime(x.DataCadastro) == filtro.DataCadastro.Date);
             }
 
-            if (filtro.StatusCompra != 0)
+            if (filtro.StatusCompra != StatusCompraEnum.None)
             {
                 query = query.Where(x => x.StatusCompra == filtro.StatusCompra);
             }

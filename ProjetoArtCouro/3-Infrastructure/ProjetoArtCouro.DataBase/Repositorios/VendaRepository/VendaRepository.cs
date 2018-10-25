@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IVenda;
 using ProjetoArtCouro.Domain.Entities.Vendas;
+using ProjetoArtCouro.Domain.Models.Enums;
+using ProjetoArtCouro.Domain.Models.Venda;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.VendaRepository
 {
@@ -36,8 +38,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.VendaRepository
             return _context.Vendas.ToList();
         }
 
-        public List<Venda> ObterLista(int codigoVenda, int codigoCliente, DateTime dataCadastro, int statusVenda,
-            string nomeCliente, string documento, int codigoUsuario)
+        public List<Venda> ObterListaPorFiltro(PesquisaVenda filtro)
         {
             var query = from venda in _context.Vendas
                 .Include("Usuario")
@@ -47,39 +48,40 @@ namespace ProjetoArtCouro.DataBase.Repositorios.VendaRepository
                 .Include("Cliente.PessoaJuridica")
                 select venda;
 
-            if (!codigoVenda.Equals(0))
+            if (filtro.CodigoVenda != 0)
             {
-                query = query.Where(x => x.VendaCodigo == codigoVenda);
+                query = query.Where(x => x.VendaCodigo == filtro.CodigoVenda);
             }
 
-            if (!codigoCliente.Equals(0))
+            if (filtro.CodigoCliente != 0)
             {
-                query = query.Where(x => x.Cliente.PessoaCodigo == codigoCliente);
+                query = query.Where(x => x.Cliente.PessoaCodigo == filtro.CodigoCliente);
             }
 
-            if (!dataCadastro.Equals(new DateTime()))
+            if (filtro.DataCadastro != new DateTime())
             {
-                query = query.Where(x => EntityFunctions.TruncateTime(x.DataCadastro) == dataCadastro.Date);
+                query = query.Where(x => DbFunctions.TruncateTime(x.DataCadastro) == filtro.DataCadastro.Date);
             }
 
-            if (!statusVenda.Equals(0))
+            if (filtro.StatusVenda != StatusVendaEnum.None)
             {
-                query = query.Where(x => (int)x.StatusVenda == statusVenda);
+                query = query.Where(x => x.StatusVenda == filtro.StatusVenda);
             }
 
-            if (!string.IsNullOrEmpty(nomeCliente))
+            if (!string.IsNullOrEmpty(filtro.NomeCliente))
             {
-                query = query.Where(x => x.Cliente.Nome == nomeCliente);
+                query = query.Where(x => x.Cliente.Nome == filtro.NomeCliente);
             }
 
-            if (!string.IsNullOrEmpty(documento))
+            if (!string.IsNullOrEmpty(filtro.CPFCNPJ))
             {
-                query = query.Where(x => x.Cliente.PessoaFisica.CPF == documento || x.Cliente.PessoaJuridica.CNPJ == documento);
+                query = query.Where(x => x.Cliente.PessoaFisica.CPF == filtro.CPFCNPJ ||
+                x.Cliente.PessoaJuridica.CNPJ == filtro.CPFCNPJ);
             }
 
-            if (!codigoUsuario.Equals(0))
+            if (filtro.CodigoUsuario != 0)
             {
-                query = query.Where(x => x.Usuario.UsuarioCodigo == codigoUsuario);
+                query = query.Where(x => x.Usuario.UsuarioCodigo == filtro.CodigoUsuario);
             }
 
             return query.ToList();

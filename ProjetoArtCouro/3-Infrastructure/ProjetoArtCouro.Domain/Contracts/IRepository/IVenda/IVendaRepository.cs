@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Vendas;
+using ProjetoArtCouro.Domain.Models.Venda;
 
 namespace ProjetoArtCouro.Domain.Contracts.IRepository.IVenda
 {
@@ -10,8 +11,7 @@ namespace ProjetoArtCouro.Domain.Contracts.IRepository.IVenda
         Venda ObterPorCodigo(int codigo);
         Venda ObterPorCodigoComItensVenda(int codigo);
         List<Venda> ObterLista();
-        List<Venda> ObterLista(int codigoVenda, int codigoCliente, DateTime dataCadastro, int statusVenda,
-            string nomeCliente, string documento, int codigoUsuario);
+        List<Venda> ObterListaPorFiltro(PesquisaVenda filtro);
         void Criar(Venda venda);
         void Atualizar(Venda venda);
         void Deletar(Venda venda);

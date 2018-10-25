@@ -110,7 +110,7 @@ Cenario: Pesquisar uma compra por código da compra
 	| 1      | Cinto     | 1          | 10,00      | 10,00      | 10,00        |
 	Quando realizar uma chamada Post ao endereço 'api/Compra/CriarCompra'
 	Entao retorne sucesso
-	Quando realizar uma chamada Post ao endereço 'api/Compra/PesquisarCompraPorCodigo/1'
+	Quando realizar uma chamada Get ao endereço 'api/Compra/PesquisarCompraPorCodigo/1'
 	Entao retorne sucesso
 
 Cenario: Apartir de um orçamento gerar uma compra preenchendo todos os campos

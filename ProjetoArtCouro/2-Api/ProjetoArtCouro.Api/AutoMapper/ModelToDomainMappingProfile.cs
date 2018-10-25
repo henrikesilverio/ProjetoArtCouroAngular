@@ -100,7 +100,7 @@ namespace ProjetoArtCouro.Api.AutoMapper
                     m => m.MapFrom(s => new FormaPagamento { FormaPagamentoCodigo = s.FormaPagamentoId ?? 0 }))
                 .ForMember(d => d.DataCadastro, m => m.MapFrom(s => s.DataCadastro.ToDateTime()))
                 .ForMember(d => d.ItensVenda, m => m.MapFrom(s => s.ItemVendaModel))
-                .ForMember(d => d.StatusVenda, m => m.MapFrom(s => Enum.Parse(typeof(StatusVendaEnum), s.Status)))
+                .ForMember(d => d.StatusVenda, m => m.MapFrom(s => Enum.Parse(typeof(StatusVendaEnum), s.StatusVenda)))
                 .ForMember(d => d.VendaCodigo, m => m.MapFrom(s => s.CodigoVenda ?? 0))
                 .ForMember(d => d.ValorTotalBruto, m => m.MapFrom(s => s.ValorTotalBruto.ToDecimal()))
                 .ForMember(d => d.ValorTotalDesconto, m => m.MapFrom(s => s.ValorTotalDesconto.ToDecimal()))
@@ -113,6 +113,10 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 .ForMember(d => d.ValorBruto, m => m.MapFrom(s => s.ValorBruto.ToDecimal()))
                 .ForMember(d => d.ValorDesconto, m => m.MapFrom(s => s.ValorDesconto.ToDecimal()))
                 .ForMember(d => d.ValorLiquido, m => m.MapFrom(s => s.ValorLiquido.ToDecimal()));
+
+            CreateMap<PesquisaVendaModel, PesquisaVenda>()
+                .ForMember(d => d.DataCadastro, m => m.MapFrom(s => s.DataCadastro.ToDateTimeWithoutHour()))
+                .ForMember(d => d.StatusVenda, m => m.MapFrom(s => s.StatusId));
         }
 
         private void MapperProduct()

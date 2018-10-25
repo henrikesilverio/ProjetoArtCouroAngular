@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ProjetoArtCouro.Domain.Entities.Pagamentos;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
 using ProjetoArtCouro.Domain.Entities.Usuarios;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.Enums;
-using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Vendas
 {
-    public class Venda
+    public class Venda : Notifiable
     {
         public Guid VendaId { get; set; }
         public int VendaCodigo { get; set; }
@@ -28,16 +28,16 @@ namespace ProjetoArtCouro.Domain.Entities.Vendas
 
         public void Validar()
         {
-            //AssertionConcern.AssertArgumentNotEquals(new DateTime(), DataCadastro,
-            //    string.Format(Erros.InvalidParameter, "DataCadastro"));
-            //AssertionConcern.AssertArgumentNotEquals(StatusVenda, StatusVendaEnum.None,
-            //    string.Format(Erros.InvalidParameter, "StatusVenda"));
-            //AssertionConcern.AssertArgumentNotEquals(0.0M, ValorTotalBruto,
-            //    string.Format(Erros.NotZeroParameter, "ValorTotalBruto"));
-            //AssertionConcern.AssertArgumentNotEquals(0.0M, ValorTotalLiquido,
-            //    string.Format(Erros.NotZeroParameter, "ValorTotalLiquido"));
-            //AssertionConcern.AssertArgumentNotEquals(0, Usuario.UsuarioCodigo, Erros.UserNotSet);
-            //AssertionConcern.AssertArgumentTrue(ItensVenda.Any(), Erros.SaleItemsNotSet);
+            new ValidationContract<Venda>(this)
+                .IsNotEquals(x => x.DataCadastro, new DateTime())
+                .IsNotEquals(x => x.StatusVenda, StatusVendaEnum.None)
+                .IsNotZero(x => x.ValorTotalBruto)
+                .IsNotZero(x => x.ValorTotalLiquido)
+                .IsNotNull(x => x.ItensVenda, Erros.SaleItemsNotSet);
+            if (!IsValid())
+            {
+                throw new DomainException(GetMergeNotifications());
+            }
         }
     }
 }
