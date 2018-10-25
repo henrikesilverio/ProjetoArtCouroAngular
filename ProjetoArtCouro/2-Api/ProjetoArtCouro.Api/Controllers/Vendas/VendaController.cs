@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using System.Threading;
-using System.Web.Http;
+﻿using System.Web.Http;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IVenda;
 using ProjetoArtCouro.Domain.Models.Venda;
@@ -23,8 +20,7 @@ namespace ProjetoArtCouro.Api.Controllers.Vendas
         [HttpPost]
         public IHttpActionResult CriarVenda(VendaModel model)
         {
-            var usuarioCodigo = ObterCodigoUsuarioLogado();
-            _vendaService.CriarVenda(usuarioCodigo, model);
+            _vendaService.CriarVenda(CodigoUsuarioLogado, model);
             return OkRetornoBase();
         }
 
@@ -33,8 +29,7 @@ namespace ProjetoArtCouro.Api.Controllers.Vendas
         [HttpPost]
         public IHttpActionResult PesquisarVenda(PesquisaVendaModel model)
         {
-            var usuarioCodigo = ObterCodigoUsuarioLogado();
-            var vendas = _vendaService.PesquisarVenda(usuarioCodigo, model);
+            var vendas = _vendaService.PesquisarVenda(CodigoUsuarioLogado, model);
             return OkRetornoBase(vendas);
         }
 
@@ -63,14 +58,6 @@ namespace ProjetoArtCouro.Api.Controllers.Vendas
         {
             _vendaService.ExcluirVenda(codigoVenda);
             return OkRetornoBase();
-        }
-
-        private static int ObterCodigoUsuarioLogado()
-        {
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-            var usuarioCodigo = identity.Claims.Where(c => c.Type == ClaimTypes.Sid)
-                .Select(c => c.Value).SingleOrDefault();
-            return usuarioCodigo.ToInt();
         }
 
         protected override void Dispose(bool disposing)

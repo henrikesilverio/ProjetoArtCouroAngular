@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using System.Threading;
-using ProjetoArtCouro.Api.Helpers;
+﻿using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.ICompra;
 using ProjetoArtCouro.Domain.Models.Compra;
 using System.Web.Http;
@@ -23,8 +20,7 @@ namespace ProjetoArtCouro.Api.Controllers.Compras
         [HttpPost]
         public IHttpActionResult CriarCompra(CompraModel model)
         {
-            var usuarioCodigo = ObterCodigoUsuarioLogado();
-            _compraService.CriarCompra(usuarioCodigo, model);
+            _compraService.CriarCompra(CodigoUsuarioLogado, model);
             return OkRetornoBase();
         }
 
@@ -33,8 +29,7 @@ namespace ProjetoArtCouro.Api.Controllers.Compras
         [HttpPost]
         public IHttpActionResult PesquisarCompra(PesquisaCompraModel model)
         {
-            var usuarioCodigo = ObterCodigoUsuarioLogado();
-            var compras = _compraService.PesquisarCompra(usuarioCodigo, model);
+            var compras = _compraService.PesquisarCompra(CodigoUsuarioLogado, model);
             return OkRetornoBase(compras);
         }
 
@@ -63,14 +58,6 @@ namespace ProjetoArtCouro.Api.Controllers.Compras
         {
             _compraService.ExcluirCompra(codigoCompra);
             return OkRetornoBase();
-        }
-
-        private static int ObterCodigoUsuarioLogado()
-        {
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-            var usuarioCodigo = identity.Claims.Where(c => c.Type == ClaimTypes.Sid)
-                .Select(c => c.Value).SingleOrDefault();
-            return usuarioCodigo.ToInt();
         }
 
         protected override void Dispose(bool disposing)

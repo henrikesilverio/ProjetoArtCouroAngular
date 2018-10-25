@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Results;
 using AutoMapper;
@@ -10,6 +13,17 @@ namespace ProjetoArtCouro.Api.Helpers
 {
     public class BaseApiController : ApiController
     {
+        public int CodigoUsuarioLogado
+        {
+            get
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+                var usuarioCodigo = identity.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                    .Select(c => c.Value).SingleOrDefault();
+                return usuarioCodigo.ToInt();
+            }
+        }
+
         public HttpResponseMessage ReturnError(Exception ex)
         {
             var retornoBase = new RetornoBase<ExceptionModel>

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Security.Claims;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
@@ -32,10 +29,9 @@ namespace ProjetoArtCouro.Api.Controllers.ContasPagar
             HttpResponseMessage response;
             try
             {
-                var usuarioCodigo = ObterCodigoUsuarioLogado();
                 var contasPagar = _contaPagarService.PesquisarContaPagar(model.CodigoCompra ?? 0, model.CodigoFornecedor ?? 0,
                     model.DataEmissao.ToDateTimeWithoutHour(), model.DataVencimento.ToDateTimeWithoutHour(),
-                    model.StatusId ?? 0, model.NomeFornecedor, model.CPFCNPJ, usuarioCodigo);
+                    model.StatusId ?? 0, model.NomeFornecedor, model.CPFCNPJ, CodigoUsuarioLogado);
                 response = ReturnSuccess(Mapper.Map<List<ContaPagarModel>>(contasPagar));
             }
             catch (Exception ex)
@@ -67,14 +63,6 @@ namespace ProjetoArtCouro.Api.Controllers.ContasPagar
             var tsc = new TaskCompletionSource<HttpResponseMessage>();
             tsc.SetResult(response);
             return tsc.Task;
-        }
-
-        private static int ObterCodigoUsuarioLogado()
-        {
-            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-            var usuarioCodigo = identity.Claims.Where(c => c.Type == ClaimTypes.Sid)
-                .Select(c => c.Value).SingleOrDefault();
-            return usuarioCodigo.ToInt();
         }
 
         protected override void Dispose(bool disposing)
