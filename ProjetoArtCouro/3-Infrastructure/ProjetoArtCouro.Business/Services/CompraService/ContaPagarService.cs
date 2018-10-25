@@ -29,7 +29,7 @@ namespace ProjetoArtCouro.Business.Services.CompraService
                 throw new Exception(Erros.EmptyParameters);
             };
 
-            return _contaPagarRepository.ObterLista(codigoCompra, codigoFornecedor, dataEmissao, dataVencimento,
+            return _contaPagarRepository.ObterListaPorFiltro(codigoCompra, codigoFornecedor, dataEmissao, dataVencimento,
                 statusContaPagar, nomeFornecedor, documento, codigoUsuario);
         }
 

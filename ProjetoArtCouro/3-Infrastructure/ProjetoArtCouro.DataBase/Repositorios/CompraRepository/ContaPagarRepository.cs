@@ -42,7 +42,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
                 _context.ContasPagar.Include("Compra").Where(x => x.Compra.CompraCodigo.Equals(codigoCompra)).ToList();
         }
 
-        public List<ContaPagar> ObterLista(int codigoCompra, int codigoFornecedor, DateTime dataEmissao, DateTime dataVencimento,
+        public List<ContaPagar> ObterListaPorFiltro(int codigoCompra, int codigoFornecedor, DateTime dataEmissao, DateTime dataVencimento,
             int statusContaPagar, string nomeFornecedor, string documento, int codigoUsuario)
         {
             var query = from contaPagar in _context.ContasPagar

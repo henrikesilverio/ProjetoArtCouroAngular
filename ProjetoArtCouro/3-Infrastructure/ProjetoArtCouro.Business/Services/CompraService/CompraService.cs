@@ -14,6 +14,9 @@ using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Entities.Estoques;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
+using ProjetoArtCouro.Domain.Exceptions;
+using ProjetoArtCouro.Domain.Models.Compra;
+using AutoMapper;
 
 namespace ProjetoArtCouro.Business.Services.CompraService
 {
@@ -46,33 +49,22 @@ namespace ProjetoArtCouro.Business.Services.CompraService
             _produtoRepository = produtoRepository;
         }
 
-        public List<Compra> PesquisarCompra(int codigoCompra, int codigoFornecedor, DateTime dataCadastro, int statusCompra,
-            string nomeFornecedor, string documento, int codigoUsuario)
+        public void CriarCompra(int usuarioCodigo, CompraModel model)
         {
-            if (codigoCompra.Equals(0) && codigoFornecedor.Equals(0) &&
-                dataCadastro.Equals(new DateTime()) && statusCompra.Equals(0) &&
-                string.IsNullOrEmpty(nomeFornecedor) && string.IsNullOrEmpty(documento) &&
-                codigoUsuario.Equals(0))
-            {
-                throw new Exception(Erros.EmptyParameters);
-            };
-
-            return _compraRepository.ObterLista(codigoCompra, codigoFornecedor, dataCadastro, statusCompra, nomeFornecedor,
-                documento, codigoUsuario);
-        }
-
-        public Compra ObterCompraPorCodigo(int codigoCompra)
-        {
-            return _compraRepository.ObterPorCodigoComItensCompra(codigoCompra);
-        }
-
-        public void CriarCompra(Compra compra)
-        {
+            var compra = Mapper.Map<Compra>(model);
             compra.Validar();
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentTrue(compra.ItensCompra.Any(), Erros.SaleItemsNotSet);
+
             compra.ItensCompra.ForEach(x => x.Validar());
-            //AssertionConcern.AssertArgumentEquals(compra.StatusCompra, StatusCompraEnum.Aberto, Erros.StatusOfDifferentPurchasingOpen);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentEquals(compra.StatusCompra, StatusCompraEnum.Aberto,
+                Erros.StatusOfDifferentPurchasingOpen);
+
             AplicaValidacoesPadrao(compra);
-            var usuario = _usuarioRepository.ObterPorCodigo(compra.Usuario.UsuarioCodigo);
+            var usuario = _usuarioRepository.ObterPorCodigo(usuarioCodigo);
             compra.Usuario = usuario;
             compra.Fornecedor = null;
             compra.FormaPagamento = null;
@@ -80,12 +72,33 @@ namespace ProjetoArtCouro.Business.Services.CompraService
             _compraRepository.Criar(compra);
         }
 
-        public void AtualizarCompra(Compra compra)
+        public List<CompraModel> PesquisarCompra(int codigoUsuario, PesquisaCompraModel model)
         {
+            var filtro = Mapper.Map<PesquisaCompra>(model);
+            filtro.CodigoUsuario = codigoUsuario;
+            var compras = _compraRepository.ObterListaPorFiltro(filtro);
+            return Mapper.Map<List<CompraModel>>(compras);
+        }
+
+        public CompraModel ObterCompraPorCodigo(int codigoCompra)
+        {
+            var compra = _compraRepository.ObterPorCodigoComItensCompra(codigoCompra);
+            return Mapper.Map<CompraModel>(compra);
+        }
+
+        public void AtualizarCompra(CompraModel model)
+        {
+            AssertionConcern<BusinessException>.AssertArgumentNotEquals(0, model.CodigoCompra,
+            string.Format(Erros.NotZeroParameter, "CompraCodigo"));
+
+            var compra = Mapper.Map<Compra>(model);
             compra.Validar();
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentTrue(compra.ItensCompra.Any(), Erros.SaleItemsNotSet);
+
             compra.ItensCompra.ForEach(x => x.Validar());
-            //AssertionConcern.AssertArgumentNotEquals(0, compra.CompraCodigo,
-                //string.Format(Erros.NotZeroParameter, "CompraCodigo"));
+
             var compraAtual = _compraRepository.ObterPorCodigoComItensCompra(compra.CompraCodigo);
             if (compra.StatusCompra == StatusCompraEnum.Aberto)
             {
@@ -103,14 +116,19 @@ namespace ProjetoArtCouro.Business.Services.CompraService
                 RemoveContaPagarDaCompra(compraAtual);
                 AtualizarDoEstoque(compraAtual.ItensCompra);
             }
+
             _compraRepository.Atualizar(compraAtual);
         }
 
         public void ExcluirCompra(int codigoCompra)
         {
             var compra = _compraRepository.ObterPorCodigo(codigoCompra);
-            //AssertionConcern.AssertArgumentNotEquals(compra, null, Erros.PurchaseDoesNotExist);
-            //AssertionConcern.AssertArgumentNotEquals(compra.StatusCompra, StatusVendaEnum.Confirmado, Erros.PurchaseConfirmedCanNotBeExcluded);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(compra, null, Erros.PurchaseDoesNotExist);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(compra.StatusCompra, StatusVendaEnum.Confirmado, Erros.PurchaseConfirmedCanNotBeExcluded);
+
             _compraRepository.Deletar(compra);
         }
 
@@ -132,21 +150,29 @@ namespace ProjetoArtCouro.Business.Services.CompraService
 
         private static void AplicaValidacoesPadrao(Compra compra)
         {
-            //AssertionConcern.AssertArgumentEquals(compra.ItensCompra.Sum(x => x.ValorBruto), compra.ValorTotalBruto,
-                    //Erros.SumDoNotMatchTotalCrudeValue);
+            AssertionConcern<BusinessException>
+                .AssertArgumentEquals(compra.ItensCompra.Sum(x => x.ValorBruto), compra.ValorTotalBruto,
+                    Erros.SumDoNotMatchTotalCrudeValue);
+
             var valorTotalLiquidoSemFrete = compra.ItensCompra.Sum(x => x.ValorLiquido);
             var valorTotalLiquidoComFrete = valorTotalLiquidoSemFrete + compra.ValorTotalFrete;
-            //AssertionConcern.AssertArgumentEquals(valorTotalLiquidoComFrete, compra.ValorTotalLiquido,
-                //Erros.SumDoNotMatchTotalValueLiquid);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentEquals(valorTotalLiquidoComFrete, compra.ValorTotalLiquido,
+                Erros.SumDoNotMatchTotalValueLiquid);
         }
 
         private void AdicionaFornecedorFormaECondicaoDePagamento(Compra compra, Compra compraAtual)
         {
-            //AssertionConcern.AssertArgumentNotEquals(0, compra.Fornecedor.PessoaCodigo, Erros.ProviderNotSet);
-            //AssertionConcern.AssertArgumentNotEquals(0, compra.FormaPagamento.FormaPagamentoCodigo,
-            //    Erros.NotSetPayment);
-            //AssertionConcern.AssertArgumentNotEquals(0, compra.CondicaoPagamento.CondicaoPagamentoCodigo,
-            //    Erros.PaymentConditionNotSet);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(0, compra.Fornecedor.PessoaCodigo, Erros.ProviderNotSet);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(0, compra.FormaPagamento.FormaPagamentoCodigo, Erros.NotSetPayment);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(0, compra.CondicaoPagamento.CondicaoPagamentoCodigo, Erros.PaymentConditionNotSet);
+
             var fornecedor = _pessoaRepository.ObterPorCodigo(compra.Fornecedor.PessoaCodigo);
             var formaPagamento = _formaPagamentoRepository.ObterPorCodigo(compra.FormaPagamento.FormaPagamentoCodigo);
             var condicaoPagamento =

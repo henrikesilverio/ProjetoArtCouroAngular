@@ -6,10 +6,10 @@ namespace ProjetoArtCouro.Domain.Models.Compra
     public class PesquisaCompraModel
     {
         [Display(Name = "CodeBuy", ResourceType = typeof(Mensagens))]
-        public int? CodigoCompra { get; set; }
+        public int CodigoCompra { get; set; }
 
         [Display(Name = "ProviderCode", ResourceType = typeof(Mensagens))]
-        public int? CodigoFornecedor { get; set; }
+        public int CodigoFornecedor { get; set; }
 
         [Display(Name = "RegistrationDate", ResourceType = typeof(Mensagens))]
         public string DataCadastro { get; set; }
@@ -21,6 +21,6 @@ namespace ProjetoArtCouro.Domain.Models.Compra
         public string CPFCNPJ { get; set; }
 
         [Display(Name = "Status", ResourceType = typeof(Mensagens))]
-        public int? StatusId { get; set; }
+        public int StatusId { get; set; }
     }
 }

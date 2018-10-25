@@ -40,6 +40,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Compras\CompraController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompraController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Compras\CompraControllerSteps.cs" />
+    <Compile Include="Controllers\Compras\CompraTestShared.cs" />
     <Compile Include="Controllers\Pagamentos\CondicaoPagamentoControllerSteps.cs" />
     <Compile Include="Controllers\Clientes\ClienteController.feature.cs">
       <AutoGen>True</AutoGen>
@@ -144,6 +151,10 @@
     <None Include="Controllers\Clientes\ClienteController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ClienteController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Controllers\Compras\CompraController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CompraController.feature.cs</LastGenOutput>
     </None>
     <None Include="Controllers\Fornecedores\FornecedorController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

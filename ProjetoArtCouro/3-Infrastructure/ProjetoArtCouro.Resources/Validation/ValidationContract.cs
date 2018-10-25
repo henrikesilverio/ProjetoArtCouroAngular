@@ -161,7 +161,30 @@ namespace ProjetoArtCouro.Resources.Validation
         }
 
         /// <summary>
-        /// Given an object, add a notification if it's equals
+        /// Given an DateTime, add a notification if it's equals
+        /// </summary>
+        /// <param name="selector">Property</param>
+        /// <param name="value">Value compare</param>
+        /// <param name="message">Error Message (Optional)</param>
+        /// <returns></returns>
+        public ValidationContract<T> IsNotEquals(Expression<Func<T, DateTime>> selector, object value, string message = "")
+        {
+            var val = selector.Compile().Invoke(_validatable);
+            var name = (selector.Body as MemberExpression)?.Member.Name ??
+                       ((MemberExpression)((UnaryExpression)selector.Body).Operand).Member.Name;
+
+            if (val.Equals(value))
+            {
+                _validatable.AddNotification(name, string.IsNullOrEmpty(message)
+                    ? string.Format(Erros.FieldCannotBe, name, (DateTime)value)
+                    : message);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Given an Enum, add a notification if it's equals
         /// </summary>
         /// <param name="selector">Property</param>
         /// <param name="value">Value compare</param>

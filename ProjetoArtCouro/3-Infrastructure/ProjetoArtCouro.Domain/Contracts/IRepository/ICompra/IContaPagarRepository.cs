@@ -11,7 +11,7 @@ namespace ProjetoArtCouro.Domain.Contracts.IRepository.ICompra
         ContaPagar ObterPorCodigoComCompra(int codigo);
         List<ContaPagar> ObterLista();
         List<ContaPagar> ObterListaPorCodigoCompra(int codigoCompra);
-        List<ContaPagar> ObterLista(int codigoCompra, int codigoFornecedor, DateTime dataEmissao, DateTime dataVencimento, int statusContaPagar,
+        List<ContaPagar> ObterListaPorFiltro(int codigoCompra, int codigoFornecedor, DateTime dataEmissao, DateTime dataVencimento, int statusContaPagar,
             string nomeFornecedor, string documento, int codigoUsuario);
         void Criar(ContaPagar contaPagar);
         void Atualizar(ContaPagar contaPagar);

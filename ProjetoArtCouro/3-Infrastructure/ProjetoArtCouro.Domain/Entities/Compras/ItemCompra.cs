@@ -1,10 +1,10 @@
 ﻿using System;
-using ProjetoArtCouro.Resource.Validation;
-using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Domain.Exceptions;
+using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Compras
 {
-    public class ItemCompra
+    public class ItemCompra : Notifiable
     {
         public Guid ItemCompraId { get; set; }
         public int ItemCompraCodigo { get; set; }
@@ -18,12 +18,19 @@ namespace ProjetoArtCouro.Domain.Entities.Compras
 
         public void Validar()
         {
-            //AssertionConcern.AssertArgumentNotEquals(0, ProdutoCodigo, string.Format(Erros.NotZeroParameter, "ProdutoCodigo"));
-            //AssertionConcern.AssertArgumentNotEmpty(ProdutoNome, string.Format(Erros.EmptyParameter, "ProdutoNome"));
-            //AssertionConcern.AssertArgumentNotEquals(0, Quantidade, string.Format(Erros.NotZeroParameter, "Quantidade"));
-            //AssertionConcern.AssertArgumentNotEquals(0.0M, PrecoVenda, string.Format(Erros.NotZeroParameter, "PrecoVenda"));
-            //AssertionConcern.AssertArgumentNotEquals(0.0M, ValorBruto, string.Format(Erros.NotZeroParameter, "ValorBruto"));
-            //AssertionConcern.AssertArgumentNotEquals(0.0M, ValorLiquido, string.Format(Erros.NotZeroParameter, "ValorLiquido"));
+            new ValidationContract<ItemCompra>(this)
+                .IsNotZero(x => x.ProdutoCodigo)
+                .IsRequired(x => x.ProdutoNome)
+                .HasMaxLenght(x => x.ProdutoNome, 200)
+                .IsNotZero(x => x.Quantidade)
+                .IsNotZero(x => x.PrecoVenda)
+                .IsNotZero(x => x.ValorBruto)
+                .IsNotZero(x => x.ValorLiquido);
+
+            if (!IsValid())
+            {
+                throw new DomainException(GetMergeNotifications());
+            }
         }
     }
 }

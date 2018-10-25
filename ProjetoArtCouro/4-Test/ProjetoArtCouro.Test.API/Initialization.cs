@@ -24,6 +24,8 @@ namespace ProjetoArtCouro.Test.API
         {
             _objectContainer = objectContainer;
             _scenarioContext = scenatriContext;
+            _scenarioContext.Add("Conteudo", null);
+            _scenarioContext.Add("Response", null);
             _scenarioContext.Add("TestShared", null);
         }
 
@@ -51,28 +53,28 @@ namespace ProjetoArtCouro.Test.API
         public void QuandoRealizarUmaChamadaGetAoEndereco(string endereco)
         {
             var response = _serviceRequest.Get(endereco);
-            _scenarioContext.Add("Response", response);
+            _scenarioContext["Response"] = response;
         }
 
         [When(@"realizar uma chamada Post ao endereço '(.*)'")]
         public void QuandoRealizarUmaChamadaPostAoEndereco(string endereco)
         {
             var response = _serviceRequest.Post(_scenarioContext["Conteudo"], endereco);
-            _scenarioContext.Add("Response", response);
+            _scenarioContext["Response"] = response;
         }
 
         [When(@"realizar uma chamada Put ao endereço '(.*)'")]
         public void QuandoRealizarUmaChamadaPutAoEndereco(string endereco)
         {
             var response = _serviceRequest.Put(_scenarioContext["Conteudo"], endereco);
-            _scenarioContext.Add("Response", response);
+            _scenarioContext["Response"] = response;
         }
 
         [When(@"realizar uma chamada Delete ao endereço '(.*)'")]
         public void QuandoRealizarUmaChamadaDeleteAoEndereco(string endereco)
         {
             var response = _serviceRequest.Delete(endereco);
-            _scenarioContext.Add("Response", response);
+            _scenarioContext["Response"] = response;
         }
 
         [Then(@"retorne sucesso")]
@@ -82,7 +84,6 @@ namespace ProjetoArtCouro.Test.API
             Assert.AreNotEqual(testShared, null, "Teste compartilhado não implementado");
             _scenarioContext.Remove("RetornoBase");
             testShared.ValidateReturnSuccess();
-            _scenarioContext.Remove("Response");
         }
 
         [Then(@"retorne erro")]
@@ -113,7 +114,6 @@ namespace ProjetoArtCouro.Test.API
             var response = (HttpResponseMessage)_scenarioContext["Response"];
             Assert.AreNotEqual(null, response.Content);
             Assert.AreEqual(statusCode, response.StatusCode);
-            _scenarioContext.Remove("Response");
 
             //if (statusCode != HttpStatusCode.NotFound)
             //{

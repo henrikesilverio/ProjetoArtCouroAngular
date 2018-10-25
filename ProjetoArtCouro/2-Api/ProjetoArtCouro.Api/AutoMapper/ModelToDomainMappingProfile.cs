@@ -84,6 +84,10 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 .ForMember(d => d.PrecoVenda, m => m.MapFrom(s => s.PrecoVenda.ToDecimal()))
                 .ForMember(d => d.ValorBruto, m => m.MapFrom(s => s.ValorBruto.ToDecimal()))
                 .ForMember(d => d.ValorLiquido, m => m.MapFrom(s => s.ValorLiquido.ToDecimal()));
+
+            CreateMap<PesquisaCompraModel, PesquisaCompra>()
+                .ForMember(d => d.DataCadastro, m => m.MapFrom(s => s.DataCadastro.ToDateTimeWithoutHour()))
+                .ForMember(d => d.StatusCompra, m => m.MapFrom(s => s.StatusId));
         }
 
         private void MapperSale()

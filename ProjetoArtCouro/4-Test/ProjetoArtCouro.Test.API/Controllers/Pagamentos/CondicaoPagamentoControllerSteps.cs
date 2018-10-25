@@ -16,7 +16,7 @@ namespace ProjetoArtCouro.Test.API
             DataBaseContext context)
         {
             _scenarioContext = scenarioContext;
-            _scenarioContext.Add("Conteudo", null);
+            _scenarioContext["Conteudo"] = null;
             _scenarioContext["TestShared"] = new CondicaoPagamentoTestShared(_scenarioContext, context);
         }
 

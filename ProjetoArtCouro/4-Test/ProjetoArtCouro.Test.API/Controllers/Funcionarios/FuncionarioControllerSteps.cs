@@ -19,7 +19,7 @@ namespace ProjetoArtCouro.Test.API.Controllers.Funcionarios
             DataBaseContext context)
         {
             _scenarioContext = scenarioContext;
-            _scenarioContext.Add("Conteudo", null);
+            _scenarioContext["Conteudo"] =  null;
             _scenarioContext["TestShared"] = new PessoaTestShared(_scenarioContext, context);
         }
 

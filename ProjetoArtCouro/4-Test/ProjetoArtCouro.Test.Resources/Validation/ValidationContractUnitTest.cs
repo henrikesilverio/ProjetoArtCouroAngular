@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resources.Validation;
+using System;
 
 namespace ProjetoArtCouro.Test.Resources.Validation
 {
@@ -98,6 +99,16 @@ namespace ProjetoArtCouro.Test.Resources.Validation
         }
 
         [TestMethod]
+        public void TestIsNotEqualsDateTime()
+        {
+            new ValidationContract<TestNotifiable>(_testNotifiable)
+                .IsNotEquals(x => x.PropertyDateTime, new DateTime());
+            Assert.IsFalse(_testNotifiable.IsValid(), "Esta valido");
+            var mensagens = _testNotifiable.GetMergeNotifications();
+            Assert.AreEqual(mensagens, string.Format(Erros.FieldCannotBe, "PropertyDateTime", new DateTime()), "Mensagem invalida");
+        }
+
+        [TestMethod]
         public void TestHasMaxLenght()
         {
             _testNotifiable.PropertyString = new string('A', 11);
@@ -127,6 +138,7 @@ namespace ProjetoArtCouro.Test.Resources.Validation
             public string PropertyString { get; set; }
             public bool PropertyBoolean { get; set; }
             public decimal PropertyDecimal { get; set; }
+            public DateTime PropertyDateTime { get; set; }
             public object PropertyObject { get; set; }
             public TestEnum PropertyEnum { get; set; }
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
@@ -29,124 +28,48 @@ namespace ProjetoArtCouro.Api.Controllers.Compras
         [Route("CriarCompra")]
         [Authorize(Roles = "NovaCompra")]
         [HttpPost]
-        public Task<HttpResponseMessage> CriarCompra(CompraModel model)
+        public IHttpActionResult CriarCompra(CompraModel model)
         {
-            HttpResponseMessage response;
-            try
-            {
-                var compra = Mapper.Map<Compra>(model);
-                var usuario = new Usuario
-                {
-                    UsuarioCodigo = ObterCodigoUsuarioLogado()
-                };
-                compra.Usuario = usuario;
-                _compraService.CriarCompra(compra);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var usuarioCodigo = ObterCodigoUsuarioLogado();
+            _compraService.CriarCompra(usuarioCodigo, model);
+            return OkRetornoBase();
         }
 
         [Route("PesquisarCompra")]
         [Authorize(Roles = "PesquisaCompra")]
         [HttpPost]
-        public Task<HttpResponseMessage> PesquisarCompra(PesquisaCompraModel model)
+        public IHttpActionResult PesquisarCompra(PesquisaCompraModel model)
         {
-            HttpResponseMessage response;
-            try
-            {
-                var usuarioCodigo = ObterCodigoUsuarioLogado();
-                var compras = _compraService.PesquisarCompra(model.CodigoCompra ?? 0, model.CodigoFornecedor ?? 0,
-                    model.DataCadastro.ToDateTimeWithoutHour(), model.StatusId ?? 0, model.NomeFornecedor, model.CPFCNPJ,
-                    usuarioCodigo);
-                response = ReturnSuccess(Mapper.Map<List<CompraModel>>(compras));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var usuarioCodigo = ObterCodigoUsuarioLogado();
+            var compras = _compraService.PesquisarCompra(usuarioCodigo, model);
+            return OkRetornoBase(compras);
         }
 
-        [Route("PesquisarCompraPorCodigo")]
+        [Route("PesquisarCompraPorCodigo/{codigoCompra:int:min(1)}")]
         [Authorize(Roles = "EditarCompra")]
         [HttpPost]
-        public Task<HttpResponseMessage> PesquisarCompraPorCodigo([FromBody]JObject jObject)
+        public IHttpActionResult PesquisarCompraPorCodigo(int codigoCompra)
         {
-            var codigoCompra = jObject["codigoCompra"].ToObject<int>();
-            HttpResponseMessage response;
-            try
-            {
-                var compra = _compraService.ObterCompraPorCodigo(codigoCompra);
-                response = ReturnSuccess(Mapper.Map<CompraModel>(compra));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var compra = _compraService.ObterCompraPorCodigo(codigoCompra);
+            return OkRetornoBase(compra);
         }
 
         [Route("EditarCompra")]
         [Authorize(Roles = "EditarCompra")]
         [HttpPut]
-        public Task<HttpResponseMessage> EditarCompra(CompraModel model)
+        public IHttpActionResult EditarCompra(CompraModel model)
         {
-            HttpResponseMessage response;
-
-            try
-            {
-                var compra = Mapper.Map<Compra>(model);
-                var usuario = new Usuario
-                {
-                    UsuarioCodigo = ObterCodigoUsuarioLogado()
-                };
-                compra.Usuario = usuario;
-                _compraService.AtualizarCompra(compra);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            _compraService.AtualizarCompra(model);
+            return OkRetornoBase();
         }
 
-        [Route("ExcluirCompra")]
+        [Route("ExcluirCompra/{codigoCompra:int:min(1)}")]
         [Authorize(Roles = "ExcluirCompra")]
         [HttpDelete]
-        public Task<HttpResponseMessage> ExcluirCompra([FromBody]JObject jObject)
+        public IHttpActionResult ExcluirCompra(int codigoCompra)
         {
-            var codigoCompra = jObject["codigoCompra"].ToObject<int>();
-            HttpResponseMessage response;
-            try
-            {
-                _compraService.ExcluirCompra(codigoCompra);
-                response = ReturnSuccess();
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            _compraService.ExcluirCompra(codigoCompra);
+            return OkRetornoBase();
         }
 
         private static int ObterCodigoUsuarioLogado()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Compras;
+using ProjetoArtCouro.Domain.Models.Compra;
 
 namespace ProjetoArtCouro.Domain.Contracts.IRepository.ICompra
 {
@@ -10,8 +11,7 @@ namespace ProjetoArtCouro.Domain.Contracts.IRepository.ICompra
         Compra ObterPorCodigo(int codigo);
         Compra ObterPorCodigoComItensCompra(int codigo);
         List<Compra> ObterLista();
-        List<Compra> ObterLista(int codigoCompra, int codigoFornecedor, DateTime dataCadastro, int statusCompra,
-            string nomeFornecedor, string documento, int codigoUsuario);
+        List<Compra> ObterListaPorFiltro(PesquisaCompra filtro);
         void Criar(Compra compra);
         void Atualizar(Compra compra);
         void Deletar(Compra compra);

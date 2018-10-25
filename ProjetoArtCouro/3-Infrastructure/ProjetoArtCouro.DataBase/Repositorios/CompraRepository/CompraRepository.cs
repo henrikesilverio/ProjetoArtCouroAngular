@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.ICompra;
 using ProjetoArtCouro.Domain.Entities.Compras;
+using ProjetoArtCouro.Domain.Models.Compra;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
 {
@@ -28,7 +29,9 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
 
         public Compra ObterPorCodigoComItensCompra(int codigo)
         {
-            return _context.Compras.Include("ItensCompra").FirstOrDefault(x => x.CompraCodigo.Equals(codigo));
+            return _context.Compras
+                .Include("ItensCompra")
+                .FirstOrDefault(x => x.CompraCodigo == codigo);
         }
 
         public List<Compra> ObterLista()
@@ -36,8 +39,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
             return _context.Compras.ToList();
         }
 
-        public List<Compra> ObterLista(int codigoCompra, int codigoFornecedor, DateTime dataCadastro, int statusCompra, string nomeFornecedor,
-            string documento, int codigoUsuario)
+        public List<Compra> ObterListaPorFiltro(PesquisaCompra filtro)
         {
             var query = from compra in _context.Compras
                 .Include("Usuario")
@@ -47,39 +49,40 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
                 .Include("Fornecedor.PessoaJuridica")
                         select compra;
 
-            if (!codigoCompra.Equals(0))
+            if (filtro.CodigoCompra != 0)
             {
-                query = query.Where(x => x.CompraCodigo == codigoCompra);
+                query = query.Where(x => x.CompraCodigo == filtro.CodigoCompra);
             }
 
-            if (!codigoFornecedor.Equals(0))
+            if (filtro.CodigoFornecedor == 0)
             {
-                query = query.Where(x => x.Fornecedor.PessoaCodigo == codigoFornecedor);
+                query = query.Where(x => x.Fornecedor.PessoaCodigo == filtro.CodigoFornecedor);
             }
 
-            if (!dataCadastro.Equals(new DateTime()))
+            if (filtro.DataCadastro != new DateTime())
             {
-                query = query.Where(x => EntityFunctions.TruncateTime(x.DataCadastro) == dataCadastro.Date);
+                query = query.Where(x => DbFunctions.TruncateTime(x.DataCadastro) == filtro.DataCadastro.Date);
             }
 
-            if (!statusCompra.Equals(0))
+            if (filtro.StatusCompra != 0)
             {
-                query = query.Where(x => (int)x.StatusCompra == statusCompra);
+                query = query.Where(x => x.StatusCompra == filtro.StatusCompra);
             }
 
-            if (!string.IsNullOrEmpty(nomeFornecedor))
+            if (!string.IsNullOrEmpty(filtro.NomeFornecedor))
             {
-                query = query.Where(x => x.Fornecedor.Nome == nomeFornecedor);
+                query = query.Where(x => x.Fornecedor.Nome == filtro.NomeFornecedor);
             }
 
-            if (!string.IsNullOrEmpty(documento))
+            if (!string.IsNullOrEmpty(filtro.CPFCNPJ))
             {
-                query = query.Where(x => x.Fornecedor.PessoaFisica.CPF == documento || x.Fornecedor.PessoaJuridica.CNPJ == documento);
+                query = query.Where(x => x.Fornecedor.PessoaFisica.CPF == filtro.CPFCNPJ || 
+                x.Fornecedor.PessoaJuridica.CNPJ == filtro.CPFCNPJ);
             }
 
-            if (!codigoUsuario.Equals(0))
+            if (filtro.CodigoUsuario != 0)
             {
-                query = query.Where(x => x.Usuario.UsuarioCodigo == codigoUsuario);
+                query = query.Where(x => x.Usuario.UsuarioCodigo == filtro.CodigoUsuario);
             }
 
             return query.ToList();

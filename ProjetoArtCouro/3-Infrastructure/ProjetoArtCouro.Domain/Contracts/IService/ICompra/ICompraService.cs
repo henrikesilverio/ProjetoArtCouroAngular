@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using ProjetoArtCouro.Domain.Entities.Compras;
+using ProjetoArtCouro.Domain.Models.Compra;
 
 namespace ProjetoArtCouro.Domain.Contracts.IService.ICompra
 {
     public interface ICompraService : IDisposable
     {
-        List<Compra> PesquisarCompra(int codigoCompra, int codigoFornecedor, DateTime dataCadastro,
-        int statusCompra, string nomeFornecedor, string documento, int codigoUsuario);
-        Compra ObterCompraPorCodigo(int codigoCompra);
-        void CriarCompra(Compra compra);
-        void AtualizarCompra(Compra compra);
+        List<CompraModel> PesquisarCompra(int codigoUsuario, PesquisaCompraModel model);
+        CompraModel ObterCompraPorCodigo(int codigoCompra);
+        void CriarCompra(int usuarioCodigo, CompraModel compra);
+        void AtualizarCompra(CompraModel compra);
         void ExcluirCompra(int codigoCompra);
     }
 }
