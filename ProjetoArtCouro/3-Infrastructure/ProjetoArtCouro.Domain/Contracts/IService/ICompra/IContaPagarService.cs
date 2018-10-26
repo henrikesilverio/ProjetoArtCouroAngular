@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using ProjetoArtCouro.Domain.Entities.Compras;
+using ProjetoArtCouro.Domain.Models.ContaPagar;
 
 namespace ProjetoArtCouro.Domain.Contracts.IService.ICompra
 {
     public interface IContaPagarService : IDisposable
     {
-        List<ContaPagar> PesquisarContaPagar(int codigoCompra, int codigoFornecedor, DateTime dataEmissao,
-            DateTime dataVencimento, int statusContaPagar, string nomeFornecedor, string documento, int codigoUsuario);
-        void PagarContas(List<ContaPagar> contasPagar);
+        List<ContaPagarModel> PesquisarContaPagar(int codigoUsuario, PesquisaContaPagarModel model);
+        void PagarContas(List<ContaPagarModel> model);
     }
 }

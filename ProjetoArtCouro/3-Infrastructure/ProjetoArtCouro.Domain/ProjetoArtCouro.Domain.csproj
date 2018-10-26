@@ -120,6 +120,7 @@
     <Compile Include="Models\Compra\PesquisaCompraModel.cs" />
     <Compile Include="Models\CondicaoPagamento\CondicaoPagamentoModel.cs" />
     <Compile Include="Models\ContaPagar\ContaPagarModel.cs" />
+    <Compile Include="Models\ContaPagar\PesquisaContaPagar.cs" />
     <Compile Include="Models\ContaPagar\PesquisaContaPagarModel.cs" />
     <Compile Include="Models\ContaReceber\ContaReceberModel.cs" />
     <Compile Include="Models\ContaReceber\PesquisaContaReceberModel.cs" />

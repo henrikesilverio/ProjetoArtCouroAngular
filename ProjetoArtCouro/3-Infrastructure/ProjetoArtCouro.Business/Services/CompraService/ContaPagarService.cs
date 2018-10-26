@@ -1,41 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Contracts.IRepository.ICompra;
 using ProjetoArtCouro.Domain.Contracts.IService.ICompra;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Models.Enums;
-using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Domain.Models.ContaPagar;
+using AutoMapper;
 using ProjetoArtCouro.Resource.Validation;
+using ProjetoArtCouro.Domain.Exceptions;
+using System.Linq;
+using ProjetoArtCouro.Resources.Resources;
 
 namespace ProjetoArtCouro.Business.Services.CompraService
 {
     public class ContaPagarService : IContaPagarService
     {
         private readonly IContaPagarRepository _contaPagarRepository;
+
         public ContaPagarService(IContaPagarRepository contaPagarRepository)
         {
             _contaPagarRepository = contaPagarRepository;
         }
 
-        public List<ContaPagar> PesquisarContaPagar(int codigoCompra, int codigoFornecedor, DateTime dataEmissao, DateTime dataVencimento,
-            int statusContaPagar, string nomeFornecedor, string documento, int codigoUsuario)
+        public List<ContaPagarModel> PesquisarContaPagar(int codigoUsuario, PesquisaContaPagarModel model)
         {
-            if (codigoCompra.Equals(0) && codigoFornecedor.Equals(0) &&
-                dataEmissao.Equals(new DateTime()) && dataVencimento.Equals(new DateTime()) &&
-                statusContaPagar.Equals(0) && string.IsNullOrEmpty(nomeFornecedor) &&
-                string.IsNullOrEmpty(documento) && codigoUsuario.Equals(0))
-            {
-                throw new Exception(Erros.EmptyParameters);
-            };
-
-            return _contaPagarRepository.ObterListaPorFiltro(codigoCompra, codigoFornecedor, dataEmissao, dataVencimento,
-                statusContaPagar, nomeFornecedor, documento, codigoUsuario);
+            var filtro = Mapper.Map<PesquisaContaPagar>(model);
+            filtro.CodigoUsuario = codigoUsuario;
+            var contasPagar = _contaPagarRepository.ObterListaPorFiltro(filtro);
+            return Mapper.Map<List<ContaPagarModel>>(contasPagar);
         }
 
-        public void PagarContas(List<ContaPagar> contasPagar)
+        public void PagarContas(List<ContaPagarModel> model)
         {
-            //AssertionConcern.AssertArgumentFalse(contasPagar.Any(x => x.ContaPagarCodigo.Equals(0)), Erros.ThereAccountPayableWithCodeZero);
+            var contasPagar = Mapper.Map<List<ContaPagar>>(model);
+            AssertionConcern<BusinessException>
+                .AssertArgumentFalse(contasPagar.Any(x => x.ContaPagarCodigo.Equals(0)), Erros.ThereAccountPayableWithCodeZero);
+
             contasPagar.ForEach(x =>
             {
                 var contaPagarAtual = _contaPagarRepository.ObterPorCodigoComCompra(x.ContaPagarCodigo);

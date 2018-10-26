@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.ICompra;
 using ProjetoArtCouro.Domain.Entities.Compras;
+using ProjetoArtCouro.Domain.Models.ContaPagar;
+using ProjetoArtCouro.Domain.Models.Enums;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
 {
@@ -42,8 +44,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
                 _context.ContasPagar.Include("Compra").Where(x => x.Compra.CompraCodigo.Equals(codigoCompra)).ToList();
         }
 
-        public List<ContaPagar> ObterListaPorFiltro(int codigoCompra, int codigoFornecedor, DateTime dataEmissao, DateTime dataVencimento,
-            int statusContaPagar, string nomeFornecedor, string documento, int codigoUsuario)
+        public List<ContaPagar> ObterListaPorFiltro(PesquisaContaPagar filtro)
         {
             var query = from contaPagar in _context.ContasPagar
                 .Include("Compra")
@@ -52,44 +53,45 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
                 .Include("Compra.Fornecedor.PessoaJuridica")
                         select contaPagar;
 
-            if (!codigoCompra.Equals(0))
+            if (filtro.CodigoCompra != 0)
             {
-                query = query.Where(x => x.Compra.CompraCodigo == codigoCompra);
+                query = query.Where(x => x.Compra.CompraCodigo == filtro.CodigoCompra);
             }
 
-            if (!codigoFornecedor.Equals(0))
+            if (filtro.CodigoFornecedor != 0)
             {
-                query = query.Where(x => x.Compra.Fornecedor.PessoaCodigo == codigoFornecedor);
+                query = query.Where(x => x.Compra.Fornecedor.PessoaCodigo == filtro.CodigoFornecedor);
             }
 
-            if (!dataEmissao.Equals(new DateTime()))
+            if (filtro.DataEmissao != new DateTime())
             {
-                query = query.Where(x => EntityFunctions.TruncateTime(x.Compra.DataCadastro) == dataEmissao.Date);
+                query = query.Where(x => DbFunctions.TruncateTime(x.Compra.DataCadastro) == filtro.DataEmissao.Date);
             }
 
-            if (!dataVencimento.Equals(new DateTime()))
+            if (filtro.DataVencimento != new DateTime())
             {
-                query = query.Where(x => EntityFunctions.TruncateTime(x.DataVencimento) == dataVencimento.Date);
+                query = query.Where(x => DbFunctions.TruncateTime(x.DataVencimento) == filtro.DataVencimento.Date);
             }
 
-            if (!statusContaPagar.Equals(0))
+            if (filtro.StatusContaPagar != StatusContaPagarEnum.None)
             {
-                query = query.Where(x => (int)x.StatusContaPagar == statusContaPagar);
+                query = query.Where(x => x.StatusContaPagar == filtro.StatusContaPagar);
             }
 
-            if (!string.IsNullOrEmpty(nomeFornecedor))
+            if (!string.IsNullOrEmpty(filtro.NomeFornecedor))
             {
-                query = query.Where(x => x.Compra.Fornecedor.Nome == nomeFornecedor);
+                query = query.Where(x => x.Compra.Fornecedor.Nome == filtro.NomeFornecedor);
             }
 
-            if (!string.IsNullOrEmpty(documento))
+            if (!string.IsNullOrEmpty(filtro.CPFCNPJ))
             {
-                query = query.Where(x => x.Compra.Fornecedor.PessoaFisica.CPF == documento || x.Compra.Fornecedor.PessoaJuridica.CNPJ == documento);
+                query = query.Where(x => x.Compra.Fornecedor.PessoaFisica.CPF == filtro.CPFCNPJ || 
+                x.Compra.Fornecedor.PessoaJuridica.CNPJ == filtro.CPFCNPJ);
             }
 
-            if (!codigoUsuario.Equals(0))
+            if (filtro.CodigoUsuario != 0)
             {
-                query = query.Where(x => x.Compra.Usuario.UsuarioCodigo == codigoUsuario);
+                query = query.Where(x => x.Compra.Usuario.UsuarioCodigo == filtro.CodigoUsuario);
             }
 
             return query.ToList();
@@ -103,7 +105,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
 
         public void Atualizar(ContaPagar contaPagar)
         {
-            _context.Entry(contaPagar).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(contaPagar).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

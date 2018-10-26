@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Compras;
+using ProjetoArtCouro.Domain.Models.ContaPagar;
 
 namespace ProjetoArtCouro.Domain.Contracts.IRepository.ICompra
 {
@@ -11,8 +12,7 @@ namespace ProjetoArtCouro.Domain.Contracts.IRepository.ICompra
         ContaPagar ObterPorCodigoComCompra(int codigo);
         List<ContaPagar> ObterLista();
         List<ContaPagar> ObterListaPorCodigoCompra(int codigoCompra);
-        List<ContaPagar> ObterListaPorFiltro(int codigoCompra, int codigoFornecedor, DateTime dataEmissao, DateTime dataVencimento, int statusContaPagar,
-            string nomeFornecedor, string documento, int codigoUsuario);
+        List<ContaPagar> ObterListaPorFiltro(PesquisaContaPagar filtro);
         void Criar(ContaPagar contaPagar);
         void Atualizar(ContaPagar contaPagar);
         void Deletar(ContaPagar contaPagar);
