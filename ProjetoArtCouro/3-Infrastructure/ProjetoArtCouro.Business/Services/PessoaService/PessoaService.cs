@@ -191,19 +191,22 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             return Mapper.Map<PessoaModel>(pessoa.PessoaJuridica);
         }
 
-        public List<Estado> ObterEstados()
+        public List<LookupModel> ObterEstados()
         {
-            return _estadoRepository.ObterLista();
+            var estados = _estadoRepository.ObterLista();
+            return Mapper.Map<List<LookupModel>>(estados);
         }
 
-        public List<EstadoCivil> ObterEstadosCivis()
+        public List<LookupModel> ObterEstadosCivis()
         {
-            return _estadoCivilRepository.ObterLista();
+            var estadosCivis = _estadoCivilRepository.ObterLista();
+            return Mapper.Map<List<LookupModel>>(estadosCivis);
         }
 
-        public List<Pessoa> ObterListaPessoa()
+        public List<PessoaModel> ObterListaPessoa()
         {
-            return _pessoaRepository.ObterListaComPessoaFisicaEJuridica();
+            var pessoas = _pessoaRepository.ObterListaComPessoaFisicaEJuridica();
+            return Mapper.Map<List<PessoaModel>>(pessoas);
         }
 
         public List<Pessoa> ObterListaPessoaFisicaEJuridicaPorPapel(TipoPapelPessoaEnum papelCodigo)
@@ -219,11 +222,6 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
         public List<PessoaJuridica> ObterListaPessoaJuridicaPorPapel(TipoPapelPessoaEnum papelCodigo)
         {
             return _pessoaJuridicaRepository.ObterLista(0, null, null, null, papelCodigo);
-        }
-
-        public List<PessoaModel> TesteProjecao()
-        {
-            return _pessoaRepository.TesteProjecao();
         }
 
         private void ValidarPessoa(Pessoa pessoa)

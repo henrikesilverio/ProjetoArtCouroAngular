@@ -99,6 +99,11 @@
     </Compile>
     <Compile Include="Controllers\Pagamentos\FormaPagamentoControllerSteps.cs" />
     <Compile Include="Controllers\Pagamentos\FormaPagamentoTestShared.cs" />
+    <Compile Include="Controllers\Pessoas\PessoaController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PessoaController.feature</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\Pessoas\PessoaTestShared.cs" />
     <Compile Include="Controllers\Produtos\ProdutoController.feature.cs">
       <AutoGen>True</AutoGen>
@@ -210,6 +215,10 @@
     <None Include="Controllers\Pagamentos\FormaPagamentoController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>FormaPagamentoController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Controllers\Pessoas\PessoaController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PessoaController.feature.cs</LastGenOutput>
     </None>
     <None Include="Controllers\Produtos\ProdutoController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

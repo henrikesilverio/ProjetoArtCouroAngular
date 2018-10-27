@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using AutoMapper;
+﻿using System.Web.Http;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
-using ProjetoArtCouro.Domain.Models.Common;
 using WebApi.OutputCache.V2;
 
 namespace ProjetoArtCouro.Api.Controllers.Pessoas
@@ -25,66 +19,30 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [Authorize(Roles = "NovoCliente, EditarCliente, NovoFornecedor, EditarFornecedor, NovoFuncionario, EditarFuncionario")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpGet]
-        public Task<HttpResponseMessage> ObterListaEstado()
+        public IHttpActionResult ObterListaEstado()
         {
-            HttpResponseMessage response;
-            try
-            {
-                var listaEstado = _pessoaService.ObterEstados();
-                response = ReturnSuccess(Mapper.Map<List<LookupModel>>(listaEstado));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var estados = _pessoaService.ObterEstados();
+            return OkRetornoBase(estados);
         }
 
         [Route("ObterListaEstadoCivil")]
         [Authorize(Roles = "NovoCliente, EditarCliente, NovoFornecedor, EditarFornecedor, NovoFuncionario, EditarFuncionario")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpGet]
-        public Task<HttpResponseMessage> ObterListaEstadoCivil()
+        public IHttpActionResult ObterListaEstadoCivil()
         {
-            HttpResponseMessage response;
-            try
-            {
-                var listaEstadoCivil = _pessoaService.ObterEstadosCivis();
-                response = ReturnSuccess(Mapper.Map<List<LookupModel>>(listaEstadoCivil));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var estadosCivis = _pessoaService.ObterEstadosCivis();
+            return OkRetornoBase(estadosCivis);
         }
 
         [Route("ObterListaPessoa")]
         [Authorize(Roles = "NovaVenda")]
         [CacheOutput(ServerTimeSpan = 10000)]
         [HttpGet]
-        public Task<HttpResponseMessage> ObterListaPessoa()
+        public IHttpActionResult ObterListaPessoa()
         {
-            HttpResponseMessage response;
-            try
-            {
-                var listaPessoa = _pessoaService.ObterListaPessoa();
-                response = ReturnSuccess(Mapper.Map<List<PessoaModel>>(listaPessoa));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var pessoas = _pessoaService.ObterListaPessoa();
+            return OkRetornoBase(pessoas);
         }
 
         protected override void Dispose(bool disposing)

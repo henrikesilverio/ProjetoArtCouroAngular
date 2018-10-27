@@ -9,9 +9,9 @@ namespace ProjetoArtCouro.Domain.Contracts.IService.IPessoa
 {
     public interface IPessoaService : IDisposable
     {
-        List<Estado> ObterEstados();
-        List<EstadoCivil> ObterEstadosCivis();
-        List<Pessoa> ObterListaPessoa();
+        List<LookupModel> ObterEstados();
+        List<LookupModel> ObterEstadosCivis();
+        List<PessoaModel> ObterListaPessoa();
         List<Pessoa> ObterListaPessoaFisicaEJuridicaPorPapel(TipoPapelPessoaEnum papelCodigo);
         List<PessoaFisica> ObterListaPessoaFisicaPorPapel(TipoPapelPessoaEnum papelCodigo);
         List<PessoaJuridica> ObterListaPessoaJuridicaPorPapel(TipoPapelPessoaEnum papelCodigo);
@@ -22,6 +22,5 @@ namespace ProjetoArtCouro.Domain.Contracts.IService.IPessoa
         void CriarPessoaJuridica(Pessoa pessoa);
         void AtualizarPessoa(PessoaModel pessoa);
         void ExcluirPessoa(int pessoaCodigo);
-        List<PessoaModel> TesteProjecao();
     }
 }
