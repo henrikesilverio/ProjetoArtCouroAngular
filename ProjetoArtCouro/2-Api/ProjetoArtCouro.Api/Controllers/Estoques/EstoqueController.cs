@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using AutoMapper;
+﻿using System.Web.Http;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IEstoque;
 using ProjetoArtCouro.Domain.Models.Estoque;
@@ -22,25 +17,10 @@ namespace ProjetoArtCouro.Api.Controllers.Estoques
 
         [Route("PesquisarEstoque")]
         [HttpPost]
-        public Task<HttpResponseMessage> PesquisarCompra(PesquisaEstoqueModel model)
+        public IHttpActionResult PesquisarCompra(PesquisaEstoqueModel model)
         {
-            HttpResponseMessage response;
-            try
-            {
-                var estoques = _estoqueService.PesquisarEstoque(model.DescricaoProduto,
-                    model.CodigoProduto.GetValueOrDefault(),
-                    model.QuantidaEstoque.GetValueOrDefault(), model.NomeFornecedor,
-                    model.CodigoFornecedor.GetValueOrDefault());
-                response = ReturnSuccess(Mapper.Map<List<EstoqueModel>>(estoques));
-            }
-            catch (Exception ex)
-            {
-                response = ReturnError(ex);
-            }
-
-            var tsc = new TaskCompletionSource<HttpResponseMessage>();
-            tsc.SetResult(response);
-            return tsc.Task;
+            var estoques = _estoqueService.PesquisarEstoque(model);
+            return OkRetornoBase(estoques);
         }
 
         protected override void Dispose(bool disposing)

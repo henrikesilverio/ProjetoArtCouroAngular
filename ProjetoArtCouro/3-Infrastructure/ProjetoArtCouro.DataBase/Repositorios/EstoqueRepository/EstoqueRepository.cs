@@ -5,6 +5,7 @@ using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IEstoque;
 using ProjetoArtCouro.Domain.Entities.Estoques;
+using ProjetoArtCouro.Domain.Models.Estoque;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.EstoqueRepository
 {
@@ -37,8 +38,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.EstoqueRepository
                 _context.Estoques.Include("Produto").FirstOrDefault(x => x.Produto.ProdutoCodigo.Equals(codigoProduto));
         }
 
-        public List<Estoque> ObterLista(string descricaoProduto, int codigoProduto, int quantidaEstoque, string nomeFornecedor,
-            int codigoFornecedor)
+        public List<Estoque> ObterListaPorFiltro(PesquisaEstoque filtro)
         {
             var query = from estoque in _context.Estoques
                 .Include("Produto")
@@ -46,29 +46,29 @@ namespace ProjetoArtCouro.DataBase.Repositorios.EstoqueRepository
                 .Include("Compra.Fornecedor")
                         select estoque;
 
-            if (!codigoProduto.Equals(0))
+            if (filtro.CodigoProduto != 0)
             {
-                query = query.Where(x => x.Produto.ProdutoCodigo == codigoProduto);
+                query = query.Where(x => x.Produto.ProdutoCodigo == filtro.CodigoProduto);
             }
 
-            if (!quantidaEstoque.Equals(0))
+            if (filtro.QuantidaEstoque != 0)
             {
-                query = query.Where(x => x.Quantidade == quantidaEstoque);
+                query = query.Where(x => x.Quantidade == filtro.QuantidaEstoque);
             }
 
-            if (!codigoFornecedor.Equals(0))
+            if (filtro.CodigoFornecedor != 0)
             {
-                query = query.Where(x => x.Compra.Fornecedor.PessoaCodigo == codigoFornecedor);
+                query = query.Where(x => x.Compra.Fornecedor.PessoaCodigo == filtro.CodigoFornecedor);
             }
 
-            if (!string.IsNullOrEmpty(descricaoProduto))
+            if (!string.IsNullOrEmpty(filtro.DescricaoProduto))
             {
-                query = query.Where(x => x.Produto.ProdutoNome.Contains(descricaoProduto));
+                query = query.Where(x => x.Produto.ProdutoNome.Contains(filtro.DescricaoProduto));
             }
 
-            if (!string.IsNullOrEmpty(nomeFornecedor))
+            if (!string.IsNullOrEmpty(filtro.NomeFornecedor))
             {
-                query = query.Where(x => x.Compra.Fornecedor.Nome.Contains(nomeFornecedor));
+                query = query.Where(x => x.Compra.Fornecedor.Nome.Contains(filtro.NomeFornecedor));
             }
 
             return query.ToList();

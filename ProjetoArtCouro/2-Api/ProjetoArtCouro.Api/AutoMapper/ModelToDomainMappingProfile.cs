@@ -22,6 +22,7 @@ using ProjetoArtCouro.Domain.Models.Produto;
 using ProjetoArtCouro.Domain.Models.Usuario;
 using ProjetoArtCouro.Domain.Models.Venda;
 using ProjetoArtCouro.Api.AutoMapper.Converters;
+using ProjetoArtCouro.Domain.Models.Estoque;
 
 namespace ProjetoArtCouro.Api.AutoMapper
 {
@@ -33,6 +34,8 @@ namespace ProjetoArtCouro.Api.AutoMapper
             MapperUser();
 
             MapperPerson();
+
+            MapperStock();
 
             MapperProduct();
 
@@ -141,6 +144,11 @@ namespace ProjetoArtCouro.Api.AutoMapper
             CreateMap<CondicaoPagamentoModel, CondicaoPagamento>();
 
             CreateMap<FormaPagamentoModel, FormaPagamento>();
+        }
+
+        private void MapperStock()
+        {
+            CreateMap<PesquisaEstoqueModel, PesquisaEstoque>();
         }
 
         private void MapperPerson()

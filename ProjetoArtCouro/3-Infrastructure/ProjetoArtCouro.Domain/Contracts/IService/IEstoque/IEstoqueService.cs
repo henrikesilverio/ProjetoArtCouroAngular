@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using ProjetoArtCouro.Domain.Entities.Estoques;
+using ProjetoArtCouro.Domain.Models.Estoque;
 
 namespace ProjetoArtCouro.Domain.Contracts.IService.IEstoque
 {
     public interface IEstoqueService : IDisposable
     {
-        List<Estoque> PesquisarEstoque(string descricaoProduto, int codigoProduto, int quantidaEstoque,
-            string nomeFornecedor, int codigoFornecedor);
+        List<EstoqueModel> PesquisarEstoque(PesquisaEstoqueModel model);
     }
 }

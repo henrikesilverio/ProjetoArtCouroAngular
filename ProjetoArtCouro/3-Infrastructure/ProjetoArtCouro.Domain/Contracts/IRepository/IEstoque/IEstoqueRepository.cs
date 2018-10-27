@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Estoques;
+using ProjetoArtCouro.Domain.Models.Estoque;
 
 namespace ProjetoArtCouro.Domain.Contracts.IRepository.IEstoque
 {
@@ -10,8 +11,7 @@ namespace ProjetoArtCouro.Domain.Contracts.IRepository.IEstoque
         Estoque ObterPorCodigo(int codigo);
         Estoque ObterPorCodigoProduto(int codigoProduto);
         List<Estoque> ObterLista();
-        List<Estoque> ObterLista(string descricaoProduto, int codigoProduto, int quantidaEstoque, string nomeFornecedor,
-            int codigoFornecedor);
+        List<Estoque> ObterListaPorFiltro(PesquisaEstoque filtro);
         void Criar(Estoque estoque);
         void Atualizar(Estoque estoque);
         void Deletar(Estoque estoque);

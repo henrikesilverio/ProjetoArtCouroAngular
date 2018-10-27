@@ -1,32 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IEstoque;
 using ProjetoArtCouro.Domain.Contracts.IService.IEstoque;
-using ProjetoArtCouro.Domain.Entities.Estoques;
-using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Domain.Models.Estoque;
 
 namespace ProjetoArtCouro.Business.Services.EstoqueService
 {
     public class EstoqueService : IEstoqueService
     {
         private readonly IEstoqueRepository _estoqueRepository;
+
         public EstoqueService(IEstoqueRepository estoqueRepository)
         {
             _estoqueRepository = estoqueRepository;
         }
 
-        public List<Estoque> PesquisarEstoque(string descricaoProduto, int codigoProduto, int quantidaEstoque, string nomeFornecedor,
-            int codigoFornecedor)
+        public List<EstoqueModel> PesquisarEstoque(PesquisaEstoqueModel model)
         {
-            if (string.IsNullOrEmpty(descricaoProduto) && codigoProduto.Equals(0) && 
-                quantidaEstoque.Equals(0) && string.IsNullOrEmpty(nomeFornecedor) &&
-                codigoFornecedor.Equals(0))
-            {
-                throw new Exception(Erros.EmptyParameters);
-            }
-
-            return _estoqueRepository.ObterLista(descricaoProduto, codigoProduto, quantidaEstoque, nomeFornecedor,
-                codigoFornecedor);
+            var filtro = Mapper.Map<PesquisaEstoque>(model);
+            var estoques = _estoqueRepository.ObterListaPorFiltro(filtro);
+            return Mapper.Map<List<EstoqueModel>>(estoques);
         }
 
         public void Dispose()

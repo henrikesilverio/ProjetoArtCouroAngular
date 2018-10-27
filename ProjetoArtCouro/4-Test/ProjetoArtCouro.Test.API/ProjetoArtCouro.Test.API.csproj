@@ -60,6 +60,13 @@
       <DependentUpon>ContaReceberController.feature</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Contas\ContaTestShared.cs" />
+    <Compile Include="Controllers\Estoque\EstoqueController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EstoqueController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Estoque\EstoqueControllerSteps.cs" />
+    <Compile Include="Controllers\Estoque\EstoqueTestShared.cs" />
     <Compile Include="Controllers\Pagamentos\CondicaoPagamentoControllerSteps.cs" />
     <Compile Include="Controllers\Clientes\ClienteController.feature.cs">
       <AutoGen>True</AutoGen>
@@ -183,6 +190,10 @@
     <None Include="Controllers\Contas\ContaReceberController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ContaReceberController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Controllers\Estoque\EstoqueController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>EstoqueController.feature.cs</LastGenOutput>
     </None>
     <None Include="Controllers\Fornecedores\FornecedorController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
