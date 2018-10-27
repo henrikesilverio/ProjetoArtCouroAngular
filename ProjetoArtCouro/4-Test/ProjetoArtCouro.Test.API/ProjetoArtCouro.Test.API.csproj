@@ -40,6 +40,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Contas\ContaReceberControllerSteps.cs" />
     <Compile Include="Controllers\Compras\CompraController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -53,6 +54,11 @@
       <DependentUpon>ContaPagarController.feature</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Contas\ContaPagarControllerSteps.cs" />
+    <Compile Include="Controllers\Contas\ContaReceberController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContaReceberController.feature</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\Contas\ContaTestShared.cs" />
     <Compile Include="Controllers\Pagamentos\CondicaoPagamentoControllerSteps.cs" />
     <Compile Include="Controllers\Clientes\ClienteController.feature.cs">
@@ -173,6 +179,10 @@
     <None Include="Controllers\Contas\ContaPagarController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ContaPagarController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Controllers\Contas\ContaReceberController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ContaReceberController.feature.cs</LastGenOutput>
     </None>
     <None Include="Controllers\Fornecedores\FornecedorController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

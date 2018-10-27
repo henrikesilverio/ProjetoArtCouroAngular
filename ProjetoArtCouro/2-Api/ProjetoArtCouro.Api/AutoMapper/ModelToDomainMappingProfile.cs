@@ -65,6 +65,11 @@ namespace ProjetoArtCouro.Api.AutoMapper
                 .ForMember(d => d.DataEmissao, m => m.MapFrom(s => s.DataEmissao.ToDateTimeWithoutHour()))
                 .ForMember(d => d.DataVencimento, m => m.MapFrom(s => s.DataVencimento.ToDateTimeWithoutHour()))
                 .ForMember(d => d.StatusContaPagar, m => m.MapFrom(s => s.StatusId));
+
+            CreateMap<PesquisaContaReceberModel, PesquisaContaReceber>()
+                .ForMember(d => d.DataEmissao, m => m.MapFrom(s => s.DataEmissao.ToDateTimeWithoutHour()))
+                .ForMember(d => d.DataVencimento, m => m.MapFrom(s => s.DataVencimento.ToDateTimeWithoutHour()))
+                .ForMember(d => d.StatusContaReceber, m => m.MapFrom(s => s.StatusId));
         }
 
         private void MapperBuy()

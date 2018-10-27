@@ -28,6 +28,8 @@ namespace ProjetoArtCouro.Test.API.Controllers.Contas
                 "DELETE FROM [Estoque] DBCC CHECKIDENT('Estoque', RESEED, 0)",
                 "DELETE FROM [Compra] DBCC CHECKIDENT('Compra', RESEED, 0)",
                 "DELETE FROM [ItemCompra] DBCC CHECKIDENT('ItemCompra', RESEED, 0)",
+                "DELETE FROM [Venda] DBCC CHECKIDENT('Venda', RESEED, 0)",
+                "DELETE FROM [ItemVenda] DBCC CHECKIDENT('ItemVenda', RESEED, 0)",
                 "DELETE FROM [MeioComunicacao] DBCC CHECKIDENT('MeioComunicacao', RESEED, 0)",
                 "DELETE FROM [Endereco] DBCC CHECKIDENT('Endereco', RESEED, 0)",
                 "DELETE FROM [PessoaFisica] DBCC CHECKIDENT('PessoaFisica', RESEED, 0)",
@@ -37,7 +39,8 @@ namespace ProjetoArtCouro.Test.API.Controllers.Contas
                 "DELETE FROM [CondicaoPagamento] DBCC CHECKIDENT('CondicaoPagamento', RESEED, 0)",
                 "DELETE FROM [FormaPagamento] DBCC CHECKIDENT('FormaPagamento', RESEED, 0)",
                 "DELETE FROM [Produto] DBCC CHECKIDENT('Produto', RESEED, 0)",
-                "DELETE FROM [ContaPagar] DBCC CHECKIDENT('ContaPagar', RESEED, 0)"
+                "DELETE FROM [ContaPagar] DBCC CHECKIDENT('ContaPagar', RESEED, 0)",
+                "DELETE FROM [ContaReceber] DBCC CHECKIDENT('ContaReceber', RESEED, 0)"
             };
 
             foreach (var command in commands)

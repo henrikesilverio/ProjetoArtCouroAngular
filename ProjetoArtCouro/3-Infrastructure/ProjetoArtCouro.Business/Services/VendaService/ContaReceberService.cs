@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IVenda;
 using ProjetoArtCouro.Domain.Contracts.IService.IVenda;
@@ -7,6 +6,9 @@ using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Entities.Vendas;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
+using ProjetoArtCouro.Domain.Exceptions;
+using ProjetoArtCouro.Domain.Models.ContaReceber;
+using AutoMapper;
 
 namespace ProjetoArtCouro.Business.Services.VendaService
 {
@@ -19,24 +21,21 @@ namespace ProjetoArtCouro.Business.Services.VendaService
             _contaReceberRepository = contaReceberRepository;
         }
 
-        public List<ContaReceber> PesquisarContaReceber(int codigoVenda, int codigoCliente, DateTime dataEmissao, DateTime dataVencimento,
-            int statusContaReceber, string nomeCliente, string documento, int codigoUsuario)
+        public List<ContaReceberModel> PesquisarContaReceber(int codigoUsuario, PesquisaContaReceberModel model)
         {
-            if (codigoVenda.Equals(0) && codigoCliente.Equals(0) &&
-                dataEmissao.Equals(new DateTime()) && dataVencimento.Equals(new DateTime()) &&
-                statusContaReceber.Equals(0) && string.IsNullOrEmpty(nomeCliente) && 
-                string.IsNullOrEmpty(documento) && codigoUsuario.Equals(0))
-            {
-                throw new Exception(Erros.EmptyParameters);
-            };
-
-            return _contaReceberRepository.ObterLista(codigoVenda, codigoCliente, dataEmissao, dataVencimento,
-                statusContaReceber, nomeCliente, documento, codigoUsuario);
+            var filtro = Mapper.Map<PesquisaContaReceber>(model);
+            filtro.CodigoUsuario = codigoUsuario;
+            var contasReceber = _contaReceberRepository.ObterListaPorFiltro(filtro);
+            return Mapper.Map<List<ContaReceberModel>>(contasReceber);
         }
 
-        public void ReceberContas(List<ContaReceber> contasReceber)
+        public void ReceberContas(List<ContaReceberModel> model)
         {
-            //AssertionConcern.AssertArgumentFalse(contasReceber.Any(x => x.ContaReceberCodigo.Equals(0)), Erros.ThereReceivableWithZeroCode);
+            var contasReceber = Mapper.Map<List<ContaReceber>>(model);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentFalse(contasReceber.Any(x => x.ContaReceberCodigo.Equals(0)), Erros.ThereReceivableWithZeroCode);
+
             contasReceber.ForEach(x =>
             {
                 var contaReceberAtual = _contaReceberRepository.ObterPorCodigoComVenda(x.ContaReceberCodigo);

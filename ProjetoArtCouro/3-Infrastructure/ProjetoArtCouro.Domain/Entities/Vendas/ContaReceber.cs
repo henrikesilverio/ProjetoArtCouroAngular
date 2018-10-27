@@ -1,11 +1,12 @@
 ﻿using System;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.Enums;
-using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Vendas
 {
-    public class ContaReceber
+    public class ContaReceber : Notifiable
     {
         public Guid ContaReceberId { get; set; }
         public int ContaReceberCodigo { get; set; }
@@ -17,13 +18,15 @@ namespace ProjetoArtCouro.Domain.Entities.Vendas
 
         public void Validar()
         {
-            //AssertionConcern.AssertArgumentNotEquals(new DateTime(), DataVencimento,
-            //    string.Format(Erros.InvalidParameter, "DataVencimento"));
-            //AssertionConcern.AssertArgumentNotEquals(0.0M, ValorDocumento,
-            //    string.Format(Erros.NotZeroParameter, "ValorDocumento"));
-            //AssertionConcern.AssertArgumentNotEquals(StatusContaReceber, StatusContaReceberEnum.None,
-            //    string.Format(Erros.InvalidParameter, "StatusContaReceber"));
-            //AssertionConcern.AssertArgumentNotNull(Venda, Erros.SaleNotSet);
+            new ValidationContract<ContaReceber>(this)
+                .IsNotEquals(x => x.DataVencimento, new DateTime())
+                .IsNotEquals(x => x.StatusContaReceber, StatusVendaEnum.None)
+                .IsNotZero(x => x.ValorDocumento)
+                .IsNotNull(x => x.Venda, Erros.PurchaseNotSet);
+            if (!IsValid())
+            {
+                throw new DomainException(GetMergeNotifications());
+            }
         }
     }
 }

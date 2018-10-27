@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IVenda;
 using ProjetoArtCouro.Domain.Entities.Vendas;
+using ProjetoArtCouro.Domain.Models.ContaReceber;
+using ProjetoArtCouro.Domain.Models.Enums;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.VendaRepository
 {
@@ -41,8 +43,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.VendaRepository
             return _context.ContasReceber.Include("Venda").Where(x => x.Venda.VendaCodigo.Equals(codigoVenda)).ToList();
         }
 
-        public List<ContaReceber> ObterLista(int codigoVenda, int codigoCliente, DateTime dataEmissao, DateTime dataVencimento,
-            int statusContaReceber, string nomeCliente, string documento, int codigoUsuario)
+        public List<ContaReceber> ObterListaPorFiltro(PesquisaContaReceber filtro)
         {
             var query = from contaReceber in _context.ContasReceber
                 .Include("Venda")
@@ -51,44 +52,45 @@ namespace ProjetoArtCouro.DataBase.Repositorios.VendaRepository
                 .Include("Venda.Cliente.PessoaJuridica")
                         select contaReceber;
 
-            if (!codigoVenda.Equals(0))
+            if (filtro.CodigoVenda != 0)
             {
-                query = query.Where(x => x.Venda.VendaCodigo == codigoVenda);
+                query = query.Where(x => x.Venda.VendaCodigo == filtro.CodigoVenda);
             }
 
-            if (!codigoCliente.Equals(0))
+            if (filtro.CodigoCliente != 0)
             {
-                query = query.Where(x => x.Venda.Cliente.PessoaCodigo == codigoCliente);
+                query = query.Where(x => x.Venda.Cliente.PessoaCodigo == filtro.CodigoCliente);
             }
 
-            if (!dataEmissao.Equals(new DateTime()))
+            if (filtro.DataEmissao != new DateTime())
             {
-                query = query.Where(x => EntityFunctions.TruncateTime(x.Venda.DataCadastro) == dataEmissao.Date);
+                query = query.Where(x => DbFunctions.TruncateTime(x.Venda.DataCadastro) == filtro.DataEmissao.Date);
             }
 
-            if (!dataVencimento.Equals(new DateTime()))
+            if (filtro.DataVencimento != new DateTime())
             {
-                query = query.Where(x => EntityFunctions.TruncateTime(x.DataVencimento) == dataVencimento.Date);
+                query = query.Where(x => DbFunctions.TruncateTime(x.DataVencimento) == filtro.DataVencimento.Date);
             }
 
-            if (!statusContaReceber.Equals(0))
+            if (filtro.StatusContaReceber != StatusContaReceberEnum.None)
             {
-                query = query.Where(x => (int)x.StatusContaReceber == statusContaReceber);
+                query = query.Where(x => x.StatusContaReceber == filtro.StatusContaReceber);
             }
 
-            if (!string.IsNullOrEmpty(nomeCliente))
+            if (!string.IsNullOrEmpty(filtro.NomeCliente))
             {
-                query = query.Where(x => x.Venda.Cliente.Nome == nomeCliente);
+                query = query.Where(x => x.Venda.Cliente.Nome == filtro.NomeCliente);
             }
 
-            if (!string.IsNullOrEmpty(documento))
+            if (!string.IsNullOrEmpty(filtro.CPFCNPJ))
             {
-                query = query.Where(x => x.Venda.Cliente.PessoaFisica.CPF == documento || x.Venda.Cliente.PessoaJuridica.CNPJ == documento);
+                query = query.Where(x => x.Venda.Cliente.PessoaFisica.CPF == filtro.CPFCNPJ || 
+                x.Venda.Cliente.PessoaJuridica.CNPJ == filtro.CPFCNPJ);
             }
 
-            if (!codigoUsuario.Equals(0))
+            if (filtro.CodigoUsuario != 0)
             {
-                query = query.Where(x => x.Venda.Usuario.UsuarioCodigo == codigoUsuario);
+                query = query.Where(x => x.Venda.Usuario.UsuarioCodigo == filtro.CodigoUsuario);
             }
 
             return query.ToList();
@@ -102,7 +104,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.VendaRepository
 
         public void Atualizar(ContaReceber contaReceber)
         {
-            _context.Entry(contaReceber).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(contaReceber).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
