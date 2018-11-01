@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
-using ProjetoArtCouro.Api.AutoMapper.Converters;
-using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Entities.Estoques;
 using ProjetoArtCouro.Domain.Entities.Pagamentos;
@@ -23,8 +21,10 @@ using ProjetoArtCouro.Domain.Models.Funcionario;
 using ProjetoArtCouro.Domain.Models.Produto;
 using ProjetoArtCouro.Domain.Models.Usuario;
 using ProjetoArtCouro.Domain.Models.Venda;
+using ProjetoArtCouro.Mapping.Converters;
+using ProjetoArtCouro.Mapping.Helpers;
 
-namespace ProjetoArtCouro.Api.AutoMapper
+namespace ProjetoArtCouro.Mapping.Profiles
 {
     public class DomainToModelMappingProfile : Profile
     {

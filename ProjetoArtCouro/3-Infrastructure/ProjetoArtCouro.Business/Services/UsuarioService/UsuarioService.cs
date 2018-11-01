@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IUsuario;
 using ProjetoArtCouro.Domain.Contracts.IService.IUsuario;
@@ -7,9 +6,9 @@ using ProjetoArtCouro.Domain.Entities.Usuarios;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resources.Validation;
 using ProjetoArtCouro.Domain.Models.Usuario;
-using AutoMapper;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Exceptions;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Business.Services.UsuarioService
 {
@@ -37,7 +36,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             AssertionConcern<BusinessException>
                 .AssertArgumentEquals(model.Senha, model.ConfirmarSenha, Erros.ConfirmPasswordAndPasswordNotMatch);
 
-            var usuario = Mapper.Map<Usuario>(model);
+            var usuario = Map<Usuario>.MapperTo(model);
             usuario.Validar();
 
             var temUsuario = _usuarioRepository.ObterPorUsuarioNome(usuario.UsuarioNome);
@@ -58,13 +57,13 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
         {
             var usuarios = _usuarioRepository
                 .ObterLista(model.UsuarioNome, model.GrupoCodigo, model.Ativo);
-            return Mapper.Map<List<UsuarioModel>>(usuarios);
+            return Map<List<UsuarioModel>>.MapperTo(usuarios);
         }
 
         public UsuarioModel PesquisarUsuarioPorCodigo(int codigoUsuario)
         {
             var usuario = _usuarioRepository.ObterPorCodigoComPermissoesEGrupo(codigoUsuario);
-            return Mapper.Map<UsuarioModel>(usuario);
+            return Map<UsuarioModel>.MapperTo(usuario);
         }
 
         public void AlterarSenha(string usuarioNome, string senha)
@@ -81,7 +80,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public void EditarUsuario(UsuarioModel model)
         {
-            var usuario = Mapper.Map<Usuario>(model);
+            var usuario = Map<Usuario>.MapperTo(model);
             var usuarioAtual = _usuarioRepository.ObterPorCodigoComPermissoesEGrupo(usuario.UsuarioCodigo);
             AssertionConcern<BusinessException>
                 .AssertArgumentNotNull(usuarioAtual, Erros.UserDoesNotExist);
@@ -135,7 +134,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             AssertionConcern<BusinessException>
                 .AssertArgumentNotEquals(usuario, null, Erros.UserDoesNotExist);
 
-            var permissoes = Mapper.Map<List<Permissao>>(model.Permissoes);
+            var permissoes = Map<List<Permissao>>.MapperTo(model.Permissoes);
             var permissoesDB = _permissaoRepository.ObterLista();
 
             usuario.Permissoes.Clear();
@@ -150,25 +149,25 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
         public List<UsuarioModel> ObterListaUsuario()
         {
             var usuarios = _usuarioRepository.ObterListaComPermissoes();
-            return Mapper.Map<List<UsuarioModel>>(usuarios);
+            return Map<List<UsuarioModel>>.MapperTo(usuarios);
         }
 
         public List<PermissaoModel> ObterListaPermissao()
         {
             var permissoes = _permissaoRepository.ObterLista();
-            return Mapper.Map<List<PermissaoModel>>(permissoes);
+            return Map<List<PermissaoModel>>.MapperTo(permissoes);
         }
 
         public List<PermissaoModel> ObterPermissoesUsuarioLogado(string usuarioNome)
         {
             var usuario = _usuarioRepository.ObterComPermissoesPorUsuarioNome(usuarioNome);
-            return Mapper.Map<List<PermissaoModel>>(usuario.Permissoes.ToList());
+            return Map<List<PermissaoModel>>.MapperTo(usuario.Permissoes.ToList());
         }
 
         public GrupoModel ObterGrupoPermissaoPorCodigo(int codigoGrupo)
         {
             var grupo = _grupoPermissaoRepository.ObterPorCodigoComPermissoes(codigoGrupo);
-            return Mapper.Map<GrupoModel>(grupo);
+            return Map<GrupoModel>.MapperTo(grupo);
         }
 
         public List<GrupoModel> PesquisarGrupo(PesquisaGrupoModel model)
@@ -182,18 +181,18 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             {
                 grupos = _grupoPermissaoRepository.ObterLista(model.GrupoNome, model.GrupoCodigo);
             }
-            return Mapper.Map<List<GrupoModel>>(grupos);
+            return Map<List<GrupoModel>>.MapperTo(grupos);
         }
 
         public List<GrupoModel> ObterListaGrupoPermissao()
         {
             var grupos = _grupoPermissaoRepository.ObterLista();
-            return Mapper.Map<List<GrupoModel>>(grupos);
+            return Map<List<GrupoModel>>.MapperTo(grupos);
         }
 
         public void CriarGrupoPermissao(GrupoModel model)
         {
-            var grupo = Mapper.Map<GrupoPermissao>(model);
+            var grupo = Map<GrupoPermissao>.MapperTo(model);
             grupo.Validar();
 
             var temGrupo = _grupoPermissaoRepository.ObterPorGrupoPermissaoNome(grupo.GrupoPermissaoNome.ToLower());
@@ -206,7 +205,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public void EditarGrupoPermissao(GrupoModel model)
         {
-            var grupo = Mapper.Map<GrupoPermissao>(model);
+            var grupo = Map<GrupoPermissao>.MapperTo(model);
             grupo.Validar();
 
             var grupoPermissaoDB =

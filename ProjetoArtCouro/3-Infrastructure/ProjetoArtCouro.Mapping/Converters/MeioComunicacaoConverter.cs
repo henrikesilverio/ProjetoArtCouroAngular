@@ -4,7 +4,7 @@ using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Domain.Models.Enums;
 using System.Collections.Generic;
 
-namespace ProjetoArtCouro.Api.AutoMapper.Converters
+namespace ProjetoArtCouro.Mapping.Converters
 {
     public class MeioComunicacaoConverter : ITypeConverter<MeioComunicacaoModel, ICollection<MeioComunicacao>>
     {

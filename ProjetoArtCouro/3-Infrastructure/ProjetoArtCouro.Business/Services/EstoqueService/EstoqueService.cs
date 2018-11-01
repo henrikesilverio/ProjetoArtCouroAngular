@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using AutoMapper;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IEstoque;
 using ProjetoArtCouro.Domain.Contracts.IService.IEstoque;
 using ProjetoArtCouro.Domain.Models.Estoque;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Business.Services.EstoqueService
 {
@@ -17,9 +17,9 @@ namespace ProjetoArtCouro.Business.Services.EstoqueService
 
         public List<EstoqueModel> PesquisarEstoque(PesquisaEstoqueModel model)
         {
-            var filtro = Mapper.Map<PesquisaEstoque>(model);
+            var filtro = Map<PesquisaEstoque>.MapperTo(model);
             var estoques = _estoqueRepository.ObterListaPorFiltro(filtro);
-            return Mapper.Map<List<EstoqueModel>>(estoques);
+            return Map<List<EstoqueModel>>.MapperTo(estoques);
         }
 
         public void Dispose()

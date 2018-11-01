@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
 
-namespace ProjetoArtCouro.Api.AutoMapper
+namespace ProjetoArtCouro.Mapping.Profiles
 {
     public class DomainToDomainMappingProfile : Profile
     {

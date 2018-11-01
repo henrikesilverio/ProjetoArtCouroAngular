@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 
-namespace ProjetoArtCouro.Api.AutoMapper
+namespace ProjetoArtCouro.Mapping.Profiles
 {
     public class ModelToModelMappingProfile : Profile
     {
         //Configuração de mapeamento do viewModel para viewModel
-        public ModelToModelMappingProfile()
-        {
-        }
+        public ModelToModelMappingProfile() { }
     }
 }

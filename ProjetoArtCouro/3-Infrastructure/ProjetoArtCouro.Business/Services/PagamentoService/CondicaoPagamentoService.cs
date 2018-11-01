@@ -5,8 +5,8 @@ using ProjetoArtCouro.Domain.Entities.Pagamentos;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Models.CondicaoPagamento;
-using AutoMapper;
 using ProjetoArtCouro.Domain.Exceptions;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Business.Services.PagamentoService
 {
@@ -22,7 +22,7 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
         public List<CondicaoPagamentoModel> ObterListaCondicaoPagamento()
         {
             var condicoesPagamentos = _condicaoPagamentoRepository.ObterLista();
-            return Mapper.Map<List<CondicaoPagamentoModel>>(condicoesPagamentos);
+            return Map<List<CondicaoPagamentoModel>>.MapperTo(condicoesPagamentos);
         }
 
         public CondicaoPagamento ObterCondicaoPagamentoPorCodigo(int codigo)
@@ -32,18 +32,18 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
 
         public CondicaoPagamentoModel CriarCondicaoPagamento(CondicaoPagamentoModel model)
         {
-            var condicaoPagamento = Mapper.Map<CondicaoPagamento>(model);
+            var condicaoPagamento = Map<CondicaoPagamento>.MapperTo(model);
             condicaoPagamento.Validar();
 
             var condicaoPagamentoIncluida = _condicaoPagamentoRepository
                 .Criar(condicaoPagamento);
 
-            return Mapper.Map<CondicaoPagamentoModel>(condicaoPagamentoIncluida);
+            return Map<CondicaoPagamentoModel>.MapperTo(condicaoPagamentoIncluida);
         }
 
         public CondicaoPagamentoModel AtualizarCondicaoPagamento(CondicaoPagamentoModel model)
         {
-            var condicaoPagamento = Mapper.Map<CondicaoPagamento>(model);
+            var condicaoPagamento = Map<CondicaoPagamento>.MapperTo(model);
             condicaoPagamento.Validar();
 
             AssertionConcern<BusinessException>
@@ -58,7 +58,7 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
             var condicaoPagamentoAtualizada = _condicaoPagamentoRepository
                 .Atualizar(condicaoPagamentoAtual);
 
-            return Mapper.Map<CondicaoPagamentoModel>(condicaoPagamentoAtualizada);
+            return Map<CondicaoPagamentoModel>.MapperTo(condicaoPagamentoAtualizada);
         }
 
         public void ExcluirCondicaoPagamento(int condicaoPagamentoCodigo)

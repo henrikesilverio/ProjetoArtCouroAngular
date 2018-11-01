@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
-using AutoMapper;
 using ProjetoArtCouro.Api.Extensions;
 using ProjetoArtCouro.Api.Helpers;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Models.Fornecedor;
 using ProjetoArtCouro.Domain.Models.Pessoa;
+using ProjetoArtCouro.Mapping;
 using WebApi.OutputCache.V2;
 
 namespace ProjetoArtCouro.Api.Controllers.Pessoas
@@ -61,9 +61,8 @@ namespace ProjetoArtCouro.Api.Controllers.Pessoas
         [HttpGet]
         public IHttpActionResult ObterListaFornecedor()
         {
-            var listaPessoa = _pessoaService
-                .ObterListaPessoaFisicaEJuridicaPorPapel(TipoPapelPessoaEnum.Fornecedor);
-            return OkRetornoBase(Mapper.Map<List<FornecedorModel>>(listaPessoa));
+            var pessoas = _pessoaService.ObterListaPessoaFisicaEJuridicaPorPapel(TipoPapelPessoaEnum.Fornecedor);
+            return OkRetornoBase(Map<List<FornecedorModel>>.MapperTo(pessoas));
         }
 
         [Route("EditarFornecedor")]

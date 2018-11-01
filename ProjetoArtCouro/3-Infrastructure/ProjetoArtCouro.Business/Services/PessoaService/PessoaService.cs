@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
 using ProjetoArtCouro.Domain.Contracts.IService.IPessoa;
 using ProjetoArtCouro.Domain.Models.Enums;
@@ -10,6 +9,7 @@ using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.Pessoa;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Business.Services.PessoaService
 {
@@ -53,7 +53,7 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
 
         public void CriarPessoa(PessoaModel model)
         {
-            var pessoa = Mapper.Map<Pessoa>(model);
+            var pessoa = Map<Pessoa>.MapperTo(model);
             ValidarPessoa(pessoa);
 
             pessoa.Papeis = new List<Papel>
@@ -63,12 +63,12 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
 
             if (model.EPessoaFisica)
             {
-                pessoa.PessoaFisica = Mapper.Map<PessoaFisica>(model);
+                pessoa.PessoaFisica = Map<PessoaFisica>.MapperTo(model);
                 CriarPessoaFisica(pessoa);
             }
             else
             {
-                pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
+                pessoa.PessoaJuridica = Map<PessoaJuridica>.MapperTo(model);
                 CriarPessoaJuridica(pessoa);
             }
         }
@@ -113,14 +113,14 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
 
         public void AtualizarPessoa(PessoaModel model)
         {
-            var pessoa = Mapper.Map<Pessoa>(model);
+            var pessoa = Map<Pessoa>.MapperTo(model);
             if (model.EPessoaFisica)
             {
-                pessoa.PessoaFisica = Mapper.Map<PessoaFisica>(model);
+                pessoa.PessoaFisica = Map<PessoaFisica>.MapperTo(model);
             }
             else
             {
-                pessoa.PessoaJuridica = Mapper.Map<PessoaJuridica>(model);
+                pessoa.PessoaJuridica = Map<PessoaJuridica>.MapperTo(model);
             }
 
             var pessoaAtual = _pessoaRepository.ObterPorCodigoComPessoaCompleta(pessoa.PessoaCodigo);
@@ -174,11 +174,11 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             {
                 var pessoasFisicas = _pessoaFisicaRepository
                     .ObterLista(filtro.Codigo ?? 0, filtro.Nome, filtro.CPFCNPJ, filtro.Email, filtro.TipoPapelPessoa);
-                return Mapper.Map<List<PessoaModel>>(pessoasFisicas);
+                return Map<List<PessoaModel>>.MapperTo(pessoasFisicas);
             }
             var pessoasJuridicas = _pessoaJuridicaRepository
                 .ObterLista(filtro.Codigo ?? 0, filtro.Nome, filtro.CPFCNPJ, filtro.Email, filtro.TipoPapelPessoa);
-            return Mapper.Map<List<PessoaModel>>(pessoasJuridicas);
+            return Map<List<PessoaModel>>.MapperTo(pessoasJuridicas);
         }
 
         public PessoaModel ObterPessoaPorCodigo(int codigo)
@@ -186,27 +186,27 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             var pessoa = _pessoaRepository.ObterPorCodigoComPessoaCompleta(codigo);
             if (pessoa.PessoaJuridica == null)
             {
-                return Mapper.Map<PessoaModel>(pessoa.PessoaFisica);
+                return Map<PessoaModel>.MapperTo(pessoa.PessoaFisica);
             }
-            return Mapper.Map<PessoaModel>(pessoa.PessoaJuridica);
+            return Map<PessoaModel>.MapperTo(pessoa.PessoaJuridica);
         }
 
         public List<LookupModel> ObterEstados()
         {
             var estados = _estadoRepository.ObterLista();
-            return Mapper.Map<List<LookupModel>>(estados);
+            return Map<List<LookupModel>>.MapperTo(estados);
         }
 
         public List<LookupModel> ObterEstadosCivis()
         {
             var estadosCivis = _estadoCivilRepository.ObterLista();
-            return Mapper.Map<List<LookupModel>>(estadosCivis);
+            return Map<List<LookupModel>>.MapperTo(estadosCivis);
         }
 
         public List<PessoaModel> ObterListaPessoa()
         {
             var pessoas = _pessoaRepository.ObterListaComPessoaFisicaEJuridica();
-            return Mapper.Map<List<PessoaModel>>(pessoas);
+            return Map<List<PessoaModel>>.MapperTo(pessoas);
         }
 
         public List<Pessoa> ObterListaPessoaFisicaEJuridicaPorPapel(TipoPapelPessoaEnum papelCodigo)

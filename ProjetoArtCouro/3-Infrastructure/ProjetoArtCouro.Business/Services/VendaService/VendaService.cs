@@ -14,8 +14,8 @@ using ProjetoArtCouro.Domain.Entities.Vendas;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Exceptions;
-using AutoMapper;
 using ProjetoArtCouro.Domain.Models.Venda;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Business.Services.VendaService
 {
@@ -50,7 +50,7 @@ namespace ProjetoArtCouro.Business.Services.VendaService
 
         public void CriarVenda(int usuarioCodigo, VendaModel model)
         {
-            var venda = Mapper.Map<Venda>(model);
+            var venda = Map<Venda>.MapperTo(model);
             venda.Validar();
 
             AssertionConcern<BusinessException>
@@ -73,16 +73,16 @@ namespace ProjetoArtCouro.Business.Services.VendaService
 
         public List<VendaModel> PesquisarVenda(int codigoUsuario, PesquisaVendaModel model)
         {
-            var filtro = Mapper.Map<PesquisaVenda>(model);
+            var filtro = Map<PesquisaVenda>.MapperTo(model);
             filtro.CodigoUsuario = codigoUsuario;
             var compras = _vendaRepository.ObterListaPorFiltro(filtro);
-            return Mapper.Map<List<VendaModel>>(compras);
+            return Map<List<VendaModel>>.MapperTo(compras);
         }
 
         public VendaModel ObterVendaPorCodigo(int codigoVenda)
         {
             var venda = _vendaRepository.ObterPorCodigoComItensVenda(codigoVenda);
-            return Mapper.Map<VendaModel>(venda);
+            return Map<VendaModel>.MapperTo(venda);
         }
 
         public void AtualizarVenda(VendaModel model)
@@ -90,7 +90,7 @@ namespace ProjetoArtCouro.Business.Services.VendaService
             AssertionConcern<BusinessException>.AssertArgumentNotEquals(0, model.CodigoVenda,
             string.Format(Erros.NotZeroParameter, "CodigoVenda"));
 
-            var venda = Mapper.Map<Venda>(model);
+            var venda = Map<Venda>.MapperTo(model);
             venda.Validar();
 
             AssertionConcern<BusinessException>

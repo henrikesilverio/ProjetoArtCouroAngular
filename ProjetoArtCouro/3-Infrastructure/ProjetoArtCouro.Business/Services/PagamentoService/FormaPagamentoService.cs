@@ -3,10 +3,10 @@ using ProjetoArtCouro.Domain.Contracts.IRepository.IPagamento;
 using ProjetoArtCouro.Domain.Contracts.IService.IPagamento;
 using ProjetoArtCouro.Domain.Entities.Pagamentos;
 using ProjetoArtCouro.Domain.Models.FormaPagamento;
-using AutoMapper;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Domain.Exceptions;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Business.Services.PagamentoService
 {
@@ -21,7 +21,7 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
         public List<FormaPagamentoModel> ObterListaFormaPagamento()
         {
             var listaformaPagamento = _formaPagamentoRepository.ObterLista();
-            return Mapper.Map<List<FormaPagamentoModel>>(listaformaPagamento);
+            return Map<List<FormaPagamentoModel>>.MapperTo(listaformaPagamento);
         }
 
         public FormaPagamento ObterFormaPagamentoPorCodigo(int codigo)
@@ -31,17 +31,17 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
 
         public FormaPagamentoModel CriarFormaPagamento(FormaPagamentoModel model)
         {
-            var formaPagamento = Mapper.Map<FormaPagamento>(model);
+            var formaPagamento = Map<FormaPagamento>.MapperTo(model);
 
             formaPagamento.Validar();
             var formaPagamentoIncluida = _formaPagamentoRepository.Criar(formaPagamento);
 
-            return Mapper.Map<FormaPagamentoModel>(formaPagamentoIncluida);
+            return Map<FormaPagamentoModel>.MapperTo(formaPagamentoIncluida);
         }
 
         public FormaPagamentoModel AtualizarFormaPagamento(FormaPagamentoModel model)
         {
-            var formaPagamento = Mapper.Map<FormaPagamento>(model);
+            var formaPagamento = Map<FormaPagamento>.MapperTo(model);
             formaPagamento.Validar();
 
             AssertionConcern<BusinessException>.AssertArgumentNotEquals(0, formaPagamento.FormaPagamentoCodigo,
@@ -55,7 +55,7 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
             var formaPagamentoAtualizada = _formaPagamentoRepository
                 .Atualizar(formaPagamentoAtual);
 
-            return Mapper.Map<FormaPagamentoModel>(formaPagamentoAtualizada);
+            return Map<FormaPagamentoModel>.MapperTo(formaPagamentoAtualizada);
         }
 
         public void ExcluirFormaPagamento(int formaPagamentoCodigo)

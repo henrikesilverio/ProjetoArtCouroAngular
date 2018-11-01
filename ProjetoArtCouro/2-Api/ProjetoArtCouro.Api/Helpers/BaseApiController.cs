@@ -6,8 +6,8 @@ using System.Security.Claims;
 using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Results;
-using AutoMapper;
 using ProjetoArtCouro.Domain.Models.Common;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Api.Helpers
 {
@@ -20,7 +20,8 @@ namespace ProjetoArtCouro.Api.Helpers
                 var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
                 var usuarioCodigo = identity.Claims.Where(c => c.Type == ClaimTypes.Sid)
                     .Select(c => c.Value).SingleOrDefault();
-                return usuarioCodigo.ToInt();
+                int.TryParse(usuarioCodigo, out int usuarioCodigoParce);
+                return usuarioCodigoParce;
             }
         }
 
@@ -28,7 +29,7 @@ namespace ProjetoArtCouro.Api.Helpers
         {
             var retornoBase = new RetornoBase<ExceptionModel>
             {
-                ObjetoRetorno = Mapper.Map<ExceptionModel>(ex),
+                ObjetoRetorno = Map<ExceptionModel>.MapperTo(ex),
                 Mensagem = ex.Message,
                 TemErros = true
             };

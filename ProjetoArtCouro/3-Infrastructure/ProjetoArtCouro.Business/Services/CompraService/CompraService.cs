@@ -16,7 +16,7 @@ using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.Compra;
-using AutoMapper;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Business.Services.CompraService
 {
@@ -51,7 +51,7 @@ namespace ProjetoArtCouro.Business.Services.CompraService
 
         public void CriarCompra(int usuarioCodigo, CompraModel model)
         {
-            var compra = Mapper.Map<Compra>(model);
+            var compra = Map<Compra>.MapperTo(model);
             compra.Validar();
 
             AssertionConcern<BusinessException>
@@ -74,16 +74,16 @@ namespace ProjetoArtCouro.Business.Services.CompraService
 
         public List<CompraModel> PesquisarCompra(int codigoUsuario, PesquisaCompraModel model)
         {
-            var filtro = Mapper.Map<PesquisaCompra>(model);
+            var filtro = Map<PesquisaCompra>.MapperTo(model);
             filtro.CodigoUsuario = codigoUsuario;
             var compras = _compraRepository.ObterListaPorFiltro(filtro);
-            return Mapper.Map<List<CompraModel>>(compras);
+            return Map<List<CompraModel>>.MapperTo(compras);
         }
 
         public CompraModel ObterCompraPorCodigo(int codigoCompra)
         {
             var compra = _compraRepository.ObterPorCodigoComItensCompra(codigoCompra);
-            return Mapper.Map<CompraModel>(compra);
+            return Map<CompraModel>.MapperTo(compra);
         }
 
         public void AtualizarCompra(CompraModel model)
@@ -91,7 +91,7 @@ namespace ProjetoArtCouro.Business.Services.CompraService
             AssertionConcern<BusinessException>.AssertArgumentNotEquals(0, model.CodigoCompra,
             string.Format(Erros.NotZeroParameter, "CompraCodigo"));
 
-            var compra = Mapper.Map<Compra>(model);
+            var compra = Map<Compra>.MapperTo(model);
             compra.Validar();
 
             AssertionConcern<BusinessException>

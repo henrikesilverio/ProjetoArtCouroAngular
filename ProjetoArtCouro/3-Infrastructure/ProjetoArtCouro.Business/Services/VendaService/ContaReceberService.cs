@@ -8,7 +8,7 @@ using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.ContaReceber;
-using AutoMapper;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Business.Services.VendaService
 {
@@ -23,15 +23,15 @@ namespace ProjetoArtCouro.Business.Services.VendaService
 
         public List<ContaReceberModel> PesquisarContaReceber(int codigoUsuario, PesquisaContaReceberModel model)
         {
-            var filtro = Mapper.Map<PesquisaContaReceber>(model);
+            var filtro = Map<PesquisaContaReceber>.MapperTo(model);
             filtro.CodigoUsuario = codigoUsuario;
             var contasReceber = _contaReceberRepository.ObterListaPorFiltro(filtro);
-            return Mapper.Map<List<ContaReceberModel>>(contasReceber);
+            return Map<List<ContaReceberModel>>.MapperTo(contasReceber);
         }
 
         public void ReceberContas(List<ContaReceberModel> model)
         {
-            var contasReceber = Mapper.Map<List<ContaReceber>>(model);
+            var contasReceber = Map<List<ContaReceber>>.MapperTo(model);
 
             AssertionConcern<BusinessException>
                 .AssertArgumentFalse(contasReceber.Any(x => x.ContaReceberCodigo.Equals(0)), Erros.ThereReceivableWithZeroCode);

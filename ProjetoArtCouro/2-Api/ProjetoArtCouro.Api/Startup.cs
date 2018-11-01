@@ -1,5 +1,4 @@
 ﻿using Owin;
-using ProjetoArtCouro.Api.AutoMapper;
 using ProjetoArtCouro.Api.Security;
 using ProjetoArtCouro.Startup.DependencyResolver;
 using System.Web.Http;
@@ -9,6 +8,7 @@ using Newtonsoft.Json.Serialization;
 using ProjetoArtCouro.Api.Helpers;
 using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
 using System.Net.Http.Extensions.Compression.Core.Compressors;
+using ProjetoArtCouro.Mapping.Configs;
 
 namespace ProjetoArtCouro.Api
 {
@@ -30,8 +30,7 @@ namespace ProjetoArtCouro.Api
 
             app.UseWebApi(config);
             
-            //Incluir os mapeamento de classe
-            AutoMapperConfig.RegisterMappings();
+            MapperConfig.RegisterMappings();
         }
 
         public void ConfigureDependencyResolver(HttpConfiguration config)

@@ -40,10 +40,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
       <Private>True</Private>
@@ -293,14 +289,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMapper\AutoMapperConfig.cs" />
-    <Compile Include="AutoMapper\Converters\MeioComunicacaoConverter.cs" />
-    <Compile Include="AutoMapper\DomainToDomainMappingProfile.cs" />
-    <Compile Include="AutoMapper\DomainToModelMappingProfile.cs" />
-    <Compile Include="AutoMapper\Converters\EnderecoModelConverter.cs" />
-    <Compile Include="AutoMapper\Converters\MeioComunicacaoModelConverter.cs" />
-    <Compile Include="AutoMapper\ModelToDomainMappingProfile.cs" />
-    <Compile Include="AutoMapper\ModelToModelMappingProfile.cs" />
     <Compile Include="Controllers\Compras\CompraController.cs" />
     <Compile Include="Controllers\ContasPagar\ContaPagarController.cs" />
     <Compile Include="Controllers\ContasReceber\ContaReceberController.cs" />
@@ -316,7 +304,6 @@
     <Compile Include="Controllers\Vendas\VendaController.cs" />
     <Compile Include="Extensions\InvalidateCacheOutputCustomAttribute.cs" />
     <Compile Include="Helpers\BaseApiController.cs" />
-    <Compile Include="Helpers\ConvertValue.cs" />
     <Compile Include="Helpers\ExceptionFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ApplicationRefreshTokenProvider.cs" />
@@ -330,6 +317,10 @@
     <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.Domain\ProjetoArtCouro.Domain.csproj">
       <Project>{d0278cc6-dc16-48e5-9626-b19142b60808}</Project>
       <Name>ProjetoArtCouro.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.Mapping\ProjetoArtCouro.Mapping.csproj">
+      <Project>{F06BC296-43C3-4AEA-95DB-2EFD463520AF}</Project>
+      <Name>ProjetoArtCouro.Mapping</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.Resources\ProjetoArtCouro.Resources.csproj">
       <Project>{5bafb16b-6802-4d6d-8045-bf640fb83a57}</Project>

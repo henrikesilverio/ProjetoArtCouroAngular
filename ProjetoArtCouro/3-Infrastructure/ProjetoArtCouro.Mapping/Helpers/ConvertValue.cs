@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace ProjetoArtCouro.Api.Helpers
+namespace ProjetoArtCouro.Mapping.Helpers
 {
-    public static class ConvertValue
+    internal static class ConvertValue
     {
         public static decimal ToDecimal(this string value)
         {
@@ -11,10 +11,9 @@ namespace ProjetoArtCouro.Api.Helpers
             {
                 return 0.0M;
             }
-            decimal newValue;
             var regex = new Regex(@"[a-zA-Z][$]");
             var unscaledValue = regex.Replace(value, "").Trim().Replace(".", "");
-            decimal.TryParse(unscaledValue, out newValue);
+            decimal.TryParse(unscaledValue, out decimal newValue);
             return newValue;
         }
 
@@ -24,8 +23,7 @@ namespace ProjetoArtCouro.Api.Helpers
             {
                 return 0;
             }
-            int newValue;
-            int.TryParse(value, out newValue);
+            int.TryParse(value, out int newValue);
             return newValue;
         }
 

@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
+using ProjetoArtCouro.Mapping.Profiles;
 
-namespace ProjetoArtCouro.Api.AutoMapper
+namespace ProjetoArtCouro.Mapping.Configs
 {
-    public class AutoMapperConfig
+    public static class MapperConfig
     {
         public static void RegisterMappings()
         {
-            //Definindo e Iniciando os mapeamentos
+            Mapper.Reset();
             Mapper.Initialize(x =>
             {
                 x.AddProfile<DomainToModelMappingProfile>();

@@ -4,11 +4,11 @@ using ProjetoArtCouro.Domain.Contracts.IService.ICompra;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Models.ContaPagar;
-using AutoMapper;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Exceptions;
 using System.Linq;
 using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Business.Services.CompraService
 {
@@ -23,15 +23,15 @@ namespace ProjetoArtCouro.Business.Services.CompraService
 
         public List<ContaPagarModel> PesquisarContaPagar(int codigoUsuario, PesquisaContaPagarModel model)
         {
-            var filtro = Mapper.Map<PesquisaContaPagar>(model);
+            var filtro = Map<PesquisaContaPagar>.MapperTo(model);
             filtro.CodigoUsuario = codigoUsuario;
             var contasPagar = _contaPagarRepository.ObterListaPorFiltro(filtro);
-            return Mapper.Map<List<ContaPagarModel>>(contasPagar);
+            return Map<List<ContaPagarModel>>.MapperTo(contasPagar);
         }
 
         public void PagarContas(List<ContaPagarModel> model)
         {
-            var contasPagar = Mapper.Map<List<ContaPagar>>(model);
+            var contasPagar = Map<List<ContaPagar>>.MapperTo(model);
             AssertionConcern<BusinessException>
                 .AssertArgumentFalse(contasPagar.Any(x => x.ContaPagarCodigo.Equals(0)), Erros.ThereAccountPayableWithCodeZero);
 

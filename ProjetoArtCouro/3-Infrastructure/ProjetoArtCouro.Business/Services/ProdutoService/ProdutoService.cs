@@ -6,8 +6,8 @@ using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.Produto;
-using AutoMapper;
 using ProjetoArtCouro.Domain.Models.Common;
+using ProjetoArtCouro.Mapping;
 
 namespace ProjetoArtCouro.Business.Services.ProdutoService
 {
@@ -25,13 +25,13 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
         public List<ProdutoModel> ObterListaProduto()
         {
             var produtos = _produtoRepository.ObterListaComUnidade();
-            return Mapper.Map<List<ProdutoModel>>(produtos);
+            return Map<List<ProdutoModel>>.MapperTo(produtos);
         }
 
         public List<LookupModel> ObterListaUnidade()
         {
             var unidades = _unidadeRepository.ObterLista();
-            return Mapper.Map<List<LookupModel>>(unidades);
+            return Map<List<LookupModel>>.MapperTo(unidades);
         }
 
         public Produto ObterProdutoPorCodigo(int codigo)
@@ -41,7 +41,7 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
 
         public ProdutoModel CriarProduto(ProdutoModel model)
         {
-            var produto = Mapper.Map<Produto>(model);
+            var produto = Map<Produto>.MapperTo(model);
             produto.Validar();
 
             var unidade = _unidadeRepository.ObterPorCodigo(produto.Unidade.UnidadeCodigo);
@@ -51,12 +51,12 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
             produto.Unidade.Validar();
             var produtoIncluido = _produtoRepository.Criar(produto);
 
-            return Mapper.Map<ProdutoModel>(produtoIncluido);
+            return Map<ProdutoModel>.MapperTo(produtoIncluido);
         }
 
         public ProdutoModel AtualizarProduto(ProdutoModel model)
         {
-            var produto = Mapper.Map<Produto>(model);
+            var produto = Map<Produto>.MapperTo(model);
             produto.Validar();
             AssertionConcern<BusinessException>
                 .AssertArgumentNotEquals(0, produto.ProdutoCodigo, string.Format(Erros.NotZeroParameter, "ProdutoCodigo"));
@@ -74,7 +74,7 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
             produtoAtual.ProdutoNome = produto.ProdutoNome;
             produtoAtual.Unidade = unidade;
             var produtoAtualizado = _produtoRepository.Atualizar(produtoAtual);
-            return Mapper.Map<ProdutoModel>(produtoAtualizado);
+            return Map<ProdutoModel>.MapperTo(produtoAtualizado);
         }
 
         public void ExcluirProduto(int produtoCodigo)
