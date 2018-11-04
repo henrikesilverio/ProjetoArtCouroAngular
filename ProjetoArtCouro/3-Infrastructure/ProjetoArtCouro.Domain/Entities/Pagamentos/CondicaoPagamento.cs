@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Compras;
 using ProjetoArtCouro.Domain.Entities.Vendas;
 using ProjetoArtCouro.Domain.Exceptions;
-using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Pagamentos
@@ -23,9 +22,7 @@ namespace ProjetoArtCouro.Domain.Entities.Pagamentos
             new ValidationContract<CondicaoPagamento>(this)
                 .IsRequired(x => x.Descricao)
                 .HasMaxLenght(x => x.Descricao, 30)
-                .IsRequired(x => x.Ativo)
-                .IsRequired(x => x.QuantidadeParcelas)
-                .IsNotZero(x => x.QuantidadeParcelas, Erros.NotZeroParameter);
+                .IsNotZero(x => x.QuantidadeParcelas);
             if (!IsValid())
             {
                 throw new DomainException(GetMergeNotifications());

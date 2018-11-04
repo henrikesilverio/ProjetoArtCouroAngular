@@ -20,8 +20,8 @@ namespace ProjetoArtCouro.Domain.Entities.Pagamentos
         {
             new ValidationContract<FormaPagamento>(this)
                 .IsRequired(x => x.Descricao)
-                .HasMaxLenght(x => x.Descricao, 30)
-                .IsRequired(x => x.Ativo);
+                .HasMaxLenght(x => x.Descricao, 30);
+
             if (!IsValid())
             {
                 throw new DomainException(GetMergeNotifications());

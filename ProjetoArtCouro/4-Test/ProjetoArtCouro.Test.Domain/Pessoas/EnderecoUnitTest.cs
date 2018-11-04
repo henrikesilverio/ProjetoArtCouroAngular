@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
 using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Test.Domain.Helpers;
 
 namespace ProjetoArtCouro.Test.Domain.Pessoas
 {
@@ -20,7 +20,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 6);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 6);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "CEP"))),
                     "Falta mensagem CEP obrigatório");
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Logradouro"))),
@@ -68,7 +68,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "CEP"))),
                     "Falta mensagem CEP obrigatório");
             }
@@ -92,7 +92,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "CEP", 9))),
                     "Falta mensagem CEP com mais de 9 caracteres");
             }
@@ -115,7 +115,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Logradouro"))),
                    "Falta mensagem Logradouro obrigatório");
             }
@@ -139,7 +139,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Logradouro", 200))),
                     "Falta mensagem Logradouro com mais de 200 caracteres");
             }
@@ -162,7 +162,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Bairro"))),
                    "Falta mensagem Bairro obrigatório");
             }
@@ -186,7 +186,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Bairro", 50))),
                     "Falta mensagem Bairro com mais de 50 caracteres");
             }
@@ -209,7 +209,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Numero"))),
                    "Falta mensagem Numero obrigatório");
             }
@@ -233,7 +233,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Numero", 6))),
                     "Falta mensagem Numero com mais de 6 caracteres");
             }
@@ -258,7 +258,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Complemento", 50))),
                     "Falta mensagem Complemento com mais de 50 caracteres");
             }
@@ -281,7 +281,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Cidade"))),
                    "Falta mensagem Cidade obrigatório");
             }
@@ -305,7 +305,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Cidade", 50))),
                     "Falta mensagem Cidade com mais de 50 caracteres");
             }
@@ -328,20 +328,10 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(Erros.EmptyState)),
                   "Falta mensagem Estado obrigatório");
             }
-        }
-
-        private static string[] ObterMensagensValidas(Exception e, int quantidadeDeMensagens)
-        {
-            Assert.AreNotEqual(e.Message, "", "Nao retornou mensagens");
-            var mensagens = e.Message.Split('-');
-            Assert.AreNotEqual(mensagens.Length, 0, "Nao retornou mensagens");
-            Assert.AreEqual(mensagens.Length, quantidadeDeMensagens, "Quantidade de mensagens invalida");
-            mensagens = mensagens.Select(x => x.Trim()).ToArray();
-            return mensagens;
         }
     }
 }

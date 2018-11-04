@@ -50,6 +50,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Helpers\TesteAuxiliar.cs" />
+    <Compile Include="Pagamentos\CondicaoPagamentoUnitTest.cs" />
+    <Compile Include="Pagamentos\FormaPagamentoUnitTest.cs" />
     <Compile Include="Pessoas\EnderecoUnitTest.cs" />
     <Compile Include="Pessoas\EstadoCivilUnitTest.cs" />
     <Compile Include="Pessoas\EstadoUnitTest.cs" />
