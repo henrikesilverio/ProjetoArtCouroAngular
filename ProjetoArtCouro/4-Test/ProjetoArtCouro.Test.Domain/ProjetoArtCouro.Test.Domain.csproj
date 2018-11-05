@@ -61,6 +61,7 @@
     <Compile Include="Pessoas\PessoaJuridicaUnitTest.cs" />
     <Compile Include="Pessoas\PessoaFisicaUnitTest.cs" />
     <Compile Include="Pessoas\PessoaUnitTest.cs" />
+    <Compile Include="Produtos\ProdutoUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

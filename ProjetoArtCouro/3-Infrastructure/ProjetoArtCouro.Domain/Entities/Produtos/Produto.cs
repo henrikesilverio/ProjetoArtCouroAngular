@@ -1,7 +1,6 @@
 ﻿using System;
 using ProjetoArtCouro.Domain.Entities.Estoques;
 using ProjetoArtCouro.Domain.Exceptions;
-using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Produtos
@@ -21,11 +20,9 @@ namespace ProjetoArtCouro.Domain.Entities.Produtos
             new ValidationContract<Produto>(this)
                 .IsRequired(x => x.ProdutoNome)
                 .HasMaxLenght(x => x.ProdutoNome, 200)
-                .IsRequired(x => x.PrecoVenda)
                 .IsNotZero(x => x.PrecoVenda)
-                .IsRequired(x => x.PrecoCusto)
                 .IsNotZero(x => x.PrecoCusto)
-                .IsNotNull(x => x.Unidade, Erros.NullParameter);
+                .IsNotNull(x => x.Unidade);
             if (!IsValid())
             {
                 throw new DomainException(GetMergeNotifications());
