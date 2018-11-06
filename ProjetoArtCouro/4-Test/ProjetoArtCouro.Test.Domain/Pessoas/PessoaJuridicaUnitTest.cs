@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
 using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Resources;
+using ProjetoArtCouro.Test.Domain.Helpers;
 
 namespace ProjetoArtCouro.Test.Domain.Pessoas
 {
@@ -18,12 +17,14 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             {
                 var pessoaJuridica = new PessoaJuridica();
                 pessoaJuridica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 2);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 2);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "CNPJ"))),
                     "Falta mensagem CNPJ obrigatório");
+
                 Assert.IsTrue(mensagens.Any(x => x.Contains(Erros.EmptyPerson)),
                     "Falta mensagem pessoa obrigatório");
             }
@@ -51,10 +52,11 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Pessoa = new Pessoa()
                 };
                 pessoaJuridica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "CNPJ"))),
                     "Falta mensagem CNPJ obrigatório");
             }
@@ -72,10 +74,11 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Pessoa = new Pessoa()
                 };
                 pessoaJuridica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "Contato", 100))),
                     "Falta mensagem Contato com mais de 100 caracteres");
             }
@@ -91,23 +94,14 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     CNPJ = "sdasd"
                 };
                 pessoaJuridica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
-                var mensagens = ObterMensagensValidas(e, 1);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(Erros.EmptyPerson)),
                     "Falta mensagem papel pessoa obrigatório");
             }
-        }
-
-        private static string[] ObterMensagensValidas(Exception e, int quantidadeDeMensagens)
-        {
-            Assert.AreNotEqual(e.Message, "", "Nao retornou mensagens");
-            var mensagens = e.Message.Split('-');
-            Assert.AreNotEqual(mensagens.Length, 0, "Nao retornou mensagens");
-            Assert.AreEqual(mensagens.Length, quantidadeDeMensagens, "Quantidade de mensagens invalida");
-            mensagens = mensagens.Select(x => x.Trim()).ToArray();
-            return mensagens;
         }
     }
 }

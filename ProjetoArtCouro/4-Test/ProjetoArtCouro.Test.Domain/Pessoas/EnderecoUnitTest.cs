@@ -23,14 +23,19 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 6);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "CEP"))),
                     "Falta mensagem CEP obrigatório");
+
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Logradouro"))),
                     "Falta mensagem Logradouro obrigatório");
+
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Numero"))),
                     "Falta mensagem Numero obrigatório");
+
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Bairro"))),
                    "Falta mensagem Bairro obrigatório");
+
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "Cidade"))),
                   "Falta mensagem Cidade obrigatório");
+
                 Assert.IsTrue(mensagens.Any(x => x.Contains(Erros.EmptyState)),
                   "Falta mensagem Estado obrigatório");
             }

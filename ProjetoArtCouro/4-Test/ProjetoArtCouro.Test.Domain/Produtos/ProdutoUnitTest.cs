@@ -62,6 +62,7 @@ namespace ProjetoArtCouro.Test.Domain.Produtos
                     Unidade = new Unidade { UnidadeNome = "UN" }
                 };
                 produto.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
