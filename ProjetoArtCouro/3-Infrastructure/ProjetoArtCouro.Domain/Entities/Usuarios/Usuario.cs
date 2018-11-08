@@ -25,8 +25,8 @@ namespace ProjetoArtCouro.Domain.Entities.Usuarios
                 .IsRequired(x => x.UsuarioNome)
                 .HasMaxLenght(x => x.UsuarioNome, 60)
                 .IsRequired(x => x.Senha)
-                .HasMaxLenght(x => x.Senha, 32)
-                .IsRequired(x => x.Ativo);
+                .HasMaxLenght(x => x.Senha, 32);
+
             if (!IsValid())
             {
                 throw new DomainException(GetMergeNotifications());
