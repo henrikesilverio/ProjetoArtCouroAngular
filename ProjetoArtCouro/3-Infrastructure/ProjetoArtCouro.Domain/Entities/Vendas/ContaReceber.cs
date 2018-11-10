@@ -20,9 +20,10 @@ namespace ProjetoArtCouro.Domain.Entities.Vendas
         {
             new ValidationContract<ContaReceber>(this)
                 .IsNotEquals(x => x.DataVencimento, new DateTime())
-                .IsNotEquals(x => x.StatusContaReceber, StatusVendaEnum.None)
+                .IsNotEquals(x => x.StatusContaReceber, StatusContaReceberEnum.None)
                 .IsNotZero(x => x.ValorDocumento)
-                .IsNotNull(x => x.Venda, Erros.PurchaseNotSet);
+                .IsNotNull(x => x.Venda, Erros.SaleNotSet);
+
             if (!IsValid())
             {
                 throw new DomainException(GetMergeNotifications());

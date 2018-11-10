@@ -195,10 +195,10 @@ namespace ProjetoArtCouro.Resources.Validation
             var val = selector.Compile().Invoke(_validatable);
             var name = ((MemberExpression) ((UnaryExpression) selector.Body).Operand).Member.Name;
 
-            if (val.Equals(value))
+            if (val.ToString() == value.ToString())
             {
                 _validatable.AddNotification(name, string.IsNullOrEmpty(message)
-                    ? string.Format(Erros.FieldCannotBe, name, (int)value)
+                    ? string.Format(Erros.FieldCannotBe, name, value.ToString())
                     : message);
             }
 

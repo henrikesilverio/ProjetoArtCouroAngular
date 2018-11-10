@@ -22,6 +22,7 @@ namespace ProjetoArtCouro.Domain.Entities.Pessoas
                 .HasMaxLenght(x => x.MeioComunicacaoNome, 250)
                 .IsNotEquals(x => x.TipoComunicacao, TipoComunicacaoEnum.None)
                 .IsRequired(x => x.Principal);
+
             if (!IsValid())
             {
                 throw new DomainException(GetMergeNotifications());

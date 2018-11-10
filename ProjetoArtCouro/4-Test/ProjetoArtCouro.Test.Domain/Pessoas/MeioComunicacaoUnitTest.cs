@@ -25,7 +25,8 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "MeioComunicacaoNome"))),
                     "Falta mensagem meio comunicação nome obrigatório");
 
-                Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldCannotBe, "TipoComunicacao", 0))),
+                Assert.IsTrue(mensagens.Any(x => x.Contains(
+                    string.Format(Erros.FieldCannotBe, "TipoComunicacao", TipoComunicacaoEnum.None))),
                     "Falta mensagem tipo comunicação obrigatório");
             }
         }
@@ -100,7 +101,8 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             catch (DomainException e)
             {
                 var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
-                Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldCannotBe, "TipoComunicacao", 0))),
+                Assert.IsTrue(mensagens.Any(x => x.Contains(
+                    string.Format(Erros.FieldCannotBe, "TipoComunicacao", TipoComunicacaoEnum.None))),
                     "Falta mensagem tipo comunicação obrigatório");
             }
         }

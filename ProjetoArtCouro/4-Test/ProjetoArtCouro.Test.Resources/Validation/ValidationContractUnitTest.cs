@@ -95,7 +95,7 @@ namespace ProjetoArtCouro.Test.Resources.Validation
                 .IsNotEquals(x => x.PropertyEnum, TestEnum.None);
             Assert.IsFalse(_testNotifiable.IsValid(), "Esta valido");
             var mensagens = _testNotifiable.GetMergeNotifications();
-            Assert.AreEqual(mensagens, string.Format(Erros.FieldCannotBe, "PropertyEnum", (int)TestEnum.None), "Mensagem invalida");
+            Assert.AreEqual(mensagens, string.Format(Erros.FieldCannotBe, "PropertyEnum", TestEnum.None), "Mensagem invalida");
         }
 
         [TestMethod]

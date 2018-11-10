@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Pessoas
@@ -16,9 +17,10 @@ namespace ProjetoArtCouro.Domain.Entities.Pessoas
             new ValidationContract<Papel>(this)
                 .IsRequired(x => x.PapelNome)
                 .HasMaxLenght(x => x.PapelNome, 250);
+
             if (!IsValid())
             {
-                throw new InvalidOperationException(GetMergeNotifications());
+                throw new DomainException(GetMergeNotifications());
             }
         }
     }

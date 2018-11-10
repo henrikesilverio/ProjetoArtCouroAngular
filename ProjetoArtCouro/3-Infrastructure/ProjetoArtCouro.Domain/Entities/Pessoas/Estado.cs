@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Domain.Entities.Pessoas
@@ -18,7 +19,7 @@ namespace ProjetoArtCouro.Domain.Entities.Pessoas
                 .HasMaxLenght(x => x.EstadoNome, 250);
             if (!IsValid())
             {
-                throw new InvalidOperationException(GetMergeNotifications());
+                throw new DomainException(GetMergeNotifications());
             }
         }
     }

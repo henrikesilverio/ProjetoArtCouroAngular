@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Test.Domain.Helpers;
 
@@ -18,7 +18,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 var papel = new Papel();
                 papel.Validar();
             }
-            catch (InvalidOperationException e)
+            catch (DomainException e)
             {
                 var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldIsRequired, "PapelNome"))),
@@ -48,7 +48,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                 };
                 papel.Validar();
             }
-            catch (Exception e)
+            catch (DomainException e)
             {
                 var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 1);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(string.Format(Erros.FieldMustHaveMaxCharacters, "PapelNome", 250))),
