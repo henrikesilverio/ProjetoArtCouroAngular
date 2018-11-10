@@ -36,6 +36,7 @@ namespace ProjetoArtCouro.Domain.Entities.Compras
                 .IsNotZero(x => x.ValorTotalBruto)
                 .IsNotZero(x => x.ValorTotalLiquido)
                 .IsNotNull(x => x.ItensCompra, Erros.PurchaseItemsNotInformed);
+
             if (!IsValid())
             {
                 throw new DomainException(GetMergeNotifications());

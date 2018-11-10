@@ -17,6 +17,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             {
                 var papel = new Papel();
                 papel.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -47,6 +48,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     PapelNome = new string('A', 251)
                 };
                 papel.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {

@@ -17,6 +17,7 @@ namespace ProjetoArtCouro.Test.Domain.Pagamentos
             {
                 var formaPagamento = new FormaPagamento();
                 formaPagamento.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -46,6 +47,7 @@ namespace ProjetoArtCouro.Test.Domain.Pagamentos
                     Descricao = new string('A', 31),
                 };
                 formaPagamento.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {

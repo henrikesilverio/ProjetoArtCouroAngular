@@ -17,6 +17,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             {
                 var estado = new Estado();
                 estado.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -47,6 +48,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     EstadoNome = new string('A', 251)
                 };
                 estado.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {

@@ -18,6 +18,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             {
                 var meioComunicacao = new MeioComunicacao();
                 meioComunicacao.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -55,6 +56,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     TipoComunicacao = TipoComunicacaoEnum.Telefone
                 };
                 meioComunicacao.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -77,6 +79,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     TipoComunicacao = TipoComunicacaoEnum.Telefone
                 };
                 meioComunicacao.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -97,6 +100,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Principal = false
                 };
                 meioComunicacao.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {

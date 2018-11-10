@@ -19,6 +19,7 @@ namespace ProjetoArtCouro.Test.Domain.Contas
             {
                 var contaReceber = new ContaReceber();
                 contaReceber.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {

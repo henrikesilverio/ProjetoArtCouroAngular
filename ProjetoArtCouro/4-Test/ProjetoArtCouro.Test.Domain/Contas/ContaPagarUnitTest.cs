@@ -19,6 +19,7 @@ namespace ProjetoArtCouro.Test.Domain.Contas
             {
                 var contaPagar = new ContaPagar();
                 contaPagar.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {

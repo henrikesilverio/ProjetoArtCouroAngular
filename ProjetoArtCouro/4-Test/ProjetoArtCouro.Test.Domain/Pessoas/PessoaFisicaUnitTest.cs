@@ -17,6 +17,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             {
                 var pessoaFisica = new PessoaFisica();
                 pessoaFisica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -66,6 +67,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     EstadoCivil = new EstadoCivil()
                 };
                 pessoaFisica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -88,6 +90,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     EstadoCivil = new EstadoCivil()
                 };
                 pessoaFisica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -111,6 +114,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     EstadoCivil = new EstadoCivil()
                 };
                 pessoaFisica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -133,6 +137,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     EstadoCivil = new EstadoCivil()
                 };
                 pessoaFisica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -156,6 +161,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     EstadoCivil = new EstadoCivil()
                 };
                 pessoaFisica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -178,6 +184,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     EstadoCivil = new EstadoCivil()
                 };
                 pessoaFisica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -200,6 +207,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Pessoa = new Pessoa()
                 };
                 pessoaFisica.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {

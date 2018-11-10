@@ -17,6 +17,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
             {
                 var endereco = new Endereco();
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -70,6 +71,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -94,6 +96,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -117,6 +120,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -141,6 +145,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -164,6 +169,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -188,6 +194,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -211,6 +218,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -235,6 +243,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -260,6 +269,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -283,6 +293,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -307,6 +318,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Estado = new Estado()
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
@@ -330,6 +342,7 @@ namespace ProjetoArtCouro.Test.Domain.Pessoas
                     Cidade = "sdads"
                 };
                 endereco.Validar();
+                Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
             {
