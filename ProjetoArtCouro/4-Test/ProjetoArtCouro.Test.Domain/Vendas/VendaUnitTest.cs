@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjetoArtCouro.Domain.Entities.Compras;
+using ProjetoArtCouro.Domain.Entities.Vendas;
 using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Resources.Resources;
@@ -8,18 +8,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProjetoArtCouro.Test.Domain.Compras
+namespace ProjetoArtCouro.Test.Domain.Vendas
 {
     [TestClass]
-    public class CompraUnitTest
+    public class VendaUnitTest
     {
         [TestMethod]
-        public void ValidarCompraSemPropriedadesObrigatoriasPreenchidas()
+        public void ValidarVendaSemPropriedadesObrigatoriasPreenchidas()
         {
             try
             {
-                var compra = new Compra();
-                compra.Validar();
+                var venda = new Venda();
+                venda.Validar();
                 Assert.Fail("Deveria retornar um erro");
             }
             catch (DomainException e)
@@ -30,8 +30,8 @@ namespace ProjetoArtCouro.Test.Domain.Compras
                     "Falta mensagem data de cadastro não pode ser 01/01/1900");
 
                 Assert.IsTrue(mensagens.Any(x => x.Contains(
-                    string.Format(Erros.FieldCannotBe, "StatusCompra", StatusCompraEnum.None))),
-                   "Falta mensagem status da compra não pode ser Nome");
+                    string.Format(Erros.FieldCannotBe, "StatusVenda", StatusVendaEnum.None))),
+                   "Falta mensagem status da venda não pode ser Nome");
 
                 Assert.IsTrue(mensagens.Any(x => x.Contains(
                     string.Format(Erros.FieldCannotBeZero, "ValorTotalBruto"))),
@@ -41,23 +41,23 @@ namespace ProjetoArtCouro.Test.Domain.Compras
                     string.Format(Erros.FieldCannotBeZero, "ValorTotalLiquido"))),
                     "Falta mensagem valor do total liquido não pode ser zero");
 
-                Assert.IsTrue(mensagens.Any(x => x.Contains(Erros.PurchaseItemsNotInformed)),
-                   "Falta mensagem itens de compra não pode ser vazia");
+                Assert.IsTrue(mensagens.Any(x => x.Contains(Erros.SaleItemsNotSet)),
+                   "Falta mensagem itens de venda não pode ser vazio");
             }
         }
 
         [TestMethod]
-        public void ValidarCompraComPropriedadesObrigatoriasPreenchidas()
+        public void ValidarVendaComPropriedadesObrigatoriasPreenchidas()
         {
-            var compra = new Compra()
+            var venda = new Venda()
             {
                 DataCadastro = DateTime.Now,
-                StatusCompra = StatusCompraEnum.Aberto,
+                StatusVenda = StatusVendaEnum.Aberto,
                 ValorTotalBruto = 1.0M,
                 ValorTotalLiquido = 1.0M,
-                ItensCompra = new List<ItemCompra>()
+                ItensVenda = new List<ItemVenda>()
             };
-            compra.Validar();
+            venda.Validar();
         }
     }
 }

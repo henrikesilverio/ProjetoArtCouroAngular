@@ -34,6 +34,7 @@ namespace ProjetoArtCouro.Domain.Entities.Vendas
                 .IsNotZero(x => x.ValorTotalBruto)
                 .IsNotZero(x => x.ValorTotalLiquido)
                 .IsNotNull(x => x.ItensVenda, Erros.SaleItemsNotSet);
+
             if (!IsValid())
             {
                 throw new DomainException(GetMergeNotifications());

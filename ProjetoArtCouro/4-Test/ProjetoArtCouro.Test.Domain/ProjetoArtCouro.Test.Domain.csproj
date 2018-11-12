@@ -71,6 +71,8 @@
     <Compile Include="Usuarios\GrupoPermissaoUnitTest.cs" />
     <Compile Include="Usuarios\PermissaoUnitTest.cs" />
     <Compile Include="Usuarios\UsuarioUnitTest.cs" />
+    <Compile Include="Vendas\ItemVendaUnitTest.cs" />
+    <Compile Include="Vendas\VendaUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.Domain\ProjetoArtCouro.Domain.csproj">
