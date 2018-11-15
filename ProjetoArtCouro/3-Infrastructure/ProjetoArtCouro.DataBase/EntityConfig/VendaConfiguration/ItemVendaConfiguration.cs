@@ -17,31 +17,25 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.VendaConfiguration
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             Property(x => x.ProdutoCodigo)
-                .IsRequired()
-                .HasColumnType("int");
+                .IsRequired();
 
             Property(x => x.ProdutoNome)
-                .IsRequired()
-                .HasColumnType("varchar");
+                .IsRequired();
 
             Property(x => x.Quantidade)
-                .IsRequired()
-                .HasColumnType("int");
+                .IsRequired();
 
             Property(x => x.PrecoVenda)
-                .IsRequired()
-                .HasColumnType("decimal");
+                .IsRequired();
 
             Property(x => x.ValorBruto)
-                .IsRequired()
-                .HasColumnType("decimal");
+                .IsRequired();
 
             Property(x => x.ValorDesconto)
-                .HasColumnType("decimal");
+                .IsRequired();
 
             Property(x => x.ValorLiquido)
-                .IsRequired()
-                .HasColumnType("decimal");
+                .IsRequired();
         }
     }
 }

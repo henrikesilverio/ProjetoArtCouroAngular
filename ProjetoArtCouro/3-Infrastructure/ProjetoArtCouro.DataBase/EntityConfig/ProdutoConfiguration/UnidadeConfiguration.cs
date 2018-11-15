@@ -18,8 +18,7 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.ProdutoConfiguration
 
             Property(x => x.UnidadeNome)
                .IsRequired()
-               .HasMaxLength(30)
-               .HasColumnType("varchar");
+               .HasMaxLength(30);
 
             Ignore(x => x.Notifications);
 

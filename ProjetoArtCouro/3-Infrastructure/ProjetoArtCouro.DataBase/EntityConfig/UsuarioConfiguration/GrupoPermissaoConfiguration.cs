@@ -18,8 +18,7 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.UsuarioConfiguration
 
             Property(x => x.GrupoPermissaoNome)
                 .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnType("varchar");
+                .HasMaxLength(50);
 
             HasMany(x => x.Permissoes);
 

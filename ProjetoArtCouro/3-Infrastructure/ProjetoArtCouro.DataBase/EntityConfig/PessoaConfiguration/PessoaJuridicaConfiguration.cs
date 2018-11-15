@@ -18,15 +18,13 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.PessoaConfiguration
 
             Property(x => x.CNPJ)
                 .IsRequired()
-                .HasColumnType("varchar")
                 .HasColumnAnnotation(
                     IndexAnnotation.AnnotationName,
                     new IndexAnnotation(new IndexAttribute("IX_CNPJ", 1) { IsUnique = true }));
 
             Property(x => x.Contato)
                 .IsOptional()
-                .HasMaxLength(100)
-                .HasColumnType("varchar");
+                .HasMaxLength(100);
 
             Ignore(x => x.Notifications);
         }

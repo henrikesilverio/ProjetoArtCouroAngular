@@ -13,7 +13,7 @@ namespace ProjetoArtCouro.DataBase.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201603240222577_Banco Inicial"; }
+            get { return "201811152131135_BancoInicial"; }
         }
         
         string IMigrationMetadata.Source

@@ -18,16 +18,13 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.PagamentoConfiguration
 
             Property(x => x.Descricao)
                .IsRequired()
-               .HasMaxLength(30)
-               .HasColumnType("varchar");
+               .HasMaxLength(30);
 
             Property(x => x.Ativo)
-                .IsRequired()
-                .HasColumnType("bit");
+                .IsRequired();
 
             Property(x => x.QuantidadeParcelas)
-                .IsRequired()
-                .HasColumnType("int");
+                .IsRequired();
         }
     }
 }

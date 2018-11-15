@@ -232,8 +232,8 @@ namespace ProjetoArtCouro.DataBase.Migrations
                     {
                         UsuarioId = c.Guid(nullable: false, identity: true),
                         UsuarioCodigo = c.Int(nullable: false, identity: true),
-                        UsuarioNome = c.String(nullable: false, maxLength: 60),
-                        Senha = c.String(nullable: false, maxLength: 32, fixedLength: true),
+                        UsuarioNome = c.String(nullable: false, maxLength: 60, unicode: false),
+                        Senha = c.String(nullable: false, maxLength: 32, unicode: false, fixedLength: true),
                         Ativo = c.Boolean(nullable: false),
                         GrupoPermissao_GrupoPermissaoId = c.Guid(nullable: false),
                     })

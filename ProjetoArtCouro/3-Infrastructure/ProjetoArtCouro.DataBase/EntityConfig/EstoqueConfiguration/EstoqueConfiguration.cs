@@ -17,10 +17,10 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.EstoqueConfiguration
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             Property(x => x.DataUltimaEntrada)
-               .HasColumnType("datetime2");
+                .IsRequired();
 
             Property(x => x.Quantidade)
-                .HasColumnType("int");
+                .IsRequired();
 
             //Relacionamento 0 ou 1 : 1
             HasOptional(x => x.Produto)

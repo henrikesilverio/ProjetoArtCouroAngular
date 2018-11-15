@@ -1,12 +1,12 @@
-﻿using System.Data.Entity;
+﻿using ProjetoArtCouro.DataBase.EntityConfig.CompraConfiguration;
+using ProjetoArtCouro.DataBase.EntityConfig.EstoqueConfiguration;
+using ProjetoArtCouro.DataBase.EntityConfig.PagamentoConfiguration;
+using ProjetoArtCouro.DataBase.EntityConfig.PessoaConfiguration;
+using ProjetoArtCouro.DataBase.EntityConfig.ProdutoConfiguration;
+using ProjetoArtCouro.DataBase.EntityConfig.UsuarioConfiguration;
+using ProjetoArtCouro.DataBase.EntityConfig.VendaConfiguration;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using ProjetoArtCouro.Test.DataBase.EntityConfig.CompraConfiguration;
-using ProjetoArtCouro.Test.DataBase.EntityConfig.EstoqueConfiguration;
-using ProjetoArtCouro.Test.DataBase.EntityConfig.PagamentoConfiguration;
-using ProjetoArtCouro.Test.DataBase.EntityConfig.PessoaConfiguration;
-using ProjetoArtCouro.Test.DataBase.EntityConfig.ProdutoConfiguration;
-using ProjetoArtCouro.Test.DataBase.EntityConfig.UsuarioConfiguration;
-using ProjetoArtCouro.Test.DataBase.EntityConfig.VendaConfiguration;
 
 namespace ProjetoArtCouro.Test.DataBase.Infra
 {
@@ -15,6 +15,7 @@ namespace ProjetoArtCouro.Test.DataBase.Infra
         public static DbModelBuilder GetDbModelBuilder()
         {
             var modelBuilder = new DbModelBuilder();
+            //Removendo pluralização dos nomes das tabelas
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             //Setando as configurações para criação dos objetos

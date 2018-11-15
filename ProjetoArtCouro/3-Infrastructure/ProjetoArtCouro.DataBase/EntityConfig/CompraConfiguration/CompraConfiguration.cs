@@ -17,23 +17,19 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.CompraConfiguration
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             Property(x => x.DataCadastro)
-                .IsRequired()
-                .HasColumnType("datetime2");
+                .IsRequired();
 
             Property(x => x.StatusCompra)
-                .IsRequired()
-                .HasColumnType("int");
+                .IsRequired();
 
             Property(x => x.ValorTotalBruto)
-                .IsRequired()
-                .HasColumnType("decimal");
+                .IsRequired();
 
             Property(x => x.ValorTotalFrete)
-                .HasColumnType("decimal");
+                .IsRequired();
 
             Property(x => x.ValorTotalLiquido)
-                .IsRequired()
-                .HasColumnType("decimal");
+                .IsRequired();
 
             //Relacionamento 0 ou 1 : N
             HasRequired(x => x.Usuario)

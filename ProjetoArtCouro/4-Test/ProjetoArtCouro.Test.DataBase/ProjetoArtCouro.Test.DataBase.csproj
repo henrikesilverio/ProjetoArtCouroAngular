@@ -70,28 +70,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="EntityConfig\CompraConfiguration\CompraConfiguration.cs" />
-    <Compile Include="EntityConfig\CompraConfiguration\ContaPagarConfiguration.cs" />
-    <Compile Include="EntityConfig\CompraConfiguration\ItemCompraConfiguration.cs" />
-    <Compile Include="EntityConfig\EstoqueConfiguration\EstoqueConfiguration.cs" />
-    <Compile Include="EntityConfig\PagamentoConfiguration\CondicaoPagamentoConfiguration.cs" />
-    <Compile Include="EntityConfig\PagamentoConfiguration\FormaPagamentoConfiguration.cs" />
-    <Compile Include="EntityConfig\PessoaConfiguration\EnderecoConfiguration.cs" />
-    <Compile Include="EntityConfig\PessoaConfiguration\EstadoCivilConfiguration.cs" />
-    <Compile Include="EntityConfig\PessoaConfiguration\EstadoConfiguration.cs" />
-    <Compile Include="EntityConfig\PessoaConfiguration\MeioComunicacaoConfiguration.cs" />
-    <Compile Include="EntityConfig\PessoaConfiguration\PapelConfiguration.cs" />
-    <Compile Include="EntityConfig\PessoaConfiguration\PessoaConfiguration.cs" />
-    <Compile Include="EntityConfig\PessoaConfiguration\PessoaFisicaConfiguration.cs" />
-    <Compile Include="EntityConfig\PessoaConfiguration\PessoaJuridicaConfiguration.cs" />
-    <Compile Include="EntityConfig\ProdutoConfiguration\ProdutoConfiguration.cs" />
-    <Compile Include="EntityConfig\ProdutoConfiguration\UnidadeConfiguration.cs" />
-    <Compile Include="EntityConfig\UsuarioConfiguration\GrupoPermissaoConfiguration.cs" />
-    <Compile Include="EntityConfig\UsuarioConfiguration\PermissaoConfiguration.cs" />
-    <Compile Include="EntityConfig\UsuarioConfiguration\UsuarioConfiguration.cs" />
-    <Compile Include="EntityConfig\VendaConfiguration\ContaReceberConfiguration.cs" />
-    <Compile Include="EntityConfig\VendaConfiguration\ItemVendaConfiguration.cs" />
-    <Compile Include="EntityConfig\VendaConfiguration\VendaConfiguration.cs" />
     <Compile Include="Infra\EntityFrameworkHelper.cs" />
     <Compile Include="PessoaRepository\EstadoCivilRepositoryUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

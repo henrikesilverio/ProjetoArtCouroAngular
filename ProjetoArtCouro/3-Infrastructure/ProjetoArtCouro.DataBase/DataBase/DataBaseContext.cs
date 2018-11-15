@@ -1,6 +1,7 @@
 ﻿using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using ProjetoArtCouro.DataBase.Conventions;
 using ProjetoArtCouro.DataBase.EntityConfig.CompraConfiguration;
 using ProjetoArtCouro.DataBase.EntityConfig.EstoqueConfiguration;
 using ProjetoArtCouro.DataBase.EntityConfig.PagamentoConfiguration;
@@ -20,9 +21,7 @@ namespace ProjetoArtCouro.DataBase.DataBase
 {
     public class DataBaseContext : DbContext
     {
-        //Definindo construtor e passando nome da connectionString para acesso a banco de dados
-        public DataBaseContext()
-            : base("ProjetoArtCouroConnectionString")
+        public DataBaseContext() : base("ProjetoArtCouroConnectionString")
         {
             Database.Initialize(true);
             Configuration.ProxyCreationEnabled = false;
@@ -37,36 +36,35 @@ namespace ProjetoArtCouro.DataBase.DataBase
             Configuration.LazyLoadingEnabled = false;
         }
 
-        public DbSet<CondicaoPagamento> CondicoesPagamento { get; set; }
-        public DbSet<ContaPagar> ContasPagar { get; set; }
-        public DbSet<ContaReceber> ContasReceber { get; set; }
-        public DbSet<Compra> Compras { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }
-        public DbSet<Estado> Estados { get; set; }
-        public DbSet<Estoque> Estoques { get; set; }
+        public virtual DbSet<CondicaoPagamento> CondicoesPagamento { get; set; }
+        public virtual DbSet<ContaPagar> ContasPagar { get; set; }
+        public virtual DbSet<ContaReceber> ContasReceber { get; set; }
+        public virtual DbSet<Compra> Compras { get; set; }
+        public virtual DbSet<Endereco> Enderecos { get; set; }
+        public virtual DbSet<Estado> Estados { get; set; }
+        public virtual DbSet<Estoque> Estoques { get; set; }
         public virtual DbSet<EstadoCivil> EstadosCivis { get; set; }
-        public DbSet<FormaPagamento> FormasPagamento { get; set; }
-        public DbSet<GrupoPermissao> GruposPermissao { get; set; }
-        public DbSet<ItemCompra> ItensCompra { get; set; }
-        public DbSet<ItemVenda> ItensVenda { get; set; }
-        public DbSet<MeioComunicacao> MeiosComunicacao { get; set; }
-        public DbSet<Papel> Papeis { get; set; }
-        public DbSet<Permissao> Permissoes { get; set; }
-        public DbSet<Pessoa> Pessoas { get; set; }
-        public DbSet<PessoaFisica> PessoasFisicas { get; set; }
-        public DbSet<PessoaJuridica> PessoasJuridicas { get; set; }
-        public DbSet<Produto> Produtos { get; set; }
-        public DbSet<Unidade> Unidades { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Venda> Vendas { get; set; }
+        public virtual DbSet<FormaPagamento> FormasPagamento { get; set; }
+        public virtual DbSet<GrupoPermissao> GruposPermissao { get; set; }
+        public virtual DbSet<ItemCompra> ItensCompra { get; set; }
+        public virtual DbSet<ItemVenda> ItensVenda { get; set; }
+        public virtual DbSet<MeioComunicacao> MeiosComunicacao { get; set; }
+        public virtual DbSet<Papel> Papeis { get; set; }
+        public virtual DbSet<Permissao> Permissoes { get; set; }
+        public virtual DbSet<Pessoa> Pessoas { get; set; }
+        public virtual DbSet<PessoaFisica> PessoasFisicas { get; set; }
+        public virtual DbSet<PessoaJuridica> PessoasJuridicas { get; set; }
+        public virtual DbSet<Produto> Produtos { get; set; }
+        public virtual DbSet<Unidade> Unidades { get; set; }
+        public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Venda> Vendas { get; set; }
 
-        //Customizando criação do DbCOntext
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //Removendo pluralização dos nomes das tabelas
+            modelBuilder.Conventions.Add(new SqlServerConvention());
+
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            //Setando as configurações para criação dos objetos
             modelBuilder.Configurations.Add(new CondicaoPagamentoConfiguration());
             modelBuilder.Configurations.Add(new ContaPagarConfiguration());
             modelBuilder.Configurations.Add(new ContaReceberConfiguration());

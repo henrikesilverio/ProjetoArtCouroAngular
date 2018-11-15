@@ -18,16 +18,13 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.ProdutoConfiguration
 
             Property(x => x.ProdutoNome)
                .IsRequired()
-               .HasMaxLength(200)
-               .HasColumnType("varchar");
+               .HasMaxLength(200);
 
             Property(x => x.PrecoVenda)
-                .IsRequired()
-                .HasColumnType("decimal");
+                .IsRequired();
 
             Property(x => x.PrecoCusto)
-                .IsRequired()
-                .HasColumnType("decimal");
+                .IsRequired();
 
             Ignore(x => x.Notifications);
         }

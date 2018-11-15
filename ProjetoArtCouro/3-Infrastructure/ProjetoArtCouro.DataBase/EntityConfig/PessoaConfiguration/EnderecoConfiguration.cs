@@ -18,36 +18,29 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.PessoaConfiguration
 
             Property(x => x.CEP)
                 .IsRequired()
-                .HasMaxLength(9)
-                .HasColumnType("varchar");
+                .HasMaxLength(9);
 
             Property(x => x.Logradouro)
                 .IsRequired()
-                .HasMaxLength(200)
-                .HasColumnType("varchar");
+                .HasMaxLength(200);
 
             Property(x => x.Bairro)
                 .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnType("varchar");
+                .HasMaxLength(50);
 
             Property(x => x.Numero)
                 .IsRequired()
-                .HasMaxLength(6)
-                .HasColumnType("varchar");
+                .HasMaxLength(6);
 
             Property(x => x.Complemento)
-                .HasMaxLength(50)
-                .HasColumnType("varchar");
+                .HasMaxLength(50);
 
             Property(x => x.Cidade)
                 .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnType("varchar");
+                .HasMaxLength(50);
 
             Property(x => x.Principal)
-                .IsRequired()
-                .HasColumnType("bit");
+                .IsRequired();
 
             Ignore(x => x.Notifications);
         }

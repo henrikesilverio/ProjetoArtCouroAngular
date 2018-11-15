@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conventions\SqlServerConvention.cs" />
     <Compile Include="DataBase\DataBaseContext.cs" />
     <Compile Include="EntityConfig\CompraConfiguration\CompraConfiguration.cs" />
     <Compile Include="EntityConfig\CompraConfiguration\ContaPagarConfiguration.cs" />
@@ -84,9 +85,9 @@
     <Compile Include="EntityConfig\VendaConfiguration\ContaReceberConfiguration.cs" />
     <Compile Include="EntityConfig\VendaConfiguration\ItemVendaConfiguration.cs" />
     <Compile Include="EntityConfig\VendaConfiguration\VendaConfiguration.cs" />
-    <Compile Include="Migrations\201603240222577_Banco Inicial.cs" />
-    <Compile Include="Migrations\201603240222577_Banco Inicial.Designer.cs">
-      <DependentUpon>201603240222577_Banco Inicial.cs</DependentUpon>
+    <Compile Include="Migrations\201811152131135_BancoInicial.cs" />
+    <Compile Include="Migrations\201811152131135_BancoInicial.Designer.cs">
+      <DependentUpon>201811152131135_BancoInicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,11 +115,6 @@
     <Compile Include="Repositorios\VendaRepository\VendaRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603240222577_Banco Inicial.resx">
-      <DependentUpon>201603240222577_Banco Inicial.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ProjetoArtCouro.Domain\ProjetoArtCouro.Domain.csproj">
       <Project>{d0278cc6-dc16-48e5-9626-b19142b60808}</Project>
       <Name>ProjetoArtCouro.Domain</Name>
@@ -135,6 +131,11 @@
   <ItemGroup>
     <Folder Include="EntityConfig\CommonConfiguration\" />
     <Folder Include="Repositorios\CommonRepository\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201811152131135_BancoInicial.resx">
+      <DependentUpon>201811152131135_BancoInicial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

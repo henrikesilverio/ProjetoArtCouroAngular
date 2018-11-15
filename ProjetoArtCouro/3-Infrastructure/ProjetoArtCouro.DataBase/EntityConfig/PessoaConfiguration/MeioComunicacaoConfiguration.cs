@@ -18,16 +18,13 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.PessoaConfiguration
 
             Property(x => x.MeioComunicacaoNome)
                 .IsRequired()
-                .HasMaxLength(250)
-                .HasColumnType("varchar");
+                .HasMaxLength(250);
 
             Property(x => x.TipoComunicacao)
-                .IsRequired()
-                .HasColumnType("int");
+                .IsRequired();
 
             Property(x => x.Principal)
-                .IsRequired()
-                .HasColumnType("bit");
+                .IsRequired();
 
             Ignore(x => x.Notifications);
         }

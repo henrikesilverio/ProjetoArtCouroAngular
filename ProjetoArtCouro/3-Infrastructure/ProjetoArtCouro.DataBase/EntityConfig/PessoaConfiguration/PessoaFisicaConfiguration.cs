@@ -18,19 +18,16 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.PessoaConfiguration
 
             Property(x => x.CPF)
                 .IsRequired()
-                .HasColumnType("varchar")
                 .HasColumnAnnotation(
                     IndexAnnotation.AnnotationName,
                     new IndexAnnotation(new IndexAttribute("IX_CPF", 1) { IsUnique = true }));
 
             Property(x => x.RG)
                 .IsRequired()
-                .HasColumnType("varchar")
                 .HasMaxLength(15);
 
             Property(x => x.Sexo)
                 .IsRequired()
-                .HasColumnType("varchar")
                 .HasMaxLength(10);
 
             Ignore(x => x.Notifications);

@@ -18,8 +18,7 @@ namespace ProjetoArtCouro.DataBase.EntityConfig.PessoaConfiguration
 
             Property(state => state.EstadoNome)
                 .IsRequired()
-                .HasMaxLength(250)
-                .HasColumnType("varchar");
+                .HasMaxLength(250);
 
             Ignore(x => x.Notifications);
 
