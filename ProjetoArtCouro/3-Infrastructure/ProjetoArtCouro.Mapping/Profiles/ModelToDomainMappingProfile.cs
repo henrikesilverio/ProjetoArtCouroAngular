@@ -23,6 +23,7 @@ using ProjetoArtCouro.Domain.Models.Venda;
 using ProjetoArtCouro.Domain.Models.Estoque;
 using ProjetoArtCouro.Mapping.Converters;
 using ProjetoArtCouro.Mapping.Helpers;
+using ProjetoArtCouro.Domain.Models.Pessoa;
 
 namespace ProjetoArtCouro.Mapping.Profiles
 {
@@ -223,6 +224,12 @@ namespace ProjetoArtCouro.Mapping.Profiles
 
             CreateMap<MeioComunicacaoModel, ICollection<MeioComunicacao>>()
                 .ConvertUsing<MeioComunicacaoConverter>();
+
+            CreateMap<PesquisaPessoaModel, PesquisaPessoaFisica>()
+                .ForMember(d => d.CPF, m => m.MapFrom(s => s.CPFCNPJ));
+
+            CreateMap<PesquisaPessoaModel, PesquisaPessoaJuridica>()
+                .ForMember(d => d.CNPJ, m => m.MapFrom(s => s.CPFCNPJ));
         }
 
         private void MapperUser()

@@ -5,6 +5,7 @@ using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using System.Data.Entity;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
 {
@@ -17,14 +18,20 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
             _context = context;
         }
 
+        public void Criar(Pessoa pessoa)
+        {
+            _context.Pessoas.Add(pessoa);
+            _context.SaveChanges();
+        }
+
         public Pessoa ObterPorId(Guid id)
         {
-            return _context.Pessoas.FirstOrDefault(x => x.PessoaId.Equals(id));
+            return _context.Pessoas.FirstOrDefault(x => x.PessoaId == id);
         }
 
         public Pessoa ObterPorCodigo(int codigo)
         {
-            return _context.Pessoas.FirstOrDefault(x => x.PessoaCodigo.Equals(codigo));
+            return _context.Pessoas.FirstOrDefault(x => x.PessoaCodigo == codigo);
         }
 
         public Pessoa ObterPorCodigoComPessoaCompleta(int codigo)
@@ -37,7 +44,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
                 .Include("MeiosComunicacao")
                 .Include("Enderecos")
                 .Include("Enderecos.Estado")
-                .FirstOrDefault(x => x.PessoaCodigo.Equals(codigo));
+                .FirstOrDefault(x => x.PessoaCodigo == codigo);
         }
 
         public Pessoa ObterPorCPFComPessoaCompleta(string cpf)
@@ -49,7 +56,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
                 .Include("MeiosComunicacao")
                 .Include("Enderecos")
                 .Include("Enderecos.Estado")
-                .FirstOrDefault(x => x.PessoaFisica.CPF.Equals(cpf));
+                .FirstOrDefault(x => x.PessoaFisica.CPF == cpf);
         }
 
         public Pessoa ObterPorCNPJComPessoaCompleta(string cnpj)
@@ -60,7 +67,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
                 .Include("MeiosComunicacao")
                 .Include("Enderecos")
                 .Include("Enderecos.Estado")
-                .FirstOrDefault(x => x.PessoaJuridica.CNPJ.Equals(cnpj));
+                .FirstOrDefault(x => x.PessoaJuridica.CNPJ == cnpj);
         }
 
         public List<Pessoa> ObterListaComPessoaFisicaEJuridica()
@@ -74,29 +81,18 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
 
         public List<Pessoa> ObterListaComPessoaFisicaEJuridicaPorPapel(TipoPapelPessoaEnum papelCodigo)
         {
-            var query = from pessoa in _context.Pessoas
-                    .Include("Papeis")
-                    .Include("PessoaFisica")
-                    .Include("PessoaJuridica")
-                    .AsNoTracking()
-                select pessoa;
-
-            if (papelCodigo != TipoPapelPessoaEnum.Nenhum)
-            {
-                query = query.Where(x => x.Papeis.Any(a => a.PapelCodigo == (int)papelCodigo));
-            }
-            return query.ToList();
-        }
-
-        public void Criar(Pessoa pessoa)
-        {
-            _context.Pessoas.Add(pessoa);
-            _context.SaveChanges();
+            return _context.Pessoas
+                .Include("Papeis")
+                .Include("PessoaFisica")
+                .Include("PessoaJuridica")
+                .Where(x => x.Papeis.Any(a => a.PapelCodigo == (int)papelCodigo))
+                .AsNoTracking()
+                .ToList();
         }
 
         public void Atualizar(Pessoa pessoa)
         {
-            _context.Entry(pessoa).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(pessoa).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

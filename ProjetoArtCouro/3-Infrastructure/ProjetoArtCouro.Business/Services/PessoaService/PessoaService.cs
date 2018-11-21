@@ -159,25 +159,26 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             _pessoaRepository.Deletar(pessoa);
         }
 
-        public List<PessoaModel> PesquisarPessoa(PesquisaPessoaModel filtro)
+        public List<PessoaModel> PesquisarPessoa(PesquisaPessoaModel pessoaFiltro)
         {
-            if (filtro.Codigo == 0 &&
-                string.IsNullOrEmpty(filtro.Nome) &&
-                string.IsNullOrEmpty(filtro.CPFCNPJ) &&
-                string.IsNullOrEmpty(filtro.Email) &&
-                filtro.TipoPapelPessoa == TipoPapelPessoaEnum.Nenhum)
+            if (pessoaFiltro.Codigo == 0 &&
+                string.IsNullOrEmpty(pessoaFiltro.Nome) &&
+                string.IsNullOrEmpty(pessoaFiltro.CPFCNPJ) &&
+                string.IsNullOrEmpty(pessoaFiltro.Email) &&
+                pessoaFiltro.TipoPapelPessoa == TipoPapelPessoaEnum.Nenhum)
             {
                 throw new BusinessException(Erros.EmptyParameters);
             };
 
-            if (filtro.EPessoaFisica)
+            if (pessoaFiltro.EPessoaFisica)
             {
-                var pessoasFisicas = _pessoaFisicaRepository
-                    .ObterLista(filtro.Codigo ?? 0, filtro.Nome, filtro.CPFCNPJ, filtro.Email, filtro.TipoPapelPessoa);
+                var filtroFisica = Map<PesquisaPessoaFisica>.MapperTo(pessoaFiltro);
+                var pessoasFisicas = _pessoaFisicaRepository.ObterListaPorFiltro(filtroFisica);
                 return Map<List<PessoaModel>>.MapperTo(pessoasFisicas);
             }
-            var pessoasJuridicas = _pessoaJuridicaRepository
-                .ObterLista(filtro.Codigo ?? 0, filtro.Nome, filtro.CPFCNPJ, filtro.Email, filtro.TipoPapelPessoa);
+
+            var filtroJuridica = Map<PesquisaPessoaJuridica>.MapperTo(pessoaFiltro);
+            var pessoasJuridicas = _pessoaJuridicaRepository.ObterListaPorFiltro(filtroJuridica);
             return Map<List<PessoaModel>>.MapperTo(pessoasJuridicas);
         }
 
@@ -216,12 +217,14 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
 
         public List<PessoaFisica> ObterListaPessoaFisicaPorPapel(TipoPapelPessoaEnum papelCodigo)
         {
-            return _pessoaFisicaRepository.ObterLista(0, null, null, null, papelCodigo);
+            var filtro = new PesquisaPessoaFisica { TipoPapelPessoa = papelCodigo };
+            return _pessoaFisicaRepository.ObterListaPorFiltro(filtro);
         }
 
         public List<PessoaJuridica> ObterListaPessoaJuridicaPorPapel(TipoPapelPessoaEnum papelCodigo)
         {
-            return _pessoaJuridicaRepository.ObterLista(0, null, null, null, papelCodigo);
+            var filtro = new PesquisaPessoaJuridica { TipoPapelPessoa = papelCodigo };
+            return _pessoaJuridicaRepository.ObterListaPorFiltro(filtro);
         }
 
         private void ValidarPessoa(Pessoa pessoa)

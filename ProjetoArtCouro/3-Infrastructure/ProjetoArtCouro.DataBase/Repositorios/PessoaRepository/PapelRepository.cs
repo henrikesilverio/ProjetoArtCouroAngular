@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
@@ -16,14 +17,20 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
             _context = context;
         }
 
+        public void Criar(Papel papel)
+        {
+            _context.Papeis.Add(papel);
+            _context.SaveChanges();
+        }
+
         public Papel ObterPorId(Guid id)
         {
-            return _context.Papeis.FirstOrDefault(x => x.PapelId.Equals(id));
+            return _context.Papeis.FirstOrDefault(x => x.PapelId == id);
         }
 
         public Papel ObterPorCodigo(int codigo)
         {
-            return _context.Papeis.FirstOrDefault(x => x.PapelCodigo.Equals(codigo));
+            return _context.Papeis.FirstOrDefault(x => x.PapelCodigo == codigo);
         }
 
         public List<Papel> ObterLista()
@@ -31,15 +38,9 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
             return _context.Papeis.ToList();
         }
 
-        public void Criar(Papel papel)
-        {
-            _context.Papeis.Add(papel);
-            _context.SaveChanges();
-        }
-
         public void Atualizar(Papel papel)
         {
-            _context.Entry(papel).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(papel).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

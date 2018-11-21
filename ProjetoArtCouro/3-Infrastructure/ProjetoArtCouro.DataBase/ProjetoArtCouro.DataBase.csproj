@@ -128,10 +128,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EntityConfig\CommonConfiguration\" />
-    <Folder Include="Repositorios\CommonRepository\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201811152131135_BancoInicial.resx">
       <DependentUpon>201811152131135_BancoInicial.cs</DependentUpon>

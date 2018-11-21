@@ -6,7 +6,7 @@ using ProjetoArtCouro.DataBase.Repositorios.PessoaRepository;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
 using ProjetoArtCouro.Test.DataBase.Infra;
 
-namespace ProjetoArtCouro.Test.DataBase.PessoaRepository
+namespace ProjetoArtCouro.Test.DataBase.Pessoas
 {
     [TestClass]
     public class EstadoCivilRepositoryUnitTest

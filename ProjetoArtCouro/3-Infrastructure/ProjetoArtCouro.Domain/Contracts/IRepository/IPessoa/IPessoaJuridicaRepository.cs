@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
-using ProjetoArtCouro.Domain.Models.Enums;
+using ProjetoArtCouro.Domain.Models.Pessoa;
 
 namespace ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa
 {
@@ -10,7 +10,7 @@ namespace ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa
         PessoaJuridica ObterPorId(Guid id);
         PessoaJuridica ObterPorCNPJ(string cnpj);
         List<PessoaJuridica> ObterLista();
-        List<PessoaJuridica> ObterLista(int codigo, string nome, string cnpj, string email, TipoPapelPessoaEnum papelCodigo);
+        List<PessoaJuridica> ObterListaPorFiltro(PesquisaPessoaJuridica filtro);
         void Criar(PessoaJuridica pessoaJuridica);
         void Atualizar(PessoaJuridica pessoaJuridica);
         void Deletar(PessoaJuridica pessoaJuridica);

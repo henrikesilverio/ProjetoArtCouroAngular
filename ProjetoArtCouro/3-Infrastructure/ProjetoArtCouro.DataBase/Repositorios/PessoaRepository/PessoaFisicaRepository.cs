@@ -5,6 +5,8 @@ using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using System.Data.Entity;
+using ProjetoArtCouro.Domain.Models.Pessoa;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
 {
@@ -17,14 +19,20 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
             _context = context;
         }
 
+        public void Criar(PessoaFisica pessoaFisica)
+        {
+            _context.PessoasFisicas.Add(pessoaFisica);
+            _context.SaveChanges();
+        }
+
         public PessoaFisica ObterPorId(Guid id)
         {
-            return _context.PessoasFisicas.FirstOrDefault(x => x.PessoaId.Equals(id));
+            return _context.PessoasFisicas.FirstOrDefault(x => x.PessoaId == id);
         }
 
         public PessoaFisica ObterPorCPF(string cpf)
         {
-            return _context.PessoasFisicas.FirstOrDefault(x => x.CPF.Equals(cpf));
+            return _context.PessoasFisicas.FirstOrDefault(x => x.CPF == cpf);
         }
 
         public List<PessoaFisica> ObterLista()
@@ -32,55 +40,49 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
             return _context.PessoasFisicas.AsNoTracking().ToList();
         }
 
-        public List<PessoaFisica> ObterLista(int codigo, string nome, string cpf, string email, TipoPapelPessoaEnum papelCodigo)
+        public List<PessoaFisica> ObterListaPorFiltro(PesquisaPessoaFisica filtro)
         {
-            var query = from pessoa in _context.PessoasFisicas
+            var query = _context.PessoasFisicas
                     .Include("Pessoa")
                     .Include("Pessoa.Papeis")
                     .Include("Pessoa.MeiosComunicacao")
                     .Include("Pessoa.Enderecos")
                     .AsNoTracking()
-                select pessoa;
+                    .AsQueryable();
 
-            if (!codigo.Equals(0))
+            if (!filtro.Codigo.Equals(0))
             {
-                query = query.Where(x => x.Pessoa.PessoaCodigo == codigo);
+                query = query.Where(x => x.Pessoa.PessoaCodigo == filtro.Codigo);
             }
 
-            if (papelCodigo != TipoPapelPessoaEnum.Nenhum)
+            if (filtro.TipoPapelPessoa != TipoPapelPessoaEnum.Nenhum)
             {
-                query = query.Where(x => x.Pessoa.Papeis.Any(a => a.PapelCodigo == (int)papelCodigo));
+                query = query.Where(x => x.Pessoa.Papeis.Any(a => a.PapelCodigo == (int)filtro.TipoPapelPessoa));
             }
 
-            if (!string.IsNullOrEmpty(nome))
+            if (!string.IsNullOrEmpty(filtro.Nome))
             {
-                query = query.Where(x => x.Pessoa.Nome == nome);
+                query = query.Where(x => x.Pessoa.Nome == filtro.Nome);
             }
 
-            if (!string.IsNullOrEmpty(cpf))
+            if (!string.IsNullOrEmpty(filtro.CPF))
             {
-                query = query.Where(x => x.CPF == cpf);
+                query = query.Where(x => x.CPF == filtro.CPF);
             }
 
-            if (!string.IsNullOrEmpty(email))
+            if (!string.IsNullOrEmpty(filtro.Email))
             {
-                query = query.Where(x =>
-                    x.Pessoa.MeiosComunicacao.Any(
-                        a => a.TipoComunicacao == TipoComunicacaoEnum.Email && a.MeioComunicacaoNome == email));
+                query = query
+                    .Where(x => x.Pessoa.MeiosComunicacao
+                    .Any(a => a.TipoComunicacao == TipoComunicacaoEnum.Email && a.MeioComunicacaoNome == filtro.Email));
             }
 
             return query.ToList();
         }
 
-        public void Criar(PessoaFisica pessoaFisica)
-        {
-            _context.PessoasFisicas.Add(pessoaFisica);
-            _context.SaveChanges();
-        }
-
         public void Atualizar(PessoaFisica pessoaFisica)
         {
-            _context.Entry(pessoaFisica).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(pessoaFisica).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

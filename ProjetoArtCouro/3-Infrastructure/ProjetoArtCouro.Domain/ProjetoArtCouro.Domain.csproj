@@ -132,6 +132,8 @@
     <Compile Include="Models\Fornecedor\FornecedorModel.cs" />
     <Compile Include="Models\Funcionario\FuncionarioModel.cs" />
     <Compile Include="Models\Login\LoginModel.cs" />
+    <Compile Include="Models\Pessoa\PesquisaPessoaFisica.cs" />
+    <Compile Include="Models\Pessoa\PesquisaPessoaJuridica.cs" />
     <Compile Include="Models\Pessoa\PesquisaPessoaModel.cs" />
     <Compile Include="Models\Produto\ProdutoModel.cs" />
     <Compile Include="Models\Usuario\ConfiguracaoUsuarioModel.cs" />
@@ -148,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\IRepository\ICommon\" />
-    <Folder Include="Entities\Common\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProjetoArtCouro.Resources\ProjetoArtCouro.Resources.csproj">

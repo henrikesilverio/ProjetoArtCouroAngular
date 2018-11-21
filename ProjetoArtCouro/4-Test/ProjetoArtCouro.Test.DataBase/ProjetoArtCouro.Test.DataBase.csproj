@@ -71,7 +71,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Infra\EntityFrameworkHelper.cs" />
-    <Compile Include="PessoaRepository\EstadoCivilRepositoryUnitTest.cs" />
+    <Compile Include="Pessoas\EnderecoRepositoryUnitTest.cs" />
+    <Compile Include="Pessoas\EstadoCivilRepositoryUnitTest.cs" />
+    <Compile Include="Pessoas\EstadoRepositoryUnitTest.cs" />
+    <Compile Include="Pessoas\MeioComunicacaoRepositoryUnitTest.cs" />
+    <Compile Include="Pessoas\PapelRepositoryUnitTest.cs" />
+    <Compile Include="Pessoas\PessoaFisicaRepositoryUnitTest.cs" />
+    <Compile Include="Pessoas\PessoaJuridicaRepositoryUnitTest.cs" />
+    <Compile Include="Pessoas\PessoaRepositoryUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

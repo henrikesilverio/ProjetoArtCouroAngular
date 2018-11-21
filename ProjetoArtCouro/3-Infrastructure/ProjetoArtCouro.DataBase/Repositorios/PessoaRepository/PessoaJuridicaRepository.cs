@@ -5,6 +5,8 @@ using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
 using ProjetoArtCouro.Domain.Models.Enums;
 using ProjetoArtCouro.Domain.Entities.Pessoas;
+using ProjetoArtCouro.Domain.Models.Pessoa;
+using System.Data.Entity;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
 {
@@ -15,6 +17,12 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
         public PessoaJuridicaRepository(DataBaseContext context)
         {
             _context = context;
+        }
+
+        public void Criar(PessoaJuridica pessoaJuridica)
+        {
+            _context.PessoasJuridicas.Add(pessoaJuridica);
+            _context.SaveChanges();
         }
 
         public PessoaJuridica ObterPorId(Guid id)
@@ -32,55 +40,48 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
             return _context.PessoasJuridicas.AsNoTracking().ToList();
         }
 
-        public List<PessoaJuridica> ObterLista(int codigo, string nome, string cnpj, string email, TipoPapelPessoaEnum papelCodigo)
+        public List<PessoaJuridica> ObterListaPorFiltro(PesquisaPessoaJuridica filtro)
         {
-            var query = from pessoa in _context.PessoasJuridicas
+            var query = _context.PessoasJuridicas
                     .Include("Pessoa")
                     .Include("Pessoa.Papeis")
                     .Include("Pessoa.MeiosComunicacao")
                     .Include("Pessoa.Enderecos")
                     .AsNoTracking()
-                select pessoa;
+                    .AsQueryable();
 
-            if (!codigo.Equals(0))
+            if (!filtro.Codigo.Equals(0))
             {
-                query = query.Where(x => x.Pessoa.PessoaCodigo == codigo);
+                query = query.Where(x => x.Pessoa.PessoaCodigo == filtro.Codigo);
             }
 
-            if (papelCodigo != TipoPapelPessoaEnum.Nenhum)
+            if (filtro.TipoPapelPessoa != TipoPapelPessoaEnum.Nenhum)
             {
-                query = query.Where(x => x.Pessoa.Papeis.Any(a => a.PapelCodigo == (int)papelCodigo));
+                query = query.Where(x => x.Pessoa.Papeis.Any(a => a.PapelCodigo == (int)filtro.TipoPapelPessoa));
             }
 
-            if (!string.IsNullOrEmpty(nome))
+            if (!string.IsNullOrEmpty(filtro.Nome))
             {
-                query = query.Where(x => x.Pessoa.Nome == nome);
+                query = query.Where(x => x.Pessoa.Nome == filtro.Nome);
             }
 
-            if (!string.IsNullOrEmpty(cnpj))
+            if (!string.IsNullOrEmpty(filtro.CNPJ))
             {
-                query = query.Where(x => x.CNPJ == cnpj);
+                query = query.Where(x => x.CNPJ == filtro.CNPJ);
             }
 
-            if (!string.IsNullOrEmpty(email))
+            if (!string.IsNullOrEmpty(filtro.Email))
             {
-                query = query.Where(x =>
-                    x.Pessoa.MeiosComunicacao.Any(
-                        a => a.TipoComunicacao == TipoComunicacaoEnum.Email && a.MeioComunicacaoNome == email));
+                query = query.Where(x => x.Pessoa.MeiosComunicacao
+                    .Any(a => a.TipoComunicacao == TipoComunicacaoEnum.Email && a.MeioComunicacaoNome == filtro.Email));
             }
 
             return query.ToList();
         }
 
-        public void Criar(PessoaJuridica pessoaJuridica)
-        {
-            _context.PessoasJuridicas.Add(pessoaJuridica);
-            _context.SaveChanges();
-        }
-
         public void Atualizar(PessoaJuridica pessoaJuridica)
         {
-            _context.Entry(pessoaJuridica).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(pessoaJuridica).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
@@ -18,12 +19,12 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
 
         public EstadoCivil ObterPorId(Guid id)
         {
-            return _context.EstadosCivis.FirstOrDefault(x => x.EstadoCivilId.Equals(id));
+            return _context.EstadosCivis.FirstOrDefault(x => x.EstadoCivilId == id);
         }
 
         public EstadoCivil ObterPorCodigo(int codigo)
         {
-            return _context.EstadosCivis.FirstOrDefault(x => x.EstadoCivilCodigo.Equals(codigo));
+            return _context.EstadosCivis.FirstOrDefault(x => x.EstadoCivilCodigo == codigo);
         }
 
         public List<EstadoCivil> ObterLista()
@@ -39,7 +40,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
 
         public void Atualizar(EstadoCivil estadoCivil)
         {
-            _context.Entry(estadoCivil).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(estadoCivil).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

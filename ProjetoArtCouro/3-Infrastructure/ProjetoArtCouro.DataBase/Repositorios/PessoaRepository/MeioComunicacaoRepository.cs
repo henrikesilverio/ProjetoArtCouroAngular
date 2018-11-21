@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPessoa;
@@ -16,14 +17,21 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
             _context = context;
         }
 
+        public MeioComunicacao Criar(MeioComunicacao meioComunicacao)
+        {
+            _context.MeiosComunicacao.Add(meioComunicacao);
+            _context.SaveChanges();
+            return _context.Entry(meioComunicacao).Entity;
+        }
+
         public MeioComunicacao ObterPorId(Guid id)
         {
-            return _context.MeiosComunicacao.FirstOrDefault(x => x.MeioComunicacaoId.Equals(id));
+            return _context.MeiosComunicacao.FirstOrDefault(x => x.MeioComunicacaoId == id);
         }
 
         public MeioComunicacao ObterPorCodigo(int codigo)
         {
-            return _context.MeiosComunicacao.FirstOrDefault(x => x.MeioComunicacaoCodigo.Equals(codigo));
+            return _context.MeiosComunicacao.FirstOrDefault(x => x.MeioComunicacaoCodigo == codigo);
         }
 
         public List<MeioComunicacao> ObterLista()
@@ -31,19 +39,9 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PessoaRepository
             return _context.MeiosComunicacao.ToList();
         }
 
-        public MeioComunicacao Criar(MeioComunicacao meioComunicacao)
-        {
-            _context.MeiosComunicacao.Add(meioComunicacao);
-            _context.SaveChanges();
-            return
-                _context.MeiosComunicacao.FirstOrDefault(x =>
-                    x.MeioComunicacaoNome.Equals(meioComunicacao.MeioComunicacaoNome) &&
-                    x.TipoComunicacao == meioComunicacao.TipoComunicacao && x.Principal);
-        }
-
         public void Atualizar(MeioComunicacao meioComunicacao)
         {
-            _context.Entry(meioComunicacao).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(meioComunicacao).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
