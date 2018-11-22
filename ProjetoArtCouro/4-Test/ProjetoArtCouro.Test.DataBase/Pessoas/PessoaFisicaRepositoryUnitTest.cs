@@ -229,7 +229,30 @@ namespace ProjetoArtCouro.Test.DataBase.Pessoas
         }
 
         [TestMethod]
-        public void AtualizarPessoa()
+        public void ObterListaDePessoaFisicaComFiltroDePesquisaCompleto()
+        {
+            using (var repositorio = new PessoaFisicaRepository(_context))
+            {
+                repositorio.Criar(ObterPessoaFisicaBase());
+
+                var primeiroPessoaFisica = _context.PessoasFisicas.FirstOrDefault();
+                Assert.IsNotNull(primeiroPessoaFisica, "Pessoa fisica não foi incluído");
+
+                var filtro = new PesquisaPessoaFisica
+                {
+                    Codigo = primeiroPessoaFisica.PessoaFisicaCodigo,
+                    Nome = primeiroPessoaFisica.Pessoa.Nome,
+                    CPF = primeiroPessoaFisica.CPF,
+                    Email = "henrikesilverio@gmail.com",
+                    TipoPapelPessoa = TipoPapelPessoaEnum.Funcionario
+                };
+                var pessoas = repositorio.ObterListaPorFiltro(filtro);
+                Assert.IsTrue(pessoas.Any(), "Pessoa fisica não é igual");
+            }
+        }
+
+        [TestMethod]
+        public void AtualizarPessoaFisica()
         {
             using (var repositorio = new PessoaFisicaRepository(_context))
             {
@@ -250,7 +273,7 @@ namespace ProjetoArtCouro.Test.DataBase.Pessoas
         }
 
         [TestMethod]
-        public void DeletarPessoa()
+        public void DeletarPessoaFisica()
         {
             using (var repositorio = new PessoaFisicaRepository(_context))
             {

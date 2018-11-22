@@ -174,7 +174,7 @@ namespace ProjetoArtCouro.Test.DataBase.Pessoas
         }
 
         [TestMethod]
-        public void ObterListaDePessoaJuridicaPorCPF()
+        public void ObterListaDePessoaJuridicaPorCNPJ()
         {
             using (var repositorio = new PessoaJuridicaRepository(_context))
             {
@@ -222,7 +222,31 @@ namespace ProjetoArtCouro.Test.DataBase.Pessoas
         }
 
         [TestMethod]
-        public void AtualizarPessoa()
+        public void ObterListaDePessoaJuridicaComFiltroDePesquisaCompleto()
+        {
+            using (var repositorio = new PessoaJuridicaRepository(_context))
+            {
+                repositorio.Criar(ObterPessoaJuridicaBase());
+
+                var primeiroPessoaJuridica = _context.PessoasJuridicas.FirstOrDefault();
+                Assert.IsNotNull(primeiroPessoaJuridica, "Pessoa Juridica não foi incluído");
+
+                var filtro = new PesquisaPessoaJuridica
+                {
+                    Codigo = primeiroPessoaJuridica.PessoaJuridicaCodigo,
+                    Nome = primeiroPessoaJuridica.Pessoa.Nome,
+                    CNPJ = primeiroPessoaJuridica.CNPJ,
+                    Email = "henrikesilverio@gmail.com",
+                    TipoPapelPessoa = TipoPapelPessoaEnum.Funcionario
+                };
+
+                var pessoas = repositorio.ObterListaPorFiltro(filtro);
+                Assert.IsTrue(pessoas.Any(), "Pessoa Juridica não é igual");
+            }
+        }
+
+        [TestMethod]
+        public void AtualizarPessoaJuridica()
         {
             using (var repositorio = new PessoaJuridicaRepository(_context))
             {
@@ -241,7 +265,7 @@ namespace ProjetoArtCouro.Test.DataBase.Pessoas
         }
 
         [TestMethod]
-        public void DeletarPessoa()
+        public void DeletarPessoaJuridica()
         {
             using (var repositorio = new PessoaJuridicaRepository(_context))
             {

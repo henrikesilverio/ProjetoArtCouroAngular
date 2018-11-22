@@ -63,6 +63,20 @@
   <ItemGroup>
     <Compile Include="Conventions\SqlServerConvention.cs" />
     <Compile Include="DataBase\DataBaseContext.cs" />
+    <Compile Include="Decorators\PessoasFisicas\IPessoaFisicaFiltro.cs" />
+    <Compile Include="Decorators\PessoasFisicas\PessoaFisicaFiltro.cs" />
+    <Compile Include="Decorators\PessoasFisicas\PessoaFisicaFiltroPorCPF.cs" />
+    <Compile Include="Decorators\PessoasFisicas\PessoaFisicaFiltroPorCodigo.cs" />
+    <Compile Include="Decorators\PessoasFisicas\PessoaFisicaFiltroPorEmail.cs" />
+    <Compile Include="Decorators\PessoasFisicas\PessoaFisicaFiltroPorNome.cs" />
+    <Compile Include="Decorators\PessoasFisicas\PessoaFisicaFiltroPorTipoPapelPessoa.cs" />
+    <Compile Include="Decorators\PessoasJuridicas\IPessoaJuridicaFiltro.cs" />
+    <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltro.cs" />
+    <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorCNPJ.cs" />
+    <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorCodigo.cs" />
+    <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorEmail.cs" />
+    <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorNome.cs" />
+    <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorTipoPapelPessoa.cs" />
     <Compile Include="EntityConfig\CompraConfiguration\CompraConfiguration.cs" />
     <Compile Include="EntityConfig\CompraConfiguration\ContaPagarConfiguration.cs" />
     <Compile Include="EntityConfig\CompraConfiguration\ItemCompraConfiguration.cs" />
@@ -85,6 +99,8 @@
     <Compile Include="EntityConfig\VendaConfiguration\ContaReceberConfiguration.cs" />
     <Compile Include="EntityConfig\VendaConfiguration\ItemVendaConfiguration.cs" />
     <Compile Include="EntityConfig\VendaConfiguration\VendaConfiguration.cs" />
+    <Compile Include="Factories\PessoaFisicaFiltroFactory.cs" />
+    <Compile Include="Factories\PessoaJuridicaFiltroFactory.cs" />
     <Compile Include="Migrations\201811152131135_BancoInicial.cs" />
     <Compile Include="Migrations\201811152131135_BancoInicial.Designer.cs">
       <DependentUpon>201811152131135_BancoInicial.cs</DependentUpon>
