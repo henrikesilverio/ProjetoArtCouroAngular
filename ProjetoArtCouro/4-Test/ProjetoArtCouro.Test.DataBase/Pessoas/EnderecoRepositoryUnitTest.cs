@@ -66,7 +66,7 @@ namespace ProjetoArtCouro.Test.DataBase.Pessoas
         }
 
         [TestMethod]
-        public void ObterMeioComunicacaoPorId()
+        public void ObterEnderecoPorId()
         {
             using (var repositorio = new EnderecoRepository(_context))
             {

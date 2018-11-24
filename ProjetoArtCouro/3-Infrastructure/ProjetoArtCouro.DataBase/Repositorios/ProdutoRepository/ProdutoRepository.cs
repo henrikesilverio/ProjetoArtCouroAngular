@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IProduto;
@@ -18,18 +19,21 @@ namespace ProjetoArtCouro.DataBase.Repositorios.ProdutoRepository
 
         public Produto ObterPorId(Guid id)
         {
-            return _context.Produtos.FirstOrDefault(x => x.ProdutoId.Equals(id));
+            return _context.Produtos
+                .FirstOrDefault(x => x.ProdutoId == id);
         }
 
         public Produto ObterPorCodigo(int codigo)
         {
-            return _context.Produtos.FirstOrDefault(x => x.ProdutoCodigo.Equals(codigo));
+            return _context.Produtos
+                .FirstOrDefault(x => x.ProdutoCodigo == codigo);
         }
 
         public Produto ObterComUnidadePorCodigo(int codigo)
         {
-            return _context.Produtos.Include("Unidade")
-                .FirstOrDefault(x => x.ProdutoCodigo.Equals(codigo));
+            return _context.Produtos
+                .Include("Unidade")
+                .FirstOrDefault(x => x.ProdutoCodigo == codigo);
         }
 
         public List<Produto> ObterLista()
@@ -39,7 +43,9 @@ namespace ProjetoArtCouro.DataBase.Repositorios.ProdutoRepository
 
         public List<Produto> ObterListaComUnidade()
         {
-            return _context.Produtos.Include("Unidade").ToList();
+            return _context.Produtos
+                .Include("Unidade")
+                .ToList();
         }
 
         public Produto Criar(Produto produto)
@@ -51,7 +57,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.ProdutoRepository
 
         public Produto Atualizar(Produto produto)
         {
-            _context.Entry(produto).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(produto).State = EntityState.Modified;
             _context.SaveChanges();
             return _context.Entry(produto).Entity;
         }

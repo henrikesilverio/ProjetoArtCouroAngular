@@ -79,6 +79,8 @@
     <Compile Include="Pessoas\PessoaFisicaRepositoryUnitTest.cs" />
     <Compile Include="Pessoas\PessoaJuridicaRepositoryUnitTest.cs" />
     <Compile Include="Pessoas\PessoaRepositoryUnitTest.cs" />
+    <Compile Include="Produtos\ProdutoRepositoryUnitTest.cs" />
+    <Compile Include="Produtos\UnidadeRepositoryUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

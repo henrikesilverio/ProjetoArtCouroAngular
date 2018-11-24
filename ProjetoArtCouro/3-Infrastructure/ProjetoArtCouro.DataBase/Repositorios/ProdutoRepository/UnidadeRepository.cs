@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IProduto;
@@ -14,6 +15,12 @@ namespace ProjetoArtCouro.DataBase.Repositorios.ProdutoRepository
         public UnidadeRepository(DataBaseContext context)
         {
             _context = context;
+        }
+
+        public void Criar(Unidade unidade)
+        {
+            _context.Unidades.Add(unidade);
+            _context.SaveChanges();
         }
 
         public Unidade ObterPorId(Guid id)
@@ -31,15 +38,9 @@ namespace ProjetoArtCouro.DataBase.Repositorios.ProdutoRepository
             return _context.Unidades.AsNoTracking().ToList();
         }
 
-        public void Criar(Unidade unidade)
-        {
-            _context.Unidades.Add(unidade);
-            _context.SaveChanges();
-        }
-
         public void Atualizar(Unidade unidade)
         {
-            _context.Entry(unidade).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(unidade).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
