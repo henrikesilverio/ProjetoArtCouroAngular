@@ -1,61 +1,74 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IUsuario;
 using ProjetoArtCouro.Domain.Entities.Usuarios;
+using ProjetoArtCouro.Domain.Models.Usuario;
 
 namespace ProjetoArtCouro.DataBase.Repositorios.UsuarioRepository
 {
     public class UsuarioRepository : IUsuarioRepository
     {
         private readonly DataBaseContext _context;
+
         public UsuarioRepository(DataBaseContext context)
         {
             _context = context;
         }
 
+        public void Criar(Usuario usuario)
+        {
+            _context.Usuarios.Add(usuario);
+            _context.SaveChanges();
+        }
+
         public Usuario ObterPorId(Guid id)
         {
-            return _context.Usuarios.FirstOrDefault(x => x.UsuarioId.Equals(id));
+            return _context.Usuarios.FirstOrDefault(x => x.UsuarioId == id);
         }
 
         public Usuario ObterPorCodigo(int codigo)
         {
-            return _context.Usuarios.FirstOrDefault(x => x.UsuarioCodigo.Equals(codigo));
+            return _context.Usuarios.FirstOrDefault(x => x.UsuarioCodigo == codigo);
         }
 
         public Usuario ObterPorCodigoComPermissoes(int codigo)
         {
-            return _context.Usuarios.Include("Permissoes").FirstOrDefault(x => x.UsuarioCodigo.Equals(codigo));
+            return _context.Usuarios
+                .Include("Permissoes")
+                .FirstOrDefault(x => x.UsuarioCodigo == codigo);
         }
 
         public Usuario ObterPorCodigoComPermissoesEGrupo(int codigo)
         {
-            return
-                _context.Usuarios
-                    .Include("Permissoes")
-                    .Include("GrupoPermissao")
-                    .FirstOrDefault(x => x.UsuarioCodigo.Equals(codigo));
+            return _context.Usuarios
+                .Include("Permissoes")
+                .Include("GrupoPermissao")
+                .FirstOrDefault(x => x.UsuarioCodigo == codigo);
         }
 
         public Usuario ObterPorUsuarioNome(string usuarioNome)
         {
-            return _context.Usuarios.FirstOrDefault(x => x.UsuarioNome == usuarioNome);
+            return _context.Usuarios
+                .FirstOrDefault(x => x.UsuarioNome == usuarioNome);
         }
 
-        public Usuario ObterComPermissoesPorUsuarioNome(string usuarioNome)
+        public Usuario ObterPorUsuarioNomeComPermissoes(string usuarioNome)
         {
-            return _context.Usuarios.Include("Permissoes").FirstOrDefault(x => x.UsuarioNome.Equals(usuarioNome));
+            return _context.Usuarios
+                .Include("Permissoes")
+                .FirstOrDefault(x => x.UsuarioNome == usuarioNome);
         }
 
-        public Usuario ObterComPermissoesComGrupoPorUsuarioNome(string usuarioNome)
+        public Usuario ObterPorUsuarioNomeComPermissoesEGrupo(string usuarioNome)
         {
             return _context.Usuarios
                 .Include("Permissoes")
                 .Include("GrupoPermissao")
                 .Include("GrupoPermissao.Permissoes")
-                .FirstOrDefault(x => x.UsuarioNome.Equals(usuarioNome));
+                .FirstOrDefault(x => x.UsuarioNome == usuarioNome);
         }
 
         public List<Usuario> ObterLista()
@@ -65,42 +78,38 @@ namespace ProjetoArtCouro.DataBase.Repositorios.UsuarioRepository
 
         public List<Usuario> ObterListaComPermissoes()
         {
-            return _context.Usuarios.Include("Permissoes").ToList();
+            return _context.Usuarios
+                .Include("Permissoes")
+                .ToList();
         }
 
-        public List<Usuario> ObterLista(string nome, int? codigoGrupo, bool? ativo)
+        public List<Usuario> ObterListaPorFiltro(PesquisaUsuario filtro)
         {
-            var query = from usuario in _context.Usuarios
+            var query = _context.Usuarios
                 .Include("GrupoPermissao")
-                        select usuario;
+                .AsQueryable();
 
-            if (!string.IsNullOrEmpty(nome))
+            if (!string.IsNullOrEmpty(filtro.UsuarioNome))
             {
-                query = query.Where(x => x.UsuarioNome == nome);
+                query = query.Where(x => x.UsuarioNome == filtro.UsuarioNome);
             }
 
-            if (codigoGrupo != null && !codigoGrupo.Equals(0))
+            if (filtro.GrupoPermissaoCodigo != 0)
             {
-                query = query.Where(x => x.GrupoPermissao.GrupoPermissaoCodigo == codigoGrupo);
+                query = query.Where(x => x.GrupoPermissao.GrupoPermissaoCodigo == filtro.GrupoPermissaoCodigo);
             }
 
-            if (ativo != null)
+            if (filtro.Ativo != null)
             {
-                query = query.Where(x => x.Ativo == ativo);
+                query = query.Where(x => x.Ativo == filtro.Ativo);
             }
 
             return query.ToList();
         }
 
-        public void Criar(Usuario usuario)
-        {
-            _context.Usuarios.Add(usuario);
-            _context.SaveChanges();
-        }
-
         public void Atualizar(Usuario usuario)
         {
-            _context.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(usuario).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

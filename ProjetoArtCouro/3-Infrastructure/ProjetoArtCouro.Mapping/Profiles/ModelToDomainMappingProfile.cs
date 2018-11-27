@@ -246,6 +246,9 @@ namespace ProjetoArtCouro.Mapping.Profiles
                 .ForMember(d => d.GrupoPermissaoCodigo, m => m.MapFrom(s => s.GrupoCodigo))
                 .ForMember(d => d.GrupoPermissaoNome, m => m.MapFrom(s => s.GrupoNome))
                 .ForMember(d => d.Permissoes, m => m.MapFrom(s => s.Permissoes));
+
+            CreateMap<PesquisaUsuarioModel, PesquisaUsuario>()
+                .ForMember(d => d.GrupoPermissaoCodigo, m => m.MapFrom(s => s.GrupoCodigo));
         }
     }
 }

@@ -28,7 +28,7 @@ namespace ProjetoArtCouro.Business.Services.AutenticacaoService
 
         public List<Permissao> ObterPermissoes(string usuarioNome)
         {
-            var usuario = _usuarioRepository.ObterComPermissoesComGrupoPorUsuarioNome(usuarioNome);
+            var usuario = _usuarioRepository.ObterPorUsuarioNomeComPermissoesEGrupo(usuarioNome);
             var permissoesUsuario = usuario.Permissoes;
             var permissoesGrupo = usuario.GrupoPermissao.Permissoes;
             var permissoes = permissoesGrupo.Union(permissoesUsuario).ToList();

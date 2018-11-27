@@ -8,10 +8,10 @@ namespace ProjetoArtCouro.Domain.Models.Usuario
         [Display(Name = "Name", ResourceType = typeof(Mensagens))]
         public string UsuarioNome { get; set; }
 
+        [Display(Name = "Groups", ResourceType = typeof(Mensagens))]
+        public int GrupoCodigo { get; set; }
+
         [Display(Name = "Active", ResourceType = typeof(Mensagens))]
         public bool? Ativo { get; set; }
-
-        [Display(Name = "Groups", ResourceType = typeof(Mensagens))]
-        public int? GrupoCodigo { get; set; }
     }
 }

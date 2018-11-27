@@ -55,8 +55,8 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public List<UsuarioModel> PesquisarUsuario(PesquisaUsuarioModel model)
         {
-            var usuarios = _usuarioRepository
-                .ObterLista(model.UsuarioNome, model.GrupoCodigo, model.Ativo);
+            var filtro = Map<PesquisaUsuario>.MapperTo(model);
+            var usuarios = _usuarioRepository.ObterListaPorFiltro(filtro);
             return Map<List<UsuarioModel>>.MapperTo(usuarios);
         }
 
@@ -71,7 +71,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             AssertionConcern<BusinessException>
                 .AssertArgumentNotEmpty(usuarioNome, Erros.InvalidUserName);
 
-            var usuarioAtual = _usuarioRepository.ObterComPermissoesPorUsuarioNome(usuarioNome);
+            var usuarioAtual = _usuarioRepository.ObterPorUsuarioNomeComPermissoes(usuarioNome);
             usuarioAtual.Senha = PasswordAssertionConcern.Encrypt(senha);
             usuarioAtual.Validar();
 
@@ -160,7 +160,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public List<PermissaoModel> ObterPermissoesUsuarioLogado(string usuarioNome)
         {
-            var usuario = _usuarioRepository.ObterComPermissoesPorUsuarioNome(usuarioNome);
+            var usuario = _usuarioRepository.ObterPorUsuarioNomeComPermissoes(usuarioNome);
             return Map<List<PermissaoModel>>.MapperTo(usuario.Permissoes.ToList());
         }
 

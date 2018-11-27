@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ProjetoArtCouro.Domain.Entities.Usuarios;
+using ProjetoArtCouro.Domain.Models.Usuario;
 
 namespace ProjetoArtCouro.Domain.Contracts.IRepository.IUsuario
 {
@@ -11,11 +12,11 @@ namespace ProjetoArtCouro.Domain.Contracts.IRepository.IUsuario
         Usuario ObterPorCodigoComPermissoes(int codigo);
         Usuario ObterPorCodigoComPermissoesEGrupo(int codigo);
         Usuario ObterPorUsuarioNome(string usuarioNome);
-        Usuario ObterComPermissoesPorUsuarioNome(string usuarioNome);
-        Usuario ObterComPermissoesComGrupoPorUsuarioNome(string usuarioNome);
+        Usuario ObterPorUsuarioNomeComPermissoes(string usuarioNome);
+        Usuario ObterPorUsuarioNomeComPermissoesEGrupo(string usuarioNome);
         List<Usuario> ObterLista();
         List<Usuario> ObterListaComPermissoes();
-        List<Usuario> ObterLista(string nome, int? codigoGrupo, bool? ativo);
+        List<Usuario> ObterListaPorFiltro(PesquisaUsuario filtro);
         void Criar(Usuario usuario);
         void Atualizar(Usuario usuario);
         void Deletar(Usuario usuario);
