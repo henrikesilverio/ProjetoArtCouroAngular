@@ -133,7 +133,7 @@ namespace ProjetoArtCouro.Api.Controllers.Usuarios
         [Route("PesquisarGrupo")]
         [Authorize(Roles = "PesquisaGrupo")]
         [HttpPost]
-        public IHttpActionResult PesquisarGrupo(PesquisaGrupoModel model)
+        public IHttpActionResult PesquisarGrupo(PesquisaGrupoPermissaoModel model)
         {
             var listaGrupoModel = _usuarioService.PesquisarGrupo(model);
             return OkRetornoBase(listaGrupoModel);

@@ -16,7 +16,7 @@ namespace ProjetoArtCouro.Domain.Contracts.IService.IUsuario
         UsuarioModel PesquisarUsuarioPorCodigo(int codigoUsuario);
         List<PermissaoModel> ObterPermissoesUsuarioLogado(string usuarioNome);
         GrupoModel ObterGrupoPermissaoPorCodigo(int codigoGrupo);
-        List<GrupoModel> PesquisarGrupo(PesquisaGrupoModel model);
+        List<GrupoModel> PesquisarGrupo(PesquisaGrupoPermissaoModel model);
         List<GrupoModel> ObterListaGrupoPermissao();
         void CriarGrupoPermissao(GrupoModel model);
         void EditarGrupoPermissao(GrupoModel model);

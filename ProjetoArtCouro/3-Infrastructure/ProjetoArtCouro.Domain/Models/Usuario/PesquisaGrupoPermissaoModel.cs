@@ -3,7 +3,7 @@ using ProjetoArtCouro.Resources.Resources;
 
 namespace ProjetoArtCouro.Domain.Models.Usuario
 {
-    public class PesquisaGrupoModel
+    public class PesquisaGrupoPermissaoModel
     {
         [Display(Name = "GroupCode", ResourceType = typeof(Mensagens))]
         public int GrupoCodigo { get; set; }

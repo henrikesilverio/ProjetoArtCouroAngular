@@ -139,7 +139,8 @@
     <Compile Include="Models\Usuario\ConfiguracaoUsuarioModel.cs" />
     <Compile Include="Models\Usuario\GrupoModel.cs" />
     <Compile Include="Models\Usuario\PermissaoModel.cs" />
-    <Compile Include="Models\Usuario\PesquisaGrupoModel.cs" />
+    <Compile Include="Models\Usuario\PesquisaGrupoPermissaoModel.cs" />
+    <Compile Include="Models\Usuario\PesquisaGrupoPermissao.cs" />
     <Compile Include="Models\Usuario\PesquisaUsuario.cs" />
     <Compile Include="Models\Usuario\PesquisaUsuarioModel.cs" />
     <Compile Include="Models\Usuario\UsuarioModel.cs" />

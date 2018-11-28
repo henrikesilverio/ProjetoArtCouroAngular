@@ -82,6 +82,8 @@
     <Compile Include="Produtos\ProdutoRepositoryUnitTest.cs" />
     <Compile Include="Produtos\UnidadeRepositoryUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usuarios\GrupoPermissaoRepositoryUnitTest.cs" />
+    <Compile Include="Usuarios\PermissaoRepositoryUnitTest.cs" />
     <Compile Include="Usuarios\UsuarioRepositoryUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>

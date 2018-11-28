@@ -170,7 +170,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             return Map<GrupoModel>.MapperTo(grupo);
         }
 
-        public List<GrupoModel> PesquisarGrupo(PesquisaGrupoModel model)
+        public List<GrupoModel> PesquisarGrupo(PesquisaGrupoPermissaoModel model)
         {
             var grupos = new List<GrupoPermissao>();
             if (model.Todos)
@@ -179,7 +179,8 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             }
             else
             {
-                grupos = _grupoPermissaoRepository.ObterLista(model.GrupoNome, model.GrupoCodigo);
+                var filtro = Map<PesquisaGrupoPermissao>.MapperTo(model);
+                grupos = _grupoPermissaoRepository.ObterListaForFiltro(filtro);
             }
             return Map<List<GrupoModel>>.MapperTo(grupos);
         }
@@ -195,7 +196,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             var grupo = Map<GrupoPermissao>.MapperTo(model);
             grupo.Validar();
 
-            var temGrupo = _grupoPermissaoRepository.ObterPorGrupoPermissaoNome(grupo.GrupoPermissaoNome.ToLower());
+            var temGrupo = _grupoPermissaoRepository.ObterPorNome(grupo.GrupoPermissaoNome.ToLower());
             AssertionConcern<BusinessException>
                 .AssertArgumentNull(temGrupo, Erros.DuplicateGruopName);
 

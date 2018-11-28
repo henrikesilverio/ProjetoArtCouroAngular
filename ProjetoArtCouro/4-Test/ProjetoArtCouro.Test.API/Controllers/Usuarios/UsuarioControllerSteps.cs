@@ -61,7 +61,7 @@ namespace ProjetoArtCouro.Test.API.Controllers.Usuarios
         [Given(@"que preencha os dados do filtro de pesquisa de grupo com as seguintes informações:")]
         public void DadoQuePreenchaOsDadosDoFiltroDePesquisaDeGrupoComAsSeguintesInformacoes(Table table)
         {
-            _scenarioContext["Conteudo"] = table.CreateInstance<PesquisaGrupoModel>();
+            _scenarioContext["Conteudo"] = table.CreateInstance<PesquisaGrupoPermissaoModel>();
         }
     }
 }

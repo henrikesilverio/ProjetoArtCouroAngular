@@ -9,6 +9,7 @@ namespace ProjetoArtCouro.DataBase.Repositorios.UsuarioRepository
     public class PermissaoRepository : IPermissaoRepository
     {
         private readonly DataBaseContext _context;
+
         public PermissaoRepository(DataBaseContext context)
         {
             _context = context;
@@ -16,7 +17,8 @@ namespace ProjetoArtCouro.DataBase.Repositorios.UsuarioRepository
 
         public Permissao ObterPermissaoPorCodigo(int codigo)
         {
-            return _context.Permissoes.FirstOrDefault(x => x.PermissaoCodigo.Equals(codigo));
+            return _context.Permissoes
+                .FirstOrDefault(x => x.PermissaoCodigo == codigo);
         }
 
         public List<Permissao> ObterLista()
