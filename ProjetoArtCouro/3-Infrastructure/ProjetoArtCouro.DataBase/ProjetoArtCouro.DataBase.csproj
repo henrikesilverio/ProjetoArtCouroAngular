@@ -63,6 +63,10 @@
   <ItemGroup>
     <Compile Include="Conventions\SqlServerConvention.cs" />
     <Compile Include="DataBase\DataBaseContext.cs" />
+    <Compile Include="Decorators\GruposPermissoes\GrupoPermissaoFiltro.cs" />
+    <Compile Include="Decorators\GruposPermissoes\GrupoPermissaoFiltroPorCodigo.cs" />
+    <Compile Include="Decorators\GruposPermissoes\GrupoPermissaoFiltroPorNome.cs" />
+    <Compile Include="Decorators\GruposPermissoes\IGrupoPermissaoFiltro.cs" />
     <Compile Include="Decorators\PessoasFisicas\IPessoaFisicaFiltro.cs" />
     <Compile Include="Decorators\PessoasFisicas\PessoaFisicaFiltro.cs" />
     <Compile Include="Decorators\PessoasFisicas\PessoaFisicaFiltroPorCPF.cs" />
@@ -77,6 +81,11 @@
     <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorEmail.cs" />
     <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorNome.cs" />
     <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorTipoPapelPessoa.cs" />
+    <Compile Include="Decorators\Usuarios\IUsuarioFiltro.cs" />
+    <Compile Include="Decorators\Usuarios\UsuarioFiltro.cs" />
+    <Compile Include="Decorators\Usuarios\UsuarioFiltroPorCodigoGrupo.cs" />
+    <Compile Include="Decorators\Usuarios\UsuarioFiltroPorNome.cs" />
+    <Compile Include="Decorators\Usuarios\UsuarioFiltroPorSituacao.cs" />
     <Compile Include="Decorators\Vendas\IVendaFiltro.cs" />
     <Compile Include="Decorators\Vendas\VendaFiltro.cs" />
     <Compile Include="Decorators\Vendas\VendaFiltroPorCodigo.cs" />
@@ -108,8 +117,10 @@
     <Compile Include="EntityConfig\VendaConfiguration\ContaReceberConfiguration.cs" />
     <Compile Include="EntityConfig\VendaConfiguration\ItemVendaConfiguration.cs" />
     <Compile Include="EntityConfig\VendaConfiguration\VendaConfiguration.cs" />
+    <Compile Include="Factories\GrupoPermissaoFiltroFactory.cs" />
     <Compile Include="Factories\PessoaFisicaFiltroFactory.cs" />
     <Compile Include="Factories\PessoaJuridicaFiltroFactory.cs" />
+    <Compile Include="Factories\UsuarioFiltroFactory.cs" />
     <Compile Include="Factories\VendaFiltroFactory.cs" />
     <Compile Include="Migrations\201811152131135_BancoInicial.cs" />
     <Compile Include="Migrations\201811152131135_BancoInicial.Designer.cs">

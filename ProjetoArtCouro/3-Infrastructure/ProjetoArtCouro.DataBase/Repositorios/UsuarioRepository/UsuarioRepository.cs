@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
+using ProjetoArtCouro.DataBase.Factories;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IUsuario;
 using ProjetoArtCouro.Domain.Entities.Usuarios;
 using ProjetoArtCouro.Domain.Models.Usuario;
@@ -85,26 +86,8 @@ namespace ProjetoArtCouro.DataBase.Repositorios.UsuarioRepository
 
         public List<Usuario> ObterListaPorFiltro(PesquisaUsuario filtro)
         {
-            var query = _context.Usuarios
-                .Include("GrupoPermissao")
-                .AsQueryable();
-
-            if (!string.IsNullOrEmpty(filtro.UsuarioNome))
-            {
-                query = query.Where(x => x.UsuarioNome == filtro.UsuarioNome);
-            }
-
-            if (filtro.GrupoPermissaoCodigo != 0)
-            {
-                query = query.Where(x => x.GrupoPermissao.GrupoPermissaoCodigo == filtro.GrupoPermissaoCodigo);
-            }
-
-            if (filtro.Ativo != null)
-            {
-                query = query.Where(x => x.Ativo == filtro.Ativo);
-            }
-
-            return query.ToList();
+            var usuarioFiltro = UsuarioFiltroFactory.Fabricar(_context);
+            return usuarioFiltro.Filtrar(filtro).ToList();
         }
 
         public void Atualizar(Usuario usuario)
