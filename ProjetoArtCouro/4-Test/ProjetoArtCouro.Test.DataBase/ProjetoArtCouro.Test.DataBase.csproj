@@ -85,6 +85,7 @@
     <Compile Include="Usuarios\GrupoPermissaoRepositoryUnitTest.cs" />
     <Compile Include="Usuarios\PermissaoRepositoryUnitTest.cs" />
     <Compile Include="Usuarios\UsuarioRepositoryUnitTest.cs" />
+    <Compile Include="Vendas\VendaRepositoryUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

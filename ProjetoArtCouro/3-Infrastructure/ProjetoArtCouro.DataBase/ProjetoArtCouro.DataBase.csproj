@@ -77,6 +77,15 @@
     <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorEmail.cs" />
     <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorNome.cs" />
     <Compile Include="Decorators\PessoasJuridicas\PessoaJuridicaFiltroPorTipoPapelPessoa.cs" />
+    <Compile Include="Decorators\Vendas\IVendaFiltro.cs" />
+    <Compile Include="Decorators\Vendas\VendaFiltro.cs" />
+    <Compile Include="Decorators\Vendas\VendaFiltroPorCodigo.cs" />
+    <Compile Include="Decorators\Vendas\VendaFiltroPorCodigoCliente.cs" />
+    <Compile Include="Decorators\Vendas\VendaFiltroPorCodigoUsuario.cs" />
+    <Compile Include="Decorators\Vendas\VendaFiltroPorDataCadastro.cs" />
+    <Compile Include="Decorators\Vendas\VendaFiltroPorDocumentoCliente.cs" />
+    <Compile Include="Decorators\Vendas\VendaFiltroPorNomeCliente.cs" />
+    <Compile Include="Decorators\Vendas\VendaFiltroPorStatus.cs" />
     <Compile Include="EntityConfig\CompraConfiguration\CompraConfiguration.cs" />
     <Compile Include="EntityConfig\CompraConfiguration\ContaPagarConfiguration.cs" />
     <Compile Include="EntityConfig\CompraConfiguration\ItemCompraConfiguration.cs" />
@@ -101,6 +110,7 @@
     <Compile Include="EntityConfig\VendaConfiguration\VendaConfiguration.cs" />
     <Compile Include="Factories\PessoaFisicaFiltroFactory.cs" />
     <Compile Include="Factories\PessoaJuridicaFiltroFactory.cs" />
+    <Compile Include="Factories\VendaFiltroFactory.cs" />
     <Compile Include="Migrations\201811152131135_BancoInicial.cs" />
     <Compile Include="Migrations\201811152131135_BancoInicial.Designer.cs">
       <DependentUpon>201811152131135_BancoInicial.cs</DependentUpon>
