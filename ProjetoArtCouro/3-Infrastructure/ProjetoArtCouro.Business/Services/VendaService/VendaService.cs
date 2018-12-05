@@ -204,7 +204,7 @@ namespace ProjetoArtCouro.Business.Services.VendaService
 
         private void RemoveContaReceberDaVenda(Venda venda)
         {
-            var contasReceber = _contaReceberRepository.ObterListaPorCodigoVenda(venda.VendaCodigo);
+            var contasReceber = _contaReceberRepository.ObterListaPorVendaCodigo(venda.VendaCodigo);
             contasReceber.ForEach(x =>
             {
                 _contaReceberRepository.Deletar(x);
