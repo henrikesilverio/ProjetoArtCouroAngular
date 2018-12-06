@@ -221,7 +221,7 @@ namespace ProjetoArtCouro.Test.DataBase.Vendas
             
                 var venda = repositorio.ObterPorCodigoComItensVenda(primeiraVenda.VendaCodigo);
                 Assert.AreEqual(primeiraVenda, venda, "Venda não é igual");
-                Assert.IsNotNull(primeiraVenda.ItensVenda, "Venda sem itens");
+                Assert.IsNotNull(venda.ItensVenda, "Venda sem itens");
             }
         }
 

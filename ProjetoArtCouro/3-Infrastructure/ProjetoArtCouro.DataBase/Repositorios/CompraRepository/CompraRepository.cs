@@ -13,19 +13,22 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
     public class CompraRepository : ICompraRepository
     {
         private readonly DataBaseContext _context;
+
         public CompraRepository(DataBaseContext context)
         {
             _context = context;
         }
 
-        public Compra ObterPorId(Guid id)
+        public void Criar(Compra compra)
         {
-            return _context.Compras.FirstOrDefault(x => x.CompraId.Equals(id));
+            _context.Compras.Add(compra);
+            _context.SaveChanges();
         }
 
         public Compra ObterPorCodigo(int codigo)
         {
-            return _context.Compras.FirstOrDefault(x => x.CompraCodigo.Equals(codigo));
+            return _context.Compras
+                .FirstOrDefault(x => x.CompraCodigo == codigo);
         }
 
         public Compra ObterPorCodigoComItensCompra(int codigo)
@@ -35,20 +38,15 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
                 .FirstOrDefault(x => x.CompraCodigo == codigo);
         }
 
-        public List<Compra> ObterLista()
-        {
-            return _context.Compras.ToList();
-        }
-
         public List<Compra> ObterListaPorFiltro(PesquisaCompra filtro)
         {
-            var query = from compra in _context.Compras
+            var query = _context.Compras
                 .Include("Usuario")
                 .Include("ItensCompra")
                 .Include("Fornecedor")
                 .Include("Fornecedor.PessoaFisica")
                 .Include("Fornecedor.PessoaJuridica")
-                        select compra;
+                .AsQueryable();
 
             if (filtro.CodigoCompra != 0)
             {
@@ -89,15 +87,9 @@ namespace ProjetoArtCouro.DataBase.Repositorios.CompraRepository
             return query.ToList();
         }
 
-        public void Criar(Compra compra)
-        {
-            _context.Compras.Add(compra);
-            _context.SaveChanges();
-        }
-
         public void Atualizar(Compra compra)
         {
-            _context.Entry(compra).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(compra).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
