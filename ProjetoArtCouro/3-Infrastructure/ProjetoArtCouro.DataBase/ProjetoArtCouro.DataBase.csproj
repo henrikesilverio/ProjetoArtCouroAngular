@@ -92,6 +92,13 @@
     <Compile Include="Decorators\ContasReceber\ContaReceberFiltroPorUsuarioCodigo.cs" />
     <Compile Include="Decorators\ContasReceber\ContaReceberFiltroPorVendaCodigo.cs" />
     <Compile Include="Decorators\ContasReceber\IContaReceberFiltro.cs" />
+    <Compile Include="Decorators\Estoques\EstoqueFiltro.cs" />
+    <Compile Include="Decorators\Estoques\EstoqueFiltroPorCodigoFornecedor.cs" />
+    <Compile Include="Decorators\Estoques\EstoqueFiltroPorCodigoProduto.cs" />
+    <Compile Include="Decorators\Estoques\EstoqueFiltroPorDescricaoProduto.cs" />
+    <Compile Include="Decorators\Estoques\EstoqueFiltroPorNomeFornecedor.cs" />
+    <Compile Include="Decorators\Estoques\EstoqueFiltroPorQuantidade.cs" />
+    <Compile Include="Decorators\Estoques\IEstoqueFiltro.cs" />
     <Compile Include="Decorators\GruposPermissoes\GrupoPermissaoFiltro.cs" />
     <Compile Include="Decorators\GruposPermissoes\GrupoPermissaoFiltroPorCodigo.cs" />
     <Compile Include="Decorators\GruposPermissoes\GrupoPermissaoFiltroPorNome.cs" />
@@ -149,6 +156,7 @@
     <Compile Include="Factories\CompraFiltroFactory.cs" />
     <Compile Include="Factories\ContaPagarFiltroFactory.cs" />
     <Compile Include="Factories\ContaReceberFiltroFactory.cs" />
+    <Compile Include="Factories\EstoqueFiltroFactory.cs" />
     <Compile Include="Factories\GrupoPermissaoFiltroFactory.cs" />
     <Compile Include="Factories\PessoaFisicaFiltroFactory.cs" />
     <Compile Include="Factories\PessoaJuridicaFiltroFactory.cs" />

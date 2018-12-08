@@ -6,6 +6,6 @@
         public string DescricaoProduto { get; set; }
         public string NomeFornecedor { get; set; }
         public int CodigoFornecedor { get; set; }
-        public int QuantidaEstoque { get; set; }
+        public int QuantidadeEstoque { get; set; }
     }
 }

@@ -7,13 +7,9 @@ namespace ProjetoArtCouro.Domain.Contracts.IRepository.IEstoque
 {
     public interface IEstoqueRepository : IDisposable
     {
-        Estoque ObterPorId(Guid id);
-        Estoque ObterPorCodigo(int codigo);
         Estoque ObterPorCodigoProduto(int codigoProduto);
-        List<Estoque> ObterLista();
         List<Estoque> ObterListaPorFiltro(PesquisaEstoque filtro);
         void Criar(Estoque estoque);
         void Atualizar(Estoque estoque);
-        void Deletar(Estoque estoque);
     }
 }

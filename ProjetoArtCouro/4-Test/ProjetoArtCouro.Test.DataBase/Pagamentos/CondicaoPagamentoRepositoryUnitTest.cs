@@ -99,7 +99,7 @@ namespace ProjetoArtCouro.Test.DataBase.Pagamentos
                 repositorio.Atualizar(antesAtualizado);
                 var aposAtualizado = _context.CondicoesPagamento.FirstOrDefault();
                 Assert.IsNotNull(aposAtualizado, "Condição de pagamento não foi Atualizado");
-                Assert.AreEqual(aposAtualizado.Descricao, "Cheque", "Condição de pagamento não foi Atualizado");
+                Assert.AreEqual(aposAtualizado.Descricao, "1 + 1", "Condição de pagamento não foi Atualizado");
                 Assert.AreEqual(aposAtualizado.Ativo, false, "Condição de pagamento não foi Atualizado");
                 Assert.AreEqual(aposAtualizado.QuantidadeParcelas, 2, "Condição de pagamento não foi Atualizado");
             }
