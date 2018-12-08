@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPagamento;
@@ -16,21 +16,6 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PagamentoRepository
             _context = context;
         }
 
-        public FormaPagamento ObterPorId(Guid id)
-        {
-            return _context.FormasPagamento.FirstOrDefault(x => x.FormaPagamentoId.Equals(id));
-        }
-
-        public FormaPagamento ObterPorCodigo(int codigo)
-        {
-            return _context.FormasPagamento.FirstOrDefault(x => x.FormaPagamentoCodigo.Equals(codigo));
-        }
-
-        public List<FormaPagamento> ObterLista()
-        {
-            return _context.FormasPagamento.AsNoTracking().ToList();
-        }
-
         public FormaPagamento Criar(FormaPagamento formaPagamento)
         {
             _context.FormasPagamento.Add(formaPagamento);
@@ -38,9 +23,21 @@ namespace ProjetoArtCouro.DataBase.Repositorios.PagamentoRepository
             return _context.Entry(formaPagamento).Entity;
         }
 
+        public FormaPagamento ObterPorCodigo(int codigo)
+        {
+            return _context.FormasPagamento
+                .FirstOrDefault(x => x.FormaPagamentoCodigo == codigo);
+        }
+
+        public List<FormaPagamento> ObterLista()
+        {
+            return _context.FormasPagamento
+                .AsNoTracking().ToList();
+        }
+
         public FormaPagamento Atualizar(FormaPagamento formaPagamento)
         {
-            _context.Entry(formaPagamento).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(formaPagamento).State = EntityState.Modified;
             _context.SaveChanges();
             return _context.Entry(formaPagamento).Entity;
         }

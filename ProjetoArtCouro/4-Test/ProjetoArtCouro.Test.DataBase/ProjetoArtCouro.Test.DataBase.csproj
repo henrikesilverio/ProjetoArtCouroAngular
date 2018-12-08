@@ -74,6 +74,8 @@
     <Compile Include="Compras\ContaPagarRepositoryUnitTest.cs" />
     <Compile Include="Compras\ItemCompraRepositoryUnitTest.cs" />
     <Compile Include="Infra\EntityFrameworkHelper.cs" />
+    <Compile Include="Pagamentos\CondicaoPagamentoRepositoryUnitTest.cs" />
+    <Compile Include="Pagamentos\FormaPagamentoRepositoryUnitTest.cs" />
     <Compile Include="Pessoas\EnderecoRepositoryUnitTest.cs" />
     <Compile Include="Pessoas\EstadoCivilRepositoryUnitTest.cs" />
     <Compile Include="Pessoas\EstadoRepositoryUnitTest.cs" />
