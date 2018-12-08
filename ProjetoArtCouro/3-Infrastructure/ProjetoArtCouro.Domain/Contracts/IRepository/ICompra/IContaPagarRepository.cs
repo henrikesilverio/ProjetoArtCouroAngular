@@ -7,11 +7,8 @@ namespace ProjetoArtCouro.Domain.Contracts.IRepository.ICompra
 {
     public interface IContaPagarRepository : IDisposable
     {
-        ContaPagar ObterPorId(Guid id);
-        ContaPagar ObterPorCodigo(int codigo);
         ContaPagar ObterPorCodigoComCompra(int codigo);
-        List<ContaPagar> ObterLista();
-        List<ContaPagar> ObterListaPorCodigoCompra(int codigoCompra);
+        List<ContaPagar> ObterListaPorCompraCodigo(int compraCodigo);
         List<ContaPagar> ObterListaPorFiltro(PesquisaContaPagar filtro);
         void Criar(ContaPagar contaPagar);
         void Atualizar(ContaPagar contaPagar);

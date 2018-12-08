@@ -200,7 +200,7 @@ namespace ProjetoArtCouro.Business.Services.CompraService
 
         private void RemoveContaPagarDaCompra(Compra compra)
         {
-            var contasReceber = _contaPagarRepository.ObterListaPorCodigoCompra(compra.CompraCodigo);
+            var contasReceber = _contaPagarRepository.ObterListaPorCompraCodigo(compra.CompraCodigo);
             contasReceber.ForEach(x =>
             {
                 _contaPagarRepository.Deletar(x);

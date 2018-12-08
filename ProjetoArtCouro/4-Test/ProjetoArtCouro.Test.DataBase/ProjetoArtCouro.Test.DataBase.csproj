@@ -71,6 +71,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Compras\CompraRepositoryUnitTest.cs" />
+    <Compile Include="Compras\ContaPagarRepositoryUnitTest.cs" />
+    <Compile Include="Compras\ItemCompraRepositoryUnitTest.cs" />
     <Compile Include="Infra\EntityFrameworkHelper.cs" />
     <Compile Include="Pessoas\EnderecoRepositoryUnitTest.cs" />
     <Compile Include="Pessoas\EstadoCivilRepositoryUnitTest.cs" />

@@ -72,6 +72,16 @@
     <Compile Include="Decorators\Compras\CompraFiltroPorNomeFornecedor.cs" />
     <Compile Include="Decorators\Compras\CompraFiltroPorStatusCompra.cs" />
     <Compile Include="Decorators\Compras\ICompraFiltro.cs" />
+    <Compile Include="Decorators\ContasPagar\ContaPagarFiltro.cs" />
+    <Compile Include="Decorators\ContasPagar\ContaPagarFiltroPorCodigoFornecedor.cs" />
+    <Compile Include="Decorators\ContasPagar\ContaPagarFiltroPorDataEmissao.cs" />
+    <Compile Include="Decorators\ContasPagar\ContaPagarFiltroPorDataVencimento.cs" />
+    <Compile Include="Decorators\ContasPagar\ContaPagarFiltroPorDocumentoFornecedor.cs" />
+    <Compile Include="Decorators\ContasPagar\ContaPagarFiltroPorNomeFornecedor.cs" />
+    <Compile Include="Decorators\ContasPagar\ContaPagarFiltroPorStatusContaPagar.cs" />
+    <Compile Include="Decorators\ContasPagar\ContaPagarFiltroPorUsuarioCodigo.cs" />
+    <Compile Include="Decorators\ContasPagar\ContaPagarFiltroPorCompraCodigo.cs" />
+    <Compile Include="Decorators\ContasPagar\IContaPagarFiltro.cs" />
     <Compile Include="Decorators\ContasReceber\ContaReceberFiltro.cs" />
     <Compile Include="Decorators\ContasReceber\ContaReceberFiltroPorClienteCodigo.cs" />
     <Compile Include="Decorators\ContasReceber\ContaReceberFiltroPorDataEmissao.cs" />
@@ -137,6 +147,7 @@
     <Compile Include="EntityConfig\VendaConfiguration\ItemVendaConfiguration.cs" />
     <Compile Include="EntityConfig\VendaConfiguration\VendaConfiguration.cs" />
     <Compile Include="Factories\CompraFiltroFactory.cs" />
+    <Compile Include="Factories\ContaPagarFiltroFactory.cs" />
     <Compile Include="Factories\ContaReceberFiltroFactory.cs" />
     <Compile Include="Factories\GrupoPermissaoFiltroFactory.cs" />
     <Compile Include="Factories\PessoaFisicaFiltroFactory.cs" />

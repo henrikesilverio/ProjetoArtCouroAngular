@@ -171,7 +171,7 @@ namespace ProjetoArtCouro.Test.DataBase.Vendas
                 Assert.IsNotNull(primeiraContaReceber, "Conta não foi incluída");
 
                 var contaReceber = repositorio.ObterPorCodigoComVenda(primeiraContaReceber.ContaReceberCodigo);
-                Assert.AreEqual(primeiraContaReceber, contaReceber, "Venda não é igual");
+                Assert.AreEqual(primeiraContaReceber, contaReceber, "Conta não é igual");
                 Assert.IsNotNull(primeiraContaReceber.Venda, "Conta sem venda");
             }
         }
@@ -224,6 +224,7 @@ namespace ProjetoArtCouro.Test.DataBase.Vendas
                     NomeCliente = "Henrique",
                     StatusContaReceber = StatusContaReceberEnum.Recebido
                 };
+
                 var contasReceber = repositorio.ObterListaPorFiltro(filtro);
                 Assert.IsTrue(contasReceber.Any(), "Conta não foi incluída");
                 Assert.IsTrue(contasReceber.Any(x => x.StatusContaReceber == StatusContaReceberEnum.Recebido), "Conta não foi incluída");
@@ -235,7 +236,7 @@ namespace ProjetoArtCouro.Test.DataBase.Vendas
                 Assert.IsTrue(contasReceber.All(x => x.Venda.Cliente.PessoaCodigo == 1), "Conta não foi incluída");
                 Assert.IsTrue(contasReceber.All(x => x.Venda.Cliente.Nome == "Henrique"), "Conta não foi incluída");
                 Assert.IsTrue(contasReceber.All(x => x.Venda.Cliente.PessoaFisica.CPF == "12345678909"), "Conta não foi incluída");
-                Assert.IsTrue(contasReceber.All(x => x.Venda.Usuario != null), "Venda sem usuario");
+                Assert.IsTrue(contasReceber.All(x => x.Venda.Usuario != null), "Conta sem usuario");
                 Assert.IsTrue(contasReceber.All(x => x.Venda.Usuario.UsuarioCodigo == 1), "Conta não foi incluída");
             }
         }
@@ -256,7 +257,7 @@ namespace ProjetoArtCouro.Test.DataBase.Vendas
                 });
 
                 var antesAtualizado = _context.ContasReceber.FirstOrDefault();
-                Assert.IsNotNull(antesAtualizado, "Venda não foi incluído");
+                Assert.IsNotNull(antesAtualizado, "Conta não foi incluído");
                 var dataCadastro = DateTime.Now;
                 antesAtualizado.DataVencimento = DateTime.Now;
                 antesAtualizado.Recebido = false;
@@ -265,11 +266,11 @@ namespace ProjetoArtCouro.Test.DataBase.Vendas
 
                 repositorio.Atualizar(antesAtualizado);
                 var aposAtualizado = _context.ContasReceber.FirstOrDefault();
-                Assert.IsNotNull(aposAtualizado, "Venda não foi Atualizado");
-                Assert.AreEqual(aposAtualizado.DataVencimento, dataCadastro, "Venda não foi Atualizado");
-                Assert.AreEqual(aposAtualizado.Recebido, false, "Venda não foi Atualizado");
-                Assert.AreEqual(aposAtualizado.StatusContaReceber, StatusContaReceberEnum.Aberto, "Venda não foi Atualizado");
-                Assert.AreEqual(aposAtualizado.ValorDocumento, 600, "Venda não foi Atualizado");
+                Assert.IsNotNull(aposAtualizado, "Conta não foi Atualizado");
+                Assert.AreEqual(aposAtualizado.DataVencimento, dataCadastro, "Conta não foi Atualizado");
+                Assert.AreEqual(aposAtualizado.Recebido, false, "Conta não foi Atualizado");
+                Assert.AreEqual(aposAtualizado.StatusContaReceber, StatusContaReceberEnum.Aberto, "Conta não foi Atualizado");
+                Assert.AreEqual(aposAtualizado.ValorDocumento, 600, "Conta não foi Atualizado");
             }
         }
 
