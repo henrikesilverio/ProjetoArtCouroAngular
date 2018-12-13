@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetoArtCouro.Test.API", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetoArtCouro.Mapping", "3-Infrastructure\ProjetoArtCouro.Mapping\ProjetoArtCouro.Mapping.csproj", "{F06BC296-43C3-4AEA-95DB-2EFD463520AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetoArtCouro.Test.Business", "4-Test\ProjetoArtCouro.Test.Business\ProjetoArtCouro.Test.Business.csproj", "{AA0F10B8-BB18-4679-A965-6FFE1EF98BC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,10 @@ Global
 		{F06BC296-43C3-4AEA-95DB-2EFD463520AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F06BC296-43C3-4AEA-95DB-2EFD463520AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F06BC296-43C3-4AEA-95DB-2EFD463520AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA0F10B8-BB18-4679-A965-6FFE1EF98BC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0F10B8-BB18-4679-A965-6FFE1EF98BC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0F10B8-BB18-4679-A965-6FFE1EF98BC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0F10B8-BB18-4679-A965-6FFE1EF98BC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +132,7 @@ Global
 		{C4950402-0630-410F-8474-0D1B745EB3A3} = {1AE748C0-89B9-479B-8EF0-196EEDAFE4EB}
 		{5BFA2CC4-A4CC-4522-943E-3E0A8FE86AE5} = {1AE748C0-89B9-479B-8EF0-196EEDAFE4EB}
 		{F06BC296-43C3-4AEA-95DB-2EFD463520AF} = {E757DD7D-264F-4AC1-8616-F05FFFD53984}
+		{AA0F10B8-BB18-4679-A965-6FFE1EF98BC8} = {1AE748C0-89B9-479B-8EF0-196EEDAFE4EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A29DA801-DFAA-4152-B832-690A685C85DB}

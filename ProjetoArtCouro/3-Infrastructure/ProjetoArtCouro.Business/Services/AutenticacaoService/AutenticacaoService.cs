@@ -19,7 +19,7 @@ namespace ProjetoArtCouro.Business.Services.AutenticacaoService
         public Usuario AutenticarUsuario(string usuarioNome, string senha)
         {
             var usuario = _usuarioRepository.ObterPorUsuarioNome(usuarioNome);
-            if (usuario == null || !PasswordAssertionConcern.Encrypt(senha).Equals(usuario.Senha))
+            if (usuario == null || PasswordAssertionConcern.Encrypt(senha) != usuario.Senha)
             {
                 return null;
             }
