@@ -3,6 +3,7 @@ using Moq;
 using ProjetoArtCouro.Business.Services.AutenticacaoService;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IUsuario;
 using ProjetoArtCouro.Domain.Entities.Usuarios;
+using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Resources.Validation;
 using System.Collections.Generic;
 
@@ -22,7 +23,8 @@ namespace ProjetoArtCouro.Test.Business.Autenticacoes
         }
 
         [TestMethod]
-        public void AutenticarUsuario_Inexistente_RetornoNulo()
+        [ExpectedException(typeof(BusinessException), "Usuario existe")]
+        public void AutenticarUsuario_Inexistente_Excecao()
         {
             _usuarioRepositoryMock
                 .Setup(x => x.ObterPorUsuarioNome("Henrique"))
@@ -30,12 +32,11 @@ namespace ProjetoArtCouro.Test.Business.Autenticacoes
 
             var usuario = _autenticacaoService
                 .AutenticarUsuario("Henrique", string.Empty);
-
-            Assert.IsNull(usuario, "Usuário deveria ser nulo");
         }
 
         [TestMethod]
-        public void AutenticarUsuario_SenhaInvalida_RetornoNulo()
+        [ExpectedException(typeof(BusinessException), "Senha valida")]
+        public void AutenticarUsuario_SenhaInvalida_Excecao()
         {
             _usuarioRepositoryMock
                 .Setup(x => x.ObterPorUsuarioNome("Henrique"))
@@ -47,8 +48,6 @@ namespace ProjetoArtCouro.Test.Business.Autenticacoes
 
             var usuario = _autenticacaoService
                 .AutenticarUsuario("Henrique", "321");
-
-            Assert.IsNull(usuario, "Usuário deveria ser nulo");
         }
 
         [TestMethod]

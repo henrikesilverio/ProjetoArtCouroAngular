@@ -1,5 +1,4 @@
 ﻿using Microsoft.Owin.Security.OAuth;
-using Microsoft.Practices.Unity;
 using ProjetoArtCouro.Domain.Contracts.IService.IAutenticacao;
 using ProjetoArtCouro.Resources.Resources;
 using System;
@@ -34,12 +33,6 @@ namespace ProjetoArtCouro.Api.Security
             try
             {
                 var user = _autenticacaoService.AutenticarUsuario(context.UserName, context.Password);
-
-                if (user == null)
-                {
-                    context.SetError("invalid_grant", Erros.InvalidCredentials);
-                    return;
-                }
 
                 var identity = new ClaimsIdentity("otc");
 

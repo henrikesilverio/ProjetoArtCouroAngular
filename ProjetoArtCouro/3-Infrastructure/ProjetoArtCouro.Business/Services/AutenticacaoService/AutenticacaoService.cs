@@ -3,6 +3,9 @@ using System.Linq;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IUsuario;
 using ProjetoArtCouro.Domain.Contracts.IService.IAutenticacao;
 using ProjetoArtCouro.Domain.Entities.Usuarios;
+using ProjetoArtCouro.Domain.Exceptions;
+using ProjetoArtCouro.Resource.Validation;
+using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Business.Services.AutenticacaoService
@@ -19,10 +22,13 @@ namespace ProjetoArtCouro.Business.Services.AutenticacaoService
         public Usuario AutenticarUsuario(string usuarioNome, string senha)
         {
             var usuario = _usuarioRepository.ObterPorUsuarioNome(usuarioNome);
-            if (usuario == null || PasswordAssertionConcern.Encrypt(senha) != usuario.Senha)
-            {
-                return null;
-            }
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(usuario, Erros.UserDoesNotExist);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentEquals(PasswordAssertionConcern.Encrypt(senha), 
+                usuario.Senha, Erros.InvalidUserPassword);
+
             return usuario;
         }
 
