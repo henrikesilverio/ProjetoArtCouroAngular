@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ProjetoArtCouro.Business.Services.PagamentoService;
+using ProjetoArtCouro.Business.PagamentoService;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IPagamento;
 using ProjetoArtCouro.Domain.Entities.Pagamentos;
 using ProjetoArtCouro.Domain.Exceptions;

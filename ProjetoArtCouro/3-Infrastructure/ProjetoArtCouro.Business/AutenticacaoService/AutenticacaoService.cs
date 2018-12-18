@@ -8,7 +8,7 @@ using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Resources.Validation;
 
-namespace ProjetoArtCouro.Business.Services.AutenticacaoService
+namespace ProjetoArtCouro.Business.AutenticacaoService
 {
     public class AutenticacaoService : IAutenticacao
     {

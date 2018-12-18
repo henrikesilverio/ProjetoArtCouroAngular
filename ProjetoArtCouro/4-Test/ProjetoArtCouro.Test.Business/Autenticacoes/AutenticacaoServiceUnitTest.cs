@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ProjetoArtCouro.Business.Services.AutenticacaoService;
+using ProjetoArtCouro.Business.AutenticacaoService;
 using ProjetoArtCouro.Domain.Contracts.IRepository.IUsuario;
 using ProjetoArtCouro.Domain.Entities.Usuarios;
 using ProjetoArtCouro.Domain.Exceptions;

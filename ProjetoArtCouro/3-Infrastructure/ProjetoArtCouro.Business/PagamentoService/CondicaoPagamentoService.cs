@@ -8,11 +8,11 @@ using ProjetoArtCouro.Domain.Models.CondicaoPagamento;
 using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Mapping;
 
-namespace ProjetoArtCouro.Business.Services.PagamentoService
+namespace ProjetoArtCouro.Business.PagamentoService
 {
     public class CondicaoPagamentoService : ICondicaoPagamentoService
     {
-        private readonly ICondicaoPagamentoRepository _condicaoPagamentoRepository; 
+        private readonly ICondicaoPagamentoRepository _condicaoPagamentoRepository;
 
         public CondicaoPagamentoService(ICondicaoPagamentoRepository condicaoPagamentoRepository)
         {
@@ -50,11 +50,13 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
                 .AssertArgumentNotEquals(0, condicaoPagamento.CondicaoPagamentoCodigo,
                 string.Format(Erros.NotZeroParameter, "CondicaoPagamentoCodigo"));
 
-            var condicaoPagamentoAtual =
-                _condicaoPagamentoRepository.ObterPorCodigo(condicaoPagamento.CondicaoPagamentoCodigo);
+            var condicaoPagamentoAtual = _condicaoPagamentoRepository
+                .ObterPorCodigo(condicaoPagamento.CondicaoPagamentoCodigo);
+
             condicaoPagamentoAtual.Ativo = condicaoPagamento.Ativo;
             condicaoPagamentoAtual.Descricao = condicaoPagamento.Descricao;
             condicaoPagamentoAtual.QuantidadeParcelas = condicaoPagamento.QuantidadeParcelas;
+
             var condicaoPagamentoAtualizada = _condicaoPagamentoRepository
                 .Atualizar(condicaoPagamentoAtual);
 
@@ -67,7 +69,9 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
                 .AssertArgumentNotEquals(0, condicaoPagamentoCodigo,
                 string.Format(Erros.NotZeroParameter, "CondicaoPagamentoCodigo"));
 
-            var condicaoPagamentoAtual = _condicaoPagamentoRepository.ObterPorCodigo(condicaoPagamentoCodigo);
+            var condicaoPagamentoAtual = _condicaoPagamentoRepository
+                .ObterPorCodigo(condicaoPagamentoCodigo);
+
             AssertionConcern<BusinessException>
                 .AssertArgumentNotNull(condicaoPagamentoAtual, Erros.PaymentConditionDoesNotExist);
 
