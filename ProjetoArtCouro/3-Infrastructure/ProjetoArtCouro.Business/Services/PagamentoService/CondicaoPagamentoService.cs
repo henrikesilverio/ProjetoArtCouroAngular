@@ -69,7 +69,7 @@ namespace ProjetoArtCouro.Business.Services.PagamentoService
 
             var condicaoPagamentoAtual = _condicaoPagamentoRepository.ObterPorCodigo(condicaoPagamentoCodigo);
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(condicaoPagamentoAtual, null, Erros.PaymentConditionDoesNotExist);
+                .AssertArgumentNotNull(condicaoPagamentoAtual, Erros.PaymentConditionDoesNotExist);
 
             _condicaoPagamentoRepository.Deletar(condicaoPagamentoAtual);
         }

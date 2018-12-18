@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autenticacoes\AutenticacaoServiceUnitTest.cs" />
+    <Compile Include="Pagamentos\CondicaoPagamentoServiceUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +82,10 @@
     <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.Domain\ProjetoArtCouro.Domain.csproj">
       <Project>{d0278cc6-dc16-48e5-9626-b19142b60808}</Project>
       <Name>ProjetoArtCouro.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.Mapping\ProjetoArtCouro.Mapping.csproj">
+      <Project>{f06bc296-43c3-4aea-95db-2efd463520af}</Project>
+      <Name>ProjetoArtCouro.Mapping</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\3-Infrastructure\ProjetoArtCouro.Resources\ProjetoArtCouro.Resources.csproj">
       <Project>{5bafb16b-6802-4d6d-8045-bf640fb83a57}</Project>
