@@ -9,7 +9,7 @@ using ProjetoArtCouro.Domain.Models.Produto;
 using ProjetoArtCouro.Domain.Models.Common;
 using ProjetoArtCouro.Mapping;
 
-namespace ProjetoArtCouro.Business.Services.ProdutoService
+namespace ProjetoArtCouro.Business.ProdutoService
 {
     public class ProdutoService : IProdutoService
     {
@@ -45,10 +45,10 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
             produto.Validar();
 
             var unidade = _unidadeRepository.ObterPorCodigo(produto.Unidade.UnidadeCodigo);
-            AssertionConcern<BusinessException>.AssertArgumentNotEquals(unidade, null, Erros.UnitDoesNotExist);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(unidade, Erros.UnitDoesNotExist);
 
             produto.Unidade = unidade;
-            produto.Unidade.Validar();
             var produtoIncluido = _produtoRepository.Criar(produto);
 
             return Map<ProdutoModel>.MapperTo(produtoIncluido);
@@ -58,16 +58,22 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
         {
             var produto = Map<Produto>.MapperTo(model);
             produto.Validar();
+
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(0, produto.ProdutoCodigo, string.Format(Erros.NotZeroParameter, "ProdutoCodigo"));
+                .AssertArgumentNotEquals(0, produto.ProdutoCodigo, 
+                string.Format(Erros.NotZeroParameter, "ProdutoCodigo"));
+
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(0, produto.Unidade.UnidadeCodigo, string.Format(Erros.NotZeroParameter, "UnidadeCodigo"));
+                .AssertArgumentNotEquals(0, produto.Unidade.UnidadeCodigo, 
+                string.Format(Erros.NotZeroParameter, "UnidadeCodigo"));
 
             var unidade = _unidadeRepository.ObterPorCodigo(produto.Unidade.UnidadeCodigo);
-            AssertionConcern<BusinessException>.AssertArgumentNotEquals(unidade, null, Erros.UnitDoesNotExist);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(unidade, Erros.UnitDoesNotExist);
 
             var produtoAtual = _produtoRepository.ObterComUnidadePorCodigo(produto.ProdutoCodigo);
-            AssertionConcern<BusinessException>.AssertArgumentNotEquals(produtoAtual, null, Erros.ProductDoesNotExist);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(produtoAtual, Erros.ProductDoesNotExist);
 
             produtoAtual.PrecoCusto = produto.PrecoCusto;
             produtoAtual.PrecoVenda = produto.PrecoVenda;
@@ -80,8 +86,9 @@ namespace ProjetoArtCouro.Business.Services.ProdutoService
         public void ExcluirProduto(int produtoCodigo)
         {
             var produtoAtual = _produtoRepository.ObterPorCodigo(produtoCodigo);
+
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(produtoAtual, null, Erros.ProductDoesNotExist);
+                .AssertArgumentNotNull(produtoAtual, Erros.ProductDoesNotExist);
 
             _produtoRepository.Deletar(produtoAtual);
         }

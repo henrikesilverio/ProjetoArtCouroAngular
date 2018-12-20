@@ -65,6 +65,7 @@
     <Compile Include="Autenticacoes\AutenticacaoServiceUnitTest.cs" />
     <Compile Include="Pagamentos\CondicaoPagamentoServiceUnitTest.cs" />
     <Compile Include="Pagamentos\FormaPagamentoServiceUnitTest.cs" />
+    <Compile Include="Produtos\ProdutoServiceUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
