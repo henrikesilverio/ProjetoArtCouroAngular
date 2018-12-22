@@ -67,6 +67,7 @@
     <Compile Include="Pagamentos\FormaPagamentoServiceUnitTest.cs" />
     <Compile Include="Produtos\ProdutoServiceUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usuarios\UsuarioServiceUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

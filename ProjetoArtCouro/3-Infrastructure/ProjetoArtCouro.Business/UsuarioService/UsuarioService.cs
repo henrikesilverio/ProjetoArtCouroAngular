@@ -10,7 +10,7 @@ using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Mapping;
 
-namespace ProjetoArtCouro.Business.Services.UsuarioService
+namespace ProjetoArtCouro.Business.UsuarioService
 {
     public class UsuarioService : IUsuarioService
     {
@@ -30,14 +30,16 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
         public void CriarUsuario(UsuarioModel model)
         {
-            AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(model.GrupoCodigo, 0, string.Format(Erros.NotZeroParameter, "GrupoId"));
-
-            AssertionConcern<BusinessException>
-                .AssertArgumentEquals(model.Senha, model.ConfirmarSenha, Erros.ConfirmPasswordAndPasswordNotMatch);
-
             var usuario = Map<Usuario>.MapperTo(model);
             usuario.Validar();
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(model.GrupoCodigo, 0, 
+                string.Format(Erros.NotZeroParameter, "GrupoId"));
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentEquals(model.Senha, model.ConfirmarSenha, 
+                Erros.ConfirmPasswordAndPasswordNotMatch);
 
             var temUsuario = _usuarioRepository.ObterPorUsuarioNome(usuario.UsuarioNome);
             AssertionConcern<BusinessException>
@@ -45,12 +47,24 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
             var grupo = _grupoPermissaoRepository.ObterPorCodigoComPermissoes(model.GrupoCodigo);
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(grupo, null, Erros.GroupDoesNotExist);
+                .AssertArgumentNotNull(grupo, Erros.GroupDoesNotExist);
 
             usuario.Senha = PasswordAssertionConcern.Encrypt(usuario.Senha);
             usuario.GrupoPermissao = grupo;
 
             _usuarioRepository.Criar(usuario);
+        }
+
+        public List<UsuarioModel> ObterListaUsuario()
+        {
+            var usuarios = _usuarioRepository.ObterListaComPermissoes();
+            return Map<List<UsuarioModel>>.MapperTo(usuarios);
+        }
+
+        public List<PermissaoModel> ObterPermissoesUsuarioLogado(string usuarioNome)
+        {
+            var usuario = _usuarioRepository.ObterPorUsuarioNomeComPermissoes(usuarioNome);
+            return Map<List<PermissaoModel>>.MapperTo(usuario.Permissoes.ToList());
         }
 
         public List<UsuarioModel> PesquisarUsuario(PesquisaUsuarioModel model)
@@ -73,7 +87,6 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
             var usuarioAtual = _usuarioRepository.ObterPorUsuarioNomeComPermissoes(usuarioNome);
             usuarioAtual.Senha = PasswordAssertionConcern.Encrypt(senha);
-            usuarioAtual.Validar();
 
             _usuarioRepository.Atualizar(usuarioAtual);
         }
@@ -81,7 +94,9 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
         public void EditarUsuario(UsuarioModel model)
         {
             var usuario = Map<Usuario>.MapperTo(model);
-            var usuarioAtual = _usuarioRepository.ObterPorCodigoComPermissoesEGrupo(usuario.UsuarioCodigo);
+            var usuarioAtual = _usuarioRepository
+                .ObterPorCodigoComPermissoesEGrupo(usuario.UsuarioCodigo);
+
             AssertionConcern<BusinessException>
                 .AssertArgumentNotNull(usuarioAtual, Erros.UserDoesNotExist);
 
@@ -108,19 +123,6 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             _usuarioRepository.Atualizar(usuarioAtual);
         }
 
-        public void ExcluirUsuario(int codigoUsuario)
-        {
-            AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(codigoUsuario, 0,
-                string.Format(Erros.NotZeroParameter, "codigoUsuario"));
-
-            var usuario = _usuarioRepository.ObterPorCodigo(codigoUsuario);
-            AssertionConcern<BusinessException>
-                .AssertArgumentNotNull(usuario, Erros.UserDoesNotExist);
-
-            _usuarioRepository.Deletar(usuario);
-        }
-
         public void EditarPermissaoUsuario(ConfiguracaoUsuarioModel model)
         {
             AssertionConcern<BusinessException>
@@ -132,7 +134,7 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
 
             var usuario = _usuarioRepository.ObterPorCodigoComPermissoes(model.UsuarioCodigo);
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(usuario, null, Erros.UserDoesNotExist);
+                .AssertArgumentNotNull(usuario, Erros.UserDoesNotExist);
 
             var permissoes = Map<List<Permissao>>.MapperTo(model.Permissoes);
             var permissoesDB = _permissaoRepository.ObterLista();
@@ -146,22 +148,23 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             _usuarioRepository.Atualizar(usuario);
         }
 
-        public List<UsuarioModel> ObterListaUsuario()
+        public void ExcluirUsuario(int codigoUsuario)
         {
-            var usuarios = _usuarioRepository.ObterListaComPermissoes();
-            return Map<List<UsuarioModel>>.MapperTo(usuarios);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotEquals(codigoUsuario, 0,
+                string.Format(Erros.NotZeroParameter, "codigoUsuario"));
+
+            var usuario = _usuarioRepository.ObterPorCodigo(codigoUsuario);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(usuario, Erros.UserDoesNotExist);
+
+            _usuarioRepository.Deletar(usuario);
         }
 
         public List<PermissaoModel> ObterListaPermissao()
         {
             var permissoes = _permissaoRepository.ObterLista();
             return Map<List<PermissaoModel>>.MapperTo(permissoes);
-        }
-
-        public List<PermissaoModel> ObterPermissoesUsuarioLogado(string usuarioNome)
-        {
-            var usuario = _usuarioRepository.ObterPorUsuarioNomeComPermissoes(usuarioNome);
-            return Map<List<PermissaoModel>>.MapperTo(usuario.Permissoes.ToList());
         }
 
         public GrupoModel ObterGrupoPermissaoPorCodigo(int codigoGrupo)
@@ -196,7 +199,8 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             var grupo = Map<GrupoPermissao>.MapperTo(model);
             grupo.Validar();
 
-            var temGrupo = _grupoPermissaoRepository.ObterPorNome(grupo.GrupoPermissaoNome.ToLower());
+            var temGrupo = _grupoPermissaoRepository
+                .ObterPorNome(grupo.GrupoPermissaoNome.ToLower());
             AssertionConcern<BusinessException>
                 .AssertArgumentNull(temGrupo, Erros.DuplicateGruopName);
 
@@ -209,28 +213,27 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             var grupo = Map<GrupoPermissao>.MapperTo(model);
             grupo.Validar();
 
-            var grupoPermissaoDB =
-                _grupoPermissaoRepository.ObterPorCodigoComPermissoesEUsuarios(grupo.GrupoPermissaoCodigo);
+            var grupoPermissaoAtual = _grupoPermissaoRepository
+                .ObterPorCodigoComPermissoesEUsuarios(grupo.GrupoPermissaoCodigo);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(grupoPermissaoAtual, Erros.GroupDoesNotExist);
 
             var listaPermissao = _permissaoRepository.ObterLista();
             AssertionConcern<BusinessException>
                 .AssertArgumentTrue(listaPermissao.Any(), Erros.PermissionsNotRegistered);
 
-            grupoPermissaoDB.Permissoes.Clear();
-            grupoPermissaoDB.Permissoes = grupo.Permissoes
+            grupoPermissaoAtual.Permissoes.Clear();
+            grupoPermissaoAtual.Permissoes = grupo.Permissoes
                 .Select(x => listaPermissao
                 .FirstOrDefault(a => a.PermissaoCodigo == x.PermissaoCodigo))
                 .ToList();
 
-            _grupoPermissaoRepository.Atualizar(grupoPermissaoDB);
+            _grupoPermissaoRepository.Atualizar(grupoPermissaoAtual);
         }
 
         public void ExcluirGrupoPermissao(int codigoGrupoPermissao)
         {
-            AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(codigoGrupoPermissao, 0,
-                string.Format(Erros.NotZeroParameter, "codigoGrupoPermissao"));
-
             var grupoPermissao = _grupoPermissaoRepository.ObterPorCodigo(codigoGrupoPermissao);
             AssertionConcern<BusinessException>
                 .AssertArgumentNotNull(grupoPermissao, Erros.GroupDoesNotExist);
@@ -244,8 +247,11 @@ namespace ProjetoArtCouro.Business.Services.UsuarioService
             AssertionConcern<BusinessException>
                 .AssertArgumentTrue(listaPermissao.Any(), Erros.PermissionsNotRegistered);
 
-            grupoPermissao.Permissoes = grupoPermissao.Permissoes.Select(x =>
-                listaPermissao.FirstOrDefault(a => a.PermissaoCodigo.Equals(x.PermissaoCodigo))).ToList();
+            grupoPermissao.Permissoes = grupoPermissao.Permissoes
+                .Select(x => listaPermissao
+                .FirstOrDefault(a => a.PermissaoCodigo.Equals(x.PermissaoCodigo)))
+                .ToList();
+
             grupoPermissao.GrupoPermissaoNome = grupoPermissao.GrupoPermissaoNome.ToUpper();
         }
 
