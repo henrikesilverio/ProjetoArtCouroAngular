@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\ConvertValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AutenticacaoService\AutenticacaoService.cs" />
     <Compile Include="Services\CompraService\CompraService.cs" />

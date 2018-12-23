@@ -41,12 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Erros.Designer.cs" >
+    <Compile Include="Resources\Erros.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Erros.resx</DependentUpon>
     </Compile>
-	<Compile Include="Resources\Mensagens.Designer.cs" >
+    <Compile Include="Resources\Mensagens.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Mensagens.resx</DependentUpon>
@@ -63,10 +63,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Erros.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Mensagens.resx" >
-	  <Generator>PublicResXFileCodeGenerator</Generator>
+    <EmbeddedResource Include="Resources\Mensagens.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Mensagens.Designer.cs</LastGenOutput>
-	</EmbeddedResource>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
