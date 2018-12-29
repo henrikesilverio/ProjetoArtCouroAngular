@@ -11,7 +11,7 @@ using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.Pessoa;
 using ProjetoArtCouro.Mapping;
 
-namespace ProjetoArtCouro.Business.Services.PessoaService
+namespace ProjetoArtCouro.Business.PessoaService
 {
     public class PessoaService : IPessoaService
     {
@@ -26,8 +26,8 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
 
         public PessoaService(IEnderecoRepository enderecoRepository, IEstadoCivilRepository estadoCivilRepository,
             IEstadoRepository estadoRepository, IMeioComunicacaoRepository meioComunicacaoRepository,
-            IPessoaRepository pessoaRepository, IPessoaFisicaRepository pessoaFisicaRepository,
-            IPessoaJuridicaRepository pessoaJuridicaRepository, IPapelRepository papelRepository)
+            IPapelRepository papelRepository, IPessoaRepository pessoaRepository,
+            IPessoaFisicaRepository pessoaFisicaRepository, IPessoaJuridicaRepository pessoaJuridicaRepository)
         {
             _enderecoRepository = enderecoRepository;
             _estadoCivilRepository = estadoCivilRepository;
@@ -73,95 +73,9 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             }
         }
 
-        public void CriarPessoaFisica(Pessoa pessoa)
-        {
-            pessoa.PessoaFisica.Pessoa = pessoa;
-            pessoa.PessoaFisica.Validar();
-
-            var existePessoaFisica = _pessoaRepository.ObterPorCPFComPessoaCompleta(pessoa.PessoaFisica.CPF);
-            if (existePessoaFisica != null)
-            {
-                existePessoaFisica.Papeis.Add(pessoa.Papeis.First());
-                _pessoaRepository.Atualizar(existePessoaFisica);
-            }
-            else
-            {
-                pessoa.Enderecos.First().Estado = _estadoRepository.ObterPorCodigo(pessoa.Enderecos.First().Estado.EstadoCodigo);
-                pessoa.PessoaFisica.EstadoCivil =
-                    _estadoCivilRepository.ObterPorCodigo(pessoa.PessoaFisica.EstadoCivil.EstadoCivilCodigo);
-                _pessoaRepository.Criar(pessoa);
-            }
-        }
-
-        public void CriarPessoaJuridica(Pessoa pessoa)
-        {
-            pessoa.PessoaJuridica.Pessoa = pessoa;
-            pessoa.PessoaJuridica.Validar();
-
-            var existePessoaJuridica = _pessoaRepository.ObterPorCNPJComPessoaCompleta(pessoa.PessoaJuridica.CNPJ);
-            if (existePessoaJuridica != null)
-            {
-                existePessoaJuridica.Papeis.Add(pessoa.Papeis.First());
-                _pessoaRepository.Atualizar(existePessoaJuridica);
-            }
-            else
-            {
-                pessoa.Enderecos.First().Estado = _estadoRepository.ObterPorCodigo(pessoa.Enderecos.First().Estado.EstadoCodigo);
-                _pessoaRepository.Criar(pessoa);
-            }
-        }
-
-        public void AtualizarPessoa(PessoaModel model)
-        {
-            var pessoa = Map<Pessoa>.MapperTo(model);
-            if (model.EPessoaFisica)
-            {
-                pessoa.PessoaFisica = Map<PessoaFisica>.MapperTo(model);
-            }
-            else
-            {
-                pessoa.PessoaJuridica = Map<PessoaJuridica>.MapperTo(model);
-            }
-
-            var pessoaAtual = _pessoaRepository.ObterPorCodigoComPessoaCompleta(pessoa.PessoaCodigo);
-            AssertionConcern<BusinessException>.AssertArgumentNotNull(pessoaAtual, Erros.PersonDoesNotExist);
-
-            pessoaAtual.Nome = pessoa.Nome;
-            if (pessoaAtual.PessoaFisica != null)
-            {
-                pessoaAtual.PessoaFisica.RG = pessoa.PessoaFisica.RG;
-                pessoaAtual.PessoaFisica.Sexo = pessoa.PessoaFisica.Sexo;
-                pessoaAtual.PessoaFisica.EstadoCivil = _estadoCivilRepository.ObterPorCodigo(pessoa.PessoaFisica.EstadoCivil.EstadoCivilCodigo);
-                pessoaAtual.Validar();
-                pessoaAtual.PessoaFisica.Validar();
-            }
-            else
-            {
-                pessoaAtual.PessoaJuridica.Contato = pessoa.PessoaJuridica.Contato;
-                pessoaAtual.Validar();
-                pessoaAtual.PessoaJuridica.Validar();
-            }
-
-            //Adiciona um novo endereço ou modifica o exitente para principal
-            AtualizarEnderecoPessoa(pessoa, pessoaAtual);
-            //Adiciona um meio de cominicação ou modifica o exitente para principal
-            AtualizarMeioCominicacaoPessoa(pessoa, pessoaAtual, TipoComunicacaoEnum.Telefone);
-            AtualizarMeioCominicacaoPessoa(pessoa, pessoaAtual, TipoComunicacaoEnum.Celular);
-            AtualizarMeioCominicacaoPessoa(pessoa, pessoaAtual, TipoComunicacaoEnum.Email);
-            _pessoaRepository.Atualizar(pessoaAtual);
-        }
-
-        public void ExcluirPessoa(int pessoaCodigo)
-        {
-            AssertionConcern<BusinessException>.AssertArgumentNotEquals(pessoaCodigo, 0, Erros.InvalidCode);
-            var pessoa = _pessoaRepository.ObterPorCodigoComPessoaCompleta(pessoaCodigo);
-            AssertionConcern<BusinessException>.AssertArgumentNotNull(pessoa, Erros.PersonDoesNotExist);
-            _pessoaRepository.Deletar(pessoa);
-        }
-
         public List<PessoaModel> PesquisarPessoa(PesquisaPessoaModel pessoaFiltro)
         {
-            if (pessoaFiltro.Codigo == 0 &&
+            if (!pessoaFiltro.Codigo.HasValue &&
                 string.IsNullOrEmpty(pessoaFiltro.Nome) &&
                 string.IsNullOrEmpty(pessoaFiltro.CPFCNPJ) &&
                 string.IsNullOrEmpty(pessoaFiltro.Email) &&
@@ -227,46 +141,157 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             return _pessoaJuridicaRepository.ObterListaPorFiltro(filtro);
         }
 
+        public void AtualizarPessoa(PessoaModel model)
+        {
+            var pessoa = Map<Pessoa>.MapperTo(model);
+            pessoa.Validar();
+
+            if (model.EPessoaFisica)
+            {
+                pessoa.PessoaFisica = Map<PessoaFisica>.MapperTo(model);
+                pessoa.PessoaFisica.Pessoa = pessoa;
+                pessoa.PessoaFisica.Validar();
+            }
+            else
+            {
+                pessoa.PessoaJuridica = Map<PessoaJuridica>.MapperTo(model);
+                pessoa.PessoaJuridica.Pessoa = pessoa;
+                pessoa.PessoaJuridica.Validar();
+            }
+
+            var pessoaAtual = _pessoaRepository
+                .ObterPorCodigoComPessoaCompleta(pessoa.PessoaCodigo);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(pessoaAtual, Erros.PersonDoesNotExist);
+
+            pessoaAtual.Nome = pessoa.Nome;
+            if (pessoaAtual.PessoaFisica != null)
+            {
+                pessoaAtual.PessoaFisica.RG = pessoa.PessoaFisica.RG;
+                pessoaAtual.PessoaFisica.Sexo = pessoa.PessoaFisica.Sexo;
+
+                var estadoCivil = _estadoCivilRepository
+                    .ObterPorCodigo(pessoa.PessoaFisica.EstadoCivil.EstadoCivilCodigo);
+
+                AssertionConcern<BusinessException>
+                    .AssertArgumentNotNull(estadoCivil, Erros.EmptyMaritalStatus);
+
+                pessoaAtual.PessoaFisica.EstadoCivil = estadoCivil;
+            }
+            else
+            {
+                pessoaAtual.PessoaJuridica.Contato = pessoa.PessoaJuridica.Contato;
+            }
+
+            //Adiciona um novo endereço ou modifica o exitente para principal
+            AtualizarEnderecoPessoa(pessoa, pessoaAtual);
+            //Adiciona um meio de cominicação ou modifica o exitente para principal
+            AtualizarMeioCominicacaoPessoa(pessoa, pessoaAtual, TipoComunicacaoEnum.Telefone);
+            AtualizarMeioCominicacaoPessoa(pessoa, pessoaAtual, TipoComunicacaoEnum.Celular);
+            AtualizarMeioCominicacaoPessoa(pessoa, pessoaAtual, TipoComunicacaoEnum.Email);
+
+            _pessoaRepository.Atualizar(pessoaAtual);
+        }
+
+        public void ExcluirPessoa(int pessoaCodigo)
+        {
+            var pessoa = _pessoaRepository.ObterPorCodigoComPessoaCompleta(pessoaCodigo);
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(pessoa, Erros.PersonDoesNotExist);
+
+            _pessoaRepository.Deletar(pessoa);
+        }
+
+        private void CriarPessoaFisica(Pessoa pessoa)
+        {
+            pessoa.PessoaFisica.Pessoa = pessoa;
+            pessoa.PessoaFisica.Validar();
+
+            var existePessoaFisica = _pessoaRepository
+                .ObterPorCPFComPessoaCompleta(pessoa.PessoaFisica.CPF);
+
+            if (existePessoaFisica != null)
+            {
+                existePessoaFisica.Papeis.Add(pessoa.Papeis.First());
+                _pessoaRepository.Atualizar(existePessoaFisica);
+            }
+            else
+            {
+                pessoa.Enderecos.First().Estado = _estadoRepository
+                    .ObterPorCodigo(pessoa.Enderecos.First().Estado.EstadoCodigo);
+
+                pessoa.PessoaFisica.EstadoCivil = _estadoCivilRepository
+                    .ObterPorCodigo(pessoa.PessoaFisica.EstadoCivil.EstadoCivilCodigo);
+
+                _pessoaRepository.Criar(pessoa);
+            }
+        }
+
+        private void CriarPessoaJuridica(Pessoa pessoa)
+        {
+            pessoa.PessoaJuridica.Pessoa = pessoa;
+            pessoa.PessoaJuridica.Validar();
+
+            var existePessoaJuridica = _pessoaRepository
+                .ObterPorCNPJComPessoaCompleta(pessoa.PessoaJuridica.CNPJ);
+
+            if (existePessoaJuridica != null)
+            {
+                existePessoaJuridica.Papeis.Add(pessoa.Papeis.First());
+                _pessoaRepository.Atualizar(existePessoaJuridica);
+            }
+            else
+            {
+                pessoa.Enderecos.First().Estado = _estadoRepository
+                    .ObterPorCodigo(pessoa.Enderecos.First().Estado.EstadoCodigo);
+
+                _pessoaRepository.Criar(pessoa);
+            }
+        }
+
         private void ValidarPessoa(Pessoa pessoa)
         {
             pessoa.Validar();
-            pessoa.Enderecos.First().Validar();
+
+            foreach (var endereco in pessoa.Enderecos)
+            {
+                endereco.Validar();
+            }
 
             AssertionConcern<BusinessException>
-                .AssertArgumentTrue(pessoa.Papeis.Any(),
-                string.Format(Erros.NullParameter, "Papeis"));
-
-            AssertionConcern<BusinessException>
-                .AssertArgumentFalse(pessoa.MeiosComunicacao
-                .All(x => x.TipoComunicacao != TipoComunicacaoEnum.Telefone), Erros.EmptyPhone);
+                .AssertArgumentTrue(pessoa.MeiosComunicacao.Any(), 
+                Erros.MeansOfCommunicationEmpty);
 
             foreach (var meioComunicacao in pessoa.MeiosComunicacao)
             {
                 meioComunicacao.Validar();
             }
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentFalse(pessoa.MeiosComunicacao
+                .All(x => x.TipoComunicacao != TipoComunicacaoEnum.Telefone), Erros.EmptyPhone);
         }
 
         private void AtualizarEnderecoPessoa(Pessoa pessoa, Pessoa pessoaAtual)
         {
             //Adiciona um novo endereço ou modifica o exitente para principal
-            var enderecoAtualizar = pessoa.Enderecos.FirstOrDefault();
-            AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(enderecoAtualizar, null, Erros.EmptyAddress);
+            var enderecoAtualizar = pessoa.Enderecos.First();
+            enderecoAtualizar.Validar();
 
-            if (enderecoAtualizar != null && enderecoAtualizar.EnderecoCodigo == -1 &&
+            if (enderecoAtualizar.EnderecoCodigo == -1 &&
                 !pessoaAtual.Enderecos.Any(x =>
-                    x.Bairro.Equals(enderecoAtualizar.Bairro) &&
-                    x.CEP.Equals(enderecoAtualizar.CEP) &&
-                    x.Cidade.Equals(enderecoAtualizar.Cidade) &&
-                    x.Logradouro.Equals(enderecoAtualizar.Logradouro) &&
-                    x.Numero.Equals(enderecoAtualizar.Numero)))
+                    x.Bairro == enderecoAtualizar.Bairro &&
+                    x.CEP == enderecoAtualizar.CEP &&
+                    x.Cidade == enderecoAtualizar.Cidade &&
+                    x.Logradouro == enderecoAtualizar.Logradouro &&
+                    x.Numero == enderecoAtualizar.Numero))
             {
                 enderecoAtualizar.Pessoa = pessoaAtual;
                 enderecoAtualizar.Estado = _estadoRepository.ObterPorCodigo(enderecoAtualizar.Estado.EstadoCodigo);
                 var novoEndereco = _enderecoRepository.Criar(enderecoAtualizar);
                 pessoaAtual.Enderecos.Add(novoEndereco);
             }
-            else if (enderecoAtualizar != null && enderecoAtualizar.EnderecoCodigo != -1)
+            else if (enderecoAtualizar.EnderecoCodigo != -1)
             {
                 //Encotra o endereço que sera o principal
                 foreach (var item in pessoaAtual.Enderecos)
@@ -286,21 +311,21 @@ namespace ProjetoArtCouro.Business.Services.PessoaService
             }
 
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(meioComunicacaoAtualizar, null, Erros.EmptyPhone);
+                .AssertArgumentNotNull(meioComunicacaoAtualizar, Erros.EmptyPhone);
 
-            if (meioComunicacaoAtualizar != null && meioComunicacaoAtualizar.MeioComunicacaoCodigo == -1 &&
-                !pessoaAtual.MeiosComunicacao.Any(x => x.MeioComunicacaoNome.Equals(meioComunicacaoAtualizar.MeioComunicacaoNome)))
+            if (meioComunicacaoAtualizar.MeioComunicacaoCodigo == -1 &&
+                !pessoaAtual.MeiosComunicacao.Any(x => x.MeioComunicacaoNome == meioComunicacaoAtualizar.MeioComunicacaoNome))
             {
                 meioComunicacaoAtualizar.Pessoa = pessoaAtual;
                 var novoMeioComunicacao = _meioComunicacaoRepository.Criar(meioComunicacaoAtualizar);
                 pessoaAtual.MeiosComunicacao.Add(novoMeioComunicacao);
             }
-            else if (meioComunicacaoAtualizar != null && meioComunicacaoAtualizar.MeioComunicacaoCodigo != -1)
+            else if (meioComunicacaoAtualizar.MeioComunicacaoCodigo != -1)
             {
-                //Encotra o endereço que sera o principal
+                //Encotra o meio de comunicação que sera o principal
                 foreach (var item in pessoaAtual.MeiosComunicacao)
                 {
-                    item.Principal = item.MeioComunicacaoCodigo.Equals(meioComunicacaoAtualizar.MeioComunicacaoCodigo);
+                    item.Principal = item.MeioComunicacaoCodigo == meioComunicacaoAtualizar.MeioComunicacaoCodigo;
                 }
             }
         }

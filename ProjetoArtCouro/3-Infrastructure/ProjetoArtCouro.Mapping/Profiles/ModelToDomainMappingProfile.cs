@@ -179,21 +179,7 @@ namespace ProjetoArtCouro.Mapping.Profiles
                     new Papel { PapelCodigo = s.PapelPessoa }
                 }))
                 .ForMember(d => d.MeiosComunicacao, m => m.MapFrom(s => s.MeioComunicacao))
-                .ForMember(d => d.Enderecos, m => m.MapFrom(s => new List<Endereco>
-                {
-                    new Endereco
-                    {
-                        EnderecoCodigo = s.Endereco.EnderecoId ?? 0,
-                        Logradouro = s.Endereco.Logradouro,
-                        Numero = s.Endereco.Numero,
-                        Bairro = s.Endereco.Bairro,
-                        Complemento = s.Endereco.Complemento,
-                        Cidade = s.Endereco.Cidade,
-                        CEP = s.Endereco.Cep,
-                        Estado = new Estado {EstadoCodigo = s.Endereco.UFId ?? 0},
-                        Principal = true
-                    }
-                }))
+                .ForMember(d => d.Enderecos, m => m.MapFrom(s => s.Endereco))
                 .Include<ClienteModel, Pessoa>()
                 .Include<FuncionarioModel, Pessoa>()
                 .Include<FornecedorModel, Pessoa>();
@@ -221,6 +207,9 @@ namespace ProjetoArtCouro.Mapping.Profiles
                 .ForMember(d => d.EstadoCivilId, m => m.Ignore())
                 .ForMember(d => d.EstadoCivilNome, m => m.Ignore())
                 .ForMember(d => d.EstadoCivilCodigo, m => m.MapFrom(s => s.EstadoCivilId));
+
+            CreateMap<EnderecoModel, ICollection<Endereco>>()
+                .ConvertUsing<EnderecoConverter>();
 
             CreateMap<MeioComunicacaoModel, ICollection<MeioComunicacao>>()
                 .ConvertUsing<MeioComunicacaoConverter>();

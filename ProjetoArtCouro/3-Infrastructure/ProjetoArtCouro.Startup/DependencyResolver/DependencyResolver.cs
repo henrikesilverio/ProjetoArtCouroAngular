@@ -4,7 +4,7 @@ using ProjetoArtCouro.Business.AutenticacaoService;
 using ProjetoArtCouro.Business.Services.CompraService;
 using ProjetoArtCouro.Business.Services.EstoqueService;
 using ProjetoArtCouro.Business.PagamentoService;
-using ProjetoArtCouro.Business.Services.PessoaService;
+using ProjetoArtCouro.Business.PessoaService;
 using ProjetoArtCouro.Business.ProdutoService;
 using ProjetoArtCouro.Business.UsuarioService;
 using ProjetoArtCouro.Business.Services.VendaService;

@@ -54,7 +54,7 @@
     <Compile Include="Services\EstoqueService\EstoqueService.cs" />
     <Compile Include="PagamentoService\CondicaoPagamentoService.cs" />
     <Compile Include="PagamentoService\FormaPagamentoService.cs" />
-    <Compile Include="Services\PessoaService\PessoaService.cs" />
+    <Compile Include="PessoaService\PessoaService.cs" />
     <Compile Include="ProdutoService\ProdutoService.cs" />
     <Compile Include="UsuarioService\UsuarioService.cs" />
     <Compile Include="Services\VendaService\ContaReceberService.cs" />

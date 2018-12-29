@@ -18,8 +18,6 @@ namespace ProjetoArtCouro.Domain.Contracts.IService.IPessoa
         List<PessoaModel> PesquisarPessoa(PesquisaPessoaModel filtro);
         PessoaModel ObterPessoaPorCodigo(int codigo);
         void CriarPessoa(PessoaModel model);
-        void CriarPessoaFisica(Pessoa pessoa);
-        void CriarPessoaJuridica(Pessoa pessoa);
         void AtualizarPessoa(PessoaModel pessoa);
         void ExcluirPessoa(int pessoaCodigo);
     }
