@@ -124,10 +124,11 @@ namespace ProjetoArtCouro.Business.Services.VendaService
             var venda = _vendaRepository.ObterPorCodigo(codigoVenda);
 
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(venda, null, Erros.SaleDoesNotExist);
+                .AssertArgumentNotNull(venda, Erros.SaleDoesNotExist);
 
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(venda.StatusVenda, StatusVendaEnum.Confirmado, Erros.SaleConfirmedCanNotBeExcluded);
+                .AssertArgumentNotEquals(venda.StatusVenda, StatusVendaEnum.Confirmado, 
+                Erros.SaleConfirmedCanNotBeExcluded);
 
             _vendaRepository.Deletar(venda);
         }

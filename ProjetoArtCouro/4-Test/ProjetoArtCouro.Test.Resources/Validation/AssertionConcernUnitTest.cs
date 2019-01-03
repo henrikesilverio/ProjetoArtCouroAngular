@@ -12,7 +12,8 @@ namespace ProjetoArtCouro.Test.Resources.Validation
         {
             try
             {
-                AssertionConcern<BusinessException>.AssertArgumentEquals("A", "B", "Erro A diferente de B");
+                AssertionConcern<BusinessException>
+                    .AssertArgumentEquals("A", "B", "Erro A diferente de B");
                 Assert.Fail("Deveria retornar um erro");
             }
             catch (BusinessException ex)
@@ -27,7 +28,8 @@ namespace ProjetoArtCouro.Test.Resources.Validation
         {
             try
             {
-                AssertionConcern<BusinessException>.AssertArgumentFalse(true, "Valor esperado é falso");
+                AssertionConcern<BusinessException>
+                    .AssertArgumentFalse(true, "Valor esperado é falso");
                 Assert.Fail("Deveria retornar um erro");
             }
             catch (BusinessException ex)
@@ -42,7 +44,8 @@ namespace ProjetoArtCouro.Test.Resources.Validation
         {
             try
             {
-                AssertionConcern<BusinessException>.AssertArgumentTrue(false, "Valor esperado é verdadeiro");
+                AssertionConcern<BusinessException>
+                    .AssertArgumentTrue(false, "Valor esperado é verdadeiro");
                 Assert.Fail("Deveria retornar um erro");
             }
             catch (BusinessException ex)

@@ -5,9 +5,17 @@ namespace ProjetoArtCouro.Resource.Validation
 {
     public class AssertionConcern<T> where T : Exception, new()
     {
-        public static void AssertArgumentEquals(object object1, object object2, string message)
+        public static void AssertArgumentEquals(object first, object second, string message)
         {
-            if (!object1.Equals(object2))
+            if (first.ToString() != second.ToString())
+            {
+                throw (T)Activator.CreateInstance(typeof(T), message);
+            }
+        }
+
+        public static void AssertArgumentNotEquals(object first, object second, string message)
+        {
+            if (first.ToString() == second.ToString())
             {
                 throw (T)Activator.CreateInstance(typeof(T), message);
             }
@@ -68,14 +76,6 @@ namespace ProjetoArtCouro.Resource.Validation
             }
         }
 
-        public static void AssertArgumentNotEquals(object object1, object object2, string message)
-        {
-            if (object1.Equals(object2))
-            {
-                throw (T)Activator.CreateInstance(typeof(T), message);
-            }
-        }
-
         public static void AssertArgumentNull(object value, string message)
         {
             if (value != null)
@@ -84,9 +84,9 @@ namespace ProjetoArtCouro.Resource.Validation
             }
         }
 
-        public static void AssertArgumentNotNull(object object1, string message)
+        public static void AssertArgumentNotNull(object value, string message)
         {
-            if (object1 == null)
+            if (value == null)
             {
                 throw (T)Activator.CreateInstance(typeof(T), message);
             }

@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autenticacoes\AutenticacaoServiceUnitTest.cs" />
+    <Compile Include="Compras\CompraServiceUnitTest.cs" />
     <Compile Include="Pagamentos\CondicaoPagamentoServiceUnitTest.cs" />
     <Compile Include="Pagamentos\FormaPagamentoServiceUnitTest.cs" />
     <Compile Include="Pessoas\PessoaServiceUnitTest.cs" />

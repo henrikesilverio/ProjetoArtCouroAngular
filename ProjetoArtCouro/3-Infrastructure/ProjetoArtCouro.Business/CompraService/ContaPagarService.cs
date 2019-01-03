@@ -10,7 +10,7 @@ using System.Linq;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Mapping;
 
-namespace ProjetoArtCouro.Business.Services.CompraService
+namespace ProjetoArtCouro.Business.CompraService
 {
     public class ContaPagarService : IContaPagarService
     {
