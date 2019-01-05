@@ -363,4 +363,10 @@
   <data name="PurchaseItemsNotInformed" xml:space="preserve">
     <value>Itens da compra não informado.</value>
   </data>
+  <data name="AccountPayableNotFound" xml:space="preserve">
+    <value>Conta a pagar não encontrada</value>
+  </data>
+  <data name="ListOfAccountsPayableEmpty" xml:space="preserve">
+    <value>Lista de contas a pagar vazia</value>
+  </data>
 </root>

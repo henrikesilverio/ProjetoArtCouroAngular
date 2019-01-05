@@ -9,6 +9,8 @@ using ProjetoArtCouro.Domain.Exceptions;
 using System.Linq;
 using ProjetoArtCouro.Resources.Resources;
 using ProjetoArtCouro.Mapping;
+using System;
+using ProjetoArtCouro.Resources.Validation;
 
 namespace ProjetoArtCouro.Business.CompraService
 {
@@ -31,19 +33,36 @@ namespace ProjetoArtCouro.Business.CompraService
 
         public void PagarContas(List<ContaPagarModel> model)
         {
-            var contasPagar = Map<List<ContaPagar>>.MapperTo(model);
             AssertionConcern<BusinessException>
-                .AssertArgumentFalse(contasPagar.Any(x => x.ContaPagarCodigo.Equals(0)), Erros.ThereAccountPayableWithCodeZero);
+                .AssertArgumentTrue(model.Any(), Erros.ListOfAccountsPayableEmpty);
+
+            var contasPagar = Map<List<ContaPagar>>.MapperTo(model);
+            contasPagar.ForEach(conta => ValidarContas(conta));
 
             contasPagar.ForEach(x =>
             {
                 var contaPagarAtual = _contaPagarRepository.ObterPorCodigoComCompra(x.ContaPagarCodigo);
+                AssertionConcern<BusinessException>
+                    .AssertArgumentNotNull(contaPagarAtual, Erros.AccountPayableNotFound);
+
                 contaPagarAtual.Pago = x.Pago;
                 contaPagarAtual.StatusContaPagar = x.Pago
                     ? StatusContaPagarEnum.Pago
                     : StatusContaPagarEnum.Aberto;
                 _contaPagarRepository.Atualizar(contaPagarAtual);
             });
+        }
+
+        private void ValidarContas(ContaPagar conta)
+        {
+            new ValidationContract<ContaPagar>(conta)
+                .IsNotZero(x => x.ContaPagarCodigo)
+                .IsNotEquals(x => x.DataVencimento, new DateTime())
+                .IsNotZero(x => x.ValorDocumento)
+                .IsNotEquals(x => x.StatusContaPagar, StatusContaPagarEnum.None);
+
+            AssertionConcern<DomainException>
+                .AssertArgumentTrue(conta.IsValid(), conta.GetMergeNotifications());
         }
 
         public void Dispose()
