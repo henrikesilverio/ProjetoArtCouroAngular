@@ -125,7 +125,7 @@ namespace ProjetoArtCouro.Test.Business.Compras
         }
 
         [TestMethod]
-        [ExpectedException(typeof(BusinessException), "Compra com status aberto")]
+        [ExpectedException(typeof(BusinessException), "A soma do valor total bruto esta correta")]
         public void CriarCompra_SomaDoValorTotalBrutoDivergente_Excecao()
         {
             _compraService.CriarCompra(1, new CompraModel
@@ -150,7 +150,7 @@ namespace ProjetoArtCouro.Test.Business.Compras
         }
 
         [TestMethod]
-        [ExpectedException(typeof(BusinessException), "Compra com status aberto")]
+        [ExpectedException(typeof(BusinessException), "A soma do valor total liquido esta correta")]
         public void CriarCompra_SomaDoValorTotalLiquidoDivergente_Excecao()
         {
             _compraService.CriarCompra(1, new CompraModel

@@ -10,7 +10,7 @@ using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.ContaReceber;
 using ProjetoArtCouro.Mapping;
 
-namespace ProjetoArtCouro.Business.Services.VendaService
+namespace ProjetoArtCouro.Business.VendaService
 {
     public class ContaReceberService : IContaReceberService
     {

@@ -369,4 +369,7 @@
   <data name="ListOfAccountsPayableEmpty" xml:space="preserve">
     <value>Lista de contas a pagar vazia</value>
   </data>
+  <data name="ClientNotFound" xml:space="preserve">
+    <value>Cliente não encontrado</value>
+  </data>
 </root>

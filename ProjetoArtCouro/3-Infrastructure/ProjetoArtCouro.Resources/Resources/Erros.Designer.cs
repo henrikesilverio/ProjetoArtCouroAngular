@@ -70,6 +70,15 @@ namespace ProjetoArtCouro.Resources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cliente não encontrado.
+        /// </summary>
+        public static string ClientNotFound {
+            get {
+                return ResourceManager.GetString("ClientNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cliente não informado.
         /// </summary>
         public static string ClientNotSet {

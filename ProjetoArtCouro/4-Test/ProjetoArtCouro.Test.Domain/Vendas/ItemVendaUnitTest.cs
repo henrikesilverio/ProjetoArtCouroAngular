@@ -21,7 +21,7 @@ namespace ProjetoArtCouro.Test.Domain.Vendas
             }
             catch (DomainException e)
             {
-                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 7);
+                var mensagens = TesteAuxiliar.ObterMensagensValidas(e, 6);
                 Assert.IsTrue(mensagens.Any(x => x.Contains(
                     string.Format(Erros.FieldCannotBeZero, "ProdutoCodigo"))),
                     "Falta mensagem codigo do produto não pode ser zero");
@@ -41,10 +41,6 @@ namespace ProjetoArtCouro.Test.Domain.Vendas
                 Assert.IsTrue(mensagens.Any(x => x.Contains(
                    string.Format(Erros.FieldCannotBeZero, "ValorBruto"))),
                    "Falta mensagem valor bruto não pode ser zero");
-
-                Assert.IsTrue(mensagens.Any(x => x.Contains(
-                   string.Format(Erros.FieldCannotBeZero, "ValorDesconto"))),
-                   "Falta mensagem valor desconto não pode ser zero");
 
                 Assert.IsTrue(mensagens.Any(x => x.Contains(
                    string.Format(Erros.FieldCannotBeZero, "ValorLiquido"))),

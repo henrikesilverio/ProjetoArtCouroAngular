@@ -7,7 +7,7 @@ using ProjetoArtCouro.Business.PagamentoService;
 using ProjetoArtCouro.Business.PessoaService;
 using ProjetoArtCouro.Business.ProdutoService;
 using ProjetoArtCouro.Business.UsuarioService;
-using ProjetoArtCouro.Business.Services.VendaService;
+using ProjetoArtCouro.Business.VendaService;
 using ProjetoArtCouro.DataBase.DataBase;
 using ProjetoArtCouro.DataBase.Repositorios.CompraRepository;
 using ProjetoArtCouro.DataBase.Repositorios.EstoqueRepository;

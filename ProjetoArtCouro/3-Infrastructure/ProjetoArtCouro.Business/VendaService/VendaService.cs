@@ -17,7 +17,7 @@ using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.Venda;
 using ProjetoArtCouro.Mapping;
 
-namespace ProjetoArtCouro.Business.Services.VendaService
+namespace ProjetoArtCouro.Business.VendaService
 {
     public class VendaService : IVendaService
     {
@@ -87,9 +87,6 @@ namespace ProjetoArtCouro.Business.Services.VendaService
 
         public void AtualizarVenda(VendaModel model)
         {
-            AssertionConcern<BusinessException>.AssertArgumentNotEquals(0, model.CodigoVenda,
-            string.Format(Erros.NotZeroParameter, "CodigoVenda"));
-
             var venda = Map<Venda>.MapperTo(model);
             venda.Validar();
 
@@ -98,7 +95,12 @@ namespace ProjetoArtCouro.Business.Services.VendaService
 
             venda.ItensVenda.ForEach(x => x.Validar());
             
-            var vendaAtual = _vendaRepository.ObterPorCodigoComItensVenda(venda.VendaCodigo);
+            var vendaAtual = _vendaRepository
+                .ObterPorCodigoComItensVenda(venda.VendaCodigo);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(vendaAtual, Erros.SaleDoesNotExist);
+
             if (venda.StatusVenda == StatusVendaEnum.Aberto)
             {
                 VerificarEstoque(venda.ItensVenda);
@@ -136,15 +138,15 @@ namespace ProjetoArtCouro.Business.Services.VendaService
         private void AtualizaItensVenda(Venda vendaAtual, IEnumerable<ItemVenda> itensVenda)
         {
             var itensVendaAtual = vendaAtual.ItensVenda.ToList();
-            itensVendaAtual.ForEach(x =>
+            itensVendaAtual.ForEach(item =>
             {
-                _itemVendaRepository.Deletar(x);
+                _itemVendaRepository.Deletar(item);
             });
             vendaAtual.ItensVenda.Clear();
-            itensVenda.ForEach(x =>
+            itensVenda.ForEach(item =>
             {
-                x.Venda = vendaAtual;
-                var novoItem = _itemVendaRepository.Criar(x);
+                item.Venda = vendaAtual;
+                var novoItem = _itemVendaRepository.Criar(item);
                 vendaAtual.ItensVenda.Add(novoItem);
             });
         }
@@ -169,19 +171,24 @@ namespace ProjetoArtCouro.Business.Services.VendaService
 
         private void AdicionaClienteFormaECondicaoDePagamento(Venda venda, Venda vendaAtual)
         {
-            AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(0, venda.Cliente.PessoaCodigo, Erros.ClientNotSet);
+            var cliente = _pessoaRepository
+                .ObterPorCodigo(venda.Cliente.PessoaCodigo);
 
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(0, venda.FormaPagamento.FormaPagamentoCodigo, Erros.NotSetPayment);
+                .AssertArgumentNotNull(cliente, Erros.ClientNotFound);
+
+            var formaPagamento = _formaPagamentoRepository
+                .ObterPorCodigo(venda.FormaPagamento.FormaPagamentoCodigo);
 
             AssertionConcern<BusinessException>
-                .AssertArgumentNotEquals(0, venda.CondicaoPagamento.CondicaoPagamentoCodigo, Erros.PaymentConditionNotSet);
+                .AssertArgumentNotNull(formaPagamento, Erros.FormOfPaymentDoesNotExist);
 
-            var cliente = _pessoaRepository.ObterPorCodigo(venda.Cliente.PessoaCodigo);
-            var formaPagamento = _formaPagamentoRepository.ObterPorCodigo(venda.FormaPagamento.FormaPagamentoCodigo);
             var condicaoPagamento = _condicaoPagamentoRepository
                 .ObterPorCodigo(venda.CondicaoPagamento.CondicaoPagamentoCodigo);
+
+            AssertionConcern<BusinessException>
+                .AssertArgumentNotNull(condicaoPagamento, Erros.PaymentConditionDoesNotExist);
+
             vendaAtual.Cliente = cliente;
             vendaAtual.FormaPagamento = formaPagamento;
             vendaAtual.CondicaoPagamento = condicaoPagamento;
@@ -235,12 +242,14 @@ namespace ProjetoArtCouro.Business.Services.VendaService
         private void VerificarEstoque(IEnumerable<ItemVenda> itensVenda)
         {
             var produtosQueFaltamNoEstoque = new List<Tuple<string, int, int>>();
-            itensVenda.ForEach(x =>
+            itensVenda.ForEach(itemVenda =>
             {
-                var estoque = _estoqueRepository.ObterPorCodigoProduto(x.ProdutoCodigo);
-                if (estoque.Quantidade - x.Quantidade < 0)
+                var estoque = _estoqueRepository.ObterPorCodigoProduto(itemVenda.ProdutoCodigo);
+                if (estoque.Quantidade - itemVenda.Quantidade < 0)
                 {
-                    produtosQueFaltamNoEstoque.Add(new Tuple<string, int, int>(x.ProdutoNome, x.Quantidade,
+                    produtosQueFaltamNoEstoque.Add(new Tuple<string, int, int>(
+                        itemVenda.ProdutoNome, 
+                        itemVenda.Quantidade,
                         estoque.Quantidade));
                 }
             });

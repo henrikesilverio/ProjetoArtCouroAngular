@@ -58,8 +58,7 @@ namespace ProjetoArtCouro.Business.CompraService
             new ValidationContract<ContaPagar>(conta)
                 .IsNotZero(x => x.ContaPagarCodigo)
                 .IsNotEquals(x => x.DataVencimento, new DateTime())
-                .IsNotZero(x => x.ValorDocumento)
-                .IsNotEquals(x => x.StatusContaPagar, StatusContaPagarEnum.None);
+                .IsNotZero(x => x.ValorDocumento);
 
             AssertionConcern<DomainException>
                 .AssertArgumentTrue(conta.IsValid(), conta.GetMergeNotifications());

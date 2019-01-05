@@ -26,7 +26,6 @@ namespace ProjetoArtCouro.Domain.Entities.Vendas
                 .IsNotZero(x => x.Quantidade)
                 .IsNotZero(x => x.PrecoVenda)
                 .IsNotZero(x => x.ValorBruto)
-                .IsNotZero(x => x.ValorDesconto)
                 .IsNotZero(x => x.ValorLiquido);
 
             if (!IsValid())
