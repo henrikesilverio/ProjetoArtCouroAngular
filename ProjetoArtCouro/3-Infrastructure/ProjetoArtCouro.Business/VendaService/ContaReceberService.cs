@@ -9,6 +9,8 @@ using ProjetoArtCouro.Resource.Validation;
 using ProjetoArtCouro.Domain.Exceptions;
 using ProjetoArtCouro.Domain.Models.ContaReceber;
 using ProjetoArtCouro.Mapping;
+using ProjetoArtCouro.Resources.Validation;
+using System;
 
 namespace ProjetoArtCouro.Business.VendaService
 {
@@ -31,20 +33,36 @@ namespace ProjetoArtCouro.Business.VendaService
 
         public void ReceberContas(List<ContaReceberModel> model)
         {
-            var contasReceber = Map<List<ContaReceber>>.MapperTo(model);
-
             AssertionConcern<BusinessException>
-                .AssertArgumentFalse(contasReceber.Any(x => x.ContaReceberCodigo.Equals(0)), Erros.ThereReceivableWithZeroCode);
+                .AssertArgumentTrue(model.Any(), Erros.ListOfAccountsReceivableEmpty);
+
+            var contasReceber = Map<List<ContaReceber>>.MapperTo(model);
+            contasReceber.ForEach(conta => ValidarContas(conta));
 
             contasReceber.ForEach(x =>
             {
-                var contaReceberAtual = _contaReceberRepository.ObterPorCodigoComVenda(x.ContaReceberCodigo);
+                var contaReceberAtual = _contaReceberRepository
+                     .ObterPorCodigoComVenda(x.ContaReceberCodigo);
+                AssertionConcern<BusinessException>
+                    .AssertArgumentNotNull(contaReceberAtual, Erros.AccountIncomingNotFound);
+
                 contaReceberAtual.Recebido = x.Recebido;
                 contaReceberAtual.StatusContaReceber = x.Recebido
                     ? StatusContaReceberEnum.Recebido
                     : StatusContaReceberEnum.Aberto;
                 _contaReceberRepository.Atualizar(contaReceberAtual);
             });
+        }
+
+        private void ValidarContas(ContaReceber conta)
+        {
+            new ValidationContract<ContaReceber>(conta)
+                .IsNotZero(x => x.ContaReceberCodigo)
+                .IsNotEquals(x => x.DataVencimento, new DateTime())
+                .IsNotZero(x => x.ValorDocumento);
+
+            AssertionConcern<DomainException>
+                .AssertArgumentTrue(conta.IsValid(), conta.GetMergeNotifications());
         }
 
         public void Dispose()

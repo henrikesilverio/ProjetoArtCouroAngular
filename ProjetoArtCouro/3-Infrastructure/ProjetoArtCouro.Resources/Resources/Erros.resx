@@ -372,4 +372,10 @@
   <data name="ClientNotFound" xml:space="preserve">
     <value>Cliente não encontrado</value>
   </data>
+  <data name="ListOfAccountsReceivableEmpty" xml:space="preserve">
+    <value>Lista de contas a receber vazia</value>
+  </data>
+  <data name="AccountIncomingNotFound" xml:space="preserve">
+    <value>Conta a receber não encontrada</value>
+  </data>
 </root>

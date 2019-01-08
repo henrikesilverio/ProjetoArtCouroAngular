@@ -4,7 +4,7 @@ using ProjetoArtCouro.Domain.Contracts.IService.IEstoque;
 using ProjetoArtCouro.Domain.Models.Estoque;
 using ProjetoArtCouro.Mapping;
 
-namespace ProjetoArtCouro.Business.Services.EstoqueService
+namespace ProjetoArtCouro.Business.EstoqueService
 {
     public class EstoqueService : IEstoqueService
     {

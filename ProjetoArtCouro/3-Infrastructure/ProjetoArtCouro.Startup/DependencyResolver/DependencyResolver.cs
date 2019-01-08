@@ -2,7 +2,7 @@
 using Microsoft.Practices.Unity;
 using ProjetoArtCouro.Business.AutenticacaoService;
 using ProjetoArtCouro.Business.CompraService;
-using ProjetoArtCouro.Business.Services.EstoqueService;
+using ProjetoArtCouro.Business.EstoqueService;
 using ProjetoArtCouro.Business.PagamentoService;
 using ProjetoArtCouro.Business.PessoaService;
 using ProjetoArtCouro.Business.ProdutoService;

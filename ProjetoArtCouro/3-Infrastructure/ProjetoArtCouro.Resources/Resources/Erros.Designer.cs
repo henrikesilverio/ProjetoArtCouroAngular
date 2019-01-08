@@ -61,6 +61,15 @@ namespace ProjetoArtCouro.Resources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conta a receber não encontrada.
+        /// </summary>
+        public static string AccountIncomingNotFound {
+            get {
+                return ResourceManager.GetString("AccountIncomingNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Conta a pagar não encontrada.
         /// </summary>
         public static string AccountPayableNotFound {
@@ -435,6 +444,15 @@ namespace ProjetoArtCouro.Resources.Resources {
         public static string ListOfAccountsPayableEmpty {
             get {
                 return ResourceManager.GetString("ListOfAccountsPayableEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lista de contas a receber vazia.
+        /// </summary>
+        public static string ListOfAccountsReceivableEmpty {
+            get {
+                return ResourceManager.GetString("ListOfAccountsReceivableEmpty", resourceCulture);
             }
         }
         
